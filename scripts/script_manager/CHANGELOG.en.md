@@ -1,3 +1,8 @@
+# Update v2.14.2
+
+- Suggestions and bug reports are protected the same way as votes: only one account writes from an IP, and the Steam ID must be real.
+- When a message is refused, the manager says why.
+
 # Update v2.14.1
 
 - Only one account votes from an IP: one vote per script, and it can be changed. The same account votes as usual from another IP.

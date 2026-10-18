@@ -98,15 +98,8 @@ async function handleVote(request, env, ctx) {
   if (typeof script !== "string" || !(await knownScripts(ctx)).has(script)) return json({ error: "unknown script" }, 404);
 
   const now = Math.floor(Date.now() / 1000);
-  const real = await realAccount(env, user, now);
-  if (real === null) return json({ error: "verify_unavailable" }, 503);
-  if (!real) return json({ error: "fake_account" }, 403);
-
-  // an address belongs to the first account that votes from it, so every script gets one vote per IP
-  const ip = await ipHash(request);
-  await env.DB.prepare("INSERT OR IGNORE INTO ip_owner (ip, steam_id, created) VALUES (?, ?, ?)").bind(ip, user, now).run();
-  const owner = await env.DB.prepare("SELECT steam_id FROM ip_owner WHERE ip = ?").bind(ip).first();
-  if (!owner || owner.steam_id !== user) return json({ error: "ip_taken" }, 403);
+  const { stop } = await guard(request, env, user, now);
+  if (stop) return stop;
 
   if (vote === 0) {
     await env.DB.prepare("DELETE FROM votes WHERE steam_id = ? AND script_id = ?").bind(user, script).run();
@@ -197,6 +190,19 @@ async function realAccount(env, user, now) {
   return ok;
 }
 
+// votes and feedback: the Steam ID must be a real account, and an address belongs to the first account
+// that used it, so one IP speaks for one account; the same account may come from any number of IPs
+async function guard(request, env, user, now) {
+  const real = await realAccount(env, user, now);
+  if (real === null) return { stop: json({ error: "verify_unavailable" }, 503) };
+  if (!real) return { stop: json({ error: "fake_account" }, 403) };
+  const ip = await ipHash(request);
+  await env.DB.prepare("INSERT OR IGNORE INTO ip_owner (ip, steam_id, created) VALUES (?, ?, ?)").bind(ip, user, now).run();
+  const owner = await env.DB.prepare("SELECT steam_id FROM ip_owner WHERE ip = ?").bind(ip).first();
+  if (!owner || owner.steam_id !== user) return { stop: json({ error: "ip_taken" }, 403) };
+  return { ip };
+}
+
 function clip(value, max) {
   return typeof value === "string" ? value.replace(/[\u0000-\u0009\u000b-\u001f]/g, "").trim().slice(0, max) : "";
 }
@@ -226,7 +232,8 @@ async function handleFeedback(request, env, ctx) {
   if (typeof script !== "string" || !titles[script]) return json({ error: "unknown script" }, 404);
 
   const now = Math.floor(Date.now() / 1000);
-  const ip = await ipHash(request);
+  const { stop: denied, ip } = await guard(request, env, user, now);
+  if (denied) return denied;
   const lim = limits(await recent(env, user, now), now);
   const stop = blocked(lim, script);
   if (stop) return json({ ...stop, limits: lim }, 429);

@@ -428,6 +428,8 @@ local localization = qLocalization.new({
 		sm_fb_sent = "The message has been sent to the author",
 		sm_fb_fail = "The message was not sent, try again later",
 		sm_fb_nouser = "Sending is unavailable: Steam ID not found",
+		sm_fb_ip = "Another account has already written from this IP",
+		sm_fb_fake = "Steam ID failed verification: no Steam or OpenDota profile",
 
 		sm_empty_search = "Nothing found",
 		sm_empty_search_d = "Try another name",
@@ -647,6 +649,8 @@ local localization = qLocalization.new({
 		sm_fb_sent = "Сообщение отправлено автору",
 		sm_fb_fail = "Сообщение не отправлено, попробуйте позже",
 		sm_fb_nouser = "Отправка недоступна: Steam ID не найден",
+		sm_fb_ip = "С этого IP уже писал другой аккаунт",
+		sm_fb_fake = "Steam ID не прошёл проверку: нет профиля в Steam или OpenDota",
 
 		sm_empty_search = "Ничего не найдено",
 		sm_empty_search_d = "Попробуй другое название",
@@ -760,7 +764,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 local JSON = require("assets.JSON")
 
-local VERSION = "2.14.1"
+local VERSION = "2.14.2"
 
 local K = {
 	CFG = "script_market",
@@ -2482,7 +2486,7 @@ function market.fb_send()
 			local keys = { script_limit = "sm_fb_lim_script", scripts_limit = "sm_fb_lim_scripts", ip_limit = "sm_fb_lim_ip" }
 			return market.fb_alert(keys[data.error] or "sm_fb_lim_script", market.fb_wait(wait))
 		end
-		market.fb_alert("sm_fb_fail")
+		market.fb_alert(({ ip_taken = "sm_fb_ip", fake_account = "sm_fb_fake" })[data.error] or "sm_fb_fail")
 	end)
 end
 
