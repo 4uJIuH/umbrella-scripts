@@ -3,13 +3,9 @@
 прерывает полёт Life Break, сохраняя попадание ульты / stops Life Break travel while preserving the ultimate hit
 
 <!-- releases:start -->
-Скачать: [huskar_life_break.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/huskar-life-break-v1.0.0/huskar_life_break.lua) — `huskar-life-break-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `huskar_life_break.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/huskar_life_break/huskar_life_break.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`huskar-life-break-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/huskar-life-break-v1.0.0) | 2026-10-13 | [huskar_life_break.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/huskar-life-break-v1.0.0/huskar_life_break.lua) | 5 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=huskar-life-break&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=huskar-life-break&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -27,12 +23,6 @@
 2. Перезагрузите скрипты. Меню: Heroes → Hero List → Huskar → Life Break.
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -53,9 +43,3 @@ A Huskar combo that casts Life Break on the target, then uses an item to stop mo
 2. Reload scripts. Menu: Heroes → Hero List → Huskar → Life Break.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

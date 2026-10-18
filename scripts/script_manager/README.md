@@ -3,11 +3,12 @@
 каталог скриптов Umbrella с установкой и обновлениями / an Umbrella script catalog with script installation and updates
 
 <!-- releases:start -->
-Скачать: [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.14.0/script_manager.lua) — `script-manager-v2.14.0`, 2026-10-18
+Скачать: [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.14.1/script_manager.lua) — `script-manager-v2.14.1`, 2026-10-18
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`script-manager-v2.14.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.14.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.14.0/script_manager.lua) | 5 |
+| [`script-manager-v2.14.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.14.1) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.14.1/script_manager.lua) | 0 |
+| [`script-manager-v2.14.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.14.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.14.0/script_manager.lua) | 6 |
 | [`script-manager-v2.13.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.13.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.13.0/script_manager.lua) | 5 |
 | [`script-manager-v2.12.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.12.1) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.12.1/script_manager.lua) | 0 |
 | [`script-manager-v2.12.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.12.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.12.0/script_manager.lua) | 0 |
@@ -68,6 +69,12 @@ Script Manager объединяет каталог скриптов в отде�
 4. Откройте `Scripts → Scripts → Script Manager`, включите его и назначьте клавишу для открытия панели.
 
 ## Что нового
+
+# Обновление v2.14.1
+
+- С одного IP голосует только один аккаунт: в каждом скрипте один голос, его можно менять. С другого IP тот же аккаунт голосует как обычно.
+- Голос принимается только от Steam ID с профилем в Steam или OpenDota, выдуманные ID отклоняются.
+- Если голос не принят, менеджер пишет причину.
 
 # Обновление v2.14.0
 
@@ -254,6 +261,12 @@ Script Manager brings the script catalog into a customizable panel. It shows des
 4. Open `Scripts → Scripts → Script Manager`, enable it, and assign a key to open the panel.
 
 ## Changelog
+
+# Update v2.14.1
+
+- Only one account votes from an IP: one vote per script, and it can be changed. The same account votes as usual from another IP.
+- Votes are accepted only from Steam IDs with a Steam or OpenDota profile; made-up IDs are rejected.
+- When a vote is refused, the manager says why.
 
 # Update v2.14.0
 
