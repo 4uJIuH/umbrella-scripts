@@ -3,13 +3,9 @@
 ловит Techies способностью Bushwhack во время Blast Off / catches Techies with Bushwhack during Blast Off
 
 <!-- releases:start -->
-Скачать: [hoodwink_bushwhack_techies.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/hoodwink-bushwhack-techies-v1.0.0/hoodwink_bushwhack_techies.lua) — `hoodwink-bushwhack-techies-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `hoodwink_bushwhack_techies.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/hoodwink_bushwhack_techies/hoodwink_bushwhack_techies.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`hoodwink-bushwhack-techies-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/hoodwink-bushwhack-techies-v1.0.0) | 2026-10-13 | [hoodwink_bushwhack_techies.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/hoodwink-bushwhack-techies-v1.0.0/hoodwink_bushwhack_techies.lua) | 4 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=hoodwink-bushwhack-techies&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=hoodwink-bushwhack-techies&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -27,12 +23,6 @@
 2. Перезагрузите скрипты. Меню: Hoodwink → Blast Off Catch.
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -53,9 +43,3 @@ A Hoodwink helper that attempts to catch Techies in midair with a net after Blas
 2. Reload scripts. Menu: Hoodwink → Blast Off Catch.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

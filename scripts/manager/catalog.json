@@ -6010,6 +6010,10 @@
         ]
       },
       "date": "2026-10-18",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staffer/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staffer/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     }
   ]

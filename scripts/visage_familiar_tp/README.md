@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`visage-familiar-tp-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/visage-familiar-tp-v1.0.0) | 2026-10-13 | [garguliatp.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/visage-familiar-tp-v1.0.0/garguliatp.lua) | 8 |
+| [`visage-familiar-tp-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/visage-familiar-tp-v1.0.0) | 2026-10-13 | [garguliatp.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/visage-familiar-tp-v1.0.0/garguliatp.lua) | 9 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=visage-familiar-tp&expanded=true)
 <!-- releases:end -->
