@@ -3,13 +3,9 @@
 переработанный скрипт Invoker с динамическим прокастом / reworked Invoker script with dynamic spell combos
 
 <!-- releases:start -->
-Скачать: [invoker.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-beta-v1.0.0/invoker.lua) — `invoker-beta-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `invoker.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-beta-v1.0.0/invoker.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`invoker-beta-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/invoker-beta-v1.0.0) | 2026-10-13 | [invoker.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-beta-v1.0.0/invoker.lua) | 32 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=invoker-beta&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=invoker-beta&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 2. Отключите стандартный скрипт Invoker, чтобы избежать конфликтов.
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ A beta with automatic combo selection, improved Auto Sunstrike, Auto Sphere, and
 2. Disable the standard Invoker script to avoid conflicts.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

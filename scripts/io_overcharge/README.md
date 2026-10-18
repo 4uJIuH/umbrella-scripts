@@ -3,13 +3,9 @@
 жмёт Overcharge, когда связанный союзник использует ультимейт / casts Overcharge when the tethered ally uses an ultimate
 
 <!-- releases:start -->
-Скачать: [io_overcharge.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/io-overcharge-v1.0.0/io_overcharge.lua) — `io-overcharge-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `io_overcharge.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/io_overcharge/io_overcharge.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`io-overcharge-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/io-overcharge-v1.0.0) | 2026-10-13 | [io_overcharge.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/io-overcharge-v1.0.0/io_overcharge.lua) | 7 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=io-overcharge&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=io-overcharge&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 1. Поместите `io_overcharge.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты.
 3. Откройте Heroes → Hero List → Io → Overcharge.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ Finds the ally connected by Tether and casts Overcharge when that ally uses a tr
 1. Place `io_overcharge.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Open Heroes → Hero List → Io → Overcharge.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

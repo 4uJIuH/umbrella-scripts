@@ -3,13 +3,9 @@
 отдельный модуль Sun Strike с prediction и ручным наведением / standalone Sun Strike module with prediction and manual targeting
 
 <!-- releases:start -->
-Скачать: [invoker_ss.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-ss-v138/invoker_ss.lua) — `invoker-ss-v138`, 2026-10-13
+Последняя версия: [`v138` — `invoker_ss.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-ss-v138/invoker_ss.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`invoker-ss-v138`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/invoker-ss-v138) | 2026-10-13 | [invoker_ss.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-ss-v138/invoker_ss.lua) | 1 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=invoker-ss&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=invoker-ss&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -24,12 +20,6 @@ Standalone-модуль на базе архитектуры Invoker от Discor
 
 1. Поместите `invoker_ss.lua` в `Umbrella\scripts` и перезагрузите Lua-скрипты.
 2. Не включайте одновременно другой скрипт, который управляет Sun Strike или Invoker.
-
-## Что нового
-
-# Релиз v138
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -47,9 +37,3 @@ A standalone module based on the Invoker framework by Discord user ID 3930590376
 
 1. Place `invoker_ss.lua` in `Umbrella\scripts` and reload Lua scripts.
 2. Do not enable another script that also controls Invoker or Sun Strike.
-
-## Changelog
-
-# Release v138
-
-- Release version: the first publication of the script.

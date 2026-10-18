@@ -6033,6 +6033,10 @@
         ]
       },
       "date": "2026-10-18",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/anti_pause_helper/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/anti_pause_helper/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6055,6 +6059,10 @@
       "heroes": [
         "shadow_shaman"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/shadow_shaman_ward_controller/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/shadow_shaman_ward_controller/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6074,6 +6082,10 @@
         ]
       },
       "date": "2026-10-18",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staff_direction/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staff_direction/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6096,6 +6108,10 @@
       "heroes": [
         "terrorblade"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/terrorblade_sunder_dagon/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/terrorblade_sunder_dagon/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6118,6 +6134,10 @@
       "heroes": [
         "venomancer"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/venomancer_ward_controller/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/venomancer_ward_controller/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     }
   ]

@@ -235,6 +235,11 @@
 - [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) — умный пуш крип-волн клоном Arc Warden
 - [Echo BKB Dodge](scripts/echo_bkb_dodge) — автоматически нажимает BKB при блинке вражеского Earthshaker
 - [Force Staffer](scripts/force_staffer) — разворачивает Force Staff и Hurricane Pike по курсору
+- [AntiPause Helper](scripts/anti_pause_helper) — помогает снять паузу в игре
+- [Shadow Shaman Ward Controller](scripts/shadow_shaman_ward_controller) — автоматически приказывает вардaм Shadow Shaman атаковать выбранные цели
+- [Force Staff Direction](scripts/force_staff_direction) — показывает направление отталкивания Force Staff и Hurricane Pike
+- [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) — комбо Terrorblade с Sunder, Ethereal Blade и Dagon
+- [Venomancer Ward Controller](scripts/venomancer_ward_controller) — автоматически направляет Plague Wards на Healing Ward и героев
 <!-- scripts:ru:end -->
 
 На странице скрипта есть описание, установка, история версий и загрузка.
@@ -517,6 +522,11 @@ Repository: https://github.com/4uJIuH/umbrella-scripts
 - [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) — smart creep-wave pushing with Arc Warden's clone
 - [Echo BKB Dodge](scripts/echo_bkb_dodge) — automatically uses BKB when an enemy Earthshaker Blinks nearby
 - [Force Staffer](scripts/force_staffer) — turns Force Staff and Hurricane Pike toward the cursor
+- [AntiPause Helper](scripts/anti_pause_helper) — helps resume a paused game
+- [Shadow Shaman Ward Controller](scripts/shadow_shaman_ward_controller) — automatically orders Shadow Shaman wards to attack selected targets
+- [Force Staff Direction](scripts/force_staff_direction) — shows Force Staff and Hurricane Pike push directions
+- [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) — Terrorblade combo with Sunder, Ethereal Blade, and Dagon
+- [Venomancer Ward Controller](scripts/venomancer_ward_controller) — automatically targets Healing Ward and heroes with Plague Wards
 <!-- scripts:en:end -->
 
 The script page includes its description, installation steps, version history, and download.
@@ -572,19 +582,19 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Rune Destruction](scripts/rune_destruction) | 20 | `rune-destruction-v1.0.2` |
 | [Earth Spirit Kick Combo](scripts/earth_spirit_kick_combo) | 13 | `earth-spirit-kick-combo-v1.0.0` |
 | [HP/Mana 67 Ping](scripts/hp_mana_67_ping) | 6 | `hp-mana-67-ping-v1.0.1` |
-| [Spirit Bear Pull](scripts/spirit_bear_pull) | 13 | `spirit-bear-pull-v1.0.0` |
+| [Spirit Bear Pull](scripts/spirit_bear_pull) | 14 | `spirit-bear-pull-v1.0.0` |
 | [Dorman Combo Assistant](scripts/dorman_combo_assistant) | 1 | `dorman-combo-assistant-v1.0.0` |
 | [Rem Assistant](scripts/rem_assistant) | 1 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
 | [qLocalization](scripts/q_localizer) | 92 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 312 | `script-manager-v2.14.2` |
+| [Script Manager](scripts/script_manager) | 315 | `script-manager-v2.14.2` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 627 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 7 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 266 | `lane-pull-v1.0.4` |
 | [DS Spot Block](scripts/ds_spot_block) | 57 | `ds-spot-block-v1.0.1` |
 | [Custom Background](scripts/custom_background) | 48 | `custom-background-v1.0.0` |
 | [Auto Stack](scripts/auto_stack) | 156 | `auto-stack-v1.1.0` |
-| [Draft Helper](scripts/draft_helper) | 1424 | `draft-helper-v2.0.0-beta.20` |
+| [Draft Helper](scripts/draft_helper) | 1426 | `draft-helper-v2.0.0-beta.20` |
 | [MusicUI](scripts/musicui) | 718 | `musicui-v1.0.8` |
 | [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 199 | `umbrella-lua-v1.0.4` |
 | [Custom Stats](scripts/custom_stats) | 13 | `custom-stats-v1.0.0` |
@@ -595,7 +605,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Arc Warden Blocker](scripts/arc_warden_blocker) | 10 | `arc-warden-blocker-v1.0.0` |
 | [Invoker Combo Switcher](scripts/invoker_combo_switcher) | 10 | `invoker-combo-switcher-v1.0.0` |
 | [Magnus Skewer Ally](scripts/magnus_skewer_ally) | 11 | `magnus-skewer-ally-v1.0.0` |
-| [Better Better Techies Combo](scripts/better_better_techies_combo) | 26 | `better-better-techies-combo-v1.0.0` |
+| [Better Better Techies Combo](scripts/better_better_techies_combo) | 27 | `better-better-techies-combo-v1.0.0` |
 | [Chat Translator](scripts/chat_translator) | 16 | `chat-translator-v1.0.0` |
 | [Hero Grid](scripts/hero_grid) | 1 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 12 | `weather-v1.0.0` |
@@ -615,7 +625,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Selection Camera](scripts/selection_camera) | 5 | `selection-camera-v1.1.0` |
 | [Spirit Breaker Combo & Ghoul 1000-7](scripts/spirit_breaker_bara) | 4 | `spirit-breaker-bara-v1.0.0` |
 | [1000-7 Counter](scripts/ghoul_counter) | 8 | `ghoul-counter-v1.0.0` |
-| [Invoker Jarvis](scripts/invoker_jarvis) | 40 | `v1.3.1` |
+| [Invoker Jarvis](scripts/invoker_jarvis) | 41 | `v1.3.1` |
 | [TikTok](scripts/umbrella_tiktok) | 294 | `v1.3.2` |
 | [Invoker AutoStack](scripts/invoker_autostack) | 73 | `v1.4.2` |
 | [Old Last Match](scripts/old_last_match) | 12 | `old-last-match-v1.0.0` |
@@ -624,7 +634,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Windranger Powershot Killsteal](scripts/windranger_powershot) | 16 | `windranger-powershot-v1.0.0` |
 | [MoM Sabre Abuse](scripts/mom_sabre_abuse) | 5 | `mom-sabre-abuse-v2.0.0` |
 | [Tinker 1x6 Farm](scripts/tinker_1x6_farm) | 1 | `tinker-1x6-farm-v1.0.0` |
-| [Forge Spirit Helper](scripts/forge_spirit_helper) | 16 | `forge-spirit-helper-v1.0.0` |
+| [Forge Spirit Helper](scripts/forge_spirit_helper) | 17 | `forge-spirit-helper-v1.0.0` |
 | [Gank Threat](scripts/gank_threat) | 13 | `gank-threat-v1.0.0` |
 | [Tinker Helper](scripts/tinker_helper) | 12 | `tinker-helper-v1.0.0` |
 | [Old HUD](scripts/old_hud) | 3 | `old-hud-v1.0.0` |
@@ -635,7 +645,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Creep Aggro](scripts/creep_aggro) | 11 | `creep-aggro-v1.0.0` |
 | [Nyx Assassin Auto Burrow](scripts/nyx_auto_burrow) | 4 | `nyx-auto-burrow-v1.0.0` |
 | [Dawnbreaker Solar Guardian Auto-Save Helper](scripts/dawnbreaker_solar_guardian) | 8 | `dawnbreaker-solar-guardian-v1.0.0` |
-| [Dota 1x6 Pack](scripts/dota1x6_pack) | 22 | `dota-1x6-pack-v1.0.0` |
+| [Dota 1x6 Pack](scripts/dota1x6_pack) | 23 | `dota-1x6-pack-v1.0.0` |
 | [Kez Raptor Dance Dispel](scripts/kez_raptor_dispel) | 6 | `kez-raptor-dispel-v1.0.0` |
 | [Huskar Life Break](scripts/huskar_life_break) | 5 | `huskar-life-break-v1.0.0` |
 | [Dragon Camp Pull](scripts/dragon_camp_pull) | 0 | `dragon-camp-pull-v1.0` |
@@ -651,7 +661,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Changer](scripts/changer) | 9 | `changer-v1.0.0` |
 | [Self Play](scripts/self_play_bot) | 6 | `self-play-v1.0.1` |
 | [Farm Pattern 2.5](scripts/farm_pattern) | 4 | `farm-pattern-v2.5` |
-| [Win Condition Engine](scripts/win_condition_engine) | 33 | `win-condition-engine-v1.0.0` |
+| [Win Condition Engine](scripts/win_condition_engine) | 34 | `win-condition-engine-v1.0.0` |
 | [Invoker (beta)](scripts/invoker_beta) | 32 | `invoker-beta-v1.0.0` |
 | [Kez Combo](scripts/kez_combo) | 11 | `kez-combo-v1.0.0` |
 | [Techies Combo](scripts/techies_combo) | 13 | `techies-combo-v1.0.0` |
@@ -688,13 +698,18 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Broodmother Helper](scripts/broodmother_helper) | 0 | `broodmother-helper-v2.1` |
 | [Script Market](scripts/market) | 19 | `market-v1.0.0` |
 | [MMR Tracker Ultimate](scripts/mmr_tracker_ultimate) | 12 | `mmr-tracker-ultimate-v1.0.0` |
-| [Glyph Timer](scripts/glyph_timer) | 30 | `glyph-timer-v1.0.0` |
+| [Glyph Timer](scripts/glyph_timer) | 31 | `glyph-timer-v1.0.0` |
 | [Rampage Timer](scripts/rampage_timer_h) | 0 | `rampage-timer-h-v1.0.0` |
 | [Lone Druid Bear AI Deluxe](scripts/lone_druid_bear_ai_deluxe) | 12 | `lone-druid-bear-ai-deluxe-v1.0.0` |
 | [PudgeHook AI](scripts/pudge_hook_ai) | 13 | `pudge-hook-ai-v1.0.0` |
 | [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) | 34 | `arc-warden-wave-pusher-v1.1.0` |
 | [Echo BKB Dodge](scripts/echo_bkb_dodge) | 5 | `echo-bkb-dodge-v1.2.0` |
 | [Force Staffer](scripts/force_staffer) | 2 | `force-staffer-v1.0.0` |
+| [AntiPause Helper](scripts/anti_pause_helper) | 0 | `anti-pause-helper-v1.0.0` |
+| [Shadow Shaman Ward Controller](scripts/shadow_shaman_ward_controller) | 0 | `shadow-shaman-ward-controller-v1.0.0` |
+| [Force Staff Direction](scripts/force_staff_direction) | 0 | `force-staff-direction-v1.0.0` |
+| [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 0 | `terrorblade-sunder-dagon-v1.0.0` |
+| [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 0 | `venomancer-ward-controller-v1.0.0` |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/stats/stats-dark.svg">
