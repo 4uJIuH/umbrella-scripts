@@ -233,6 +233,12 @@ def write_manager_catalog():
             item["heroes"] = script["heroes"]
         if script.get("users"):
             item["users"] = script["users"]
+        history = {}
+        for lang, name in (("ru", "CHANGELOG.md"), ("en", "CHANGELOG.en.md")):
+            if (BASE / "scripts" / script["id"] / name).is_file():
+                history[lang] = "https://raw.githubusercontent.com/%s/main/scripts/%s/%s" % (REPO, script["id"], name)
+        if history:
+            item["history"] = {"ru": history.get("ru", history.get("en")), "en": history.get("en", history.get("ru"))}
         if script.get("version_marker") in ("SCRIPT_VERSION", "NONE"):
             item["version_marker"] = script["version_marker"]
         items.append(item)

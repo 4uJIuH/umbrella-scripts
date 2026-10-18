@@ -1,3 +1,9 @@
+# Update v2.12.0
+
+- The script page has a Changelog button that opens a window with every version.
+- Hero search knows more abbreviations: db, tb, pb, np, io, ul and others.
+- Russian spellings of hero name words find every matching hero: "спирит" shows all Spirit heroes, not only Earth Spirit.
+
 # Update v2.11.0
 
 - Catalog scripts can be limited to chosen Steam accounts; other players do not see them.

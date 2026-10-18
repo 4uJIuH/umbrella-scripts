@@ -398,6 +398,13 @@ local localization = qLocalization.new({
 		sm_retry = "Retry",
 		sm_updating_n = "Updating %d of %d",
 		sm_changes = "What's new",
+		sm_log = "Changelog",
+		sm_log_btn = "Changelog",
+		sm_log_loading = "Loading the changelog",
+		sm_log_empty = "The changelog is empty",
+		sm_log_mine = "installed",
+		sm_log_new = "new",
+		sm_log_n = "%d versions",
 
 		sm_empty_search = "Nothing found",
 		sm_empty_search_d = "Try another name",
@@ -585,6 +592,13 @@ local localization = qLocalization.new({
 		sm_retry = "Повторить",
 		sm_updating_n = "Обновление: %d из %d",
 		sm_changes = "Что нового",
+		sm_log = "История изменений",
+		sm_log_btn = "Изменения",
+		sm_log_loading = "Загружаем историю изменений",
+		sm_log_empty = "История изменений пуста",
+		sm_log_mine = "установлена",
+		sm_log_new = "новая",
+		sm_log_n = "Версий: %d",
 
 		sm_empty_search = "Ничего не найдено",
 		sm_empty_search_d = "Попробуй другое название",
@@ -696,7 +710,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 local JSON = require("assets.JSON")
 
-local VERSION = "2.11.0"
+local VERSION = "2.12.0"
 
 local K = {
 	CFG = "script_market",
@@ -729,6 +743,7 @@ local K = {
 		search = "\u{f002}", clear = "\u{f057}", sort = "\u{f160}", refresh = "\u{f2f9}", sliders = "\u{f1de}",
 		warn = "\u{f071}", folder = "\u{f07b}",
 		thumb_up = "\u{f164}", thumb_down = "\u{f165}",
+		history = "\u{f1da}",
 		back = "\u{f053}", down = "\u{f078}", up = "\u{f077}", check = "\u{f00c}", store = "\u{f54e}", clock = "\u{f017}",
 	},
 }
@@ -878,38 +893,57 @@ end
 
 -- short names players type in search, besides initials of multi-word names (qop, wk, am...)
 local HERO_ALIAS = {
-	abaddon = "аба абадон абаддон", alchemist = "алх алхимик", ancient_apparition = "аа апарат",
-	antimage = "ам антимаг", arc_warden = "арк аркварден", axe = "акс", bane = "бейн", batrider = "bat бэт бат",
-	beastmaster = "bm бм бист", bloodseeker = "bs бс сикер блудсикер", bounty_hunter = "bh бх баунти",
-	brewmaster = "brew бру панда", bristleback = "bb бб брист", broodmother = "brood бруда паук",
-	centaur = "cent кент кентавр", chaos_knight = "хаос", chen = "чен", clinkz = "клинкз",
-	rattletrap = "clock клок клокверк", crystal_maiden = "cm цм кристалка", dark_seer = "дс сир",
-	dark_willow = "dw виллоу", dawnbreaker = "dawn давн", dazzle = "даз дазл", death_prophet = "дп",
-	disruptor = "disr дизраптор", doom_bringer = "дум", dragon_knight = "дк драгон", drow_ranger = "drow дров дровка",
-	earth_spirit = "esp ес спирит", earthshaker = "шейкер шекер", elder_titan = "титан", ember_spirit = "ember эмбер",
-	enchantress = "ench энча", enigma = "энигма", faceless_void = "fv void войд", grimstroke = "grim грим",
-	gyrocopter = "gyro гиро", hoodwink = "худвинк белка", huskar = "хуск хускар", invoker = "invo инвок инвокер",
-	wisp = "wisp висп виспа", jakiro = "thd джакиро", juggernaut = "jugg джагер джага", keeper_of_the_light = "kotl котл",
-	kez = "кез", kunkka = "кунка", largo = "ларго", legion_commander = "лц легионка", leshrac = "lesh леш лешрак",
-	lich = "лич", life_stealer = "ls naix гуля найкс", lina = "лина", lion = "лион", lone_druid = "лд друид",
+	abaddon = "aba аба абадон абаддон", alchemist = "alch алх алхимик", ancient_apparition = "apparition аа апарат",
+	antimage = "am magina ам антимаг магина", arc_warden = "arc zet арк зет аркварден", axe = "акс", bane = "бейн",
+	batrider = "bat бэт бат", beastmaster = "bm beast бм бист", bloodseeker = "bs blood бс сикер блудсикер",
+	bounty_hunter = "bh bounty бх баунти", brewmaster = "brew panda бру панда", bristleback = "bb bristle бб брист",
+	broodmother = "brood бруда паук", centaur = "cent кент кентавр", chaos_knight = "хаос", chen = "чен",
+	clinkz = "clinkz bone клинкз клинк", rattletrap = "clock клок клокверк", crystal_maiden = "cm rylai цм см кристалка рилай",
+	dark_seer = "дс сир", dark_willow = "dw willow виллоу", dawnbreaker = "db dawn дб давн давнбрейкер", dazzle = "daz даз дазл",
+	death_prophet = "дп krob кроба кробелус", disruptor = "disr thrall дизраптор трал", doom_bringer = "дум",
+	dragon_knight = "дк драгон", drow_ranger = "drow traxex дров дровка", earth_spirit = "esp kaolin ес еспирит каолин",
+	earthshaker = "es shaker ес шейкер шекер", elder_titan = "титан", ember_spirit = "ember xin эмбер",
+	enchantress = "ench энча", enigma = "энигма", faceless_void = "fv void фв войд", grimstroke = "grim грим",
+	gyrocopter = "gyro гиро", hoodwink = "hood худвинк белка", huskar = "husk хуск хускар", invoker = "invo инвок инвокер",
+	wisp = "io wisp ио висп виспа", jakiro = "thd jak джакиро", juggernaut = "jugg jug juggernaut джагер джага",
+	keeper_of_the_light = "kotl keeper котл", kez = "кез", kunkka = "kunk кунка", largo = "ларго",
+	legion_commander = "lc legion лц легионка", leshrac = "lesh леш лешрак", lich = "лич",
+	life_stealer = "ls naix лс гуля найкс", lina = "лина", lion = "лион", lone_druid = "ld bear лд друид медведь",
 	luna = "луна", lycan = "ликан", magnataur = "magnus magn магнус", marci = "марси", mars = "марс",
-	medusa = "dusa медуза дуза", meepo = "мипо", mirana = "potm мирана", monkey_king = "мк манки",
-	morphling = "morph морф", muerta = "муэрта", naga_siren = "naga нага", furion = "furion фурион фура",
-	necrolyte = "necro некр некрофос", night_stalker = "нс балан", nyx_assassin = "nyx никс", ogre_magi = "ogre огр",
+	medusa = "dusa медуза дуза", meepo = "мипо", mirana = "potm мирана", monkey_king = "mk мк манки",
+	morphling = "morph морф", muerta = "муэрта", naga_siren = "naga нага", furion = "np furion нп фурион фура",
+	necrolyte = "necro некр некрофос", night_stalker = "ns нс балан", nyx_assassin = "nyx никс", ogre_magi = "om ogre ом огр",
 	omniknight = "omni омник", oracle = "оракл", obsidian_destroyer = "od од", pangolier = "pango панго",
-	phantom_assassin = "па фантомка мортред", phantom_lancer = "пл лансер", phoenix = "феникс", primal_beast = "праймал",
-	puck = "пак", pudge = "пудж", pugna = "пугна", queenofpain = "qopa квопа акаша", razor = "разор", riki = "рики",
-	ringmaster = "rm", rubick = "руби рубик", sand_king = "ск сенд", shadow_demon = "сд", nevermore = "sf сф шадоу невермор",
-	shadow_shaman = "rhasta шаман раста", silencer = "сайленсер", skywrath_mage = "sky скай", slardar = "слардар",
-	slark = "сларк", snapfire = "snap снапфаер бабка", sniper = "снайпер", spectre = "spec спектра",
-	spirit_breaker = "bara бара сб", storm_spirit = "storm шторм", sven = "свен", techies = "течис минер",
-	templar_assassin = "та темпларка", terrorblade = "тб террор", tidehunter = "tide тайд", shredder = "timber тимбер",
-	tinker = "тинкер", tiny = "тини", treant = "трент тринт", troll_warlord = "troll тролль", tusk = "туск",
-	abyssal_underlord = "pitlord андер питлорд", undying = "андаинг", ursa = "урса", vengefulspirit = "venge венга",
-	venomancer = "veno веном веник", viper = "вайпер", visage = "визаж", void_spirit = "войдспирит",
-	warlock = "wl варлок", weaver = "вивер", windrunner = "wr windrunner вр винда виндранер виндраннер",
-	winter_wyvern = "ww виверна", witch_doctor = "wd вд вичдоктор", skeleton_king = "wk вк скелет леорик",
-	zuus = "zeus зевс",
+	phantom_assassin = "pa па фантомка мортред", phantom_lancer = "pl пл лансер", phoenix = "феникс",
+	primal_beast = "pb primal пб праймал", puck = "пак", pudge = "пудж", pugna = "пугна",
+	queenofpain = "qop qopa куоп квоп квопа акаша", razor = "разор", riki = "рики", ringmaster = "rm ring рм рингмастер",
+	rubick = "rub руби рубик", sand_king = "sk ск сенд", shadow_demon = "sd сд",
+	nevermore = "sf сф шадоу невермор", shadow_shaman = "ss rhasta сс шаман раста", silencer = "sil сайленсер",
+	skywrath_mage = "sky скай", slardar = "slar слардар", slark = "сларк", snapfire = "snap снапфаер бабка",
+	sniper = "снайпер", spectre = "spec спектра", spirit_breaker = "sb bara сб бара", storm_spirit = "storm шторм",
+	sven = "свен", techies = "tech течис минер", templar_assassin = "ta lanaya та темпларка ланая",
+	terrorblade = "tb terror тб террор", tidehunter = "tide тайд", shredder = "timber тимбер", tinker = "tink тинк тинкер",
+	tiny = "тини", treant = "tree трент тринт", troll_warlord = "troll тролль", tusk = "туск",
+	abyssal_underlord = "ul pitlord андер питлорд", undying = "dirge андаинг", ursa = "урса",
+	vengefulspirit = "vs venge вс венга", venomancer = "veno веном веник", viper = "вайпер", visage = "визаж",
+	void_spirit = "vsp войдспирит", warlock = "wl варлок", weaver = "weav вивер",
+	windrunner = "wr windrunner вр винда виндранер виндраннер", winter_wyvern = "ww виверна",
+	witch_doctor = "wd вд вичдоктор", skeleton_king = "wk вк скелет леорик", zuus = "zeus зевс",
+}
+
+-- how players write the English words of hero names in Russian: "спирит" finds every Spirit hero
+local WORD_RU = {
+	spirit = "спирит", knight = "найт кнайт", king = "кинг", lord = "лорд", mage = "маг", assassin = "ассасин",
+	master = "мастер", hunter = "хантер", warden = "варден", ranger = "ренджер рейнджер", lancer = "лансер",
+	demon = "демон", shaman = "шаман", maiden = "мейден", seer = "сир", prophet = "профет", titan = "титан",
+	void = "войд", storm = "шторм", ember = "эмбер", earth = "ерс эрс", shadow = "шадоу шадов", phantom = "фантом",
+	dark = "дарк", crystal = "кристал", dragon = "драгон", legion = "легион", troll = "тролль", winter = "винтер",
+	witch = "вич", wraith = "врейт", monkey = "манки", night = "найт", lone = "лон", druid = "друид", sand = "сенд",
+	chaos = "хаос", ancient = "эншент", death = "дез", elder = "элдер", faceless = "фейслес", primal = "праймал",
+	beast = "бист", queen = "квин", pain = "пейн", breaker = "брейкер", templar = "темплар", vengeful = "венжфул",
+	keeper = "кипер", light = "лайт", bounty = "баунти", outworld = "аутворлд", skywrath = "скайврат", ogre = "огр",
+	stalker = "сталкер", siren = "сирена", wyvern = "виверна", doctor = "доктор", commander = "командер",
+	warlord = "варлорд", protector = "протектор", apparition = "апарат", willow = "виллоу",
 }
 
 local LAYOUT = {}
@@ -964,6 +998,7 @@ local S = {
 	net = { state = "idle", at = 0, stamp = 0, err = nil, loaded = false },
 	rate = { url = nil, user = nil, tot = {}, mine = {}, busy = {}, rev = 0 },
 	inst = {}, busy = {}, err = {}, batch = nil, confirm_t = 0, kb_id = nil, pend = {}, pend_t = 0, typed_ok = false, nlz = nil, nlz_wait = nil, dir = nil, dw = nil, dw_open = false,
+	log = nil, log_open = false, log_cache = {},
 	set = {
 		open_mode = "reload",
 		check = Config.ReadString(K.CFG, "check", "start"),
@@ -1751,6 +1786,12 @@ function text.latin(str)
 	return table.concat(out)
 end
 
+-- changelog text without markdown marks: **bold**, `code`, [link](url)
+function text.md(str)
+	str = str:gsub("%[([^%]]+)%]%([^%)]*%)", "%1"):gsub("%*%*", ""):gsub("__", ""):gsub("`", "")
+	return (str:match("^%s*(.-)%s*$"))
+end
+
 function text.humanize(id)
 	return (id:gsub("_", " "):gsub("(%a)([%w]*)", function(a, b) return a:upper() .. b end))
 end
@@ -1897,6 +1938,9 @@ function market.hero_keys(id)
 		if #initials > 1 then k.short[#k.short + 1] = table.concat(initials) end
 	end
 	for alias in (HERO_ALIAS[id] or ""):gmatch("%S+") do k.short[#k.short + 1] = alias end
+	for word in h.name:lower():gmatch("%a+") do
+		for ru in (WORD_RU[word] or ""):gmatch("%S+") do k.words[#k.words + 1] = ru end
+	end
 	h.keys, h.keys_loc = k, loc
 	return k
 end
@@ -2049,6 +2093,8 @@ function market.build(catalog, meta)
 					en = text.list(type(e.changelog) == "string" and { e.changelog } or e.changelog
 						or (type(en.changelog) == "string" and { en.changelog } or en.changelog)),
 				},
+				log = type(e.history) == "table" and web.trusted(e.history.ru) and web.trusted(e.history.en)
+					and { ru = e.history.ru, en = e.history.en } or nil,
 				menu = {
 					ru = text.routes(type(e.menu) == "table" and e.menu.ru or nil),
 					en = text.routes(type(e.menu) == "table" and e.menu.en or nil),
@@ -2160,6 +2206,61 @@ function market.allowed(e)
 		if math.tointeger(tonumber(u)) == me then return true end
 	end
 	return false
+end
+
+-- CHANGELOG.md: "# Update v1.2.0", "## 1.2.0" or "**Version 1.2.0**" start a version, other lines are its items
+function market.log_parse(body)
+	local out, cur = {}, nil
+	for line in (body .. "\n"):gmatch("([^\n]*)\n") do
+		line = line:gsub("\r$", "")
+		local head = line:match("^#+%s*(.-)%s*$") or line:match("^%*%*([^*]+)%*%*%s*$")
+		if head and text.md(head) ~= "" then
+			head = text.md(head)
+			local v = head:match("%d+%.%d[%w%.%-]*")
+			local label = head
+			if v then
+				local a, b = head:find(v, 1, true)
+				if a > 1 and head:sub(a - 1, a - 1):lower() == "v" then a = a - 1 end
+				label = (head:sub(1, a - 1) .. " " .. head:sub(b + 1)):gsub("%s+", " "):match("^%s*(.-)%s*$")
+			end
+			local low = text.lower(label)
+			cur = { ver = v, label = label, fix = low:find("исправ", 1, true) ~= nil or low:find("fix", 1, true) ~= nil, items = {} }
+			out[#out + 1] = cur
+		else
+			local item = line:match("^%s*[-*+]%s+(.+)$") or line:match("^%s*(%S.*)$")
+			if item and text.md(item) ~= "" then
+				if not cur then
+					cur = { label = "", items = {} }
+					out[#out + 1] = cur
+				end
+				cur.items[#cur.items + 1] = text.md(item)
+			end
+		end
+	end
+	return out
+end
+
+function market.log_open(s)
+	if not s.log then return end
+	local lang = S.lang == "ru" and "ru" or "en"
+	local key = s.id .. ":" .. lang
+	S.log = { id = s.id, key = key, to = 0, f = 0 }
+	S.log_open = true
+	local c = S.log_cache[key]
+	if c and c.state ~= "error" then return end
+	S.log_cache[key] = { state = "loading" }
+	web.get(web.fresh(s.log[lang]), function(body, err, detail)
+		if not body then
+			S.log_cache[key] = { state = "error", err = L(err) .. (detail and (": " .. detail) or "") }
+			return
+		end
+		local ok, list = pcall(market.log_parse, body)
+		S.log_cache[key] = ok and { state = "ok", list = list } or { state = "error", err = L("sm_e_parse") }
+	end)
+end
+
+function market.log_close()
+	S.log_open = false
 end
 
 function market.rate_load()
@@ -3541,6 +3642,150 @@ function view.dir_window()
 	g.a = S.alpha
 end
 
+-- word-wraps every version once per width, the window only moves the result
+function view.log_layout(d, list, tw)
+	if d.lay and d.lay_src == list and d.lay_w == tw and d.lay_font == S.set.font then return d.lay end
+	local lay, y = {}, 0
+	for i, e in ipairs(list) do
+		local row = { e = e, y = y, items = {} }
+		y = y + 30
+		for _, item in ipairs(e.items) do
+			local lines = g.wrap(400, 13, item, tw - 16)
+			row.items[#row.items + 1] = { y = y, lines = lines }
+			y = y + #lines * 19.5 + 6
+		end
+		y = y + (i < #list and 18 or 0)
+		row.h = y - row.y
+		lay[#lay + 1] = row
+		y = y + (i < #list and 19 or 0)
+	end
+	d.lay, d.lay_src, d.lay_w, d.lay_font, d.lay_h = lay, list, tw, S.set.font, y
+	return lay
+end
+
+function view.log_window()
+	local ka = anim.tween("lw", S.log_open and 1 or 0, 0.18)
+	local d = S.log
+	local s = d and BY_ID[d.id]
+	if ka < 0.01 or not s then return end
+	local live = S.log_open
+	g.a = S.alpha
+	g.rect(0, 0, K.W, K.H, { 0, 0, 0 }, 16, 0.62 * ka)
+	if live then hit.add(0, 0, K.W, K.H, "lw_bg", { click = market.log_close }) end
+
+	g.a = S.alpha * ka
+	local c = S.log_cache[d.key] or { state = "loading" }
+	local list = c.state == "ok" and c.list or nil
+	local w = math.min(600, K.W - 80)
+	local tw = w - 48
+	local lay = list and #list > 0 and view.log_layout(d, list, tw) or nil
+	local head = 24 + 44 + 20
+	local body_max = K.H - 64 - head - 20
+	local content = lay and d.lay_h or 132
+	local bh = math.min(content, body_max)
+	local h = head + bh + 20
+	local x = (K.W - w) / 2
+	local y = (K.H - h) / 2 + 12 * (1 - ka)
+
+	g.rect(x, y, w, h, C.menu, 16, 1)
+	g.rect(x, y, w, h, s.color, 16, 0.05)
+	g.frame(x, y, w, h, T.white, 16, 0.12)
+	if live then hit.add(x, y, w, h, "lw_card") end
+
+	g.rect(x + 24, y + 24, 44, 44, s.color, 14, 0.18)
+	g.glyph(K.G.history, 19, x + 24 + 22, y + 24 + 22, s.color)
+	local text_w = w - 24 - 44 - 14 - 24 - 30 - 8
+	g.text(700, 19, g.fit(700, 19, L("sm_log"), text_w), x + 24 + 44 + 14, y + 24 + 12, T.t1)
+	local sub = s.title
+	if list then sub = sub .. "  ·  " .. string.format(L("sm_log_n"), #list) end
+	g.text(400, 12, g.fit(400, 12, sub, text_w), x + 24 + 44 + 14, y + 24 + 34, T.t3)
+
+	local bx, by = x + w - 24 - 30, y + 24 + 7
+	local chv = anim.hover("lw_close")
+	g.rect(bx, by, 30, 30, T.white, 9, 0.05 + 0.07 * chv)
+	local cc = anim.mix(T.t3, T.t1, chv)
+	g.line(bx + 10, by + 10, bx + 20, by + 20, cc, 1, 1.6)
+	g.line(bx + 10, by + 20, bx + 20, by + 10, cc, 1, 1.6)
+	if live then hit.add(bx, by, 30, 30, "lw_close", { click = market.log_close }) end
+
+	local top = y + head
+	g.hl(x + 24, top - 10, tw, T.white, C.line / 255)
+	if not lay then
+		local cy = top + bh / 2
+		if c.state == "loading" then
+			g.ring(x + w / 2, cy - 18, 10, T.white, 0.14, 2.5, 0, 1)
+			g.ring(x + w / 2, cy - 18, 10, s.color, 1, 2.5, (S.now * 360) % 360, 0.28)
+			g.text(500, 13, L("sm_log_loading"), x + w / 2, cy + 14, T.t3, 1, "c")
+		elseif c.state == "error" then
+			g.glyph(K.G.warn, 16, x + w / 2, cy - 30, T.red)
+			g.text(500, 13, g.fit(500, 13, c.err or L("sm_e_net"), tw), x + w / 2, cy - 4, T.red, 1, "c")
+			local rw = g.width(600, 12, L("sm_retry")) + 36
+			view.pill(x + (w - rw) / 2, cy + 16, rw, 30, L("sm_retry"), "soft", live and "lw_retry" or nil, function() market.log_open(s) end)
+		else
+			g.glyph(K.G.history, 22, x + w / 2, cy - 14, T.t4, 0.6)
+			g.text(500, 13, L("sm_log_empty"), x + w / 2, cy + 16, T.t3, 1, "c")
+		end
+		g.a = S.alpha
+		return
+	end
+
+	local max_scroll = math.max(0, content - bh)
+	d.to = clamp(d.to, 0, max_scroll)
+	local diff = d.to - d.f
+	d.f = math.abs(diff) * g.s < 0.5 and d.to or d.f + diff * (1 - math.exp(-S.dt * 18))
+	local sy = math.floor(d.f * g.s + 0.5) / g.s
+
+	local inst = S.inst[s.id]
+	g.clip(x, top, w, bh)
+	for _, row in ipairs(lay) do
+		local ry = top + row.y - sy
+		if ry + row.h >= top - 4 and ry <= top + bh + 4 then
+			local e = row.e
+			local cx = x + 24
+			if e.ver then
+				local vt = "v" .. e.ver
+				local vw = g.width(600, 12, vt) + 20
+				g.rect(cx, ry, vw, 22, e.fix and ORANGE or K.ACCENT, 11, 0.18)
+				g.text(600, 12, vt, cx + vw / 2, ry + 11, e.fix and ORANGE or K.ACCENT_TEXT, 1, "c")
+				cx = cx + vw + 10
+			end
+			local tag
+			if e.ver and inst == e.ver then
+				tag = { L("sm_log_mine"), T.t3, T.white, 0.07 }
+			elseif e.ver and inst and e.ver == s.latest and inst ~= s.latest then
+				tag = { L("sm_log_new"), K.ACCENT_TEXT, K.ACCENT, 0.16 }
+			end
+			local tag_w = tag and g.width(600, 11, tag[1]) + 18 or 0
+			if e.label ~= "" then
+				g.text(600, 14, g.fit(600, 14, e.label, x + 24 + tw - cx - (tag and tag_w + 10 or 0)), cx, ry + 11, T.t1)
+			end
+			if tag then
+				local tx = x + 24 + tw - tag_w
+				g.rect(tx, ry + 1, tag_w, 20, tag[3], 10, tag[4])
+				g.text(600, 11, tag[1], tx + tag_w / 2, ry + 11, tag[2], 1, "c")
+			end
+			for _, it in ipairs(row.items) do
+				local iy = top + it.y - sy
+				g.dot(x + 24 + 3, iy + 10, 2, e.fix and ORANGE or s.color)
+				for li, part in ipairs(it.lines) do g.text(400, 13, part, x + 24 + 16, iy + (li - 1) * 19.5 + 10, T.t2) end
+			end
+			if row.y + row.h < d.lay_h then g.hl(x + 24, ry + row.h, tw, T.white, C.line / 255) end
+		end
+	end
+	g.unclip()
+
+	local ta = clamp(sy / 14, 0, 1)
+	if ta > 0.01 then g.hl(x + 18, top, w - 36, T.white, 0.08 * ta) end
+	if max_scroll > 0 then
+		local ba = clamp((max_scroll - sy) / 14, 0, 1)
+		if ba > 0.01 then g.hl(x + 18, top + bh - 1, w - 36, T.white, 0.06 * ba) end
+		local thumb = math.max(28, bh * bh / content)
+		local ty = top + (bh - thumb) * clamp(sy / max_scroll, 0, 1)
+		g.rect(x + w - 10, ty, 3, thumb, T.white, 2, 0.16)
+	end
+	g.a = S.alpha
+end
+
 -- where the script puts its own menu: Scripts → Scripts → Script Manager
 function view.menu_path(s, cx, y, cw)
 	local routes = s.menu[S.lang]
@@ -3660,6 +3905,17 @@ function view.detail()
 		g.a = base
 		if show_rm then hit.add(rx, y + 23, w, 34, "d_remove", { click = function() market.remove(s.id) end }) end
 		right = right - (8 + w) * ra
+	end
+
+	if s.log then
+		local lw = 14 + 13 + 7 + g.width(500, 13, L("sm_log_btn")) + 16
+		local lx = right - 8 - lw
+		local lhv = anim.hover("d_log")
+		g.rect(lx, y + 23, lw, 34, T.white, 17, 0.06 + 0.06 * lhv)
+		g.glyph(K.G.history, 12, lx + 14 + 6.5, y + 40, anim.mix(T.t3, T.t1, lhv))
+		g.text(500, 13, L("sm_log_btn"), lx + 14 + 13 + 7, y + 40, anim.mix(T.t2, T.t1, lhv))
+		hit.add(lx, y + 23, lw, 34, "d_log", { click = function() market.log_open(s) end })
+		right = lx
 	end
 
 	g.rect(cx, y, 80, 80, s.color, 20, 0.15)
@@ -4158,6 +4414,7 @@ function view.window()
 	g.frame(0, 0, K.W, K.H, T.white, 16, 0.09)
 	g.hl(18, 0, K.W - 36, K.ACCENT_TEXT, 0.35 * S.alpha)
 	view.grip()
+	view.log_window()
 	view.dir_window()
 end
 
@@ -4292,6 +4549,8 @@ function input.key(key)
 	if key == KEY.KEY_ESCAPE then
 		if S.dw_open then
 			market.dir_close()
+		elseif S.log_open then
+			market.log_close()
 		elseif S.sort_open or S.menu then
 			S.sort_open, S.menu = false, nil
 		elseif S.view ~= "list" then
@@ -4381,6 +4640,10 @@ function script.OnKeyEvent(e)
 	if e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_UP or e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_DOWN then
 		if not over then return true end
 		if S.dw_open then return false end
+		if S.log_open then
+			if S.log then S.log.to = S.log.to + (e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_DOWN and 1 or -1) * K.WHEEL end
+			return false
+		end
 		for i = #hit.list, 1, -1 do
 			local h = hit.list[i]
 			if h[5] == "content" and mx >= h[1] and mx < h[3] and my >= h[2] and my < h[4] then
