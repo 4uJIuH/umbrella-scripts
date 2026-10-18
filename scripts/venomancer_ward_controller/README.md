@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`venomancer-ward-controller-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/venomancer-ward-controller-v1.0.0) | 2026-10-18 | [venomancer_ward_controller.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/venomancer-ward-controller-v1.0.0/venomancer_ward_controller.lua) | 0 |
+| [`venomancer-ward-controller-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/venomancer-ward-controller-v1.0.0) | 2026-10-18 | [venomancer_ward_controller.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/venomancer-ward-controller-v1.0.0/venomancer_ward_controller.lua) | 1 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=venomancer-ward-controller&expanded=true)
 <!-- releases:end -->

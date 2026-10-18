@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`force-staff-direction-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/force-staff-direction-v1.0.0) | 2026-10-18 | [Force_Staff.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/force-staff-direction-v1.0.0/Force_Staff.lua) | 0 |
+| [`force-staff-direction-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/force-staff-direction-v1.0.0) | 2026-10-18 | [Force_Staff.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/force-staff-direction-v1.0.0/Force_Staff.lua) | 1 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=force-staff-direction&expanded=true)
 <!-- releases:end -->
