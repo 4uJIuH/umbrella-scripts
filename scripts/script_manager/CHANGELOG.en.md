@@ -1,3 +1,7 @@
+# Fix v2.12.1
+
+- Fixed Script Manager 2.12.0 failing to load ("attempt to assign to const variable").
+
 # Update v2.12.0
 
 - The script page has a Changelog button that opens a window with every version.

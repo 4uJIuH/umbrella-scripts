@@ -710,7 +710,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 local JSON = require("assets.JSON")
 
-local VERSION = "2.12.0"
+local VERSION = "2.12.1"
 
 local K = {
 	CFG = "script_market",
@@ -2211,8 +2211,8 @@ end
 -- CHANGELOG.md: "# Update v1.2.0", "## 1.2.0" or "**Version 1.2.0**" start a version, other lines are its items
 function market.log_parse(body)
 	local out, cur = {}, nil
-	for line in (body .. "\n"):gmatch("([^\n]*)\n") do
-		line = line:gsub("\r$", "")
+	for raw in (body .. "\n"):gmatch("([^\n]*)\n") do
+		local line = raw:gsub("\r$", "")
 		local head = line:match("^#+%s*(.-)%s*$") or line:match("^%*%*([^*]+)%*%*%s*$")
 		if head and text.md(head) ~= "" then
 			head = text.md(head)
