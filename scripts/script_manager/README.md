@@ -3,10 +3,11 @@
 каталог скриптов Umbrella с установкой и обновлениями / an Umbrella script catalog with script installation and updates
 
 <!-- releases:start -->
-Скачать: [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.12.0/script_manager.lua) — `script-manager-v2.12.0`, 2026-10-18
+Скачать: [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.12.1/script_manager.lua) — `script-manager-v2.12.1`, 2026-10-18
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`script-manager-v2.12.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.12.1) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.12.1/script_manager.lua) | 0 |
 | [`script-manager-v2.12.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.12.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.12.0/script_manager.lua) | 0 |
 | [`script-manager-v2.11.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.11.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.11.0/script_manager.lua) | 2 |
 | [`script-manager-v2.10.6`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.10.6) | 2026-10-17 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.10.6/script_manager.lua) | 51 |
@@ -65,6 +66,10 @@ Script Manager объединяет каталог скриптов в отде�
 4. Откройте `Scripts → Scripts → Script Manager`, включите его и назначьте клавишу для открытия панели.
 
 ## Что нового
+
+# Исправление v2.12.1
+
+- Исправлена ошибка загрузки Script Manager 2.12.0 («attempt to assign to const variable»).
 
 # Обновление v2.12.0
 
@@ -235,6 +240,10 @@ Script Manager brings the script catalog into a customizable panel. It shows des
 4. Open `Scripts → Scripts → Script Manager`, enable it, and assign a key to open the panel.
 
 ## Changelog
+
+# Fix v2.12.1
+
+- Fixed Script Manager 2.12.0 failing to load ("attempt to assign to const variable").
 
 # Update v2.12.0
 

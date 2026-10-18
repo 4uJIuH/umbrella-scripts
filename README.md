@@ -575,7 +575,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Rem Assistant](scripts/rem_assistant) | 1 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
 | [qLocalization](scripts/q_localizer) | 85 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 289 | `script-manager-v2.12.0` |
+| [Script Manager](scripts/script_manager) | 289 | `script-manager-v2.12.1` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 626 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 5 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 264 | `lane-pull-v1.0.4` |
