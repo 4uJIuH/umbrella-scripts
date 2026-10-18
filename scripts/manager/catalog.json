@@ -5996,8 +5996,8 @@
     {
       "id": "force_staffer",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staffer/forcestaffer.lua",
-      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staffer/forcestaffer.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/96ac3764aa8c379f1a539a62f06759682bf4e874/scripts/force_staffer/forcestaffer.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/force-staffer-v1.0.0/forcestaffer.lua",
       "manual": false,
       "needs_q_localizer": true,
       "author": "Tommy (creator, Discord: tommytheitguy); 4uJIuH (latest version, Discord: sopka11)",
