@@ -6015,6 +6015,110 @@
         "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staffer/CHANGELOG.en.md"
       },
       "version_marker": "NONE"
+    },
+    {
+      "id": "anti_pause_helper",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/anti_pause_helper/anti_pause_helper.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/anti_pause_helper/anti_pause_helper.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "dreiki (Discord: dreiki666)",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Other \u2192 AntiPause Helper \u2192 AntiPause Helper \u2192 Settings"
+        ],
+        "en": [
+          "Scripts \u2192 Other \u2192 AntiPause Helper \u2192 AntiPause Helper \u2192 Settings"
+        ]
+      },
+      "date": "2026-10-18",
+      "version_marker": "NONE"
+    },
+    {
+      "id": "shadow_shaman_ward_controller",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/shadow_shaman_ward_controller/shadow_shaman_ward_controller.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/shadow_shaman_ward_controller/shadow_shaman_ward_controller.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "Tommy (Discord: tommytheitguy)",
+      "menu": {
+        "ru": [
+          "Heroes \u2192 Hero List \u2192 Shadow Shaman \u2192 Main Settings \u2192 Ward Settings"
+        ],
+        "en": [
+          "Heroes \u2192 Hero List \u2192 Shadow Shaman \u2192 Main Settings \u2192 Ward Settings"
+        ]
+      },
+      "date": "2026-10-18",
+      "heroes": [
+        "shadow_shaman"
+      ],
+      "version_marker": "NONE"
+    },
+    {
+      "id": "force_staff_direction",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staff_direction/Force_Staff.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staff_direction/Force_Staff.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "ezruiner (Discord: ezruiner)",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Other \u2192 Force Staff Direction \u2192 \u041e\u0441\u043d\u043e\u0432\u043d\u043e\u0435 \u2192 \u041e\u0441\u043d\u043e\u0432\u043d\u044b\u0435"
+        ],
+        "en": [
+          "Scripts \u2192 Other \u2192 Force Staff Direction \u2192 \u041e\u0441\u043d\u043e\u0432\u043d\u043e\u0435 \u2192 \u041e\u0441\u043d\u043e\u0432\u043d\u044b\u0435"
+        ]
+      },
+      "date": "2026-10-18",
+      "version_marker": "NONE"
+    },
+    {
+      "id": "terrorblade_sunder_dagon",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/terrorblade_sunder_dagon/terrorblade_sunder_dagon.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/terrorblade_sunder_dagon/terrorblade_sunder_dagon.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "\u0421\u0435\u043b\u044c\u0441\u043a\u0438\u0439 \u0431\u0443\u0434\u0438\u043b\u044c\u043d\u0438\u043a (Discord: luas0726)",
+      "menu": {
+        "ru": [
+          "Heroes \u2192 Hero List \u2192 Terrorblade \u2192 Sunder + Dagon"
+        ],
+        "en": [
+          "Heroes \u2192 Hero List \u2192 Terrorblade \u2192 Sunder + Dagon"
+        ]
+      },
+      "date": "2026-10-18",
+      "heroes": [
+        "terrorblade"
+      ],
+      "version_marker": "NONE"
+    },
+    {
+      "id": "venomancer_ward_controller",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/venomancer_ward_controller/venomancer_ward_controller.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/venomancer_ward_controller/venomancer_ward_controller.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "\u0420\u043e\u043c\u0431\u0438\u0442 (Discord: derevasha); creator and team retain sole ownership",
+      "menu": {
+        "ru": [
+          "Heroes \u2192 Hero List \u2192 Venomancer \u2192 Main Settings \u2192 Ward Settings"
+        ],
+        "en": [
+          "Heroes \u2192 Hero List \u2192 Venomancer \u2192 Main Settings \u2192 Ward Settings"
+        ]
+      },
+      "date": "2026-10-18",
+      "heroes": [
+        "venomancer"
+      ],
+      "version_marker": "NONE"
     }
   ]
 }

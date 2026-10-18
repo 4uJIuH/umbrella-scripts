@@ -59,6 +59,28 @@ class MenuLocationsTests(unittest.TestCase):
             },
         )
 
+    def test_new_script_batch_menu_paths_match_install_instructions(self):
+        expected = {
+            "anti_pause_helper": [
+                "Scripts → Other → AntiPause Helper → AntiPause Helper → Settings"
+            ],
+            "shadow_shaman_ward_controller": [
+                "Heroes → Hero List → Shadow Shaman → Main Settings → Ward Settings"
+            ],
+            "force_staff_direction": [
+                "Scripts → Other → Force Staff Direction → Основное → Основные"
+            ],
+            "terrorblade_sunder_dagon": [
+                "Heroes → Hero List → Terrorblade → Sunder + Dagon"
+            ],
+            "venomancer_ward_controller": [
+                "Heroes → Hero List → Venomancer → Main Settings → Ward Settings"
+            ],
+        }
+        for script_id, paths in expected.items():
+            with self.subTest(script=script_id):
+                self.assertEqual(paths_for(self.by_id[script_id]), {"ru": paths, "en": paths})
+
     def test_dynamic_menu_paths_are_explicit(self):
         paths = paths_for(self.by_id["windranger_powershot"])
         self.assertEqual(

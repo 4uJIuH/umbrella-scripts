@@ -11182,6 +11182,255 @@
           "Open `Scripts → Scripts → Force Staffer → Settings → Force Staffer`."
         ]
       }
+    },
+    {
+      "id": "anti_pause_helper",
+      "tag": "anti-pause-helper",
+      "title": "AntiPause Helper",
+      "kind": "lua",
+      "category": "dota",
+      "file": "anti_pause_helper.lua",
+      "heroes": [],
+      "author": "dreiki (Discord: dreiki666)",
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/anti_pause_helper",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=anti-pause-helper&expanded=true",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-18",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/anti_pause_helper/anti_pause_helper.lua"
+      },
+      "ru": {
+        "tagline": "помогает снять паузу в игре",
+        "about": "AntiPause Helper отслеживает событие паузы и отправляет команду на снятие паузы. В текущем исходнике попытка выполняется один раз на событие и ограничена интервалом в 5 секунд; автоматических повторов каждую секунду нет. Автор: dreiki (Discord: dreiki666).",
+        "features": [
+          "Включение и выключение автоматической попытки",
+          "Опция игнорирования пауз от союзников включена по умолчанию",
+          "Не пытается снять паузу, поставленную самим игроком",
+          "Одна попытка на событие паузы; между командами действует интервал 5 секунд"
+        ],
+        "install": [
+          "Поместите `anti_pause_helper.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Scripts → Other → AntiPause Helper → AntiPause Helper → Settings`."
+        ]
+      },
+      "en": {
+        "tagline": "helps resume a paused game",
+        "about": "AntiPause Helper watches for a pause event and issues an unpause command. In the supplied source, it makes one attempt per event with a 5-second rate limit; it does not retry every second. Author: dreiki (Discord: dreiki666).",
+        "features": [
+          "Toggle automatic unpause attempts",
+          "Ignore allied pauses, enabled by default",
+          "Does not try to unpause a game paused by the local player",
+          "One attempt per pause event, with a 5-second interval between commands"
+        ],
+        "install": [
+          "Place `anti_pause_helper.lua` in the `umbrella\\scripts` folder.",
+          "Reload the Lua scripts.",
+          "Open `Scripts → Other → AntiPause Helper → AntiPause Helper → Settings`."
+        ]
+      }
+    },
+    {
+      "id": "shadow_shaman_ward_controller",
+      "tag": "shadow-shaman-ward-controller",
+      "title": "Shadow Shaman Ward Controller",
+      "kind": "lua",
+      "category": "dota",
+      "file": "shadow_shaman_ward_controller.lua",
+      "heroes": [
+        "shadow_shaman"
+      ],
+      "author": "Tommy (Discord: tommytheitguy)",
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/shadow_shaman_ward_controller",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=shadow-shaman-ward-controller&expanded=true",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-18",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/shadow_shaman_ward_controller/shadow_shaman_ward_controller.lua"
+      },
+      "ru": {
+        "tagline": "автоматически приказывает вардaм Shadow Shaman атаковать выбранные цели",
+        "about": "Модифицированный контроллер, адаптированный для Serpent Wards Shadow Shaman. Создатель: Tommy (Discord: tommytheitguy).",
+        "features": [
+          "Автоматически выбирает цель для подконтрольных Serpent Wards",
+          "В первую очередь атакует Healing Ward Juggernaut и курьера, затем выбирает героя с наименьшим здоровьем",
+          "Учитывает увеличенную дальность атаки от таланта"
+        ],
+        "install": [
+          "Поместите `shadow_shaman_ward_controller.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Heroes → Hero List → Shadow Shaman → Main Settings → Ward Settings`."
+        ]
+      },
+      "en": {
+        "tagline": "automatically orders Shadow Shaman wards to attack selected targets",
+        "about": "A modified ward controller adapted for Shadow Shaman Serpent Wards. Created by Tommy (Discord: tommytheitguy).",
+        "features": [
+          "Automatically selects a target for controllable Serpent Wards",
+          "Prioritizes Juggernaut's Healing Ward and couriers, then picks the lowest-health hero",
+          "Accounts for the increased attack range from a talent"
+        ],
+        "install": [
+          "Place `shadow_shaman_ward_controller.lua` in the `umbrella\\scripts` folder.",
+          "Reload the Lua scripts.",
+          "Open `Heroes → Hero List → Shadow Shaman → Main Settings → Ward Settings`."
+        ]
+      }
+    },
+    {
+      "id": "force_staff_direction",
+      "tag": "force-staff-direction",
+      "title": "Force Staff Direction",
+      "kind": "lua",
+      "category": "dota",
+      "file": "Force_Staff.lua",
+      "heroes": [],
+      "author": "ezruiner (Discord: ezruiner)",
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/force_staff_direction",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=force-staff-direction&expanded=true",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-18",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staff_direction/Force_Staff.lua"
+      },
+      "ru": {
+        "tagline": "показывает направление отталкивания Force Staff и Hurricane Pike",
+        "about": "Визуализирует траектории отталкивания для себя, союзников, врагов и выбранных крипов. Отрисовка стороннего индикатора может накладываться поверх элементов интерфейса. Автор: ezruiner (Discord: ezruiner).",
+        "features": [
+          "Показывает траекторию Force Staff, Hurricane Pike и Psychic Headband",
+          "Настраиваемое отображение для себя, союзников, врагов и крипов — постоянно или при наведении",
+          "Есть опция «Только когда активно» для отображения при выборе Force Staff или Pike",
+          "Учитывает 50% врождённое сопротивление отталкиванию Magnus и позволяет задать сопротивление для других героев",
+          "Настройки внешнего вида линии и конечной точки"
+        ],
+        "install": [
+          "Поместите `Force_Staff.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Scripts → Other → Force Staff Direction → Основное → Основные`."
+        ]
+      },
+      "en": {
+        "tagline": "shows Force Staff and Hurricane Pike push directions",
+        "about": "Visualizes push trajectories for yourself, allies, enemies, and selected creeps. The third-party indicator may render over parts of the game interface. Author: ezruiner (Discord: ezruiner).",
+        "features": [
+          "Shows trajectories for Force Staff, Hurricane Pike, and Psychic Headband",
+          "Configurable display for yourself, allies, enemies, and creeps, always or on hover",
+          "Includes a Show only when active option for Force Staff or Pike target selection",
+          "Accounts for Magnus's 50% innate knockback resistance and allows resistance settings for other heroes",
+          "Customizable trajectory line and endpoint"
+        ],
+        "install": [
+          "Place `Force_Staff.lua` in the `umbrella\\scripts` folder.",
+          "Reload the Lua scripts.",
+          "Open `Scripts → Other → Force Staff Direction → Основное → Основные`."
+        ]
+      }
+    },
+    {
+      "id": "terrorblade_sunder_dagon",
+      "tag": "terrorblade-sunder-dagon",
+      "title": "Terrorblade Sunder + Dagon",
+      "kind": "lua",
+      "category": "dota",
+      "file": "terrorblade_sunder_dagon.lua",
+      "heroes": [
+        "terrorblade"
+      ],
+      "author": "Сельский будильник (Discord: luas0726)",
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/terrorblade_sunder_dagon",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=terrorblade-sunder-dagon&expanded=true",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-18",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/terrorblade_sunder_dagon/terrorblade_sunder_dagon.lua"
+      },
+      "ru": {
+        "tagline": "комбо Terrorblade с Sunder, Ethereal Blade и Dagon",
+        "about": "Запускает комбо Terrorblade: Sunder, затем при включённой настройке Ethereal Blade и Dagon. Рассчитывает, может ли комбо убить цель, и поддерживает авто-каст по подходящему врагу. В исходнике нет применения предмета невидимости — для атаки из инвиза используйте его отдельно. Автор: Сельский будильник (Discord: luas0726).",
+        "features": [
+          "Комбо по клавише и отдельный режим автоматического применения Sunder в радиусе",
+          "Расчёт урона для безопасного режима «Только если можно убить»",
+          "Опциональное использование Ethereal Blade перед Dagon",
+          "Индикатор оценки комбо, радиус Sunder и область действия Radiance у врагов"
+        ],
+        "install": [
+          "Поместите `terrorblade_sunder_dagon.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Heroes → Hero List → Terrorblade → Sunder + Dagon`."
+        ]
+      },
+      "en": {
+        "tagline": "Terrorblade combo with Sunder, Ethereal Blade, and Dagon",
+        "about": "Runs a Terrorblade combo: Sunder, followed by Ethereal Blade when enabled and then Dagon. It estimates whether the combo can kill the target and supports autocast on a suitable enemy. The supplied source does not use an invisibility item; activate invisibility separately if desired. Author: Сельский будильник (Discord: luas0726).",
+        "features": [
+          "Combo key plus a separate automatic Sunder mode for targets in range",
+          "Damage estimate for the Only if killable safe mode",
+          "Optional Ethereal Blade before Dagon",
+          "Combo estimate indicator, Sunder range, and enemy Radiance radius"
+        ],
+        "install": [
+          "Place `terrorblade_sunder_dagon.lua` in the `umbrella\\scripts` folder.",
+          "Reload the Lua scripts.",
+          "Open `Heroes → Hero List → Terrorblade → Sunder + Dagon`."
+        ]
+      }
+    },
+    {
+      "id": "venomancer_ward_controller",
+      "tag": "venomancer-ward-controller",
+      "title": "Venomancer Ward Controller",
+      "kind": "lua",
+      "category": "dota",
+      "file": "venomancer_ward_controller.lua",
+      "heroes": [
+        "venomancer"
+      ],
+      "author": "Ромбит (Discord: derevasha); creator and team retain sole ownership",
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/venomancer_ward_controller",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=venomancer-ward-controller&expanded=true",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-18",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/venomancer_ward_controller/venomancer_ward_controller.lua"
+      },
+      "ru": {
+        "tagline": "автоматически направляет Plague Wards на Healing Ward и героев",
+        "about": "Автоматически управляет вардами Venomancer. Healing Ward Juggernaut получает приоритет; если её нет, варды атакуют героя противника с наименьшим здоровьем. Скрипт разработан Ромбитом и его командой, которые являются его единственными владельцами.",
+        "features": [
+          "Приоритетная цель — Healing Ward Juggernaut",
+          "Иначе выбирает героя противника с наименьшим здоровьем в радиусе",
+          "Приказы атаки отправляются с интервалом, чтобы не спамить команды"
+        ],
+        "install": [
+          "Поместите `venomancer_ward_controller.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Heroes → Hero List → Venomancer → Main Settings → Ward Settings`."
+        ]
+      },
+      "en": {
+        "tagline": "automatically targets Healing Ward and heroes with Plague Wards",
+        "about": "Automatically controls Venomancer Plague Wards. Juggernaut's Healing Ward takes priority; otherwise, the wards attack the lowest-health enemy hero in range. Created by Ромбит and his team, who retain sole ownership of the script.",
+        "features": [
+          "Prioritizes Juggernaut's Healing Ward",
+          "Otherwise selects the lowest-health enemy hero in range",
+          "Throttles attack orders to avoid command spam"
+        ],
+        "install": [
+          "Place `venomancer_ward_controller.lua` in the `umbrella\\scripts` folder.",
+          "Reload the Lua scripts.",
+          "Open `Heroes → Hero List → Venomancer → Main Settings → Ward Settings`."
+        ]
+      }
     }
   ]
 }
