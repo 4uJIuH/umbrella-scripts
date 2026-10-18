@@ -696,7 +696,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 local JSON = require("assets.JSON")
 
-local VERSION = "2.10.6"
+local VERSION = "2.11.0"
 
 local K = {
 	CFG = "script_market",
@@ -1987,6 +1987,7 @@ function market.build(catalog, meta)
 	end
 
 	local cat_set = REAL_CATS
+	S.wait_account = false
 
 	for i = #SCRIPTS, 1, -1 do SCRIPTS[i] = nil end
 	for id in pairs(BY_ID) do BY_ID[id] = nil end
@@ -2021,7 +2022,7 @@ function market.build(catalog, meta)
 		local file = url_name(install_url)
 		local ext = file:match("^[%w%._%- ]+%.(%a+)$")
 		ext = type(ext) == "string" and ext:lower() or ""
-		if type(e) == "table" and type(e.id) == "string" and not BY_ID[e.id] and ver.valid(e.version) and web.trusted(install_url)
+		if type(e) == "table" and type(e.id) == "string" and not BY_ID[e.id] and market.allowed(e) and ver.valid(e.version) and web.trusted(install_url)
 			and (ext == "lua" or ext == "zip" or ext == "rar") then
 			local m = described[e.id] or {}
 			local ru, en = m.ru or {}, m.en or {}
@@ -2137,6 +2138,28 @@ function market.rate_id()
 	id = ok and tostring(id or "") or ""
 	if id:match("^%d+$") and #id >= 15 and #id <= 20 then return id end
 	return nil
+end
+
+-- Steam account id (the short profile number), nil while Steam has not answered yet
+function market.account()
+	local id = market.rate_id()
+	local n = id and math.tointeger(tonumber(id))
+	return n and n - 76561197960265728 or nil
+end
+
+-- entries with "users" are listed only for those Steam accounts
+function market.allowed(e)
+	if e.users == nil then return true end
+	if type(e.users) ~= "table" then return false end
+	local me = market.account()
+	if not me then
+		S.wait_account = true
+		return false
+	end
+	for _, u in ipairs(e.users) do
+		if math.tointeger(tonumber(u)) == me then return true end
+	end
+	return false
 end
 
 function market.rate_load()
@@ -2475,6 +2498,9 @@ function market.tick()
 		market.load()
 	elseif st.state ~= "loading" and S.set.check == "hour" and S.now >= st.next then
 		market.load()
+	elseif S.wait_account and st.state ~= "loading" and S.now >= (S.account_at or 0) then
+		S.account_at = S.now + 5
+		if market.account() then market.load() end
 	end
 	if S.foot == "done" and S.now > S.foot_until then S.foot = "idle" end
 	if S.confirm and S.now - S.confirm_t > 3 then S.confirm = nil end

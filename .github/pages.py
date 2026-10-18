@@ -159,6 +159,8 @@ def build_readme(script, rels):
 def catalog_list(lang):
     out = []
     for script in CATALOG["scripts"]:
+        if script.get("private"):
+            continue
         out.append("- [%s](scripts/%s) — %s"
                    % (script["title"], script["id"], script[lang]["tagline"]))
     return NL.join(out)
@@ -177,6 +179,8 @@ def patch(path, start, end, block):
 def main():
     rels = releases()
     for script in CATALOG["scripts"]:
+        if script.get("private"):
+            continue
         n = build_readme(script, rels)
         print("%-20s releases: %d" % (script["id"], n))
     readme = BASE / "README.md"

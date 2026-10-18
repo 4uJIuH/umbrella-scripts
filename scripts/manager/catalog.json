@@ -5094,6 +5094,28 @@
       },
       "date": "2026-10-17",
       "version_marker": "NONE"
+    },
+    {
+      "id": "ability_draft_helper",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ability_draft_helper/ability_draft_helper.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ability_draft_helper/ability_draft_helper.lua",
+      "manual": false,
+      "needs_q_localizer": true,
+      "author": "4uJIuH",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Scripts \u2192 Ability Draft Helper"
+        ],
+        "en": [
+          "Scripts \u2192 Scripts \u2192 Ability Draft Helper"
+        ]
+      },
+      "date": "2026-10-18",
+      "users": [
+        125775785,
+        128880242
+      ]
     }
   ]
 }

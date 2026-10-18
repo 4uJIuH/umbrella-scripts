@@ -1,3 +1,7 @@
+# Update v2.11.0
+
+- Catalog scripts can be limited to chosen Steam accounts; other players do not see them.
+
 # Update v2.10.6
 
 - When sorting by update date, the date is shown next to the script name ("BehaviorScoreHelper · Oct 15 2026") instead of above the ratings.

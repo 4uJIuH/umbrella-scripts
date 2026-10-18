@@ -231,6 +231,8 @@ def write_manager_catalog():
             item["files"] = version["files"]
         if script.get("heroes"):
             item["heroes"] = script["heroes"]
+        if script.get("users"):
+            item["users"] = script["users"]
         if script.get("version_marker") in ("SCRIPT_VERSION", "NONE"):
             item["version_marker"] = script["version_marker"]
         items.append(item)

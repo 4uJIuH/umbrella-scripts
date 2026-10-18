@@ -132,6 +132,8 @@ def table(rows):
             by_script.setdefault(r["script"], []).append(r)
     out = ["| script | downloads | latest |", "| --- | --- | --- |"]
     for script in CATALOG["scripts"]:
+        if script.get("private"):
+            continue
         items = by_script.get(script["id"], [])
         total = sum(i["downloads"] for i in items)
         if not items and not total:

@@ -11067,6 +11067,55 @@
           "Open `Scripts → Other → echo_bkb_dodge → Защита → Echo Slam` and enable “Включить защиту”."
         ]
       }
+    },
+    {
+      "id": "ability_draft_helper",
+      "tag": "ability-draft-helper",
+      "title": "Ability Draft Helper",
+      "kind": "lua",
+      "category": "dota",
+      "file": "ability_draft_helper.lua",
+      "needs_q_localizer": true,
+      "private": true,
+      "users": [
+        125775785,
+        128880242
+      ],
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-18",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ability_draft_helper/ability_draft_helper.lua"
+      },
+      "author": "4uJIuH",
+      "author_github": "4uJIuH",
+      "ru": {
+        "tagline": "подсказки на драфте Ability Draft",
+        "about": "Панель на экране драфта Ability Draft: ранжирует пул способностей и ультимейтов по статистике и синергии с уже выбранными способностями.",
+        "features": [
+          "Рейтинг всего пула способностей, включая ультимейты",
+          "Синергии пар и троек способностей, ловушки и что забрать у врага",
+          "Улучшения от Аганима и Шарда для выбранных способностей",
+          "Данные скачиваются с GitHub и обновляются раз в 12 часов"
+        ],
+        "install": [
+          "Установите через Script Manager.",
+          "Перезагрузите Lua-скрипты."
+        ]
+      },
+      "en": {
+        "tagline": "Ability Draft hints",
+        "about": "A panel on the Ability Draft screen that ranks the ability and ultimate pool by statistics and synergy with the abilities already picked.",
+        "features": [
+          "Ranks the whole ability pool, ultimates included",
+          "Pair and triplet synergies, traps and what to deny the enemy",
+          "Aghanim's Scepter and Shard upgrades for the picked abilities",
+          "Data is downloaded from GitHub and refreshed every 12 hours"
+        ],
+        "install": [
+          "Install it through Script Manager.",
+          "Reload the Lua scripts."
+        ]
+      }
     }
   ]
 }

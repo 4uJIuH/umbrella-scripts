@@ -55,7 +55,7 @@ def discord(path):
 
 def supported_script(script_id):
     script = BY_ID.get(script_id)
-    if not script or script.get("external") or script.get("kind") != "lua":
+    if not script or script.get("external") or script.get("private") or script.get("kind") != "lua":
         return None
     if script.get("package") or script.get("archive_files"):
         return None

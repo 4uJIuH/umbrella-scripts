@@ -84,7 +84,7 @@ def entry(script, folder, kind):
 
 
 def main():
-    items = [entry(s, "scripts/" + s["id"], s["kind"]) for s in CATALOG["scripts"]]
+    items = [entry(s, "scripts/" + s["id"], s["kind"]) for s in CATALOG["scripts"] if not s.get("private")]
     items = [i for i in items if i["versions"]]
     data = "window.DATA=" + json.dumps({"repo": CATALOG["repo"], "items": items, "series": SERIES, "ratings_url": CATALOG.get("ratings_url", "")}, ensure_ascii=False)
 
