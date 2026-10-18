@@ -3,13 +3,9 @@
 отслеживает иллюзии и показывает назначенные им бинды / tracks illusions and displays their assigned control groups
 
 <!-- releases:start -->
-Скачать: [IllusionTracker.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/illusion-tracker-v1.0.0/IllusionTracker.lua) — `illusion-tracker-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `IllusionTracker.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/illusion_tracker/IllusionTracker.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`illusion-tracker-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/illusion-tracker-v1.0.0) | 2026-10-13 | [IllusionTracker.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/illusion-tracker-v1.0.0/IllusionTracker.lua) | 3 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=illusion-tracker&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=illusion-tracker&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -24,12 +20,6 @@
 
 1. Поместите `IllusionTracker.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты. Настройки: Основное → IllusionTracker.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -47,9 +37,3 @@ Detects spawned copies, associates individual illusions with chosen key groups, 
 
 1. Place `IllusionTracker.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts. Settings: Main → IllusionTracker.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.
