@@ -575,7 +575,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Rem Assistant](scripts/rem_assistant) | 1 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
 | [qLocalization](scripts/q_localizer) | 86 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 289 | `script-manager-v2.13.0` |
+| [Script Manager](scripts/script_manager) | 294 | `script-manager-v2.14.0` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 626 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 5 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 264 | `lane-pull-v1.0.4` |
@@ -584,7 +584,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Auto Stack](scripts/auto_stack) | 155 | `auto-stack-v1.1.0` |
 | [Draft Helper](scripts/draft_helper) | 1413 | `draft-helper-v2.0.0-beta.20` |
 | [MusicUI](scripts/musicui) | 716 | `musicui-v1.0.8` |
-| [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 198 | `umbrella-lua-v1.0.4` |
+| [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 199 | `umbrella-lua-v1.0.4` |
 | [Custom Stats](scripts/custom_stats) | 12 | `custom-stats-v1.0.0` |
 | [Bloodrage AutoCast](scripts/bloodrage_autocast) | 6 | `bloodrage-autocast-v1.0.0` |
 | [Naga PT Abuse](scripts/naga_pt_abuse) | 12 | `naga-pt-abuse-v1.0.0` |
@@ -598,7 +598,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Hero Grid](scripts/hero_grid) | 1 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 11 | `weather-v1.0.0` |
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 8 | `visage-familiar-tp-v1.0.0` |
-| [Grimstroke Helper](scripts/grimstroke_helper) | 7 | `grimstroke-helper-v1.0.0` |
+| [Grimstroke Helper](scripts/grimstroke_helper) | 8 | `grimstroke-helper-v1.0.0` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 6 | `phoenix-smartnova-v1.0.0` |
 | [BehaviorScoreHelper](scripts/behavior_score_helper) | 16 | `behavior-score-helper-v1.1.1` |
 | [Disable Tracker](scripts/disable_tracker) | 3 | `disable-tracker-v1.0.0` |

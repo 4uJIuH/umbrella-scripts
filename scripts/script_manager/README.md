@@ -3,14 +3,15 @@
 каталог скриптов Umbrella с установкой и обновлениями / an Umbrella script catalog with script installation and updates
 
 <!-- releases:start -->
-Скачать: [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.13.0/script_manager.lua) — `script-manager-v2.13.0`, 2026-10-18
+Скачать: [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.14.0/script_manager.lua) — `script-manager-v2.14.0`, 2026-10-18
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`script-manager-v2.13.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.13.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.13.0/script_manager.lua) | 0 |
+| [`script-manager-v2.14.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.14.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.14.0/script_manager.lua) | 0 |
+| [`script-manager-v2.13.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.13.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.13.0/script_manager.lua) | 4 |
 | [`script-manager-v2.12.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.12.1) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.12.1/script_manager.lua) | 0 |
 | [`script-manager-v2.12.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.12.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.12.0/script_manager.lua) | 0 |
-| [`script-manager-v2.11.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.11.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.11.0/script_manager.lua) | 2 |
+| [`script-manager-v2.11.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.11.0) | 2026-10-18 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.11.0/script_manager.lua) | 3 |
 | [`script-manager-v2.10.6`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.10.6) | 2026-10-17 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.10.6/script_manager.lua) | 51 |
 | [`script-manager-v2.10.5`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.10.5) | 2026-10-17 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.10.5/script_manager.lua) | 3 |
 | [`script-manager-v2.10.4`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/script-manager-v2.10.4) | 2026-10-17 | [script_manager.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/script-manager-v2.10.4/script_manager.lua) | 7 |
@@ -67,6 +68,12 @@ Script Manager объединяет каталог скриптов в отде�
 4. Откройте `Scripts → Scripts → Script Manager`, включите его и назначьте клавишу для открытия панели.
 
 ## Что нового
+
+# Обновление v2.14.0
+
+- В карточке скрипта появилась кнопка «Предложить»: можно отправить автору предложение по улучшению, идею, сообщение об ошибке или что-то другое.
+- Текст многострочный, от 10 до 1000 символов, на русском или английском. Ctrl+Enter отправляет сообщение.
+- Не больше 2 сообщений в час для одного скрипта и не больше 5 разных скриптов в час. Окно показывает, через сколько можно написать снова.
 
 # Обновление v2.13.0
 
@@ -247,6 +254,12 @@ Script Manager brings the script catalog into a customizable panel. It shows des
 4. Open `Scripts → Scripts → Script Manager`, enable it, and assign a key to open the panel.
 
 ## Changelog
+
+# Update v2.14.0
+
+- Script cards have a Suggest button: send the author an improvement proposal, an idea, a bug report or anything else.
+- Multi-line text from 10 to 1000 characters, in Russian or English. Ctrl+Enter sends the message.
+- No more than 2 messages per hour for one script and no more than 5 different scripts per hour. The window shows when you can write again.
 
 # Update v2.13.0
 
