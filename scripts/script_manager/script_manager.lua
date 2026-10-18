@@ -405,6 +405,29 @@ local localization = qLocalization.new({
 		sm_log_mine = "installed",
 		sm_log_new = "new",
 		sm_log_n = "%d versions",
+		sm_fb_btn = "Suggest",
+		sm_fb = "Suggestion or feedback",
+		sm_fb_kind_improve = "Improvement proposal",
+		sm_fb_kind_idea = "Idea",
+		sm_fb_kind_bug = "Bug",
+		sm_fb_kind_other = "Other",
+		sm_fb_hint = "Describe an idea, a bug or what you would like to change",
+		sm_fb_send = "Send",
+		sm_fb_sending = "Sending",
+		sm_fb_cancel = "Cancel",
+		sm_fb_keys = "Ctrl+Enter to send",
+		sm_fb_short = "Write at least %d characters",
+		sm_fb_wait = "Next message in %s",
+		sm_fb_lim_t = "Message limit",
+		sm_fb_lim_script = "No more than 2 messages per hour for one script. Next one in %s",
+		sm_fb_lim_scripts = "Messages for no more than 5 scripts per hour. Next one in %s",
+		sm_fb_lim_ip = "Too many messages from your network. Next one in %s",
+		sm_fb_min = "%d min",
+		sm_fb_sec = "%d s",
+		sm_fb_sent_t = "Thank you!",
+		sm_fb_sent = "The message has been sent to the author",
+		sm_fb_fail = "The message was not sent, try again later",
+		sm_fb_nouser = "Sending is unavailable: Steam ID not found",
 
 		sm_empty_search = "Nothing found",
 		sm_empty_search_d = "Try another name",
@@ -599,6 +622,29 @@ local localization = qLocalization.new({
 		sm_log_mine = "установлена",
 		sm_log_new = "новая",
 		sm_log_n = "Версий: %d",
+		sm_fb_btn = "Предложить",
+		sm_fb = "Предложение или отзыв",
+		sm_fb_kind_improve = "Предложение по улучшению",
+		sm_fb_kind_idea = "Идея",
+		sm_fb_kind_bug = "Ошибка",
+		sm_fb_kind_other = "Другое",
+		sm_fb_hint = "Опишите идею, ошибку или что хотелось бы изменить",
+		sm_fb_send = "Отправить",
+		sm_fb_sending = "Отправка",
+		sm_fb_cancel = "Отмена",
+		sm_fb_keys = "Ctrl+Enter, чтобы отправить",
+		sm_fb_short = "Напишите хотя бы %d символов",
+		sm_fb_wait = "Следующее сообщение через %s",
+		sm_fb_lim_t = "Лимит сообщений",
+		sm_fb_lim_script = "Не больше 2 сообщений в час для одного скрипта. Следующее через %s",
+		sm_fb_lim_scripts = "За час можно написать максимум про 5 скриптов. Следующее через %s",
+		sm_fb_lim_ip = "Слишком много сообщений из вашей сети. Следующее через %s",
+		sm_fb_min = "%d мин",
+		sm_fb_sec = "%d сек",
+		sm_fb_sent_t = "Спасибо!",
+		sm_fb_sent = "Сообщение отправлено автору",
+		sm_fb_fail = "Сообщение не отправлено, попробуйте позже",
+		sm_fb_nouser = "Отправка недоступна: Steam ID не найден",
 
 		sm_empty_search = "Ничего не найдено",
 		sm_empty_search_d = "Попробуй другое название",
@@ -710,7 +756,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 local JSON = require("assets.JSON")
 
-local VERSION = "2.13.0"
+local VERSION = "2.14.0"
 
 local K = {
 	CFG = "script_market",
@@ -732,6 +778,9 @@ local K = {
 	SCALE_MAX = 160,
 	WHEEL = 72,
 	QUERY_MAX = 32,
+	FB_MIN = 10,
+	FB_MAX = 1000,
+	FB_LH = 20,
 	SINK_ALIVE = 0.4,
 	SINK_TIMEOUT = 1500,
 	ACCENT = { 76, 130, 247 },
@@ -744,6 +793,7 @@ local K = {
 		warn = "\u{f071}", folder = "\u{f07b}",
 		thumb_up = "\u{f164}", thumb_down = "\u{f165}",
 		history = "\u{f1da}",
+		idea = "\u{f0eb}", bug = "\u{f188}", comment = "\u{f075}",
 		back = "\u{f053}", down = "\u{f078}", up = "\u{f077}", check = "\u{f00c}", store = "\u{f54e}", clock = "\u{f017}",
 	},
 }
@@ -999,6 +1049,7 @@ local S = {
 	rate = { url = nil, user = nil, tot = {}, mine = {}, busy = {}, rev = 0 },
 	inst = {}, busy = {}, err = {}, batch = nil, confirm_t = 0, kb_id = nil, pend = {}, pend_t = 0, typed_ok = false, nlz = nil, nlz_wait = nil, dir = nil, dw = nil, dw_open = false,
 	log = nil, log_open = false, log_cache = {},
+	fb = nil, fb_open = false, fb_focus = false, fb_lim = nil, fb_ip = 0,
 	set = {
 		open_mode = "reload",
 		check = Config.ReadString(K.CFG, "check", "start"),
@@ -1622,10 +1673,11 @@ function web.post(url, body, done)
 		data = body,
 	}, function(response)
 		local code = tonumber(response.code) or 0
-		if code == 200 and type(response.response) == "string" and #response.response > 0 then
-			done(response.response)
+		local raw = type(response.response) == "string" and response.response or nil
+		if code == 200 and raw and #raw > 0 then
+			done(raw, code)
 		else
-			done(nil)
+			done(nil, code, raw)
 		end
 	end, "script_manager_vote")
 	if not sent then done(nil) end
@@ -2324,6 +2376,111 @@ function market.rate_chips(x, cy, id, interactive, align_r)
 	return wu + 12 + wd
 end
 
+local FB_KINDS = {
+	{ id = "improve", glyph = K.G.auxiliary, color = K.ACCENT_TEXT },
+	{ id = "idea", glyph = K.G.idea, color = { 245, 185, 66 } },
+	{ id = "bug", glyph = K.G.bug, color = T.red },
+	{ id = "other", glyph = K.G.comment, color = T.t2 },
+}
+
+-- the server answers seconds left, kept here as moments of os.time()
+function market.fb_limits(data)
+	if type(data) ~= "table" then return end
+	local now = os.time()
+	local lim = { scripts = {}, used = tonumber(data.used) or 0, till = now + (tonumber(data.wait) or 0) }
+	if type(data.scripts) == "table" then
+		for id, v in pairs(data.scripts) do
+			if type(v) == "table" then lim.scripts[id] = now + (tonumber(v.wait) or 0) end
+		end
+	end
+	S.fb_lim = lim
+end
+
+-- nil while the script may get a message, otherwise the reason and seconds left
+function market.fb_block(id)
+	local now = os.time()
+	if S.fb_ip > now then return "sm_fb_lim_ip", S.fb_ip - now end
+	local lim = S.fb_lim
+	if not lim then return nil end
+	local mine = lim.scripts[id]
+	if mine and mine > now then return "sm_fb_lim_script", mine - now end
+	if not mine and lim.used >= 5 and lim.till > now then return "sm_fb_lim_scripts", lim.till - now end
+	return nil
+end
+
+function market.fb_wait(secs)
+	secs = math.max(1, math.floor(secs))
+	if secs < 60 then return string.format(L("sm_fb_sec"), secs) end
+	return string.format(L("sm_fb_min"), math.ceil(secs / 60))
+end
+
+function market.fb_open(s)
+	local r = S.rate
+	if not r.url then return end
+	local f = S.fb
+	if not f or f.id ~= s.id then
+		f = { id = s.id, kind = "idea", query = "", qc = 0, qa = nil, max = K.FB_MAX, off = 0, off_to = 0 }
+		S.fb = f
+	end
+	f.busy, f.alert = false, nil
+	S.fb_open, S.fb_focus, S.focus, S.q_blink = true, true, true, S.now
+	r.user = r.user or market.rate_id()
+	if not r.user then return end
+	web.get(r.url .. "/feedback?user=" .. r.user, function(body)
+		if not body then return end
+		local ok, data = pcall(function() return JSON:decode(body) end)
+		if ok then market.fb_limits(data) end
+	end)
+end
+
+function market.fb_close()
+	S.fb_open = false
+	if S.fb_focus then S.focus = false end
+	S.fb_focus = false
+end
+
+function market.fb_alert(key, ...)
+	if S.fb then S.fb.alert = { text = string.format(L(key), ...), t = S.now } end
+end
+
+function market.fb_send()
+	local f, r = S.fb, S.rate
+	if not f or f.busy or not r.url then return end
+	local s = BY_ID[f.id]
+	if not s then return end
+	r.user = r.user or market.rate_id()
+	if not r.user then return market.fb_alert("sm_fb_nouser") end
+	local body = f.query:match("^%s*(.-)%s*$")
+	if (utf8.len(body) or #body) < K.FB_MIN then return market.fb_alert("sm_fb_short", K.FB_MIN) end
+	local key, wait = market.fb_block(f.id)
+	if key then return market.fb_alert(key, market.fb_wait(wait)) end
+	local ok_name, name = pcall(function() return Steam.GetPersonaName() end)
+	f.busy, f.alert = true, nil
+	web.post(r.url .. "/feedback", JSON:encode({
+		script = f.id, user = r.user, kind = f.kind, text = body,
+		version = S.inst[f.id] or s.latest, manager = VERSION,
+		name = ok_name and type(name) == "string" and name or nil,
+	}), function(raw, code, refused)
+		f.busy = false
+		local ok, data = pcall(function() return JSON:decode(raw or refused or "") end)
+		if not ok or type(data) ~= "table" then data = {} end
+		if data.limits then market.fb_limits(data.limits) end
+		if raw and data.ok then
+			f.query, f.qc, f.qa, f.off, f.off_to = "", 0, nil, 0, 0
+			if S.fb == f then market.fb_close() end
+			market.note("sm_fb_sent_t", L("sm_fb_sent"))
+			return
+		end
+		if code == 429 then
+			local wait = tonumber(data.wait) or 0
+			if data.error == "ip_limit" then S.fb_ip = os.time() + wait end
+			local keys = { script_limit = "sm_fb_lim_script", scripts_limit = "sm_fb_lim_scripts", ip_limit = "sm_fb_lim_ip" }
+			return market.fb_alert(keys[data.error] or "sm_fb_lim_script", market.fb_wait(wait))
+		end
+		market.fb_alert("sm_fb_fail")
+	end)
+end
+
 function market.load()
 	local st = S.net
 	if st.state == "loading" then return end
@@ -2719,23 +2876,28 @@ for i = 0, 9 do CHARS[KEY["KEY_" .. i]] = tostring(i) end
 CHARS[KEY.KEY_SPACE] = " "
 CHARS[KEY.KEY_MINUS] = "-"
 
-local edit = { box = nil }
+local edit = { box = nil, fb_box = nil }
 
-function edit.chars() return g.chars(S.query) end
+-- keys go to the feedback text while it has focus, otherwise to the search
+function edit.f() return S.fb_focus and S.fb or S end
+
+function edit.chars() return g.chars(edit.f().query) end
 
 function edit.range()
-	if S.qa and S.qa ~= S.qc then return math.min(S.qa, S.qc), math.max(S.qa, S.qc) end
+	local f = edit.f()
+	if f.qa and f.qa ~= f.qc then return math.min(f.qa, f.qc), math.max(f.qa, f.qc) end
 	return nil
 end
 
 function edit.put(chars, caret)
-	S.query = table.concat(chars)
-	S.qc, S.qa = caret, nil
+	local f = edit.f()
+	f.query = table.concat(chars)
+	f.qc, f.qa = caret, nil
 end
 
 function edit.cut(chars)
 	local lo, hi = edit.range()
-	if not lo then return chars, S.qc end
+	if not lo then return chars, edit.f().qc end
 	local out = {}
 	for i = 1, lo do out[#out + 1] = chars[i] end
 	for i = hi + 1, #chars do out[#out + 1] = chars[i] end
@@ -2744,78 +2906,165 @@ end
 
 function edit.insert(str)
 	local chars, caret = edit.cut(edit.chars())
-	if #chars >= K.QUERY_MAX then return end
+	if #chars >= (edit.f().max or K.QUERY_MAX) then return end
 	table.insert(chars, caret + 1, str)
 	edit.put(chars, caret + 1)
 end
 
+local function gap(c) return c == " " or c == "\n" end
+
 function edit.word_left(chars, i)
-	while i > 0 and chars[i] == " " do i = i - 1 end
-	while i > 0 and chars[i] ~= " " do i = i - 1 end
+	while i > 0 and gap(chars[i]) do i = i - 1 end
+	while i > 0 and not gap(chars[i]) do i = i - 1 end
 	return i
 end
 
 function edit.word_right(chars, i)
 	local n = #chars
-	while i < n and chars[i + 1] == " " do i = i + 1 end
-	while i < n and chars[i + 1] ~= " " do i = i + 1 end
+	while i < n and gap(chars[i + 1]) do i = i + 1 end
+	while i < n and not gap(chars[i + 1]) do i = i + 1 end
 	return i
 end
 
 function edit.erase(forward, word)
+	local f = edit.f()
 	local chars = edit.chars()
 	if not edit.range() then
-		local a, b = S.qc, S.qc
+		local a, b = f.qc, f.qc
 		if forward then
-			b = word and edit.word_right(chars, S.qc) or math.min(#chars, S.qc + 1)
+			b = word and edit.word_right(chars, f.qc) or math.min(#chars, f.qc + 1)
 		else
-			a = word and edit.word_left(chars, S.qc) or math.max(0, S.qc - 1)
+			a = word and edit.word_left(chars, f.qc) or math.max(0, f.qc - 1)
 		end
 		if a == b then return end
-		S.qa, S.qc = a, b
+		f.qa, f.qc = a, b
 	end
 	edit.put(edit.cut(chars))
 end
 
 function edit.move(to, shift)
+	local f = edit.f()
 	if shift then
-		S.qa = S.qa or S.qc
+		f.qa = f.qa or f.qc
 	else
-		S.qa = nil
+		f.qa = nil
 	end
-	S.qc = to
+	f.qc = to
+end
+
+-- word-wraps the feedback text keeping every caret position: a line holds positions a..b, xs[k] is the x of a + k
+function edit.fb_layout(f, w)
+	local key = w .. ":" .. g.s .. ":" .. S.set.font .. ":" .. f.query
+	if f.lay_key == key then return f.lay end
+	local chars = g.chars(f.query)
+	local n = #chars
+	local lines, a = {}, 0
+	while true do
+		local xs, x, b, space, skip = { [0] = 0 }, 0, a, nil, false
+		while b < n do
+			local c = chars[b + 1]
+			if c == "\n" then
+				skip = true
+				break
+			end
+			local cw = g.width(400, 13, c)
+			if x + cw > w and b > a then
+				if c == " " then
+					skip = true
+				elseif space then
+					b = space
+				end
+				break
+			end
+			x, b = x + cw, b + 1
+			xs[b - a] = x
+			if c == " " then space = b end
+		end
+		lines[#lines + 1] = { a = a, b = b, xs = xs, text = table.concat(chars, "", a + 1, b) }
+		if skip then
+			a = b + 1
+		elseif b >= n then
+			break
+		else
+			a = b
+		end
+	end
+	f.lay, f.lay_key, f.lay_n = lines, key, n
+	return lines
+end
+
+function edit.fb_caret(lay, qc)
+	for i = #lay, 1, -1 do
+		local l = lay[i]
+		if qc >= l.a and qc <= l.b then return i, l.xs[qc - l.a] or 0 end
+	end
+	return 1, 0
+end
+
+function edit.fb_pick(lay, lx, li)
+	local l = lay[clamp(li, 1, #lay)]
+	local best = l.a
+	for k = 1, l.b - l.a do
+		if lx < (l.xs[k - 1] + l.xs[k]) / 2 then break end
+		best = l.a + k
+	end
+	return best
+end
+
+function edit.fb_line(dir, shift)
+	local f = S.fb
+	if not f.lay then return end
+	local li, x = edit.fb_caret(f.lay, f.qc)
+	if li + dir < 1 then return edit.move(0, shift) end
+	if li + dir > #f.lay then return edit.move(f.lay_n, shift) end
+	edit.move(edit.fb_pick(f.lay, x, li + dir), shift)
 end
 
 function edit.key(key, ctrl, shift)
+	local f = edit.f()
+	local multi = f ~= S and f.lay ~= nil
 	local chars = edit.chars()
 	local n = #chars
 	local lo, hi = edit.range()
+	local line = multi and f.lay[edit.fb_caret(f.lay, f.qc)]
 	if ctrl and key == KEY.KEY_A then
-		S.qa, S.qc = 0, n
+		f.qa, f.qc = 0, n
 	elseif key == KEY.KEY_LEFT then
 		if lo and not shift then
 			edit.move(lo, false)
 		else
-			edit.move(ctrl and edit.word_left(chars, S.qc) or math.max(0, S.qc - 1), shift)
+			edit.move(ctrl and edit.word_left(chars, f.qc) or math.max(0, f.qc - 1), shift)
 		end
 	elseif key == KEY.KEY_RIGHT then
 		if hi and not shift then
 			edit.move(hi, false)
 		else
-			edit.move(ctrl and edit.word_right(chars, S.qc) or math.min(n, S.qc + 1), shift)
+			edit.move(ctrl and edit.word_right(chars, f.qc) or math.min(n, f.qc + 1), shift)
 		end
+	elseif multi and (key == KEY.KEY_UP or key == KEY.KEY_DOWN) then
+		edit.fb_line(key == KEY.KEY_DOWN and 1 or -1, shift)
 	elseif key == KEY.KEY_HOME or key == KEY.KEY_UP then
-		edit.move(0, shift)
+		edit.move((line and not ctrl) and line.a or 0, shift)
 	elseif key == KEY.KEY_END or key == KEY.KEY_DOWN then
-		edit.move(n, shift)
+		edit.move((line and not ctrl) and line.b or n, shift)
 	elseif key == KEY.KEY_BACKSPACE then
 		edit.erase(false, ctrl)
 	elseif key == KEY.KEY_DELETE then
 		edit.erase(true, ctrl)
 	elseif key == KEY.KEY_ESCAPE then
-		if lo then S.qa = nil else S.focus = false end
+		if lo then
+			f.qa = nil
+		else
+			S.focus, S.fb_focus = false, false
+		end
 	elseif key == KEY.KEY_ENTER or key == KEY.KEY_PAD_ENTER then
-		S.focus = false
+		if f == S then
+			S.focus = false
+		elseif ctrl then
+			market.fb_send()
+		else
+			edit.insert("\n")
+		end
 	elseif not ctrl and CHARS[key] and not S.typed_ok then
 		S.pend[#S.pend + 1] = shift and CHARS[key]:upper() or CHARS[key]
 		S.pend_t = S.now
@@ -2823,7 +3072,14 @@ function edit.key(key, ctrl, shift)
 	S.q_blink = S.now
 end
 
-function edit.index_at(mx)
+function edit.index_at(mx, my)
+	if S.fb_focus then
+		local box, f = edit.fb_box, S.fb
+		if not box or not f.lay then return f.qc end
+		local lx = (mx - g.x) / g.s - box.tx
+		local ly = (my - g.y) / g.s - box.ty + f.off
+		return edit.fb_pick(f.lay, lx, math.floor(ly / K.FB_LH) + 1)
+	end
 	local box = edit.box
 	if not box then return S.qc end
 	local lx = (mx - g.x) / g.s - box.tx + S.q_off
@@ -2837,22 +3093,23 @@ function edit.index_at(mx)
 	return #chars
 end
 
-function edit.click(mx)
-	local i = edit.index_at(mx)
+function edit.click(mx, my)
+	local f = edit.f()
+	local i = edit.index_at(mx, my)
 	S.q_blink = S.now
 	if S.focus and S.now - S.q_click < 0.35 then
 		local chars = edit.chars()
-		S.qa, S.qc, S.q_click = edit.word_left(chars, i), edit.word_right(chars, i), 0
+		f.qa, f.qc, S.q_click = edit.word_left(chars, i), edit.word_right(chars, i), 0
 		return
 	end
 	S.q_click = S.now
 	local shift = Input.IsKeyDown(KEY.KEY_LSHIFT) or Input.IsKeyDown(KEY.KEY_RSHIFT)
 	if shift and S.focus then
-		S.qa = S.qa or S.qc
+		f.qa = f.qa or f.qc
 	else
-		S.qa = i
+		f.qa = i
 	end
-	S.qc = i
+	f.qc = i
 	S.focus, S.q_drag = true, true
 end
 
@@ -3082,7 +3339,7 @@ end
 function view.search(x, y, w)
 	local h = 36
 	local has = S.query ~= ""
-	local fa = anim.tween("sf_focus", S.focus and 1 or 0, 0.16)
+	local fa = anim.tween("sf_focus", S.focus and not S.fb_focus and 1 or 0, 0.16)
 	local pa = anim.tween("sf_hint", has and 0 or 1, 0.14)
 	local ca = anim.tween("sf_clear", has and 1 or 0, 0.14)
 	hit.add(x, y, w, h, "search", { down = edit.click })
@@ -3786,6 +4043,162 @@ function view.log_window()
 	g.a = S.alpha
 end
 
+function view.fb_window()
+	local ka = anim.tween("fw", S.fb_open and 1 or 0, 0.18)
+	local f = S.fb
+	local s = f and BY_ID[f.id]
+	if ka < 0.01 or not s then return end
+	local live = S.fb_open
+	g.a = S.alpha
+	g.rect(0, 0, K.W, K.H, { 0, 0, 0 }, 16, 0.62 * ka)
+	if live then hit.add(0, 0, K.W, K.H, "fw_bg") end
+
+	g.a = S.alpha * ka
+	local w = 560
+	local tw = w - 48
+	local box_h = 8 * K.FB_LH + 24
+	local alert = f.alert and S.now - f.alert.t < 8 and f.alert or nil
+	local alert_lines = alert and g.wrap(400, 13, alert.text, tw - 52) or {}
+	local ah = anim.tween("fw_ah", alert and (#alert_lines * 19 + 22 + 12) or 0, 0.18, ease_in_out)
+	local h = 24 + 44 + 20 + 30 + 14 + box_h + 10 + 18 + 18 + ah + 38 + 24
+	local x = (K.W - w) / 2
+	local y = (K.H - h) / 2 + 12 * (1 - ka)
+
+	g.rect(x, y, w, h, C.menu, 16, 1)
+	g.rect(x, y, w, h, s.color, 16, 0.05)
+	g.frame(x, y, w, h, T.white, 16, 0.12)
+	if live then hit.add(x, y, w, h, "fw_card") end
+
+	g.rect(x + 24, y + 24, 44, 44, s.color, 14, 0.18)
+	g.glyph(K.G.idea, 19, x + 24 + 22, y + 24 + 22, s.color)
+	local text_w = w - 24 - 44 - 14 - 24 - 30 - 8
+	g.text(700, 19, g.fit(700, 19, L("sm_fb"), text_w), x + 24 + 44 + 14, y + 24 + 12, T.t1)
+	local ver = S.inst[s.id] or s.latest
+	g.text(400, 12, g.fit(400, 12, s.title .. (ver and ("  ·  v" .. ver) or ""), text_w), x + 24 + 44 + 14, y + 24 + 34, T.t3)
+
+	local bx, by = x + w - 24 - 30, y + 24 + 7
+	local chv = anim.hover("fw_close")
+	g.rect(bx, by, 30, 30, T.white, 9, 0.05 + 0.07 * chv)
+	local cc = anim.mix(T.t3, T.t1, chv)
+	g.line(bx + 10, by + 10, bx + 20, by + 20, cc, 1, 1.6)
+	g.line(bx + 10, by + 20, bx + 20, by + 10, cc, 1, 1.6)
+	if live then hit.add(bx, by, 30, 30, "fw_close", { click = market.fb_close }) end
+
+	local cy = y + 24 + 44 + 20
+	g.hl(x + 24, cy - 10, tw, T.white, C.line / 255)
+	-- the chips share one row: long labels eat the padding first
+	local kx, labels_w = x + 24, 0
+	for _, kind in ipairs(FB_KINDS) do labels_w = labels_w + 12 + 7 + g.width(600, 12, L("sm_fb_kind_" .. kind.id)) end
+	local pad = clamp((tw - 8 * (#FB_KINDS - 1) - labels_w) / #FB_KINDS, 12, 28)
+	for _, kind in ipairs(FB_KINDS) do
+		local label = L("sm_fb_kind_" .. kind.id)
+		local kw = 12 + 7 + g.width(600, 12, label) + pad
+		local id = "fw_kind:" .. kind.id
+		local on = anim.tween("fw_on:" .. kind.id, f.kind == kind.id and 1 or 0, 0.16)
+		local hv = anim.hover(id)
+		g.rect(kx, cy, kw, 30, T.white, 15, 0.05 * (1 - on) + 0.05 * hv)
+		g.rect(kx, cy, kw, 30, kind.color, 15, 0.18 * on)
+		local col = anim.mix(T.t3, kind.color, on)
+		g.glyph(kind.glyph, 11, kx + pad / 2 + 6, cy + 15, col)
+		g.text(600, 12, label, kx + pad / 2 + 12 + 7, cy + 15, anim.mix(T.t2, T.t1, on))
+		if live then
+			hit.add(kx, cy, kw, 30, id, { click = function()
+				f.kind = kind.id
+				S.fb_focus, S.focus, S.q_blink = true, true, S.now
+			end })
+		end
+		kx = kx + kw + 8
+	end
+	cy = cy + 30 + 14
+
+	-- the text: wrapped by words, scrolled to keep the caret in sight
+	local fa = anim.tween("fw_focus", S.fb_focus and 1 or 0, 0.16)
+	g.rect(x + 24, cy, tw, box_h, T.white, 12, C.field / 255 + 0.04 + 0.04 * fa)
+	g.frame(x + 24, cy, tw, box_h, K.ACCENT, 12, 0.55 * fa)
+	if live then
+		hit.add(x + 24, cy, tw, box_h, "fb_text", { down = function(mx, my)
+			S.fb_focus = true
+			edit.click(mx, my)
+		end })
+	end
+	local tx, ty = x + 24 + 14, cy + 12
+	local iw, vh = tw - 28 - 6, box_h - 24
+	edit.fb_box = { tx = tx, ty = ty }
+	local lay = edit.fb_layout(f, iw)
+	local li, caret_x = edit.fb_caret(lay, f.qc)
+	local content = #lay * K.FB_LH
+	local max_off = math.max(0, content - vh)
+	if f.seen_qc ~= f.qc or f.seen_q ~= f.query then
+		f.seen_qc, f.seen_q = f.qc, f.query
+		local top = (li - 1) * K.FB_LH
+		if top < f.off_to then f.off_to = top end
+		if top + K.FB_LH > f.off_to + vh then f.off_to = top + K.FB_LH - vh end
+	end
+	f.off_to = clamp(f.off_to, 0, max_off)
+	local diff = f.off_to - f.off
+	f.off = math.abs(diff) * g.s < 0.5 and f.off_to or f.off + diff * (1 - math.exp(-S.dt * 18))
+	local off = math.floor(f.off * g.s + 0.5) / g.s
+
+	g.clip(x + 24 + 2, cy + 4, tw - 4, box_h - 8)
+	if f.query == "" then g.text(400, 13, g.fit(400, 13, L("sm_fb_hint"), iw), tx, ty + K.FB_LH / 2, T.t4) end
+	local lo, hi
+	if S.fb_focus and f.qa and f.qa ~= f.qc then lo, hi = math.min(f.qa, f.qc), math.max(f.qa, f.qc) end
+	for i, l in ipairs(lay) do
+		local ly = ty + (i - 1) * K.FB_LH - off
+		if ly + K.FB_LH >= cy and ly <= cy + box_h then
+			if lo then
+				local s0, s1 = math.max(lo, l.a), math.min(hi, l.b)
+				if s1 > s0 then g.rect(tx + l.xs[s0 - l.a], ly + 1, l.xs[s1 - l.a] - l.xs[s0 - l.a], 18, K.ACCENT, 3, 0.45) end
+			end
+			if l.text ~= "" then g.text(400, 13, l.text, tx, ly + K.FB_LH / 2, T.t1) end
+		end
+	end
+	local t = S.now - S.q_blink
+	local blink = t < 0.5 and 1 or (math.cos((t - 0.5) * math.pi * 2) + 1) / 2
+	if S.fb_focus and not lo then g.rect(tx + caret_x, ty + (li - 1) * K.FB_LH + 2 - off, 1.5, 16, T.t1, 0, blink) end
+	g.unclip()
+	if max_off > 0 then
+		local thumb = math.max(24, vh * vh / content)
+		g.rect(x + 24 + tw - 9, ty + (vh - thumb) * clamp(off / max_off, 0, 1), 3, thumb, T.white, 2, 0.16)
+	end
+	cy = cy + box_h + 10
+
+	local block, wait = market.fb_block(f.id)
+	local n = utf8.len(f.query) or #f.query
+	g.text(500, 12, n .. " / " .. K.FB_MAX, x + 24 + tw, cy + 9, n >= K.FB_MAX and ORANGE or T.t4, 1, "r")
+	if block then
+		g.glyph(K.G.clock, 11, x + 24 + 6, cy + 9, ORANGE)
+		g.text(500, 12, string.format(L("sm_fb_wait"), market.fb_wait(wait)), x + 24 + 19, cy + 9, ORANGE)
+	else
+		g.text(400, 12, L("sm_fb_keys"), x + 24, cy + 9, T.t4)
+	end
+	cy = cy + 18 + 18
+
+	if ah > 0.5 then
+		local base = g.a
+		local aa = clamp(ah / math.max(1, #alert_lines * 19 + 22 + 12), 0, 1)
+		g.a = base * aa
+		local box = ah - 12
+		g.clip(x + 24, cy, tw, box)
+		g.rect(x + 24, cy, tw, box, ORANGE, 12, 0.14)
+		g.glyph(K.G.warn, 15, x + 24 + 22, cy + 11 + 9, ORANGE)
+		for i, line in ipairs(alert_lines) do g.text(500, 13, line, x + 24 + 42, cy + 11 + (i - 1) * 19 + 9, T.t1) end
+		g.unclip()
+		g.a = base
+		cy = cy + ah
+	end
+
+	local send = f.busy and L("sm_fb_sending") or L("sm_fb_send")
+	local go_w = g.width(600, 13, send) + 48
+	local cancel_w = g.width(500, 13, L("sm_fb_cancel")) + 40
+	local base = g.a
+	if block or f.busy then g.a = base * 0.55 end
+	view.pill(x + w - 24 - go_w, cy, go_w, 38, send, "white", live and "fw_send" or nil, market.fb_send, 13)
+	g.a = base
+	view.pill(x + w - 24 - go_w - 8 - cancel_w, cy, cancel_w, 38, L("sm_fb_cancel"), "ghost", live and "fw_cancel" or nil, market.fb_close, 13)
+	g.a = S.alpha
+end
+
 -- where the script puts its own menu: Scripts → Scripts → Script Manager
 function view.menu_path(s, cx, y, cw)
 	local routes = s.menu[S.lang]
@@ -3907,7 +4320,7 @@ function view.detail()
 		right = right - (8 + w) * ra
 	end
 
-	-- the changelog sits under the install button, at least as wide as it
+	-- the changelog and the feedback sit under the install button, the changelog at least as wide as it
 	local low_right = cx + cw
 	if s.log then
 		local tw = 12 + 7 + g.width(500, 12, L("sm_log_btn"))
@@ -3920,6 +4333,18 @@ function view.detail()
 		g.text(500, 12, L("sm_log_btn"), tx + 12 + 7, y + 79, anim.mix(T.t2, T.t1, lhv))
 		hit.add(lx, y + 65, lw, 28, "d_log", { click = function() market.log_open(s) end })
 		low_right = lx
+	end
+	if S.rate.url then
+		local tw = 12 + 7 + g.width(500, 12, L("sm_fb_btn"))
+		local fw = s.log and tw + 28 or math.max(aw, tw + 28)
+		local fx = low_right - (s.log and 8 or 0) - fw
+		local fhv = anim.hover("d_fb")
+		g.rect(fx, y + 65, fw, 28, T.white, 14, 0.06 + 0.06 * fhv)
+		local tx = fx + (fw - tw) / 2
+		g.glyph(K.G.idea, 11, tx + 6, y + 79, anim.mix(T.t3, T.t1, fhv))
+		g.text(500, 12, L("sm_fb_btn"), tx + 12 + 7, y + 79, anim.mix(T.t2, T.t1, fhv))
+		hit.add(fx, y + 65, fw, 28, "d_fb", { click = function() market.fb_open(s) end })
+		low_right = fx
 	end
 
 	g.rect(cx, y, 80, 80, s.color, 20, 0.15)
@@ -4419,6 +4844,7 @@ function view.window()
 	g.hl(18, 0, K.W - 36, K.ACCENT_TEXT, 0.35 * S.alpha)
 	view.grip()
 	view.log_window()
+	view.fb_window()
 	view.dir_window()
 end
 
@@ -4508,7 +4934,8 @@ function input.press(mx, my)
 		S.press = { id = false }
 		return
 	end
-	if id ~= "search" and id ~= "search_clear" then S.focus = false end
+	if id ~= "search" and id ~= "search_clear" and id ~= "fb_text" then S.focus, S.fb_focus = false, false end
+	if id == "search" then S.fb_focus = false end
 	if id ~= "d_remove" then S.confirm = nil end
 	S.kb_id = nil
 	S.press = { id = id or false, on = on }
@@ -4553,6 +4980,8 @@ function input.key(key)
 	if key == KEY.KEY_ESCAPE then
 		if S.dw_open then
 			market.dir_close()
+		elseif S.fb_open then
+			market.fb_close()
 		elseif S.log_open then
 			market.log_close()
 		elseif S.sort_open or S.menu then
@@ -4604,7 +5033,7 @@ function script.OnFrame()
 	if S.drag then
 		S.wx, S.wy = S.drag.wx + mx - S.drag.mx, S.drag.wy + my - S.drag.my
 	end
-	if S.q_drag then S.qc = edit.index_at(mx) end
+	if S.q_drag then edit.f().qc = edit.index_at(mx, my) end
 	if S.slide then view.slide_to(mx) end
 	if S.sb_drag then
 		local d = S.sb_drag
@@ -4644,6 +5073,10 @@ function script.OnKeyEvent(e)
 	if e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_UP or e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_DOWN then
 		if not over then return true end
 		if S.dw_open then return false end
+		if S.fb_open then
+			if S.fb then S.fb.off_to = S.fb.off_to + (e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_DOWN and 1 or -1) * K.FB_LH * 2 end
+			return false
+		end
 		if S.log_open then
 			if S.log then S.log.to = S.log.to + (e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_DOWN and 1 or -1) * K.WHEEL end
 			return false

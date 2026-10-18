@@ -1,3 +1,9 @@
+# Update v2.14.0
+
+- Script cards have a Suggest button: send the author an improvement proposal, an idea, a bug report or anything else.
+- Multi-line text from 10 to 1000 characters, in Russian or English. Ctrl+Enter sends the message.
+- No more than 2 messages per hour for one script and no more than 5 different scripts per hour. The window shows when you can write again.
+
 # Update v2.13.0
 
 - Every script in the catalog has a changelog.
