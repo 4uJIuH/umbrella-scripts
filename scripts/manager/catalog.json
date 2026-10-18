@@ -6038,8 +6038,8 @@
     {
       "id": "shadow_shaman_ward_controller",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/shadow_shaman_ward_controller/shadow_shaman_ward_controller.lua",
-      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/shadow_shaman_ward_controller/shadow_shaman_ward_controller.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/3adeda0c3dfc39c2b989c7e5ab42da620db4d07c/scripts/shadow_shaman_ward_controller/shadow_shaman_ward_controller.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/shadow-shaman-ward-controller-v1.0.0/shadow_shaman_ward_controller.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "Tommy (Discord: tommytheitguy)",
