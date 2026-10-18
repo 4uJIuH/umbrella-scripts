@@ -6060,8 +6060,8 @@
     {
       "id": "force_staff_direction",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staff_direction/Force_Staff.lua",
-      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staff_direction/Force_Staff.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/3adeda0c3dfc39c2b989c7e5ab42da620db4d07c/scripts/force_staff_direction/Force_Staff.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/force-staff-direction-v1.0.0/Force_Staff.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "ezruiner (Discord: ezruiner)",
