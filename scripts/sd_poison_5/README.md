@@ -27,6 +27,12 @@
 2. Перезагрузите скрипты. Настройки: General → Main → SD Poison 5 → Main → Settings.
 3. Помните: Release взрывает все ваши стаки на всех целях одновременно.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Shadow Demon Poison 5 (English)
@@ -45,3 +51,9 @@ A companion module for Shadow Poison Release only; it does not replace a Shadow 
 1. Place `sd_poison_5.lua` in `%cheat_dir%\scripts`.
 2. Reload scripts. Settings: General → Main → SD Poison 5 → Main → Settings.
 3. Note: Release detonates all your stacks on all targets at once.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

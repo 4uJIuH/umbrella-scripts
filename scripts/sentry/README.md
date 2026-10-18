@@ -25,6 +25,12 @@
 1. Поместите `sentry.lua` в `Umbrella\scripts`.
 2. Перезагрузите Lua-скрипты.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Sentry (English)
@@ -41,3 +47,9 @@ An experimental script that analyzes enemy facing and movement to estimate threa
 
 1. Place `sentry.lua` in `Umbrella\scripts`.
 2. Reload Lua scripts.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

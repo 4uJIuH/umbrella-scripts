@@ -25,6 +25,12 @@
 1. Поместите `sf_feast_of_souls_abuse.lua` в `Umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и настройте раздел `Heroes → Shadow Fiend → Feast of Souls Abuse`.
 
+## Что нового
+
+# Релиз v4.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # SF Feast of Souls Abuse (English)
@@ -41,3 +47,9 @@ A Shadow Fiend script with KOTL and Octarine options and protections for stored 
 
 1. Place `sf_feast_of_souls_abuse.lua` in `Umbrella\scripts`.
 2. Reload scripts and configure `Heroes → Shadow Fiend → Feast of Souls Abuse`.
+
+## Changelog
+
+# Release v4.0
+
+- Release version: the first publication of the script.

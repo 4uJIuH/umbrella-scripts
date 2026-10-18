@@ -27,6 +27,12 @@
 2. Перезагрузите Lua-скрипты.
 3. Откройте Heroes → Hero List → Io → Overcharge.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Io Overcharge (English)
@@ -45,3 +51,9 @@ Finds the ally connected by Tether and casts Overcharge when that ally uses a tr
 1. Place `io_overcharge.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Open Heroes → Hero List → Io → Overcharge.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

@@ -27,6 +27,12 @@
 2. Откройте `Scripts → Other → Market`.
 3. Проверьте источник загружаемых скриптов в меню перед установкой.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Script Market (English)
@@ -45,3 +51,9 @@ A ScriptIvMarket catalog client that fetches its script list and downloads scrip
 1. Place `market.lua` in `umbrella\scripts` and reload Lua scripts.
 2. Open `Scripts → Other → Market`.
 3. Review the source of scripts listed in the menu before installing them.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

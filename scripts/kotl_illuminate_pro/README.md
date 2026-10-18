@@ -25,6 +25,12 @@
 1. Поместите `kotl_illuminate_pro.lua` в `Umbrella\scripts`.
 2. В меню `General → Utility → KOTL Illuminate` настройте предметы и клавишу Illuminate.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # KOTL Illuminate Pro (English)
@@ -41,3 +47,9 @@ Estimates Illuminate damage using resistance, barriers, regeneration, spell amp,
 
 1. Place `kotl_illuminate_pro.lua` in `Umbrella\scripts`.
 2. Configure items and the Illuminate key under `General → Utility → KOTL Illuminate`.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

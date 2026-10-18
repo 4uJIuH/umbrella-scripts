@@ -563,7 +563,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 <!-- stats:start -->
 | script | downloads | latest |
 | --- | --- | --- |
-| [Tinker Turret Dodge](scripts/tinker_turret_dodge) | 28 | `tinker-turret-dodge-v1.1.5` |
+| [Tinker Turret Dodge](scripts/tinker_turret_dodge) | 29 | `tinker-turret-dodge-v1.1.5` |
 | [Tinker Auto Farm](scripts/tinker_auto_farm) | 12 | `tinker-auto-farm-v1.0.4` |
 | [Auto Shackleshot](scripts/auto_shackleshot) | 10 | `auto-shackleshot-v1.0.0` |
 | [Auto Spark](scripts/auto_spark) | 17 | `auto-spark-v1.0.0` |
@@ -574,8 +574,8 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Dorman Combo Assistant](scripts/dorman_combo_assistant) | 1 | `dorman-combo-assistant-v1.0.0` |
 | [Rem Assistant](scripts/rem_assistant) | 1 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
-| [qLocalization](scripts/q_localizer) | 85 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 289 | `script-manager-v2.12.1` |
+| [qLocalization](scripts/q_localizer) | 86 | `q-localizer-v1.0.0` |
+| [Script Manager](scripts/script_manager) | 289 | `script-manager-v2.13.0` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 626 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 5 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 264 | `lane-pull-v1.0.4` |
@@ -624,7 +624,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Tinker 1x6 Farm](scripts/tinker_1x6_farm) | 0 | `tinker-1x6-farm-v1.0.0` |
 | [Forge Spirit Helper](scripts/forge_spirit_helper) | 14 | `forge-spirit-helper-v1.0.0` |
 | [Gank Threat](scripts/gank_threat) | 13 | `gank-threat-v1.0.0` |
-| [Tinker Helper](scripts/tinker_helper) | 10 | `tinker-helper-v1.0.0` |
+| [Tinker Helper](scripts/tinker_helper) | 11 | `tinker-helper-v1.0.0` |
 | [Old HUD](scripts/old_hud) | 3 | `old-hud-v1.0.0` |
 | [Illusion Tracker](scripts/illusion_tracker) | 2 | `illusion-tracker-v1.0.0` |
 | [Arc Warden Clone Safe Me](scripts/arc_warden_clone_safe_me) | 3 | `arc-warden-clone-safe-me-v1.0.0` |

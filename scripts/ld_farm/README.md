@@ -27,6 +27,12 @@
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
 
+## Что нового
+
+# Релиз v1.7
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Lone Druid Auto Farm (English)
@@ -45,3 +51,9 @@ Automatically selects the nearest available camp and farms with the hero without
 2. Reload scripts and open `Heroes → Hero List → Lone Druid → ~Auto-LD`.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
+
+## Changelog
+
+# Release v1.7
+
+- Release version: the first publication of the script.

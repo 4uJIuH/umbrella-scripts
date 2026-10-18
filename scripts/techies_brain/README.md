@@ -24,6 +24,12 @@
 1. Поместите `techies_brain.lua` в `Umbrella\scripts` и перезагрузите скрипты.
 2. Отключите или отвяжите другой скрипт комбо Techies и задайте Combo Key в `Heroes → Hero List → Techies → Brain`.
 
+## Что нового
+
+# Релиз v0.2.6
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Techies Brain Combo (English)
@@ -39,3 +45,9 @@ A unified combo controller for Hex, Sticky Bomb, Tazer, Ethereal Blade, Blast Of
 
 1. Place `techies_brain.lua` in `Umbrella\scripts` and reload scripts.
 2. Disable or unbind any other Techies combo script and set the Combo Key under `Heroes → Hero List → Techies → Brain`.
+
+## Changelog
+
+# Release v0.2.6
+
+- Release version: the first publication of the script.

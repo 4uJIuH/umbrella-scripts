@@ -24,6 +24,12 @@
 1. Поместите `mom_sabre_abuse.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и настройте режим в меню скрипта.
 
+## Что нового
+
+# Релиз v2.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # MoM Sabre Abuse (English)
@@ -39,3 +45,9 @@ Sequences Mask of Madness and Echo Sabre usage; the author's description mention
 
 1. Place `mom_sabre_abuse.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts and configure the mode in its menu.
+
+## Changelog
+
+# Release v2.0.0
+
+- Release version: the first publication of the script.

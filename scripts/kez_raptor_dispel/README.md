@@ -25,6 +25,12 @@
 1. Поместите `kez_raptor_dispel.lua` в `umbrella\scripts`.
 2. Перезагрузите скрипты и откройте настройки Kez.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Kez Raptor Dance Dispel (English)
@@ -41,3 +47,9 @@ A small Kez helper for a Kazurai Katana interaction: use the item on an enemy wh
 
 1. Place `kez_raptor_dispel.lua` in `umbrella\scripts`.
 2. Reload scripts and open the Kez settings.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

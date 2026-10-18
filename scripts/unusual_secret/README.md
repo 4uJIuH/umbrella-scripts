@@ -24,6 +24,12 @@
 1. Поместите `Unusual_Secret.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и найдите настройки в разделе визуальных скриптов.
 
+## Что нового
+
+# Релиз v2.1.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Unusual Secret (English)
@@ -39,3 +45,9 @@ Changes the attachment point of supported effects to parts of a hero model. This
 
 1. Place `Unusual_Secret.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts and find its settings under visual scripts.
+
+## Changelog
+
+# Release v2.1.0
+
+- Release version: the first publication of the script.

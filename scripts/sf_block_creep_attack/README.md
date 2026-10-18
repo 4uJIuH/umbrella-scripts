@@ -24,6 +24,12 @@
 1. Поместите `sf_block_creep_attack.lua` в `Umbrella\scripts`.
 2. Перезагрузите скрипты; настройки находятся в меню `Feast of Souls Abuse`.
 
+## Что нового
+
+# Релиз v1.2
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Block Creep Attack During Feast (English)
@@ -39,3 +45,9 @@ A Shadow Fiend helper that blocks attack orders on creeps while collecting souls
 
 1. Place `sf_block_creep_attack.lua` in `Umbrella\scripts`.
 2. Reload scripts; settings are under `Feast of Souls Abuse`.
+
+## Changelog
+
+# Release v1.2
+
+- Release version: the first publication of the script.

@@ -25,6 +25,12 @@
 2. Перезагрузите Lua-скрипты.
 3. Включите настройку в General → Visuals → Old Last Match.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Old Last Match (English)
@@ -41,3 +47,9 @@ Replaces the current event background on the main menu with the last-match scree
 1. Place `old_match.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Enable General → Visuals → Old Last Match.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

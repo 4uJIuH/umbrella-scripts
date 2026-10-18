@@ -26,6 +26,12 @@
 2. Перезагрузите Lua-скрипты.
 3. Откройте настройки героя и выберите режим переключения.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # MoM Swapper (English)
@@ -43,3 +49,9 @@ Rebuilds Mask of Madness into Echo Sabre or Specialist's Array and back using th
 1. Place `mom_swapper.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Open the hero settings and choose a swap mode.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

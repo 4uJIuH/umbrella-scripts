@@ -27,6 +27,12 @@
 2. Перезагрузите Lua-скрипты.
 3. Откройте `Heroes → Hero List → Lone Druid → Bear AI Deluxe`.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Lone Druid Bear AI Deluxe (English)
@@ -45,3 +51,9 @@ Provides farming, pushing, and stacking modes, bear survival and item management
 1. Place `LoneDruidBearAIDeluxe.lua` in `umbrella\scripts`.
 2. Reload Lua scripts.
 3. Open `Heroes → Hero List → Lone Druid → Bear AI Deluxe`.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

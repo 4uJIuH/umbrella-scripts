@@ -24,6 +24,12 @@
 1. Поместите `old_hud.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и проверьте настройки в General → Main.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Old HUD (English)
@@ -39,3 +45,9 @@ A visual script for an older version of the game's interface.
 
 1. Place `old_hud.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts and review its settings under General → Main.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

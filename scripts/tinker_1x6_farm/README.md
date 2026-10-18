@@ -25,6 +25,12 @@
 1. Поместите `tinker_1x6_farm.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и откройте Heroes → Hero List → Tinker → 1x6 Farm.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Tinker 1x6 Farm (English)
@@ -41,3 +47,9 @@ Automates Tinker farming with movement between locations, camp and lane farming,
 
 1. Place `tinker_1x6_farm.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts and open Heroes → Hero List → Tinker → 1x6 Farm.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

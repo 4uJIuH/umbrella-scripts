@@ -25,6 +25,12 @@
 1. Поместите `kez_combo.lua` в `Umbrella\scripts`.
 2. Перезагрузите Lua-скрипты; основное комбо Umbrella оставьте включённым.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Kez Combo (English)
@@ -41,3 +47,9 @@ An additional Kez combo script. The author notes that the code is experimental a
 
 1. Place `kez_combo.lua` in `Umbrella\scripts`.
 2. Reload scripts; keep Umbrella's main combo enabled.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

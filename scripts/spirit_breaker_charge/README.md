@@ -27,6 +27,12 @@
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Spirit Breaker Charge Combo (English)
@@ -45,3 +51,9 @@ Times Spirit Breaker's items and abilities during the charge, preserving selecte
 2. Reload scripts and open Spirit Breaker → Charge Combo.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

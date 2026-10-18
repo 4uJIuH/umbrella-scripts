@@ -25,6 +25,12 @@
 1. Поместите `IllusionTracker.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты. Настройки: Основное → IllusionTracker.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Illusion Tracker (English)
@@ -41,3 +47,9 @@ Detects spawned copies, associates individual illusions with chosen key groups, 
 
 1. Place `IllusionTracker.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts. Settings: Main → IllusionTracker.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

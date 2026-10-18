@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`tinker-helper-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/tinker-helper-v1.0.0) | 2026-10-13 | [tinker_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-helper-v1.0.0/tinker_helper.lua) | 10 |
+| [`tinker-helper-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/tinker-helper-v1.0.0) | 2026-10-13 | [tinker_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-helper-v1.0.0/tinker_helper.lua) | 11 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=tinker-helper&expanded=true)
 <!-- releases:end -->
@@ -25,6 +25,12 @@
 1. Поместите `tinker_helper.lua` в `umbrella\scripts` и перезагрузите Lua-скрипты.
 2. Настройки: Герои → Tinker → Tinker Helper.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Tinker Helper (English)
@@ -41,3 +47,9 @@ A bundled script with automatic farming, Glimmer usage, Wisdom Rune pickup, and 
 
 1. Place `tinker_helper.lua` in `umbrella\scripts` and reload the Lua scripts.
 2. Settings: Heroes → Tinker → Tinker Helper.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

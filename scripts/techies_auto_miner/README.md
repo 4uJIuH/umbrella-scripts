@@ -28,6 +28,12 @@
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
 
+## Что нового
+
+# Релиз v1.1
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Techies Auto Miner (English)
@@ -47,3 +53,9 @@ Automatically traverses zones selected on an interactive minimap and plants Prox
 2. Reload scripts, select zones on the map panel, and start mining.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
+
+## Changelog
+
+# Release v1.1
+
+- Release version: the first publication of the script.

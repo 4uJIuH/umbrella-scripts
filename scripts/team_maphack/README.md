@@ -24,6 +24,12 @@
 1. Поместите `team_maphack.lua` в `Umbrella\scripts` и перезагрузите скрипты.
 2. Проверьте, что выбранные уведомления соответствуют правилам игры и платформы.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Team Maphack (English)
@@ -39,3 +45,9 @@ Displays and sends signals about teleports, smokes, scans, runes, Roshan, Tormen
 
 1. Place `team_maphack.lua` in `Umbrella\scripts` and reload scripts.
 2. Check that selected notifications comply with the game and platform rules.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

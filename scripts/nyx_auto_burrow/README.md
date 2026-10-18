@@ -26,6 +26,12 @@
 1. Поместите `nyx_auto_burrow.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и найдите настройки в разделе Nyx Assassin.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Nyx Assassin Auto Burrow (English)
@@ -43,3 +49,9 @@ Automatically uses Burrow while idle, at low health or mana, and in suitable fig
 
 1. Place `nyx_auto_burrow.lua` in `umbrella\scripts`.
 2. Reload Lua scripts and find the settings under Nyx Assassin.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

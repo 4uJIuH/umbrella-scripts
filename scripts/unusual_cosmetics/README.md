@@ -24,6 +24,12 @@
 1. Поместите `unusual_cosmetics.lua` в `Umbrella\scripts`.
 2. Перезагрузите Lua-скрипты. Если эффекты сбрасываются или работают неправильно, сообщите об этом автору.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Unusual Effects (English)
@@ -39,3 +45,9 @@ Select a hero and item, then change its effect in a match. The author notes that
 
 1. Place `unusual_cosmetics.lua` in `Umbrella\scripts`.
 2. Reload Lua scripts. Report any effects that reset or behave incorrectly to the author.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

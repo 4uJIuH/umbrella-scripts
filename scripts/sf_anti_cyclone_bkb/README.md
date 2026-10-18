@@ -24,6 +24,12 @@
 1. Поместите `sf_anti_cyclone_bkb.lua` в `Umbrella\scripts`.
 2. Перезагрузите скрипты и настройте раздел `Anti-Cyclone BKB`.
 
+## Что нового
+
+# Релиз v2.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Anti-Cyclone BKB (English)
@@ -39,3 +45,9 @@ A Shadow Fiend script that watches for an enemy Eul's Scepter or Wind Waker targ
 
 1. Place `sf_anti_cyclone_bkb.lua` in `Umbrella\scripts`.
 2. Reload scripts and configure the `Anti-Cyclone BKB` section.
+
+## Changelog
+
+# Release v2.0
+
+- Release version: the first publication of the script.

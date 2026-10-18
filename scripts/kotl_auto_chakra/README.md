@@ -24,6 +24,12 @@
 1. Поместите `kotl_auto_chakra.lua` в `Umbrella\scripts`.
 2. Перезагрузите скрипты и откройте меню Keeper of the Light.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # KOTL Auto Chakra (English)
@@ -39,3 +45,9 @@ A re-upload of a Keeper of the Light script with Auto Chakra and additional feat
 
 1. Place `kotl_auto_chakra.lua` in `Umbrella\scripts`.
 2. Reload scripts and open the Keeper of the Light menu.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

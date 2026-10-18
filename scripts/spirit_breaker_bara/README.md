@@ -27,6 +27,12 @@
 2. Перезагрузите Lua-скрипты.
 3. Отключите Auto Pause On Impact и 1000-7 Chat Countdown, если эти действия не нужны.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Spirit Breaker Combo & Ghoul 1000-7 (English)
@@ -45,3 +51,9 @@ Uses Bulldoze before impact, can cast Nether Strike, and activates items. It can
 1. Place `bara.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Disable Auto Pause On Impact and 1000-7 Chat Countdown if you do not want those actions.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

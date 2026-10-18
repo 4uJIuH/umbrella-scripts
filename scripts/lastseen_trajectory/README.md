@@ -24,6 +24,12 @@
 1. Поместите `lastseen_trajectory.lua` в `Umbrella\scripts` и перезагрузите скрипты.
 2. Настройка находится в `Информация → Мапхак → Показывать направление`.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Last Seen Trajectory (English)
@@ -39,3 +45,9 @@ Displays the direction in which an enemy was last moving in the game world and o
 
 1. Place `lastseen_trajectory.lua` in `Umbrella\scripts` and reload scripts.
 2. Find the option under `Information → Maphack → Show direction`.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

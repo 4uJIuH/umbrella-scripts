@@ -24,6 +24,12 @@
 1. Поместите `lycan_auto_control.lua` в `Umbrella\scripts`.
 2. Перезагрузите скрипты и настройте поведение подконтрольных юнитов.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Lycan Auto Control (English)
@@ -39,3 +45,9 @@ Automatically assigns Lycan's wolves to push a lane and units controlled with Do
 
 1. Place `lycan_auto_control.lua` in `Umbrella\scripts`.
 2. Reload scripts and configure controlled-unit behavior.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

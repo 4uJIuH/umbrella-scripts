@@ -26,6 +26,21 @@
 1. Распакуйте `Self-Play.zip` в папку `Umbrella\scripts`, сохранив структуру файлов.
 2. Перезагрузите скрипты. Меню: Scripts → Self Play → Main.
 
+## Что нового
+
+# Обновление v1.0.1
+
+- Ротация на свободную линию: бот уходит с линии, где стоит слишком много союзников.
+- Новый ползунок «Уверенность в драках»: насколько смело бот вступает в бой.
+- Керри и мид не уходят в драки и пуши команды, пока не готовы к ним.
+- Бот ставит игру на паузу, если камера не смотрит на героя; слежение камерой включено по умолчанию.
+- Автоматическое переподключение к матчу после вылета.
+- Покупки: Blood Grenade для саппортов в начале игры, сентри для оффлейна и саппортов, точнее учитываются потраченные деньги.
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Self Play (English)
@@ -42,3 +57,18 @@ A full self-play script that coordinates with the team, can pursue Roshan and ru
 
 1. Extract `Self-Play.zip` into `Umbrella\scripts`, preserving its folder structure.
 2. Reload scripts. Menu: Scripts → Self Play → Main.
+
+## Changelog
+
+# Update v1.0.1
+
+- Lane rotation: the bot leaves a lane that is crowded with allies.
+- New Confidence in fights slider: how boldly the bot joins a fight.
+- Carry and mid no longer join team fights and pushes before they are ready.
+- The bot pauses while the camera is away from the hero; camera follow is on by default.
+- Automatic reconnect to the match after a disconnect.
+- Shopping: Blood Grenade for supports early on, sentries for offlane and supports, spent gold is tracked more precisely.
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

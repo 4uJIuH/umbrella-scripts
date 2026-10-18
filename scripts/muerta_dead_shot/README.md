@@ -27,6 +27,12 @@
 2. Поместите `muerta_dead_shot.lua` в `umbrella\scripts` и перезагрузите скрипты.
 3. Назначьте этому скрипту клавишу комбо Umbrella; настройки находятся в `Heroes → Hero List → Muerta → Main Settings → Dead Shot`.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Muerta Dead Shot (English)
@@ -45,3 +51,9 @@ Replaces the first-skill cast from Umbrella's combo and searches for a suitable 
 1. Disable Dead Shot auto-cast in Umbrella's built-in combo.
 2. Place `muerta_dead_shot.lua` in `umbrella\scripts` and reload scripts.
 3. Bind this script to the Umbrella combo key; settings are under `Heroes → Hero List → Muerta → Main Settings → Dead Shot`.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

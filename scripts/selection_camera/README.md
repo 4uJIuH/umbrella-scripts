@@ -27,6 +27,12 @@
 2. Перезагрузите Lua-скрипты.
 3. Настройте Selection Camera в General → Main.
 
+## Что нового
+
+# Релиз v1.1.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Selection Camera (English)
@@ -45,3 +51,9 @@ On a selection change, moves the camera once to the active unit or group center 
 1. Place `selection_camera.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Configure Selection Camera under General → Main.
+
+## Changelog
+
+# Release v1.1.0
+
+- Release version: the first publication of the script.

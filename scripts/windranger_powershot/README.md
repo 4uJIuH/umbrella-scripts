@@ -24,6 +24,12 @@
 1. Поместите `Windranger.lua` в `umbrella\scripts` и перезагрузите Lua-скрипты.
 2. Настройки находятся во вкладке Windranger.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Windranger Powershot Killsteal (English)
@@ -39,3 +45,9 @@ Calculates Windranger's second ability damage and casts Powershot when its predi
 
 1. Place `Windranger.lua` in `umbrella\scripts` and reload the Lua scripts.
 2. Settings are in the Windranger tab.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

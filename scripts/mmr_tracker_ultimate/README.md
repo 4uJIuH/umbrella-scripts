@@ -26,6 +26,12 @@
 1. Поместите `mmr_tracker_ultimate.lua` в `umbrella\scripts`.
 2. Перезагрузите скрипты и откройте `Scripts → Other → MMR Tracker Ultimate`.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # MMR Tracker Ultimate (English)
@@ -43,3 +49,9 @@ Displays your current rank and progress to the next tier, session statistics, an
 
 1. Place `mmr_tracker_ultimate.lua` in `umbrella\scripts`.
 2. Reload scripts and open `Scripts → Other → MMR Tracker Ultimate`.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

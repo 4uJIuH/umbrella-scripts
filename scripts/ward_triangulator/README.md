@@ -26,6 +26,12 @@
 2. Перезагрузите Lua-скрипты.
 3. Откройте `Scripts → Other → Ward Triangulator`.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Ward Triangulator (English)
@@ -43,3 +49,9 @@ Tracks when your hero becomes visible to an enemy sentry and estimates the ward'
 1. Place `ward_triangulator.lua` in `umbrella\scripts`.
 2. Reload Lua scripts.
 3. Open `Scripts → Other → Ward Triangulator`.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

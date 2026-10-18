@@ -29,6 +29,12 @@
 2. Перезагрузите Lua-скрипты.
 3. Откройте `Heroes → Hero List → Pudge → PudgeHook AI`.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # PudgeHook AI (English)
@@ -49,3 +55,9 @@ While Mouse 4 is held, the script selects an enemy hero near the cursor and auto
 1. Place `PudgeHook.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Open `Heroes → Hero List → Pudge → PudgeHook AI`.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

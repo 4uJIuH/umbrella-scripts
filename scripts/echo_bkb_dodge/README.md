@@ -28,6 +28,12 @@ Echo BKB Dodge отслеживает подтверждённый блинк в
 2. Перезагрузите Lua-скрипты.
 3. Откройте `Scripts → Other → echo_bkb_dodge → Защита → Echo Slam` и включите «Включить защиту».
 
+## Что нового
+
+# Релиз v1.2.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Echo BKB Dodge (English)
@@ -47,3 +53,9 @@ Echo BKB Dodge watches for a confirmed Blink by an enemy Earthshaker and uses BK
 1. Place `echo_bkb_dodge.lua` in the `umbrella\scripts` folder.
 2. Reload the Lua scripts.
 3. Open `Scripts → Other → echo_bkb_dodge → Защита → Echo Slam` and enable “Включить защиту”.
+
+## Changelog
+
+# Release v1.2.0
+
+- Release version: the first publication of the script.

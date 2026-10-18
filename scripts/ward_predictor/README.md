@@ -27,6 +27,12 @@
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Ward Predictor (English)
@@ -45,3 +51,9 @@ Uses OpenDota match history and the current game state to estimate likely observ
 2. Reload scripts and open General → Main → Ward Predictor.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

@@ -24,6 +24,12 @@
 1. Поместите `maptroll.lua` в `umbrella\scripts` и перезагрузите Lua-скрипты.
 2. Откройте Scripts → Other → Map Chat Troll.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Map Chat Troll (English)
@@ -39,3 +45,9 @@ A utility for displaying text on the minimap with configurable position, size, a
 
 1. Place `maptroll.lua` in `umbrella\scripts` and reload the Lua scripts.
 2. Open Scripts → Other → Map Chat Troll.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

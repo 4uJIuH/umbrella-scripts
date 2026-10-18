@@ -26,6 +26,12 @@
 2. Перезагрузите Lua-скрипты.
 3. Перед включением ознакомьтесь с переключателем разбивания предмета.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Russian Roulette (English)
@@ -43,3 +49,9 @@ A joke roulette with a configurable number of bullets and an on-screen cylinder.
 1. Place `russian_roulette.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Review the item-breaking toggle before enabling it.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

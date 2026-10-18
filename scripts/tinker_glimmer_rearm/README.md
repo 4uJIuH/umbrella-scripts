@@ -24,6 +24,12 @@
 1. Поместите `tinker_glimmer_rearm.lua` в `Umbrella\scripts`.
 2. Перезагрузите скрипты и настройте его во вкладке Tinker.
 
+## Что нового
+
+# Релиз v1.3
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Tinker Glimmer during Rearm (English)
@@ -39,3 +45,9 @@ A small Tinker utility that activates Glimmer Cape at the selected point during 
 
 1. Place `tinker_glimmer_rearm.lua` in `Umbrella\scripts`.
 2. Reload scripts and configure it under Tinker.
+
+## Changelog
+
+# Release v1.3
+
+- Release version: the first publication of the script.

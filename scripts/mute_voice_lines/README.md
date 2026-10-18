@@ -24,6 +24,12 @@
 1. Поместите `mute_voice_lines.lua` в `Umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и добавьте ID нужных фраз в список скрипта.
 
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Mute Voice Lines (English)
@@ -39,3 +45,9 @@ Suppresses playback of selected voice lines sent through the chat wheel. The blo
 
 1. Place `mute_voice_lines.lua` in `Umbrella\scripts`.
 2. Reload Lua scripts and add the desired voice-line IDs to the script's list.
+
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.

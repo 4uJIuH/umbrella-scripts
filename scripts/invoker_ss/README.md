@@ -25,6 +25,12 @@ Standalone-модуль на базе архитектуры Invoker от Discor
 1. Поместите `invoker_ss.lua` в `Umbrella\scripts` и перезагрузите Lua-скрипты.
 2. Не включайте одновременно другой скрипт, который управляет Sun Strike или Invoker.
 
+## Что нового
+
+# Релиз v138
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Invoker SS (English)
@@ -41,3 +47,9 @@ A standalone module based on the Invoker framework by Discord user ID 3930590376
 
 1. Place `invoker_ss.lua` in `Umbrella\scripts` and reload Lua scripts.
 2. Do not enable another script that also controls Invoker or Sun Strike.
+
+## Changelog
+
+# Release v138
+
+- Release version: the first publication of the script.
