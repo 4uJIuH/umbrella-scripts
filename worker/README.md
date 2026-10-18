@@ -31,6 +31,6 @@ Set the printed `https://umbrella-ratings.<account>.workers.dev` as `ratings_url
 ## API
 
 - `GET /ratings[?user=<steamid>]` returns `{ratings: {id: {up, down}}, mine: {id: 1|-1}}` (`mine` only with `user`).
-- `POST /vote` with `{script, user, vote}` where vote is `1`, `-1` or `0` returns the new `{up, down, mine}` for that script.
+- `POST /vote` with `{script, user, vote}` where vote is `1`, `-1` or `0` returns the new `{up, down, mine}` for that script. One IP votes from at most 3 accounts a day and 60 times an hour; past that the answer is 429 `{error: "accounts_limit" | "votes_limit"}`.
 - `GET /feedback?user=<steamid>` returns the limits of the last hour: `{scripts: {id: {count, wait}}, used, wait}`; `wait` is seconds until the next message is allowed.
 - `POST /feedback` with `{script, user, kind, text, version, manager, name}` posts the message to Discord. `kind` is `improve`, `idea`, `bug` or `other`, `text` is 10–1000 characters. One account sends 2 messages per script and messages to 5 different scripts per hour, one IP 20 messages per hour; past that the answer is 429 `{error: "script_limit" | "scripts_limit" | "ip_limit", wait}`.

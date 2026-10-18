@@ -14,3 +14,9 @@ CREATE TABLE IF NOT EXISTS feedback (
 );
 CREATE INDEX IF NOT EXISTS feedback_user ON feedback (steam_id, created);
 CREATE INDEX IF NOT EXISTS feedback_ip ON feedback (ip, created);
+CREATE TABLE IF NOT EXISTS vote_log (
+  ip TEXT NOT NULL,
+  steam_id TEXT NOT NULL,
+  created INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS vote_log_ip ON vote_log (ip, created);

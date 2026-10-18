@@ -6,6 +6,9 @@ const HOUR = 3600;
 const PER_SCRIPT = 2;
 const SCRIPTS_PER_HOUR = 5;
 const PER_IP = 20;
+const DAY = 86400;
+const VOTE_ACCOUNTS = 3;
+const VOTES_PER_HOUR = 60;
 const TEXT_MIN = 10;
 const TEXT_MAX = 1000;
 const STEAM_BASE = 76561197960265728n;
@@ -96,13 +99,23 @@ async function handleVote(request, env, ctx) {
   if (![-1, 0, 1].includes(vote)) return json({ error: "bad vote" }, 400);
   if (typeof script !== "string" || !(await knownScripts(ctx)).has(script)) return json({ error: "unknown script" }, 404);
 
+  // one address votes from at most 3 accounts a day and 60 times an hour, so made-up Steam IDs cannot flood the ratings
+  const now = Math.floor(Date.now() / 1000);
+  const ip = await ipHash(request);
+  const { results: log } = await env.DB.prepare("SELECT steam_id, created FROM vote_log WHERE ip = ? AND created > ?")
+    .bind(ip, now - DAY).all();
+  const accounts = new Set(log.map((r) => r.steam_id));
+  if (!accounts.has(user) && accounts.size >= VOTE_ACCOUNTS) return json({ error: "accounts_limit" }, 429);
+  if (log.filter((r) => r.created > now - HOUR).length >= VOTES_PER_HOUR) return json({ error: "votes_limit" }, 429);
+  await env.DB.prepare("INSERT INTO vote_log (ip, steam_id, created) VALUES (?, ?, ?)").bind(ip, user, now).run();
+
   if (vote === 0) {
     await env.DB.prepare("DELETE FROM votes WHERE steam_id = ? AND script_id = ?").bind(user, script).run();
   } else {
     await env.DB.prepare(
       "INSERT INTO votes (steam_id, script_id, vote, updated) VALUES (?1, ?2, ?3, ?4) " +
         "ON CONFLICT (steam_id, script_id) DO UPDATE SET vote = excluded.vote, updated = excluded.updated"
-    ).bind(user, script, vote, Math.floor(Date.now() / 1000)).run();
+    ).bind(user, script, vote, now).run();
   }
 
   const row = await env.DB.prepare(
