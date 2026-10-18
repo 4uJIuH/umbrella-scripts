@@ -6101,8 +6101,8 @@
     {
       "id": "venomancer_ward_controller",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/venomancer_ward_controller/venomancer_ward_controller.lua",
-      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/venomancer_ward_controller/venomancer_ward_controller.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/3adeda0c3dfc39c2b989c7e5ab42da620db4d07c/scripts/venomancer_ward_controller/venomancer_ward_controller.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/venomancer-ward-controller-v1.0.0/venomancer_ward_controller.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "\u0420\u043e\u043c\u0431\u0438\u0442 (Discord: derevasha); creator and team retain sole ownership",
