@@ -11132,6 +11132,56 @@
           "Reload the Lua scripts."
         ]
       }
+    },
+    {
+      "id": "force_staffer",
+      "tag": "force-staffer",
+      "title": "Force Staffer",
+      "kind": "lua",
+      "category": "dota",
+      "file": "forcestaffer.lua",
+      "author": "Tommy (creator, Discord: tommytheitguy); 4uJIuH (latest version, Discord: sopka11)",
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/force_staffer",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=force-staffer&expanded=true",
+      "version_marker": "NONE",
+      "needs_q_localizer": true,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-18",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staffer/forcestaffer.lua"
+      },
+      "ru": {
+        "tagline": "разворачивает Force Staff и Hurricane Pike по курсору",
+        "about": "По клавише герой разворачивается к курсору, затем применяет на себя Force Staff или Hurricane Pike. Создатель — Tommy (Discord: tommytheitguy), последнюю версию подготовил 4uJIuH (Discord: sopka11).",
+        "features": [
+          "Поддерживает Force Staff и Hurricane Pike",
+          "Два режима клавиши: «По удержанию» и «По нажатию»",
+          "В режиме «По нажатию» герой самостоятельно разворачивается и применяет предмет, прекращая попытку через 3 секунды",
+          "Позиция курсора фиксируется в момент нажатия в одноразовом режиме"
+        ],
+        "install": [
+          "Поместите `forcestaffer.lua` в папку `umbrella\\scripts`.",
+          "Поместите <a href=\"https://github.com/4uJIuH/umbrella-scripts/releases/download/q-localizer-v1.0.0/_qLocalizer.lua\" target=\"_blank\" rel=\"noopener\"><code>_qLocalizer.lua</code></a> туда же.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Scripts → Scripts → Force Staffer → Settings → Force Staffer`."
+        ]
+      },
+      "en": {
+        "tagline": "turns Force Staff and Hurricane Pike toward the cursor",
+        "about": "Press the key to turn your hero toward the cursor and use Force Staff or Hurricane Pike on yourself. Created by Tommy (Discord: tommytheitguy); the latest version was prepared by 4uJIuH (Discord: sopka11).",
+        "features": [
+          "Supports Force Staff and Hurricane Pike",
+          "Two key modes: While held and One press",
+          "In One press mode, the hero turns and uses the item automatically, giving up after 3 seconds",
+          "The cursor position is captured when you press the key in One press mode"
+        ],
+        "install": [
+          "Place `forcestaffer.lua` in the `umbrella\\scripts` folder.",
+          "Place <a href=\"https://github.com/4uJIuH/umbrella-scripts/releases/download/q-localizer-v1.0.0/_qLocalizer.lua\" target=\"_blank\" rel=\"noopener\"><code>_qLocalizer.lua</code></a> in the same folder.",
+          "Reload the Lua scripts.",
+          "Open `Scripts → Scripts → Force Staffer → Settings → Force Staffer`."
+        ]
+      }
     }
   ]
 }

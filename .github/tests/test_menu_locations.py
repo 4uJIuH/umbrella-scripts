@@ -46,6 +46,19 @@ class MenuLocationsTests(unittest.TestCase):
             },
         )
 
+    def test_force_staffer_menu_path_matches_install_instructions(self):
+        self.assertEqual(
+            paths_for(self.by_id["force_staffer"]),
+            {
+                "ru": [
+                    "Scripts → Scripts → Force Staffer → Settings → Force Staffer"
+                ],
+                "en": [
+                    "Scripts → Scripts → Force Staffer → Settings → Force Staffer"
+                ],
+            },
+        )
+
     def test_dynamic_menu_paths_are_explicit(self):
         paths = paths_for(self.by_id["windranger_powershot"])
         self.assertEqual(

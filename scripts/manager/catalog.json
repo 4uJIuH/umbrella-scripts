@@ -5992,6 +5992,25 @@
         "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ability_draft_helper/CHANGELOG.md",
         "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ability_draft_helper/CHANGELOG.en.md"
       }
+    },
+    {
+      "id": "force_staffer",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staffer/forcestaffer.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_staffer/forcestaffer.lua",
+      "manual": false,
+      "needs_q_localizer": true,
+      "author": "Tommy (creator, Discord: tommytheitguy); 4uJIuH (latest version, Discord: sopka11)",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Scripts \u2192 Force Staffer \u2192 Settings \u2192 Force Staffer"
+        ],
+        "en": [
+          "Scripts \u2192 Scripts \u2192 Force Staffer \u2192 Settings \u2192 Force Staffer"
+        ]
+      },
+      "date": "2026-10-18",
+      "version_marker": "NONE"
     }
   ]
 }
