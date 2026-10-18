@@ -177,7 +177,11 @@
       "date": "2026-10-10",
       "heroes": [
         "windrunner"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_shackleshot/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_shackleshot/CHANGELOG.en.md"
+      }
     },
     {
       "id": "auto_spark",
@@ -245,7 +249,11 @@
       "date": "2026-10-10",
       "heroes": [
         "earth_spirit"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/earth_spirit_kick_combo/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/earth_spirit_kick_combo/CHANGELOG.en.md"
+      }
     },
     {
       "id": "hp_mana_67_ping",
@@ -288,7 +296,11 @@
       "date": "2026-10-10",
       "heroes": [
         "lone_druid"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/spirit_bear_pull/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/spirit_bear_pull/CHANGELOG.en.md"
+      }
     },
     {
       "id": "script_manager",
@@ -329,6 +341,10 @@
         ]
       },
       "date": "2026-10-06",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dynamic_island_dota/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dynamic_island_dota/CHANGELOG.en.md"
+      },
       "version_marker": "SCRIPT_VERSION"
     },
     {
@@ -373,6 +389,10 @@
         ]
       },
       "date": "2026-09-20",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/lane_pull/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/lane_pull/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -395,6 +415,10 @@
       "heroes": [
         "dark_seer"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ds_spot_block/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ds_spot_block/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -414,6 +438,10 @@
         ]
       },
       "date": "2026-09-20",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/custom_background/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/custom_background/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -439,6 +467,10 @@
         "kunkka",
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/auto_stack/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/auto_stack/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -457,7 +489,11 @@
           "Scripts \u2192 Scripts \u2192 Draft Helper"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/draft_helper/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/draft_helper/CHANGELOG.en.md"
+      }
     },
     {
       "id": "musicui",
@@ -475,7 +511,11 @@
           "Scripts \u2192 Scripts \u2192 MusicUI"
         ]
       },
-      "date": "2026-09-23"
+      "date": "2026-09-23",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/musicui/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/musicui/CHANGELOG.en.md"
+      }
     },
     {
       "id": "custom_stats",
@@ -903,7 +943,11 @@
           "Scripts \u2192 Utility \u2192 \u041e\u0442\u043c\u0430\u0437\u043a\u0438"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/excuses/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/excuses/CHANGELOG.en.md"
+      }
     },
     {
       "id": "creep_obituary",
@@ -921,7 +965,11 @@
           "Scripts \u2192 Utility \u2192 \u041d\u0435\u043a\u0440\u043e\u043b\u043e\u0433\u0438"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/creep_obituary/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/creep_obituary/CHANGELOG.en.md"
+      }
     },
     {
       "id": "wrapped",
@@ -939,7 +987,11 @@
           "Scripts \u2192 Utility \u2192 Wrapped"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/wrapped/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/wrapped/CHANGELOG.en.md"
+      }
     },
     {
       "id": "arc_warden_heist",
@@ -960,7 +1012,11 @@
       "date": "2026-10-13",
       "heroes": [
         "arc_warden"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_heist/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_heist/CHANGELOG.en.md"
+      }
     },
     {
       "id": "chen_circus",
@@ -981,7 +1037,11 @@
       "date": "2026-10-13",
       "heroes": [
         "chen"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/chen_circus/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/chen_circus/CHANGELOG.en.md"
+      }
     },
     {
       "id": "mana_void_killer",
@@ -1002,7 +1062,11 @@
       "date": "2026-10-13",
       "heroes": [
         "antimage"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mana_void_killer/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mana_void_killer/CHANGELOG.en.md"
+      }
     },
     {
       "id": "lualingo",
@@ -1027,7 +1091,11 @@
           "path": "lualingo/tasks.lua",
           "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/c955dd889876bf1898ad01e9a8650e5628a9bb9e/scripts/lualingo/lualingo/tasks.lua"
         }
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lualingo/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lualingo/CHANGELOG.en.md"
+      }
     },
     {
       "id": "disable_tracker",
@@ -1045,7 +1113,11 @@
           "General \u2192 Main \u2192 Oppression Indicator"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/disable_tracker/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/disable_tracker/CHANGELOG.en.md"
+      }
     },
     {
       "id": "russian_roulette",
@@ -1063,7 +1135,11 @@
           "General \u2192 Fun \u2192 Russian Roulette"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/russian_roulette/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/russian_roulette/CHANGELOG.en.md"
+      }
     },
     {
       "id": "mom_swapper",
@@ -1085,7 +1161,11 @@
       "heroes": [
         "sven",
         "muerta"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mom_swapper/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mom_swapper/CHANGELOG.en.md"
+      }
     },
     {
       "id": "botle",
@@ -1103,7 +1183,11 @@
           "Scripts \u2192 Other \u2192 \u0410\u0431\u0443\u0437 \u0431\u043e\u0442\u043b\u0430"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/botle/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/botle/CHANGELOG.en.md"
+      }
     },
     {
       "id": "action_recorder",
@@ -1121,7 +1205,11 @@
           "Scripts \u2192 Scripts \u2192 Action Recorder"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/action_recorder/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/action_recorder/CHANGELOG.en.md"
+      }
     },
     {
       "id": "io_overcharge",
@@ -1142,7 +1230,11 @@
       "date": "2026-10-13",
       "heroes": [
         "wisp"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/io_overcharge/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/io_overcharge/CHANGELOG.en.md"
+      }
     },
     {
       "id": "arc_warden_utilities",
@@ -1185,7 +1277,11 @@
           "General \u2192 Main \u2192 Back Cast"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/backwards_cast/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/backwards_cast/CHANGELOG.en.md"
+      }
     },
     {
       "id": "forge_spirit_farm_beta",
@@ -1206,7 +1302,11 @@
       "date": "2026-10-13",
       "heroes": [
         "invoker"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/forge_spirit_farm_beta/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/forge_spirit_farm_beta/CHANGELOG.en.md"
+      }
     },
     {
       "id": "selection_camera",
@@ -1224,7 +1324,11 @@
           "General \u2192 Main \u2192 Selection Camera"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/selection_camera/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/selection_camera/CHANGELOG.en.md"
+      }
     },
     {
       "id": "spirit_breaker_bara",
@@ -1245,7 +1349,11 @@
       "date": "2026-10-13",
       "heroes": [
         "spirit_breaker"
-      ]
+      ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/spirit_breaker_bara/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/spirit_breaker_bara/CHANGELOG.en.md"
+      }
     },
     {
       "id": "ghoul_counter",
@@ -1263,7 +1371,11 @@
           "General \u2192 Main \u2192 Interface"
         ]
       },
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ghoul_counter/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ghoul_counter/CHANGELOG.en.md"
+      }
     },
     {
       "id": "invoker_jarvis",
@@ -1287,6 +1399,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_jarvis/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_jarvis/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1306,6 +1422,10 @@
         ]
       },
       "date": "2026-10-14",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/umbrella_tiktok/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/umbrella_tiktok/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1330,6 +1450,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_autostack/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_autostack/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1349,6 +1473,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/old_last_match/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/old_last_match/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1387,6 +1515,10 @@
           "url": "https://raw.githubusercontent.com/iseetwop/achievements/92655a35189923606ef3485a113f04bcd20fd3b1/ulib/timer.lua"
         }
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/achievements/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/achievements/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1406,6 +1538,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/unusual_secret/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/unusual_secret/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1425,6 +1561,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/atmospheric_fog/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/atmospheric_fog/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1449,6 +1589,10 @@
       "heroes": [
         "windrunner"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/windranger_powershot/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/windranger_powershot/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1468,6 +1612,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mom_sabre_abuse/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mom_sabre_abuse/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1490,6 +1638,10 @@
       "heroes": [
         "tinker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_1x6_farm/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_1x6_farm/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1509,6 +1661,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/forge_spirit_helper/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/forge_spirit_helper/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1543,6 +1699,10 @@
           "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/585e12dda729607b6e31eace28eb1259f2434fe5/scripts/gank_threat/ulib/timer.lua"
         }
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/gank_threat/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/gank_threat/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1565,6 +1725,10 @@
       "heroes": [
         "tinker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_helper/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_helper/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1607,6 +1771,10 @@
           "url": "https://raw.githubusercontent.com/iseetwop/counteritems/d311fade07de899a638fe89167b31d4d17e9b704/ulib/timer.lua"
         }
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/counter_items/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/counter_items/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1626,6 +1794,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/old_hud/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/old_hud/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1645,6 +1817,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/illusion_tracker/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/illusion_tracker/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1667,6 +1843,10 @@
       "heroes": [
         "arc_warden"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_clone_safe_me/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_clone_safe_me/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1689,6 +1869,10 @@
       "heroes": [
         "arc_warden"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_multi_stack/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_multi_stack/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1708,6 +1892,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/maptroll/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/maptroll/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1727,6 +1915,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/creep_aggro/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/creep_aggro/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1749,6 +1941,10 @@
       "heroes": [
         "nyx_assassin"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/nyx_auto_burrow/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/nyx_auto_burrow/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1771,6 +1967,10 @@
       "heroes": [
         "dawnbreaker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dawnbreaker_solar_guardian/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dawnbreaker_solar_guardian/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1816,6 +2016,10 @@
         "phantom_assassin",
         "pudge"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dota1x6_pack/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dota1x6_pack/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1838,6 +2042,10 @@
       "heroes": [
         "kez"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kez_raptor_dispel/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kez_raptor_dispel/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1860,6 +2068,10 @@
       "heroes": [
         "huskar"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/huskar_life_break/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/huskar_life_break/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1879,6 +2091,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dragon_camp_pull/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dragon_camp_pull/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1901,6 +2117,10 @@
       "heroes": [
         "shadow_demon"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sd_poison_5/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sd_poison_5/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1923,6 +2143,10 @@
       "heroes": [
         "techies"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_auto_miner/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_auto_miner/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1945,6 +2169,10 @@
       "heroes": [
         "broodmother"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/brood_camp_blocker/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/brood_camp_blocker/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1967,6 +2195,10 @@
       "heroes": [
         "hoodwink"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/hoodwink_bushwhack_techies/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/hoodwink_bushwhack_techies/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -1986,6 +2218,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ringmaster_eul_combo/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ringmaster_eul_combo/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2005,6 +2241,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/spirit_breaker_charge/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/spirit_breaker_charge/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2024,6 +2264,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ward_predictor/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ward_predictor/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2043,6 +2287,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_ss/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_ss/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2062,6 +2310,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sentry/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sentry/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2081,6 +2333,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/changer/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/changer/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2527,6 +2783,10 @@
           "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/dbc92756345ef3bebb01adee72a7ab997ad9a211/scripts/self_play_bot/package/self_play/vision.lua"
         }
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/self_play_bot/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/self_play_bot/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2546,6 +2806,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/farm_pattern/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/farm_pattern/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2565,6 +2829,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/win_condition_engine/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/win_condition_engine/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2584,6 +2852,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_beta/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_beta/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2603,6 +2875,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kez_combo/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kez_combo/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2622,6 +2898,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_combo/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_combo/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2641,6 +2921,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ld_farm/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ld_farm/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2660,6 +2944,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/unusual_cosmetics/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/unusual_cosmetics/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2679,6 +2967,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_tazer_dispel/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_tazer_dispel/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2698,6 +2990,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_brain/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_brain/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2742,6 +3038,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kotl_illuminate_pro/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kotl_illuminate_pro/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2761,6 +3061,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lycan_auto_control/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lycan_auto_control/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2780,6 +3084,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mute_voice_lines/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mute_voice_lines/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2799,6 +3107,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_glimmer_rearm/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_glimmer_rearm/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2818,6 +3130,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dota_no_limit/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dota_no_limit/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2837,6 +3153,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/team_maphack/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/team_maphack/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2856,6 +3176,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lastseen_trajectory/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lastseen_trajectory/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2875,6 +3199,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kotl_auto_chakra/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kotl_auto_chakra/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2894,6 +3222,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sf_feast_of_souls_abuse/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sf_feast_of_souls_abuse/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2913,6 +3245,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sf_block_creep_attack/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sf_block_creep_attack/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2932,6 +3268,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sf_anti_cyclone_bkb/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sf_anti_cyclone_bkb/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2951,6 +3291,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/control_ally/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/control_ally/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2970,6 +3314,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/eul_wind_waker_blink_helper/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/eul_wind_waker_blink_helper/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -2989,6 +3337,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_carnival_path_tokens/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_carnival_path_tokens/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3011,6 +3363,10 @@
       "heroes": [
         "lone_druid"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lone_druid_bear_ai_deluxe/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lone_druid_bear_ai_deluxe/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3030,6 +3386,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ward_triangulator/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ward_triangulator/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3052,6 +3412,10 @@
       "heroes": [
         "muerta"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/muerta_dead_shot/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/muerta_dead_shot/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3071,6 +3435,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/enemy_cooldowns/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/enemy_cooldowns/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3090,6 +3458,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/can_teleport_out/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/can_teleport_out/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3109,6 +3481,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_courier_gem/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_courier_gem/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3128,6 +3504,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/stacker/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/stacker/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3147,6 +3527,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_ruin/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_ruin/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3169,6 +3553,10 @@
       "heroes": [
         "broodmother"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/broodmother_helper/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/broodmother_helper/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3188,6 +3576,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/market/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/market/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3207,6 +3599,10 @@
         ]
       },
       "date": "2026-10-13",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mmr_tracker_ultimate/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mmr_tracker_ultimate/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3252,6 +3648,10 @@
       "heroes": [
         "arc_warden"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_control_rune/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_control_rune/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3271,6 +3671,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/treecutter_plus/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/treecutter_plus/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3293,6 +3697,10 @@
       "heroes": [
         "tinker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_fear_of_god/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_fear_of_god/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3315,6 +3723,10 @@
       "heroes": [
         "arc_warden"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_high_five/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_high_five/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3334,6 +3746,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/creep_block/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/creep_block/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3356,6 +3772,10 @@
       "heroes": [
         "ember_spirit"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ember_spirit_sticky_trainer/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ember_spirit_sticky_trainer/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3375,6 +3795,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_mana_abuse/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_mana_abuse/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3399,6 +3823,10 @@
       "heroes": [
         "marci"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/marci_dust_delivery/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/marci_dust_delivery/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3421,6 +3849,10 @@
       "heroes": [
         "arc_warden"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_rune_control/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_rune_control/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3440,6 +3872,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/cooldown_ping/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/cooldown_ping/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3462,6 +3898,10 @@
       "heroes": [
         "beastmaster"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/beastmaster_razorbacks/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/beastmaster_razorbacks/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3484,6 +3924,10 @@
       "heroes": [
         "juggernaut"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/juggernaut_ward_control/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/juggernaut_ward_control/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3506,6 +3950,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_auto_alacrity/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_auto_alacrity/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3528,6 +3976,10 @@
       "heroes": [
         "snapfire"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/snapfire_cookie_landing/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/snapfire_cookie_landing/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3547,6 +3999,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mute_all_voice_phrases/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mute_all_voice_phrases/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3566,6 +4022,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mini_games/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mini_games/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3585,6 +4045,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mmr_log/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mmr_log/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3607,6 +4071,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_sunstrike_on_tp/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_sunstrike_on_tp/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3626,6 +4094,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/autopick/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/autopick/CHANGELOG.en.md"
+      },
       "version_marker": "SCRIPT_VERSION"
     },
     {
@@ -3645,6 +4117,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/txt_spoofer/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/txt_spoofer/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3667,6 +4143,10 @@
       "heroes": [
         "zuus"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/zeus_heavenly_jump_range/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/zeus_heavenly_jump_range/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3689,6 +4169,10 @@
       "heroes": [
         "meepo"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/meepo_v2/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/meepo_v2/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3717,6 +4201,10 @@
       "heroes": [
         "abaddon"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/abaddon_borrowed_time_plus_one/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/abaddon_borrowed_time_plus_one/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3736,6 +4224,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/zmeyka/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/zmeyka/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3755,6 +4247,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dota_imba/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dota_imba/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3777,6 +4273,10 @@
       "heroes": [
         "earth_spirit"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/earth_spirit_boulder_helper/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/earth_spirit_boulder_helper/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3801,6 +4301,10 @@
       "heroes": [
         "tusk"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/walrus_kick_assist/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/walrus_kick_assist/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3823,6 +4327,10 @@
       "heroes": [
         "techies"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_tazer_auto_detonate/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_tazer_auto_detonate/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3849,6 +4357,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_tp_sun_strike/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_tp_sun_strike/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3868,6 +4380,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/courier_build_route/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/courier_build_route/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3890,6 +4406,10 @@
       "heroes": [
         "broodmother"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/brood_pull_s/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/brood_pull_s/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3909,6 +4429,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_cookie_cursor_cast/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/force_cookie_cursor_cast/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3931,6 +4455,10 @@
       "heroes": [
         "abaddon"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/abaddon_auto_mist_coil/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/abaddon_auto_mist_coil/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3953,6 +4481,10 @@
       "heroes": [
         "void_spirit"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/void_spirit_escape/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/void_spirit_escape/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3972,6 +4504,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pogoda_ui/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pogoda_ui/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -3991,6 +4527,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/fog_of_war_predictor/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/fog_of_war_predictor/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4010,6 +4550,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tree_cutter_bf2/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tree_cutter_bf2/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4031,6 +4575,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/session_info/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/session_info/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4053,6 +4601,10 @@
       "heroes": [
         "techies"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/autofocus/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/autofocus/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4075,6 +4627,10 @@
       "heroes": [
         "warlock"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/warlock_control_golems/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/warlock_control_golems/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4094,6 +4650,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dust_radius/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dust_radius/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4115,6 +4675,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/cosmic_menu/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/cosmic_menu/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4137,6 +4701,10 @@
       "heroes": [
         "tinker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_tweak/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_tweak/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4156,6 +4724,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/flutter_fx/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/flutter_fx/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4180,6 +4752,10 @@
       "heroes": [
         "tinker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_glimmer_combo/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_glimmer_combo/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4201,6 +4777,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/toxic_chat_guard/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/toxic_chat_guard/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4220,6 +4800,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_unsleep/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_unsleep/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4239,6 +4823,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/follow_selected_hero/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/follow_selected_hero/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4258,6 +4846,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/radial_chat/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/radial_chat/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4283,6 +4875,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/interactive_menu/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/interactive_menu/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4308,6 +4904,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ranks_mmr_tracker/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ranks_mmr_tracker/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4336,6 +4936,10 @@
       "heroes": [
         "lycan"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lycan_auto_howl/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lycan_auto_howl/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4358,6 +4962,10 @@
       "heroes": [
         "nevermore"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sf_requiem_radius/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sf_requiem_radius/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4377,6 +4985,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dotaplus_tracker/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dotaplus_tracker/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4399,6 +5011,10 @@
       "heroes": [
         "keeper_of_the_light"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/illuminate_visualizer/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/illuminate_visualizer/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4418,6 +5034,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/aegis_blinkout_cone/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/aegis_blinkout_cone/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4440,6 +5060,10 @@
       "heroes": [
         "furion"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/natures_call_block/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/natures_call_block/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4463,6 +5087,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/remote_auto_search/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/remote_auto_search/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4482,6 +5110,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/opendota_stats_tracker/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/opendota_stats_tracker/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4501,6 +5133,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_carnival_suggest_heroes/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_carnival_suggest_heroes/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4523,6 +5159,10 @@
       "heroes": [
         "meepo"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/meepo_auto_escape/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/meepo_auto_escape/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4544,6 +5184,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/incoming_damage_hud/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/incoming_damage_hud/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4562,6 +5206,10 @@
       "heroes": [
         "tinker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_turret_double_tap/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_turret_double_tap/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4581,6 +5229,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ntfy_match_notifier/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ntfy_match_notifier/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4604,6 +5256,10 @@
         "beastmaster",
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_summons_kiting/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_summons_kiting/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4634,6 +5290,10 @@
       "heroes": [
         "dazzle"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dazzle_support/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dazzle_support/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4656,6 +5316,10 @@
       "heroes": [
         "keeper_of_the_light"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kotl_illuminate_kill_release/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kotl_illuminate_kill_release/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4675,6 +5339,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/hero_speed_overlay/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/hero_speed_overlay/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4696,6 +5364,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ai_chat_responder/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ai_chat_responder/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4724,6 +5396,10 @@
       "heroes": [
         "windranger"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/windranger_combo/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/windranger_combo/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4746,6 +5422,10 @@
       "heroes": [
         "lone_druid"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lone_druid_bear_ai_deluxe/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lone_druid_bear_ai_deluxe/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4765,6 +5445,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ultrashizfrenia_laugh/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ultrashizfrenia_laugh/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4784,6 +5468,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ultrashizfrenia_high_five/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ultrashizfrenia_high_five/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4806,6 +5494,10 @@
       "heroes": [
         "rubick"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/rubick_last_spell/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/rubick_last_spell/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4828,6 +5520,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_combo_panel/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_combo_panel/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4850,6 +5546,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_ice_wall_farm/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_ice_wall_farm/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4872,6 +5572,10 @@
       "heroes": [
         "meepo"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/meepo_block/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/meepo_block/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4891,6 +5595,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_strength_low_hp/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_strength_low_hp/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4910,6 +5618,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/combine_lock_click/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/combine_lock_click/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4932,6 +5644,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_ice_wall_cursor/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_ice_wall_cursor/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4954,6 +5670,10 @@
       "heroes": [
         "chaos_knight"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/chaos_knight_crit_guard/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/chaos_knight_crit_guard/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4976,6 +5696,10 @@
       "heroes": [
         "witch_doctor"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/witch_doctor_ward_controller/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/witch_doctor_ward_controller/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -4995,6 +5719,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sense_metrics/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/sense_metrics/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -5017,6 +5745,10 @@
       "heroes": [
         "terrorblade"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/terrorblade_conjure_spam/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/terrorblade_conjure_spam/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -5039,6 +5771,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_alacrity_allies_panel/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_alacrity_allies_panel/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -5058,6 +5794,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/html_widget/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/html_widget/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -5077,6 +5817,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/synoptic_forecast/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/synoptic_forecast/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -5096,6 +5840,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pedometer/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pedometer/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -5115,6 +5863,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/luchik/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/luchik/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -5134,6 +5886,10 @@
         ]
       },
       "date": "2026-10-15",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/deny_taunt/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/deny_taunt/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -5156,6 +5912,10 @@
       "heroes": [
         "pudge"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pudge_hook_ai/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pudge_hook_ai/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -5201,6 +5961,10 @@
         ]
       },
       "date": "2026-10-17",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/echo_bkb_dodge/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/echo_bkb_dodge/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {

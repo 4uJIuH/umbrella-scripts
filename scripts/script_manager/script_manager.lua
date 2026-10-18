@@ -710,7 +710,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 local JSON = require("assets.JSON")
 
-local VERSION = "2.12.1"
+local VERSION = "2.13.0"
 
 local K = {
 	CFG = "script_market",
@@ -3907,20 +3907,24 @@ function view.detail()
 		right = right - (8 + w) * ra
 	end
 
+	-- the changelog sits under the install button, at least as wide as it
+	local low_right = cx + cw
 	if s.log then
-		local lw = 14 + 13 + 7 + g.width(500, 13, L("sm_log_btn")) + 16
-		local lx = right - 8 - lw
+		local tw = 12 + 7 + g.width(500, 12, L("sm_log_btn"))
+		local lw = math.max(aw, tw + 28)
+		local lx = cx + cw - lw
 		local lhv = anim.hover("d_log")
-		g.rect(lx, y + 23, lw, 34, T.white, 17, 0.06 + 0.06 * lhv)
-		g.glyph(K.G.history, 12, lx + 14 + 6.5, y + 40, anim.mix(T.t3, T.t1, lhv))
-		g.text(500, 13, L("sm_log_btn"), lx + 14 + 13 + 7, y + 40, anim.mix(T.t2, T.t1, lhv))
-		hit.add(lx, y + 23, lw, 34, "d_log", { click = function() market.log_open(s) end })
-		right = lx
+		g.rect(lx, y + 65, lw, 28, T.white, 14, 0.06 + 0.06 * lhv)
+		local tx = lx + (lw - tw) / 2
+		g.glyph(K.G.history, 11, tx + 6, y + 79, anim.mix(T.t3, T.t1, lhv))
+		g.text(500, 12, L("sm_log_btn"), tx + 12 + 7, y + 79, anim.mix(T.t2, T.t1, lhv))
+		hit.add(lx, y + 65, lw, 28, "d_log", { click = function() market.log_open(s) end })
+		low_right = lx
 	end
 
 	g.rect(cx, y, 80, 80, s.color, 20, 0.15)
 	g.glyph(s.glyph, 32, cx + 40, y + 40, s.color)
-	local title_w = right - 16 - (cx + 100)
+	local title_w = math.min(right, low_right) - 16 - (cx + 100)
 	local tag = tr(s.tag)
 	local tag_fits = g.width(400, 14, tag) <= title_w
 	local title_y, tag_y, chip_y = 27, 56, 56

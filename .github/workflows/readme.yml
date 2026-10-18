@@ -33,6 +33,9 @@ jobs:
       - name: downloads
         run: python .github/stats.py
 
+      - name: changelogs
+        run: python .github/changelogs.py
+
       - name: readme
         run: python .github/pages.py
 

@@ -860,6 +860,10 @@
           "Place `lane_pull.lua` in `umbrella\\scripts`.",
           "Reload the Lua scripts."
         ]
+      },
+      "changelog_url": {
+        "ru": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/lane_pull/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/lane_pull/CHANGELOG.en.md"
       }
     },
     {
@@ -1025,6 +1029,10 @@
           "Place `auto_stack.lua` in `umbrella\\scripts`.",
           "Reload the Lua scripts."
         ]
+      },
+      "changelog_url": {
+        "ru": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/auto_stack/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/auto_stack/CHANGELOG.en.md"
       }
     },
     {
@@ -1137,6 +1145,10 @@
           "Put `MusicUI.lua` into the `scripts` folder next to your cheat.",
           "Run `MusicUI.exe` and follow the prompts in the console."
         ]
+      },
+      "changelog_url": {
+        "ru": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/musicui/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/scripts/musicui/CHANGELOG.en.md"
       }
     },
     {
@@ -1180,6 +1192,10 @@
           "Download the archive from the author’s <a href=\"https://github.com/But3rflys/umbrella-work/releases/download/umbrella-lua-v1.0.4/umbrella-lua.zip\" target=\"_blank\" rel=\"noopener\">latest release</a>.",
           "Install it in a compatible development tool using that tool’s instructions."
         ]
+      },
+      "changelog_url": {
+        "ru": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/skill/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/But3rflys/umbrella-work/main/skill/CHANGELOG.en.md"
       }
     },
     {

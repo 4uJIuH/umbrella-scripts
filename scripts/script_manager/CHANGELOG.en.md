@@ -1,3 +1,9 @@
+# Update v2.13.0
+
+- Every script in the catalog has a changelog.
+- The Changelog button moved under the install button.
+- Scripts from other authors' repositories show the author's history: from their changelog files or their release notes.
+
 # Fix v2.12.1
 
 - Fixed Script Manager 2.12.0 failing to load ("attempt to assign to const variable").
