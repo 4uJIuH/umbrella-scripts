@@ -1,3 +1,9 @@
+# Update v2.14.1
+
+- Only one account votes from an IP: one vote per script, and it can be changed. The same account votes as usual from another IP.
+- Votes are accepted only from Steam IDs with a Steam or OpenDota profile; made-up IDs are rejected.
+- When a vote is refused, the manager says why.
+
 # Update v2.14.0
 
 - Script cards have a Suggest button: send the author an improvement proposal, an idea, a bug report or anything else.

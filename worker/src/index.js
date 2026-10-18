@@ -7,8 +7,6 @@ const PER_SCRIPT = 2;
 const SCRIPTS_PER_HOUR = 5;
 const PER_IP = 20;
 const DAY = 86400;
-const VOTE_ACCOUNTS = 3;
-const VOTES_PER_HOUR = 60;
 const TEXT_MIN = 10;
 const TEXT_MAX = 1000;
 const STEAM_BASE = 76561197960265728n;
@@ -99,15 +97,16 @@ async function handleVote(request, env, ctx) {
   if (![-1, 0, 1].includes(vote)) return json({ error: "bad vote" }, 400);
   if (typeof script !== "string" || !(await knownScripts(ctx)).has(script)) return json({ error: "unknown script" }, 404);
 
-  // one address votes from at most 3 accounts a day and 60 times an hour, so made-up Steam IDs cannot flood the ratings
   const now = Math.floor(Date.now() / 1000);
+  const real = await realAccount(env, user, now);
+  if (real === null) return json({ error: "verify_unavailable" }, 503);
+  if (!real) return json({ error: "fake_account" }, 403);
+
+  // an address belongs to the first account that votes from it, so every script gets one vote per IP
   const ip = await ipHash(request);
-  const { results: log } = await env.DB.prepare("SELECT steam_id, created FROM vote_log WHERE ip = ? AND created > ?")
-    .bind(ip, now - DAY).all();
-  const accounts = new Set(log.map((r) => r.steam_id));
-  if (!accounts.has(user) && accounts.size >= VOTE_ACCOUNTS) return json({ error: "accounts_limit" }, 429);
-  if (log.filter((r) => r.created > now - HOUR).length >= VOTES_PER_HOUR) return json({ error: "votes_limit" }, 429);
-  await env.DB.prepare("INSERT INTO vote_log (ip, steam_id, created) VALUES (?, ?, ?)").bind(ip, user, now).run();
+  await env.DB.prepare("INSERT OR IGNORE INTO ip_owner (ip, steam_id, created) VALUES (?, ?, ?)").bind(ip, user, now).run();
+  const owner = await env.DB.prepare("SELECT steam_id FROM ip_owner WHERE ip = ?").bind(ip).first();
+  if (!owner || owner.steam_id !== user) return json({ error: "ip_taken" }, 403);
 
   if (vote === 0) {
     await env.DB.prepare("DELETE FROM votes WHERE steam_id = ? AND script_id = ?").bind(user, script).run();
@@ -171,6 +170,31 @@ async function profile(account) {
   } catch {
     return null;
   }
+}
+
+async function steamProfile(user) {
+  try {
+    const res = await fetch("https://steamcommunity.com/profiles/" + user + "?xml=1", { signal: AbortSignal.timeout(4000) });
+    if (!res.ok) return null;
+    const xml = await res.text();
+    if (xml.includes("<error>")) return false;
+    return /<steamID><!\[CDATA\[[^\]]+\]\]>/.test(xml);
+  } catch {
+    return null;
+  }
+}
+
+// a Steam ID votes only if OpenDota or the Steam community knows a profile behind it; a pass is kept for good, a miss for a day
+async function realAccount(env, user, now) {
+  const id = BigInt(user);
+  if (id <= STEAM_BASE || id > STEAM_BASE + 0xffffffffn) return false;
+  const row = await env.DB.prepare("SELECT ok, checked FROM accounts WHERE steam_id = ?").bind(user).first();
+  if (row && (row.ok || row.checked > now - DAY)) return !!row.ok;
+  let ok = !!(await profile((id - STEAM_BASE).toString()));
+  if (!ok) ok = await steamProfile(user);
+  if (ok === null) return null;
+  await env.DB.prepare("INSERT OR REPLACE INTO accounts (steam_id, ok, checked) VALUES (?, ?, ?)").bind(user, ok ? 1 : 0, now).run();
+  return ok;
 }
 
 function clip(value, max) {

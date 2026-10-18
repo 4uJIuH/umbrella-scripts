@@ -493,6 +493,8 @@ local localization = qLocalization.new({
 		sm_rate = "Rating",
 		sm_rate_nouser = "Voting is unavailable: Steam ID not found",
 		sm_rate_fail = "Vote was not saved",
+		sm_rate_ip = "Another account has already voted from this IP",
+		sm_rate_fake = "Steam ID failed verification: no Steam or OpenDota profile",
 
 		sm_settings = "Settings",
 		sm_g_updates = "UPDATES",
@@ -710,6 +712,8 @@ local localization = qLocalization.new({
 		sm_rate = "Рейтинг",
 		sm_rate_nouser = "Голосование недоступно: Steam ID не найден",
 		sm_rate_fail = "Голос не сохранён",
+		sm_rate_ip = "С этого IP уже голосовал другой аккаунт",
+		sm_rate_fake = "Steam ID не прошёл проверку: нет профиля в Steam или OpenDota",
 
 		sm_settings = "Настройки",
 		sm_g_updates = "ОБНОВЛЕНИЯ",
@@ -756,7 +760,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 local JSON = require("assets.JSON")
 
-local VERSION = "2.14.0"
+local VERSION = "2.14.1"
 
 local K = {
 	CFG = "script_market",
@@ -2336,16 +2340,17 @@ function market.rate_vote(id, vote)
 	local prev = r.mine[id] or 0
 	local want = prev == vote and 0 or vote
 	r.busy[id] = true
-	web.post(r.url .. "/vote", JSON:encode({ script = id, user = r.user, vote = want }), function(body)
+	web.post(r.url .. "/vote", JSON:encode({ script = id, user = r.user, vote = want }), function(body, _, err)
 		r.busy[id] = nil
 		local ok, data = false, nil
-		if body then ok, data = pcall(function() return JSON:decode(body) end) end
+		if body or err then ok, data = pcall(function() return JSON:decode(body or err) end) end
 		if ok and type(data) == "table" and tonumber(data.up) and tonumber(data.down) then
 			r.tot[id] = { up = data.up, down = data.down }
 			r.mine[id] = want ~= 0 and want or nil
 			r.rev = r.rev + 1
 		else
-			market.note("sm_err_t", L("sm_rate_fail"))
+			local why = ok and type(data) == "table" and ({ ip_taken = "sm_rate_ip", fake_account = "sm_rate_fake" })[data.error]
+			market.note("sm_err_t", L(why or "sm_rate_fail"))
 		end
 	end)
 end
