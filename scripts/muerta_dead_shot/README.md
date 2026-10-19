@@ -3,13 +3,9 @@
 подбирает траекторию Dead Shot с рикошетами и страхом к Muerta / plans Dead Shot ricochets and fears targets toward Muerta
 
 <!-- releases:start -->
-Скачать: [muerta_dead_shot.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/muerta-dead-shot-v1.0.0/muerta_dead_shot.lua) — `muerta-dead-shot-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `muerta_dead_shot.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/muerta_dead_shot/muerta_dead_shot.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`muerta-dead-shot-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/muerta-dead-shot-v1.0.0) | 2026-10-13 | [muerta_dead_shot.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/muerta-dead-shot-v1.0.0/muerta_dead_shot.lua) | 6 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=muerta-dead-shot&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=muerta-dead-shot&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 1. Отключите автокаст Dead Shot в стандартном комбо Umbrella.
 2. Поместите `muerta_dead_shot.lua` в `umbrella\scripts` и перезагрузите скрипты.
 3. Назначьте этому скрипту клавишу комбо Umbrella; настройки находятся в `Heroes → Hero List → Muerta → Main Settings → Dead Shot`.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ Replaces the first-skill cast from Umbrella's combo and searches for a suitable 
 1. Disable Dead Shot auto-cast in Umbrella's built-in combo.
 2. Place `muerta_dead_shot.lua` in `umbrella\scripts` and reload scripts.
 3. Bind this script to the Umbrella combo key; settings are under `Heroes → Hero List → Muerta → Main Settings → Dead Shot`.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

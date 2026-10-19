@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`anti-pause-helper-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/anti-pause-helper-v1.0.0) | 2026-10-18 | [anti_pause_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/anti-pause-helper-v1.0.0/anti_pause_helper.lua) | 2 |
+| [`anti-pause-helper-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/anti-pause-helper-v1.0.0) | 2026-10-18 | [anti_pause_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/anti-pause-helper-v1.0.0/anti_pause_helper.lua) | 3 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=anti-pause-helper&expanded=true)
 <!-- releases:end -->
