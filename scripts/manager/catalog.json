@@ -6139,6 +6139,24 @@
         "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/venomancer_ward_controller/CHANGELOG.en.md"
       },
       "version_marker": "NONE"
+    },
+    {
+      "id": "web_radar",
+      "version": "2.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/web_radar/web_radar.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/web_radar/web_radar.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "4uJIuH",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Main \u2192 Cloud Radar"
+        ],
+        "en": [
+          "Scripts \u2192 Main \u2192 Cloud Radar"
+        ]
+      },
+      "date": "2026-10-18"
     }
   ]
 }

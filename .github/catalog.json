@@ -11431,6 +11431,54 @@
           "Open `Heroes → Hero List → Venomancer → Main Settings → Ward Settings`."
         ]
       }
+    },
+    {
+      "id": "web_radar",
+      "tag": "web-radar",
+      "title": "Cloud Radar",
+      "kind": "lua",
+      "category": "dota",
+      "file": "web_radar.lua",
+      "author": "4uJIuH",
+      "author_github": "4uJIuH",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "2.0.0",
+        "date": "2026-10-18",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/web_radar/web_radar.lua"
+      },
+      "ru": {
+        "tagline": "живой радар матча для друзей по ссылке",
+        "about": "Показывает друзьям карту вашего матча в браузере: героев, варды, руны, вышки, Рошана и ленту событий. Сервер не нужен: нажмите Start и отправьте ссылку. Передается только то, что видит ваша команда.",
+        "features": [
+          "Карта с иконками героев, вардов, рун и вышек",
+          "Предметы, ульт, KDA и байбек у видимых героев",
+          "Лента событий: смерти, руны, телепорты, сканы, Рошан и Торментор",
+          "Карта и консоль поверх игры (картинка в картинке)"
+        ],
+        "install": [
+          "Поместите `web_radar.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Scripts → Main → Cloud Radar`, включите радар и нажмите Start.",
+          "Скопируйте ссылку из поля «Ссылка» и отправьте друзьям."
+        ]
+      },
+      "en": {
+        "tagline": "live match radar for friends via a link",
+        "about": "Shows your match map to friends in a browser: heroes, wards, runes, towers, Roshan and an event feed. No server needed: press Start and send the link. Only what your team can see is shared.",
+        "features": [
+          "Map with hero, ward, rune and tower icons",
+          "Items, ultimate, KDA and buyback for visible heroes",
+          "Event feed: deaths, runes, teleports, scans, Roshan and Tormentor",
+          "Map and console on top of the game (picture in picture)"
+        ],
+        "install": [
+          "Place `web_radar.lua` in the `umbrella\\scripts` folder.",
+          "Reload the Lua scripts.",
+          "Open `Scripts → Main → Cloud Radar`, enable the radar and press Start.",
+          "Copy the link from the Link field and send it to friends."
+        ]
+      }
     }
   ]
 }
