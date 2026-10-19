@@ -21,7 +21,11 @@
           "Scripts \u2192 Scripts \u2192 Auto Support Buy"
         ]
       },
-      "date": "2026-10-19"
+      "date": "2026-10-19",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_support_buy/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_support_buy/CHANGELOG.en.md"
+      }
     },
     {
       "id": "tinker_turret_dodge",

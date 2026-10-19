@@ -6,6 +6,7 @@
 Репозиторий: https://github.com/4uJIuH/umbrella-scripts
 
 <!-- scripts:ru:start -->
+- [Auto Support Buy](scripts/auto_support_buy) — покупает смоки и варды при полном запасе в лавке
 - [Tinker Turret Dodge](scripts/tinker_turret_dodge) — автоматический додж опасных способностей турелями Тинкера
 - [Tinker Auto Farm](scripts/tinker_auto_farm) — автоматический фарм на Тинкере
 - [Auto Shackleshot](scripts/auto_shackleshot) — автоматическое применение Shackleshot за Windranger
@@ -300,6 +301,7 @@ Site: https://4ujiuh.github.io/umbrella-scripts/
 Repository: https://github.com/4uJIuH/umbrella-scripts
 
 <!-- scripts:en:start -->
+- [Auto Support Buy](scripts/auto_support_buy) — buys smokes and wards when the shop stock is full
 - [Tinker Turret Dodge](scripts/tinker_turret_dodge) — automatically dodges dangerous abilities with Tinker turrets
 - [Tinker Auto Farm](scripts/tinker_auto_farm) — automatic farming on Tinker
 - [Auto Shackleshot](scripts/auto_shackleshot) — automatic Shackleshot on Windranger
