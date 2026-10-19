@@ -37,8 +37,23 @@ header{border-bottom:1px solid var(--soft);background:color-mix(in srgb,var(--bg
 .seg{display:flex;border:1px solid var(--border);border-radius:8px;padding:2px}
 .seg button{height:26px;padding:0 8px;border-radius:6px;color:var(--faint);font-size:12px;font-weight:600;transition:color .2s,background .2s}
 .seg button.on{color:var(--fg);background:var(--sec)}
-main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-template-columns:320px minmax(0,1fr) 380px;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"score score score" "feed map teams"}
-#scoreCard{grid-area:score;overflow:visible}
+main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12px 20px 16px}
+.cols{flex:1;min-height:0;display:flex;gap:0}
+.zone{display:flex;flex-direction:column;gap:12px;min-height:0;min-width:0}
+.zone.top{flex:none}
+.zone.col{flex:none}
+.zone.center{flex:1}
+.zone.empty{display:none}
+.gut{flex:none;width:12px;cursor:col-resize;position:relative}
+.gut::after{content:'';position:absolute;left:5px;top:40%;bottom:40%;width:2px;border-radius:1px;background:var(--border);opacity:0;transition:opacity .15s}
+.gut:hover::after,.gut.drag::after{opacity:1}
+.gut.off{cursor:default;pointer-events:none}
+.zone > .card{flex:none}
+.zone > #mapCard,.zone > #console,.zone > #teamsCard{flex:1 1 0;min-height:220px}
+.zone.top > #mapCard{flex:none;height:70vh}
+.zone.top > #console,.zone.top > #teamsCard{flex:none;height:320px}
+#scoreCard{overflow:visible}
+.card:not(#mapCard){zoom:var(--z,1)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .card-h{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--soft);flex:none}
 .card-h h2{font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:8px}
@@ -46,9 +61,7 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
 .card-h .sp{flex:1}
 .icon-btn{width:30px;height:30px;border-radius:8px;color:var(--faint);display:grid;place-items:center;transition:.15s}
 .icon-btn:hover{color:var(--fg);background:var(--sec)}
-#feedCol{grid-area:feed;display:flex;flex-direction:column;gap:12px;min-height:0}
-#mapCard{grid-area:map}
-#teamsCard{grid-area:teams;position:relative;overflow:visible}
+#teamsCard{position:relative;overflow:visible}
 #teams{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;border-radius:0 0 12px 12px}
 #teamsCard .opts{top:48px;right:10px;width:220px}
 .tgroup + .tgroup{border-top:1px solid var(--border)}
@@ -60,7 +73,7 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
 .obj .k{font-size:11.5px;color:var(--faint);line-height:1.2}
 .obj .v{font-size:13px;font-weight:600;line-height:1.3}
 .obj .v.ok{color:var(--ok)} .obj .v.bad{color:var(--bad)} .obj .v.warn{color:var(--warn)}
-#console{flex:1;min-height:200px}
+#console{min-height:200px}
 #console.pop{height:100vh;border-radius:0;border:0}
 #log{flex:1;overflow:auto;padding:6px 0;scrollbar-width:thin}
 #log:empty::after{content:attr(data-empty);display:block;color:var(--faint);font-size:13px;padding:12px 14px}
@@ -123,7 +136,7 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
 .opt span{flex:1}
 .sw{width:30px;height:18px;border-radius:9px;background:var(--border);position:relative;transition:.15s;flex:none}
 .sw::after{content:'';position:absolute;left:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:.15s}
-.opt.on .sw{background:var(--ok)} .opt.on .sw::after{left:14px}
+.opt.on .sw,.sw.on{background:var(--ok)} .opt.on .sw::after,.sw.on::after{left:14px}
 .opt.on{color:var(--fg)}
 .opts .sep{height:1px;background:var(--soft);margin:6px 4px}
 .mapbtns{display:flex;gap:4px;padding:2px 4px}
@@ -194,8 +207,63 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
 .hero.fogrow .portrait img{filter:saturate(.5)}
 .hero.deadrow{opacity:.55}
 .hero.deadrow .portrait img{filter:grayscale(1)}
-@media (max-width:1320px){main{grid-template-columns:minmax(0,1fr) 380px;grid-template-areas:"score score" "map teams" "feed teams";grid-template-rows:auto minmax(0,1fr) 300px}#feedCol{flex-direction:row}#feedCol > *{flex:1}}
-@media (max-width:900px){html,body{height:auto}main{display:flex;flex-direction:column}#mapCard{height:min(100vw,640px)}#feedCol{flex-direction:column}#console{height:320px;flex:none}.sb{flex-wrap:wrap;justify-content:center}.sb-team{flex:1 1 100%}.sb-mid{order:-1}.crumb,.gh{display:none}.bar{gap:8px;padding:0 12px}}
+@media (max-width:900px){html,body{height:auto}.cols{flex-direction:column;gap:12px}.zone.col{width:auto!important}.gut{display:none}.zone > #mapCard{flex:none;height:min(100vw,640px)}.zone > #console,.zone > #teamsCard{flex:none;height:420px}.sb{grid-template-columns:1fr}.sb-mid{order:-1}.crumb,.gh{display:none}.bar{gap:8px;padding:0 12px}#drawer{width:100%}}
+.compact main{gap:8px;padding:8px 10px 10px}.compact .zone{gap:8px}.compact .card-h{padding:8px 12px}.compact .hero{padding:8px 12px}.compact .ev{padding:3px 12px 3px 9px}
+.compact .obj{padding:6px 12px}.compact .team-h{padding:8px 12px}.compact .sb{padding:6px 12px 8px}
+#teams.no-name .pn,#teams.no-state .state,#teams.no-bars .bars,#teams.no-kpis .kpis,#teams.no-attrs .attrs,#teams.no-extra .extra,
+#teams.no-items .slots.inv,#teams.no-backpack .slots.bp,#teams.no-abilities .slots.abil{display:none}
+#score.no-nw .gold,#score.no-mana .mb,#score.no-numbers .hb b,#score.no-numbers .mb b,#score.no-ult .ul,#score.no-clock .daybox,#score.no-heads .sb-head span:not(.flag):not(.gold){display:none}
+#log.noicons .ev{grid-template-columns:40px 1fr}#log.noicons .ev > :nth-child(2){display:none}
+#log.rev{display:flex;flex-direction:column-reverse;justify-content:flex-end}
+.legend.off{display:none}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:420px;z-index:50;background:var(--card);border-left:1px solid var(--border);box-shadow:-16px 0 40px rgba(0,0,0,.35);display:flex;flex-direction:column;transform:translateX(105%);transition:transform .22s cubic-bezier(.3,.7,.2,1)}
+#drawer.on{transform:none}
+#scrim{position:fixed;inset:0;z-index:49;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s}
+#scrim.on{opacity:1;pointer-events:auto}
+.dr-h{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--soft)}
+.dr-h h2{font-size:15px;font-weight:600;flex:1;display:flex;align-items:center;gap:10px}
+.dr-h h2 i{color:var(--faint);font-size:13px}
+.dr-tabs{display:flex;flex-wrap:wrap;gap:2px;padding:8px 10px;border-bottom:1px solid var(--soft)}
+.dr-tabs button{height:30px;padding:0 10px;border-radius:8px;color:var(--faint);font-size:12.5px;font-weight:500;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.dr-tabs button i{font-size:11px}
+.dr-tabs button:hover{color:var(--fg)}
+.dr-tabs button.on{background:var(--sec);color:var(--fg)}
+.dr-body{flex:1;overflow-y:auto;padding:6px 10px 16px;scrollbar-width:thin}
+.dr-body h3{font-size:11.5px;font-weight:600;color:var(--faint);padding:14px 6px 6px;text-transform:uppercase;letter-spacing:.05em}
+.dr-body .hint{font-size:12px;color:var(--faint);padding:0 6px 8px;line-height:1.45}
+.row-c{display:flex;align-items:center;gap:12px;padding:8px 6px;border-radius:8px;font-size:13px;color:var(--muted);min-height:38px}
+.row-c:hover{background:var(--sec)}
+.row-c > span{flex:1;min-width:0}
+.row-c.on{color:var(--fg)}
+.row-c .seg button{height:24px;font-size:11.5px}
+.row-c input[type=range]{width:130px;accent-color:var(--ok)}
+.row-c output{width:42px;text-align:right;font-size:12px;color:var(--faint)}
+.row-c input[type=color]{width:34px;height:24px;border:1px solid var(--border);border-radius:6px;background:none;padding:1px;cursor:pointer}
+.row-c.clickable{cursor:pointer}
+.dr-f{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--soft)}
+.dr-f button{flex:1;height:32px;border-radius:8px;border:1px solid var(--border);font-size:12.5px;font-weight:500;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.dr-f button:hover{color:var(--fg);background:var(--sec)}
+.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 6px}
+.presets button{height:56px;border-radius:10px;border:1px solid var(--border);font-size:12px;font-weight:500;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.presets button i{font-size:15px;color:var(--faint)}
+.presets button:hover{color:var(--fg);border-color:var(--faint)}
+.le{display:grid;grid-template-columns:1fr 1.25fr 1fr;grid-template-areas:"top top top" "left center right";gap:6px;padding:0 6px}
+.le-box{border:1.5px dashed var(--border);border-radius:10px;padding:22px 6px 6px;min-height:64px;position:relative;display:flex;flex-direction:column;gap:5px;transition:border-color .15s,background .15s}
+.le-box::before{content:attr(data-label);position:absolute;left:8px;top:4px;font-size:10.5px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:.05em}
+.le-box.over{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 8%,transparent)}
+.le-box[data-slot=top]{grid-area:top;flex-direction:row;flex-wrap:wrap;min-height:54px}
+.le-box[data-slot=left]{grid-area:left}.le-box[data-slot=center]{grid-area:center}.le-box[data-slot=right]{grid-area:right}
+.chip-p{display:flex;align-items:center;gap:6px;padding:6px 7px;border-radius:7px;background:var(--sec);font-size:12px;font-weight:500;cursor:grab;user-select:none}
+.chip-p:active{cursor:grabbing}
+.chip-p.dragging{opacity:.4}
+.chip-p .g{color:var(--faint);font-size:10px}
+.chip-p span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip-p button{width:20px;height:20px;border-radius:5px;color:var(--faint);font-size:11px;display:grid;place-items:center}
+.chip-p button:hover{color:var(--fg);background:var(--border)}
+.chip-p.off{opacity:.45}
+.chip-p.off span{text-decoration:line-through}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(10px);z-index:60;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 14px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.toast.on{opacity:1;transform:translateX(-50%)}
 </style>
 </head>
 <body>
@@ -207,20 +275,28 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
   <div class="sp"></div>
   <div class="seg" id="lang"><button data-l="ru">RU</button><button data-l="en">EN</button></div>
   <button class="ghost" id="theme"><i class="fa-solid fa-moon"></i></button>
+  <button class="ghost" id="custom" type="button"><i class="fa-solid fa-sliders"></i><span class="gh" id="customText"></span></button>
   <a class="ghost" href="https://github.com/4uJIuH/umbrella-scripts" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i><span class="gh">GitHub</span></a>
 </div></header>
 <main>
-  <section class="card" id="scoreCard"><div class="sb" id="score"></div></section>
-  <section id="feedCol">
-    <div class="card"><div class="card-h"><h2><i class="fa-solid fa-crosshairs"></i><span id="hObj"></span></h2></div><div class="objs" id="objs"></div></div>
-    <div class="card" id="console"><div class="card-h"><h2><i class="fa-solid fa-list-ul"></i><span id="hLog"></span></h2><div class="sp"></div><button class="icon-btn" id="popcon" type="button"><i class="fa-solid fa-up-right-from-square"></i></button></div><div id="log"></div></div>
-  </section>
-  <section class="card" id="mapCard">
-    <div id="stage"><button class="gear" id="gear" type="button"><i class="fa-solid fa-gear"></i></button><div class="opts" id="opts"></div><canvas id="map"></canvas><div id="marks"></div><div id="empty"><div><i class="fa-solid fa-satellite-dish"></i><span id="emptyText"></span></div></div></div>
-    <div class="legend" id="legend"></div>
-  </section>
-  <section class="card" id="teamsCard"><div class="card-h"><h2><i class="fa-solid fa-users"></i><span id="hTeams"></span></h2><div class="sp"></div><button class="icon-btn" id="teamGear" type="button"><i class="fa-solid fa-gear"></i></button></div><div class="opts" id="teamOpts"></div><div id="teams"></div></section>
+  <div class="zone top" id="slotTop"></div>
+  <div class="cols"><div class="zone col" id="slotLeft"></div><div class="gut" id="gutL"></div><div class="zone center" id="slotCenter"></div><div class="gut" id="gutR"></div><div class="zone col" id="slotRight"></div></div>
+  <div hidden id="panels">
+<section class="card" id="scoreCard"><div class="sb" id="score"></div></section>
+<section class="card" id="objCard"><div class="card-h"><h2><i class="fa-solid fa-crosshairs"></i><span id="hObj"></span></h2></div><div class="objs" id="objs"></div></section>
+<section class="card" id="console"><div class="card-h"><h2><i class="fa-solid fa-list-ul"></i><span id="hLog"></span></h2><div class="sp"></div><button class="icon-btn" id="popcon" type="button"><i class="fa-solid fa-up-right-from-square"></i></button></div><div id="log"></div></section>
+<section class="card" id="mapCard">
+<div id="stage"><button class="gear" id="gear" type="button"><i class="fa-solid fa-gear"></i></button><div class="opts" id="opts"></div><canvas id="map"></canvas><div id="marks"></div><div id="empty"><div><i class="fa-solid fa-satellite-dish"></i><span id="emptyText"></span></div></div></div>
+<div class="legend" id="legend"></div>
+</section>
+<section class="card" id="teamsCard"><div class="card-h"><h2><i class="fa-solid fa-users"></i><span id="hTeams"></span></h2><div class="sp"></div><button class="icon-btn" id="teamGear" type="button"><i class="fa-solid fa-gear"></i></button></div><div class="opts" id="teamOpts"></div><div id="teams"></div></section>
+  </div>
 </main>
+<div id="scrim"></div>
+<aside id="drawer"><div class="dr-h"><h2><i class="fa-solid fa-sliders"></i><span id="drTitle"></span></h2><button class="icon-btn" id="drClose" type="button"><i class="fa-solid fa-xmark"></i></button></div>
+<div class="dr-tabs" id="drTabs"></div><div class="dr-body" id="drBody"></div>
+<div class="dr-f"><button type="button" id="cfgExport"><i class="fa-solid fa-copy"></i><span></span></button><button type="button" id="cfgImport"><i class="fa-solid fa-paste"></i><span></span></button><button type="button" id="cfgReset"><i class="fa-solid fa-rotate-left"></i><span></span></button></div></aside>
+<div class="toast" id="toast"></div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getDatabase, ref, onValue, query, limitToLast, onChildAdded, onChildChanged, onChildRemoved } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
@@ -302,7 +378,41 @@ const ALL = {
 };
 let LANG = localStorage.getItem('cr_lang') || ((navigator.language || '').toLowerCase().startsWith('ru') ? 'ru' : 'en');
 let TEXT = ALL[LANG];
-if (localStorage.getItem('cr_theme') === 'light') document.documentElement.classList.remove('dark');
+const CFG_DEFAULT = {
+  layout: { top: ['score'], left: ['objectives', 'events'], center: ['map'], right: ['heroes'], hidden: [], wl: 320, wr: 380 },
+  layers: { heroes: true, fog: true, labels: true, creeps: true, waves: true, jungle: true, wards: true, runes: true, couriers: true, buildings: true, events: true },
+  look: { theme: 'dark', density: 'normal', zoom: 100, rad: '#57c785', dire: '#ef6b6b', mapScale: 100, heroScale: 100, legend: true },
+  top: { nw: true, heads: true, mana: true, numbers: true, ult: true, clock: true, corner: 'lh' },
+  heroes: { view: 'all', order: 'mine', name: true, state: true, bars: true, kpis: true, attrs: true, extra: true, items: true, backpack: true, abilities: true },
+  events: { death: true, rune: true, tp: true, cast: true, smoke: true, intel: true, ward: true, building: true, boss: true, scan: true, icons: true, newest: false },
+  objectives: { rosh: true, torm: true, glyph: true, scan: true, charges: true, camps: true, stock: true },
+};
+function mergeCfg(base, extra) {
+  const out = Array.isArray(base) ? base.slice() : Object.assign({}, base);
+  if (!extra || typeof extra !== 'object') return out;
+  for (const key of Object.keys(base)) {
+    const b = base[key], e = extra[key];
+    if (e === undefined) continue;
+    if (Array.isArray(b)) out[key] = Array.isArray(e) ? e.filter(x => typeof x === 'string') : b.slice();
+    else if (b && typeof b === 'object') out[key] = mergeCfg(b, e);
+    else if (typeof e === typeof b) out[key] = e;
+  }
+  return out;
+}
+let cfg;
+try { cfg = mergeCfg(CFG_DEFAULT, JSON.parse(localStorage.getItem('cr_cfg') || 'null')); } catch (e) { cfg = mergeCfg(CFG_DEFAULT, null); }
+if (!localStorage.getItem('cr_cfg')) {
+  try { Object.assign(cfg.layers, JSON.parse(localStorage.getItem('cr_layers') || '{}')); } catch (e) {}
+  if (localStorage.getItem('cr_team_view')) cfg.heroes.view = localStorage.getItem('cr_team_view');
+  if (localStorage.getItem('cr_theme')) cfg.look.theme = localStorage.getItem('cr_theme');
+}
+function saveCfg() {
+  localStorage.setItem('cr_cfg', JSON.stringify(cfg));
+}
+function themeDark() {
+  return cfg.look.theme === 'auto' ? !window.matchMedia('(prefers-color-scheme: light)').matches : cfg.look.theme !== 'light';
+}
+document.documentElement.classList.toggle('dark', themeDark());
 
 const HERO_NAMES = {
   antimage: 'Anti-Mage', furion: "Nature's Prophet", nevermore: 'Shadow Fiend', doom_bringer: 'Doom', obsidian_destroyer: 'Outworld Destroyer',
@@ -353,10 +463,10 @@ const canvas = $('map'), ctx = canvas.getContext('2d'), stage = $('stage');
 const consoleEl = $('console'), objsEl = $('objs'), logEl = $('log'), teamsEl = $('teams'), statusEl = $('status'), clockEl = $('clock');
 
 let openPip = () => {};
-let teamView = localStorage.getItem('cr_team_view') || 'all';
+let teamView = cfg.heroes.view;
 const LAYER_KEYS = [['heroes', 'fa-user'], ['fog', 'fa-eye-slash'], ['labels', 'fa-clock'], ['creeps', 'fa-people-group'], ['waves', 'fa-route'], ['jungle', 'fa-tree'],
   ['wards', 'fa-eye'], ['runes', 'fa-gem'], ['couriers', 'fa-horse'], ['buildings', 'fa-chess-rook'], ['events', 'fa-bolt']];
-const layers = Object.assign(Object.fromEntries(LAYER_KEYS.map(k => [k[0], true])), JSON.parse(localStorage.getItem('cr_layers') || '{}'));
+const layers = cfg.layers;
 
 let size = 600;
 let heroes = {};
@@ -381,6 +491,7 @@ function applyText() {
   $('teamGear').title = TEXT.teamShow;
   renderTeamOpts();
   logEl.dataset.empty = TEXT.noEvents;
+  $('customText').textContent = CT.customize;
   $('opts').innerHTML = '<h3>' + esc(TEXT.show) + '</h3>' + LAYER_KEYS.map(([key, ic]) => '<button type="button" class="opt' + (layers[key] ? ' on' : '') + '" data-k="' + key + '"><i class="fa-solid ' + ic + '"></i><span>' + esc(TEXT.layers[key]) + '</span><em class="sw"></em></button>').join('') +
     '<div class="sep"></div><h3>' + esc(TEXT.windows) + '</h3><div class="mapbtns"><button type="button" id="pip"><i class="fa-solid fa-map"></i>' + esc(TEXT.pip) + '</button></div>';
   $('pip').onclick = () => openPip();
@@ -401,7 +512,7 @@ $('opts').onclick = ev => {
   const key = b.dataset.k;
   layers[key] = !layers[key];
   b.classList.toggle('on', layers[key]);
-  localStorage.setItem('cr_layers', JSON.stringify(layers));
+  saveCfg();
 };
 function renderTeamOpts() {
   $('teamOpts').innerHTML = '<h3>' + esc(TEXT.teamShow) + '</h3>' + [['all', 'fa-users', TEXT.viewAll], ['allies', 'fa-user-shield', TEXT.viewAllies], ['enemies', 'fa-skull', TEXT.viewEnemies]]
@@ -411,7 +522,8 @@ $('teamOpts').onclick = ev => {
   const b = ev.target.closest('.opt');
   if (!b) return;
   teamView = b.dataset.v;
-  localStorage.setItem('cr_team_view', teamView);
+  cfg.heroes.view = teamView;
+  saveCfg();
   renderTeamOpts();
   sideHtml = '';
   renderSide();
@@ -441,16 +553,18 @@ $('lang').onclick = ev => {
   if (!b || b.dataset.l === LANG) return;
   LANG = b.dataset.l;
   TEXT = ALL[LANG];
+  CT = CFG_TEXT[LANG];
   localStorage.setItem('cr_lang', LANG);
   applyText();
+  if (drawer.classList.contains('on')) renderDrawer();
 };
 function themeIcon() {
   $('theme').innerHTML = '<i class="fa-solid fa-' + (document.documentElement.classList.contains('dark') ? 'moon' : 'sun') + '"></i>';
 }
 $('theme').onclick = () => {
-  const dark = document.documentElement.classList.toggle('dark');
-  localStorage.setItem('cr_theme', dark ? 'dark' : 'light');
-  themeIcon();
+  cfg.look.theme = themeDark() ? 'light' : 'dark';
+  saveCfg();
+  applyAll();
 };
 themeIcon();
 
@@ -477,7 +591,8 @@ const RUNE_ICONS = { 0: 'rune_strong.png', 1: 'rune_speed.png', 2: 'rune_ilusion
 const TOWER_ICON = 'dota_minimap_assets/towers/minimap_tower90_psd_a98bbc61.png';
 const CAMP_ICON = 'dota_minimap_assets/camps/minimap_creepcamp_psd_72d26740.png';
 const TORM_ICON = side => 'radar/icons/dota_minimap_assets/tormentor/tormentor_timer_icon_' + side + '_png.png';
-const RAD = [87, 199, 133], DIRE = [239, 107, 107], NEUTRAL = [217, 168, 78];
+let RAD = [87, 199, 133], DIRE = [239, 107, 107];
+const NEUTRAL = [217, 168, 78];
 
 function resize() {
   const s = Math.max(200, Math.min(stage.clientWidth, stage.clientHeight) - 24);
@@ -502,7 +617,7 @@ function world(r) {
   return r * size / (2 * view.half);
 }
 function unit() {
-  return Math.max(0.7, size / 700);
+  return Math.max(0.7, size / 700) * cfg.look.mapScale / 100;
 }
 
 function drawMap() {
@@ -808,7 +923,7 @@ function drawHero(h, t) {
   const [x, y] = toScreen(h.cx, h.cy);
   const age = r.f && typeof r.seen === 'number' ? Math.max(0, t - r.seen) : 0;
   const alpha = r.f === 2 ? 0.45 : (r.f === 1 ? Math.max(0.5, 1 - age / 60) : 1);
-  const s = 24 * u;
+  const s = 24 * u * cfg.look.heroScale / 100;
   ctx.globalAlpha = alpha;
   ctx.shadowColor = 'rgba(0,0,0,.6)';
   ctx.shadowBlur = 6;
@@ -962,9 +1077,9 @@ function heroCard(entry) {
     (r.max_mana ? '<div class="meter mp thin"><i style="width:' + pct(r.mana, r.max_mana) + '%"></i></div>' : '') + '</div>' +
     (kpis.length ? '<div class="kpis" style="grid-template-columns:repeat(' + kpis.length + ',1fr)"' + (s.est ? ' title="* ' + esc(TEXT.est) + '"' : '') + '>' + kpis.map(k => '<div><span>' + esc(k[0]) + '</span><b>' + esc(k[1]) + '</b></div>').join('') + '</div>' : '') +
     attrs + (extra.length ? '<div class="extra">' + extra.map(x => '<span>' + x + '</span>').join('') + '</div>' : '') +
-    (items.length ? '<div class="slots">' + inv + '</div>' : '') +
-    (back ? '<div class="slots">' + back + '</div>' : '') +
-    (abilities ? '<div class="slots">' + abilities + '</div>' : '') + '</div>';
+    (items.length ? '<div class="slots inv">' + inv + '</div>' : '') +
+    (back ? '<div class="slots bp">' + back + '</div>' : '') +
+    (abilities ? '<div class="slots abil">' + abilities + '</div>' : '') + '</div>';
 }
 
 function portraitImg(name) {
@@ -976,7 +1091,9 @@ function tile(entry) {
   const r = entry.row, info = entry.info || {}, s = info.stats || {};
   const dead = r.alive === false;
   const kda = typeof s.k === 'number' ? s.k + '/' + s.d + (typeof s.a === 'number' ? '/' + s.a : '') : '';
-  const creeps = typeof s.lh === 'number' ? s.lh + '/' + (s.dn || 0) : '';
+  const corner = cfg.top.corner;
+  const creeps = corner === 'kda' ? kda : corner === 'nw' ? (typeof s.nw === 'number' ? (s.partial ? '≥' : '') + kilo(s.nw) : '')
+    : corner === 'lh' && typeof s.lh === 'number' ? s.lh + '/' + (s.dn || 0) : '';
   let ult = '';
   if (info.ult) {
     const cd = remaining(info.ult.ready_at);
@@ -1037,7 +1154,7 @@ function renderSide() {
   const mine = (live.clock || {}).team;
   const rows = Object.values(roster).sort((a, b) => a.row.team - b.row.team || String(a.row.id).localeCompare(String(b.row.id)));
   const groups = [];
-  for (const team of (mine === 3 ? [3, 2] : [2, 3])) {
+  for (const team of (mine === 3 && cfg.heroes.order === 'mine' ? [3, 2] : [2, 3])) {
     if ((mine === 2 || mine === 3) && (teamView === 'allies' && team !== mine || teamView === 'enemies' && team === mine)) continue;
     const members = rows.filter(e => e.row.team === team);
     if (!members.length) continue;
@@ -1067,23 +1184,23 @@ function bossState(o) {
 }
 function renderObjs() {
   const obj = live.objectives || {};
+  const o = cfg.objectives;
   const cells = [];
-  const rosh = bossState(obj.roshan);
-  cells.push(['radar/icons/roshan.png', TEXT.roshan, rosh[0], rosh[1]]);
+  if (o.rosh) { const rosh = bossState(obj.roshan); cells.push(['radar/icons/roshan.png', TEXT.roshan, rosh[0], rosh[1]]); }
   const torms = list(obj.tormentors);
-  if (!torms.length) cells.push([TORM_ICON('radiant'), TEXT.tormentor, TEXT.noData, '']);
-  torms.forEach((t, i) => {
+  if (o.torm && !torms.length) cells.push([TORM_ICON('radiant'), TEXT.tormentor, TEXT.noData, '']);
+  if (o.torm) torms.forEach((t, i) => {
     const st = bossState(t);
     cells.push([TORM_ICON(i === 1 ? 'dire' : 'radiant'), TEXT.tormentor + (torms.length > 1 ? ' ' + (i + 1) : ''), st[0], st[1]]);
   });
-  cells.push(['fa-shield-halved', TEXT.glyph, cdText(obj.glyph_radiant) + ' / ' + cdText(obj.glyph_dire), '']);
-  cells.push(['fa-satellite-dish', TEXT.scan, cdText(obj.scan_radiant) + ' / ' + cdText(obj.scan_dire), '']);
+  if (o.glyph) cells.push(['fa-shield-halved', TEXT.glyph, cdText(obj.glyph_radiant) + ' / ' + cdText(obj.glyph_dire), '']);
+  if (o.scan) cells.push(['fa-satellite-dish', TEXT.scan, cdText(obj.scan_radiant) + ' / ' + cdText(obj.scan_dire), '']);
   const sc = obj.scan_charges || {};
-  if (typeof sc.r === 'number' || typeof sc.d === 'number') cells.push(['fa-bolt', TEXT.scanCharges, (sc.r ?? '—') + ' / ' + (sc.d ?? '—'), '']);
+  if (o.charges && (typeof sc.r === 'number' || typeof sc.d === 'number')) cells.push(['fa-bolt', TEXT.scanCharges, (sc.r ?? '—') + ' / ' + (sc.d ?? '—'), '']);
   const camps = list(live.camps);
-  if (camps.length) cells.push(['radar/icons/' + CAMP_ICON, TEXT.camps, camps.filter(c => c.s === 1).length + ' / ' + camps.length, '']);
+  if (o.camps && camps.length) cells.push(['radar/icons/' + CAMP_ICON, TEXT.camps, camps.filter(c => c.s === 1).length + ' / ' + camps.length, '']);
   const st = obj.stock || {};
-  if (typeof st.smoke === 'number') cells.push([itemImg('item_smoke_of_deceit'), TEXT.stock, 'Smoke ' + st.smoke + ' · Obs ' + (st.obs ?? '—') + ' · Sen ' + (st.sen ?? '—'), '']);
+  if (o.stock && typeof st.smoke === 'number') cells.push([itemImg('item_smoke_of_deceit'), TEXT.stock, 'Smoke ' + st.smoke + ' · Obs ' + (st.obs ?? '—') + ' · Sen ' + (st.sen ?? '—'), '']);
   if (cells.length % 2) cells.push(null);
   objsEl.innerHTML = cells.map(c => c ? '<div class="obj">' + (c[0].indexOf('fa-') === 0 ? '<i class="fa-solid ' + c[0] + '"></i>' : '<img src="' + esc(c[0]) + '" alt="">') +
     '<div style="min-width:0"><div class="k">' + esc(c[1]) + '</div><div class="v ' + c[3] + '">' + esc(c[2]) + '</div></div></div>' : '<div class="obj"></div>').join('');
@@ -1143,6 +1260,12 @@ function feedIcon(e) {
   return null;
 }
 
+const FEED_CATS = { death: 'death', rune: 'rune', tp_from: 'tp', tp_to: 'tp', ability: 'cast', ult: 'cast', blink: 'cast', smoke: 'smoke',
+  spot: 'intel', farm: 'intel', ward: 'ward', tower: 'building', rax: 'building', scan: 'scan', scan_used: 'scan', glyph: 'scan' };
+function feedCat(e) {
+  const k = String(e.k || '');
+  return k.indexOf('boss') === 0 ? 'boss' : (FEED_CATS[k] || 'cast');
+}
 function feedLine(key, e) {
   feedData.set(key, e);
   let line = feedLines.get(key);
@@ -1155,6 +1278,7 @@ function feedLine(key, e) {
   }
   line.className = 'ev ' + feedClass(e);
   const src = feedIcon(e);
+  line.hidden = !cfg.events[feedCat(e)];
   line.innerHTML = '<span class="t">' + clockText(e.t) + '</span>' + (src ? '<img src="' + esc(src) + '" alt="" onerror="this.style.visibility=\'hidden\'">' : '<span></span>') +
     '<span class="x">' + feedHtml(e) + '</span>';
 }
@@ -1201,6 +1325,329 @@ function refreshStatus() {
   $('emptyText').textContent = cls === 'ok' ? TEXT.waiting : text;
 }
 
+const CFG_TEXT = {
+  en: {
+    customize: 'Customize', title: 'Customize the radar', exportCfg: 'Copy', importCfg: 'Paste', resetCfg: 'Reset', copied: 'Settings copied to the clipboard',
+    pastePrompt: 'Paste the settings text', badCfg: 'These settings could not be read', resetAsk: 'Reset all radar settings to the defaults?',
+    tabs: { layout: 'Layout', map: 'Map', top: 'Top bar', heroes: 'Heroes', events: 'Events', look: 'Look' },
+    panels: { score: 'Top bar', objectives: 'Objectives', events: 'Events', map: 'Map', heroes: 'Heroes' },
+    slots: { top: 'Top', left: 'Left', center: 'Center', right: 'Right' },
+    layoutHint: 'Drag panels between the areas. The eye hides a panel. Drag the edges between columns on the page to change their width.',
+    presets: 'Presets', presetClassic: 'Classic', presetMap: 'Big map', presetStream: 'Compact', widths: 'Column width', wl: 'Left column', wr: 'Right column',
+    hide: 'Hide', show: 'Show', moveUp: 'Up', moveDown: 'Down',
+    mapLayers: 'Layers', mapLook: 'Map look', mapScale: 'Icon size', heroScale: 'Hero icon size', legend: 'Legend under the map',
+    topParts: 'What to show', nw: 'Team net worth', heads: 'Allies and enemies labels', mana: 'Mana bars', numbers: 'Numbers on the bars', ult: 'Ultimate indicator', clock: 'Clock and day or night',
+    corner: 'Number on the portrait', cornerLh: 'Creeps', cornerKda: 'KDA', cornerNw: 'NW', cornerNone: 'None',
+    heroWho: 'Whom to show', heroOrder: 'Team order', orderMine: 'My team first', orderRad: 'Radiant first', heroParts: 'Hero card',
+    hName: 'Player name', hState: 'Status (visible, fog, dead)', hBars: 'HP and mana', hKpis: 'KDA, NW, creeps, gold', hAttrs: 'Attributes, damage, armor, speed', hExtra: 'Hero damage, healing, wards, XP',
+    hItems: 'Items', hBackpack: 'Backpack and TP', hAbilities: 'Abilities',
+    evTypes: 'Event types', evLook: 'Event list', evIcons: 'Icons', evNewest: 'Newest on top',
+    ev: { death: 'Deaths', rune: 'Runes', tp: 'Teleports', cast: 'Abilities and items', smoke: 'Smoke', intel: 'Spotted and jungle farming', ward: 'Enemy wards', building: 'Towers and barracks', boss: 'Roshan and Tormentor', scan: 'Scan and glyph' },
+    objRows: 'Objectives panel', obj: { rosh: 'Roshan', torm: 'Tormentor', glyph: 'Glyph', scan: 'Scan cooldown', charges: 'Scan charges', camps: 'Camps', stock: 'Shop stock' },
+    theme: 'Theme', themeDark: 'Dark', themeLight: 'Light', themeAuto: 'System', density: 'Density', densNormal: 'Normal', densCompact: 'Compact',
+    zoom: 'Text and panel size', colors: 'Team colors', radColor: 'Radiant', direColor: 'Dire', colorsReset: 'Default colors', lang: 'Language',
+  },
+  ru: {
+    customize: 'Настроить', title: 'Настройка радара', exportCfg: 'Копировать', importCfg: 'Вставить', resetCfg: 'Сбросить', copied: 'Настройки скопированы в буфер обмена',
+    pastePrompt: 'Вставьте текст настроек', badCfg: 'Не удалось прочитать эти настройки', resetAsk: 'Сбросить все настройки радара?',
+    tabs: { layout: 'Расположение', map: 'Карта', top: 'Верхняя панель', heroes: 'Герои', events: 'События', look: 'Вид' },
+    panels: { score: 'Верхняя панель', objectives: 'Цели', events: 'События', map: 'Карта', heroes: 'Герои' },
+    slots: { top: 'Сверху', left: 'Слева', center: 'По центру', right: 'Справа' },
+    layoutHint: 'Перетаскивайте панели между областями. Глаз скрывает панель. Ширину колонок меняйте, перетаскивая их края на странице.',
+    presets: 'Готовые варианты', presetClassic: 'Классика', presetMap: 'Большая карта', presetStream: 'Компактно', widths: 'Ширина колонок', wl: 'Левая колонка', wr: 'Правая колонка',
+    hide: 'Скрыть', show: 'Показать', moveUp: 'Выше', moveDown: 'Ниже',
+    mapLayers: 'Слои', mapLook: 'Вид карты', mapScale: 'Размер значков', heroScale: 'Размер героев', legend: 'Легенда под картой',
+    topParts: 'Что показывать', nw: 'NW команд', heads: 'Подписи союзники и враги', mana: 'Полоски маны', numbers: 'Числа на полосках', ult: 'Индикатор ульта', clock: 'Время, день и ночь',
+    corner: 'Число на портрете', cornerLh: 'Крипы', cornerKda: 'KDA', cornerNw: 'NW', cornerNone: 'Нет',
+    heroWho: 'Кого показывать', heroOrder: 'Порядок команд', orderMine: 'Моя команда первой', orderRad: 'Сначала Radiant', heroParts: 'Карточка героя',
+    hName: 'Ник игрока', hState: 'Статус (виден, туман, мертв)', hBars: 'HP и мана', hKpis: 'KDA, NW, крипы, золото', hAttrs: 'Атрибуты, урон, броня, скорость', hExtra: 'Урон по героям, лечение, варды, опыт',
+    hItems: 'Предметы', hBackpack: 'Рюкзак и TP', hAbilities: 'Способности',
+    evTypes: 'Типы событий', evLook: 'Список событий', evIcons: 'Иконки', evNewest: 'Новые сверху',
+    ev: { death: 'Смерти', rune: 'Руны', tp: 'Телепорты', cast: 'Способности и предметы', smoke: 'Smoke', intel: 'Замечен и фарм леса', ward: 'Вражеские варды', building: 'Башни и казармы', boss: 'Рошан и Торментор', scan: 'Скан и глиф' },
+    objRows: 'Панель целей', obj: { rosh: 'Рошан', torm: 'Торментор', glyph: 'Глиф', scan: 'Перезарядка скана', charges: 'Заряды скана', camps: 'Кемпы', stock: 'Лавка' },
+    theme: 'Тема', themeDark: 'Темная', themeLight: 'Светлая', themeAuto: 'Как в системе', density: 'Плотность', densNormal: 'Обычная', densCompact: 'Компактная',
+    zoom: 'Размер текста и панелей', colors: 'Цвета команд', radColor: 'Radiant', direColor: 'Dire', colorsReset: 'Цвета по умолчанию', lang: 'Язык',
+  },
+};
+let CT = CFG_TEXT[LANG];
+const PANELS = { score: 'scoreCard', objectives: 'objCard', events: 'console', map: 'mapCard', heroes: 'teamsCard' };
+const SLOTS = { top: 'slotTop', left: 'slotLeft', center: 'slotCenter', right: 'slotRight' };
+const PRESETS = {
+  classic: { top: ['score'], left: ['objectives', 'events'], center: ['map'], right: ['heroes'], hidden: [], wl: 320, wr: 380 },
+  map: { top: ['score'], left: [], center: ['map'], right: ['heroes', 'objectives', 'events'], hidden: [], wl: 320, wr: 400 },
+  stream: { top: [], left: [], center: ['map'], right: ['score', 'events'], hidden: ['objectives', 'heroes'], wl: 320, wr: 460 },
+};
+let drawerTab = 'layout';
+
+function hexRgb(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+  if (!m) return null;
+  const n = parseInt(m[1], 16);
+  return [n >> 16 & 255, n >> 8 & 255, n & 255];
+}
+function applyLayout() {
+  const L = cfg.layout, placed = new Set();
+  for (const [slot, elId] of Object.entries(SLOTS)) {
+    const box = $(elId);
+    for (const id of L[slot]) {
+      if (!PANELS[id] || placed.has(id)) continue;
+      placed.add(id);
+      box.appendChild($(PANELS[id]));
+    }
+  }
+  for (const id of Object.keys(PANELS)) {
+    if (!placed.has(id)) { L.right.push(id); $('slotRight').appendChild($(PANELS[id])); }
+    $(PANELS[id]).hidden = L.hidden.includes(id);
+  }
+  for (const elId of Object.values(SLOTS)) $(elId).classList.toggle('empty', ![...$(elId).children].some(c => !c.hidden));
+  $('slotLeft').style.width = L.wl + 'px';
+  $('slotRight').style.width = L.wr + 'px';
+  const centerOn = !$('slotCenter').classList.contains('empty');
+  $('gutL').classList.toggle('off', $('slotLeft').classList.contains('empty'));
+  $('gutR').classList.toggle('off', $('slotRight').classList.contains('empty'));
+  if (!centerOn) { $('slotRight').style.flex = '1'; } else { $('slotRight').style.flex = ''; }
+  resize();
+}
+function applyLook() {
+  const dark = themeDark();
+  document.documentElement.classList.toggle('dark', dark);
+  document.body.classList.toggle('compact', cfg.look.density === 'compact');
+  document.documentElement.style.setProperty('--z', String(cfg.look.zoom / 100));
+  const rad = hexRgb(cfg.look.rad), dire = hexRgb(cfg.look.dire);
+  if (rad) { RAD = rad; document.documentElement.style.setProperty('--rad', cfg.look.rad); }
+  if (dire) { DIRE = dire; document.documentElement.style.setProperty('--dire', cfg.look.dire); }
+  $('legend').classList.toggle('off', !cfg.look.legend);
+  themeIcon();
+}
+function applyClasses() {
+  for (const key of ['name', 'state', 'bars', 'kpis', 'attrs', 'extra', 'items', 'backpack', 'abilities']) teamsEl.classList.toggle('no-' + key, !cfg.heroes[key]);
+  for (const key of ['nw', 'heads', 'mana', 'numbers', 'ult', 'clock']) $('score').classList.toggle('no-' + key, !cfg.top[key]);
+  logEl.classList.toggle('noicons', !cfg.events.icons);
+  logEl.classList.toggle('rev', cfg.events.newest);
+}
+function applyAll() {
+  teamView = cfg.heroes.view;
+  applyLook();
+  applyClasses();
+  applyLayout();
+  scoreHtml = '';
+  applyText();
+  if (drawer.classList.contains('on')) renderDrawer();
+}
+
+function getPath(path) {
+  return path.split('.').reduce((o, k) => o && o[k], cfg);
+}
+function setPath(path, value) {
+  const keys = path.split('.'), last = keys.pop();
+  const target = keys.reduce((o, k) => o[k], cfg);
+  target[last] = value;
+}
+function ctlSwitch(label, path) {
+  const on = !!getPath(path);
+  return '<div class="row-c clickable' + (on ? ' on' : '') + '" data-toggle="' + path + '"><span>' + esc(label) + '</span><em class="sw' + (on ? ' on' : '') + '"></em></div>';
+}
+function ctlSeg(label, path, options) {
+  const cur = getPath(path);
+  return '<div class="row-c on"><span>' + esc(label) + '</span><div class="seg">' + options.map(([v, t]) => '<button type="button" data-set="' + path + '" data-v="' + esc(v) + '" class="' + (cur === v ? 'on' : '') + '">' + esc(t) + '</button>').join('') + '</div></div>';
+}
+function ctlRange(label, path, min, max, step, unitText) {
+  const v = getPath(path);
+  return '<div class="row-c on"><span>' + esc(label) + '</span><input type="range" min="' + min + '" max="' + max + '" step="' + step + '" value="' + v + '" data-range="' + path + '"><output>' + v + (unitText || '') + '</output></div>';
+}
+function ctlColor(label, path) {
+  return '<div class="row-c on"><span>' + esc(label) + '</span><input type="color" value="' + esc(getPath(path)) + '" data-color="' + path + '"></div>';
+}
+function layoutEditor() {
+  const L = cfg.layout;
+  const chip = id => {
+    const off = L.hidden.includes(id);
+    return '<div class="chip-p' + (off ? ' off' : '') + '" draggable="true" data-p="' + id + '"><i class="fa-solid fa-grip-vertical g"></i><span>' + esc(CT.panels[id]) + '</span>' +
+      '<button type="button" data-hide="' + id + '" title="' + esc(off ? CT.show : CT.hide) + '"><i class="fa-solid fa-' + (off ? 'eye-slash' : 'eye') + '"></i></button></div>';
+  };
+  return '<div class="le">' + Object.keys(SLOTS).map(slot => '<div class="le-box" data-slot="' + slot + '" data-label="' + esc(CT.slots[slot]) + '">' + L[slot].filter(id => PANELS[id]).map(chip).join('') + '</div>').join('') + '</div>';
+}
+function renderDrawer() {
+  $('drTitle').textContent = CT.title;
+  const tabs = [['layout', 'fa-table-columns'], ['map', 'fa-map'], ['top', 'fa-window-maximize'], ['heroes', 'fa-users'], ['events', 'fa-list-ul'], ['look', 'fa-palette']];
+  $('drTabs').innerHTML = tabs.map(([k, ic]) => '<button type="button" data-tab="' + k + '" class="' + (drawerTab === k ? 'on' : '') + '"><i class="fa-solid ' + ic + '"></i>' + esc(CT.tabs[k]) + '</button>').join('');
+  let h = '';
+  if (drawerTab === 'layout') {
+    h += '<h3>' + esc(CT.presets) + '</h3><div class="presets"><button type="button" data-preset="classic"><i class="fa-solid fa-table-columns"></i>' + esc(CT.presetClassic) + '</button>' +
+      '<button type="button" data-preset="map"><i class="fa-solid fa-expand"></i>' + esc(CT.presetMap) + '</button><button type="button" data-preset="stream"><i class="fa-solid fa-compress"></i>' + esc(CT.presetStream) + '</button></div>';
+    h += '<h3>' + esc(CT.tabs.layout) + '</h3><div class="hint">' + esc(CT.layoutHint) + '</div>' + layoutEditor();
+    h += '<h3>' + esc(CT.widths) + '</h3>' + ctlRange(CT.wl, 'layout.wl', 240, 640, 10, 'px') + ctlRange(CT.wr, 'layout.wr', 260, 720, 10, 'px');
+    h += '<h3>' + esc(CT.objRows) + '</h3>' + Object.keys(cfg.objectives).map(k => ctlSwitch(CT.obj[k], 'objectives.' + k)).join('');
+  } else if (drawerTab === 'map') {
+    h += '<h3>' + esc(CT.mapLayers) + '</h3>' + LAYER_KEYS.map(([k]) => ctlSwitch(TEXT.layers[k], 'layers.' + k)).join('');
+    h += '<h3>' + esc(CT.mapLook) + '</h3>' + ctlRange(CT.mapScale, 'look.mapScale', 60, 180, 5, '%') + ctlRange(CT.heroScale, 'look.heroScale', 60, 200, 5, '%') + ctlSwitch(CT.legend, 'look.legend');
+  } else if (drawerTab === 'top') {
+    h += '<h3>' + esc(CT.topParts) + '</h3>' + ['nw', 'heads', 'mana', 'numbers', 'ult', 'clock'].map(k => ctlSwitch(CT[k], 'top.' + k)).join('');
+    h += ctlSeg(CT.corner, 'top.corner', [['lh', CT.cornerLh], ['kda', CT.cornerKda], ['nw', CT.cornerNw], ['none', CT.cornerNone]]);
+  } else if (drawerTab === 'heroes') {
+    h += '<h3>' + esc(CT.heroWho) + '</h3>' + ctlSeg(CT.heroWho, 'heroes.view', [['all', TEXT.viewAll], ['allies', TEXT.viewAllies], ['enemies', TEXT.viewEnemies]]) +
+      ctlSeg(CT.heroOrder, 'heroes.order', [['mine', CT.orderMine], ['radiant', CT.orderRad]]);
+    h += '<h3>' + esc(CT.heroParts) + '</h3>' + [['name', CT.hName], ['state', CT.hState], ['bars', CT.hBars], ['kpis', CT.hKpis], ['attrs', CT.hAttrs], ['extra', CT.hExtra], ['items', CT.hItems], ['backpack', CT.hBackpack], ['abilities', CT.hAbilities]]
+      .map(([k, t]) => ctlSwitch(t, 'heroes.' + k)).join('');
+  } else if (drawerTab === 'events') {
+    h += '<h3>' + esc(CT.evTypes) + '</h3>' + Object.keys(CT.ev).map(k => ctlSwitch(CT.ev[k], 'events.' + k)).join('');
+    h += '<h3>' + esc(CT.evLook) + '</h3>' + ctlSwitch(CT.evIcons, 'events.icons') + ctlSwitch(CT.evNewest, 'events.newest');
+  } else {
+    h += '<h3>' + esc(CT.theme) + '</h3>' + ctlSeg(CT.theme, 'look.theme', [['dark', CT.themeDark], ['light', CT.themeLight], ['auto', CT.themeAuto]]) +
+      ctlSeg(CT.density, 'look.density', [['normal', CT.densNormal], ['compact', CT.densCompact]]) + ctlRange(CT.zoom, 'look.zoom', 80, 130, 5, '%') +
+      ctlSeg(CT.lang, 'lang', [['ru', 'Русский'], ['en', 'English']]);
+    h += '<h3>' + esc(CT.colors) + '</h3>' + ctlColor(CT.radColor, 'look.rad') + ctlColor(CT.direColor, 'look.dire') +
+      '<div class="row-c clickable" data-colors-reset="1"><span>' + esc(CT.colorsReset) + '</span><i class="fa-solid fa-rotate-left" style="color:var(--faint)"></i></div>';
+  }
+  $('drBody').innerHTML = h;
+  $('cfgExport').lastChild.textContent = CT.exportCfg;
+  $('cfgImport').lastChild.textContent = CT.importCfg;
+  $('cfgReset').lastChild.textContent = CT.resetCfg;
+}
+const drawer = $('drawer');
+function openDrawer(on) {
+  drawer.classList.toggle('on', on);
+  $('scrim').classList.toggle('on', on);
+  if (on) renderDrawer();
+}
+$('custom').onclick = () => openDrawer(!drawer.classList.contains('on'));
+$('drClose').onclick = () => openDrawer(false);
+$('scrim').onclick = () => openDrawer(false);
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape') openDrawer(false); });
+$('drTabs').onclick = ev => {
+  const b = ev.target.closest('button[data-tab]');
+  if (!b) return;
+  drawerTab = b.dataset.tab;
+  renderDrawer();
+  $('drBody').scrollTop = 0;
+};
+function changed() {
+  saveCfg();
+  const scroll = $('drBody').scrollTop;
+  applyAll();
+  $('drBody').scrollTop = scroll;
+}
+$('drBody').onclick = ev => {
+  const t = ev.target.closest('[data-toggle]');
+  if (t) { setPath(t.dataset.toggle, !getPath(t.dataset.toggle)); changed(); return; }
+  const s = ev.target.closest('[data-set]');
+  if (s) {
+    if (s.dataset.set === 'lang') { LANG = s.dataset.v; TEXT = ALL[LANG]; CT = CFG_TEXT[LANG]; localStorage.setItem('cr_lang', LANG); }
+    else setPath(s.dataset.set, s.dataset.v);
+    changed();
+    return;
+  }
+  const hide = ev.target.closest('[data-hide]');
+  if (hide) {
+    const L = cfg.layout, id = hide.dataset.hide;
+    L.hidden = L.hidden.includes(id) ? L.hidden.filter(x => x !== id) : L.hidden.concat(id);
+    changed();
+    return;
+  }
+  const pr = ev.target.closest('[data-preset]');
+  if (pr) { cfg.layout = JSON.parse(JSON.stringify(PRESETS[pr.dataset.preset])); changed(); return; }
+  if (ev.target.closest('[data-colors-reset]')) { cfg.look.rad = CFG_DEFAULT.look.rad; cfg.look.dire = CFG_DEFAULT.look.dire; changed(); }
+};
+$('drBody').oninput = ev => {
+  const r = ev.target.closest('[data-range]');
+  if (r) {
+    setPath(r.dataset.range, Number(r.value));
+    r.nextElementSibling.textContent = r.value + (r.dataset.range.indexOf('layout') === 0 ? 'px' : '%');
+    saveCfg();
+    applyLook();
+    applyLayout();
+    return;
+  }
+  const c = ev.target.closest('[data-color]');
+  if (c) { setPath(c.dataset.color, c.value); saveCfg(); applyLook(); scoreHtml = ''; sideHtml = ''; renderSide(); }
+};
+let dragId = null;
+$('drBody').addEventListener('dragstart', ev => {
+  const c = ev.target.closest('.chip-p');
+  if (!c) return;
+  dragId = c.dataset.p;
+  c.classList.add('dragging');
+  ev.dataTransfer.effectAllowed = 'move';
+  ev.dataTransfer.setData('text/plain', dragId);
+});
+$('drBody').addEventListener('dragend', () => { dragId = null; for (const b of document.querySelectorAll('.le-box.over')) b.classList.remove('over'); });
+$('drBody').addEventListener('dragover', ev => {
+  const box = ev.target.closest('.le-box');
+  if (!box || !dragId) return;
+  ev.preventDefault();
+  for (const b of document.querySelectorAll('.le-box.over')) if (b !== box) b.classList.remove('over');
+  box.classList.add('over');
+});
+$('drBody').addEventListener('drop', ev => {
+  const box = ev.target.closest('.le-box');
+  if (!box || !dragId) return;
+  ev.preventDefault();
+  const slot = box.dataset.slot, L = cfg.layout;
+  const horizontal = slot === 'top';
+  let index = 0;
+  for (const c of box.querySelectorAll('.chip-p')) {
+    if (c.dataset.p === dragId) continue;
+    const r = c.getBoundingClientRect();
+    if ((horizontal ? ev.clientX > r.left + r.width / 2 : ev.clientY > r.top + r.height / 2)) index++;
+  }
+  for (const k of Object.keys(SLOTS)) L[k] = L[k].filter(x => x !== dragId);
+  L[slot].splice(index, 0, dragId);
+  dragId = null;
+  changed();
+});
+for (const [gutId, key, sign] of [['gutL', 'wl', 1], ['gutR', 'wr', -1]]) {
+  const gut = $(gutId);
+  gut.addEventListener('pointerdown', ev => {
+    ev.preventDefault();
+    gut.setPointerCapture(ev.pointerId);
+    gut.classList.add('drag');
+    const startX = ev.clientX, start = cfg.layout[key];
+    const move = e => {
+      cfg.layout[key] = Math.max(240, Math.min(720, Math.round(start + sign * (e.clientX - startX))));
+      $(key === 'wl' ? 'slotLeft' : 'slotRight').style.width = cfg.layout[key] + 'px';
+      resize();
+    };
+    const up = () => {
+      gut.classList.remove('drag');
+      gut.removeEventListener('pointermove', move);
+      gut.removeEventListener('pointerup', up);
+      saveCfg();
+      if (drawer.classList.contains('on')) renderDrawer();
+    };
+    gut.addEventListener('pointermove', move);
+    gut.addEventListener('pointerup', up);
+  });
+  gut.addEventListener('dblclick', () => { cfg.layout[key] = CFG_DEFAULT.layout[key]; saveCfg(); applyLayout(); });
+}
+function toast(text) {
+  const t = $('toast');
+  t.textContent = text;
+  t.classList.add('on');
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => t.classList.remove('on'), 2200);
+}
+$('cfgExport').onclick = async () => {
+  const text = JSON.stringify(cfg);
+  try { await navigator.clipboard.writeText(text); toast(CT.copied); } catch (e) { window.prompt(CT.exportCfg, text); }
+};
+$('cfgImport').onclick = () => {
+  const text = window.prompt(CT.pastePrompt, '');
+  if (!text) return;
+  try { cfg = mergeCfg(CFG_DEFAULT, JSON.parse(text)); saveCfg(); location.reload(); } catch (e) { toast(CT.badCfg); }
+};
+$('cfgReset').onclick = () => {
+  if (!window.confirm(CT.resetAsk)) return;
+  localStorage.removeItem('cr_cfg');
+  localStorage.removeItem('cr_layers');
+  localStorage.removeItem('cr_team_view');
+  localStorage.removeItem('cr_theme');
+  location.reload();
+};
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => { if (cfg.look.theme === 'auto') applyLook(); });
+
+applyLook();
+applyClasses();
+applyLayout();
 applyText();
 
 if (/^[A-Za-z0-9]{20}$/.test(sessionId)) {
@@ -1218,7 +1665,7 @@ if (/^[A-Za-z0-9]{20}$/.test(sessionId)) {
   onValue(ref(db, base + '/live'), snap => { live = snap.val() || {}; applyLive(); refreshStatus(); }, () => {});
   const feed = query(ref(db, base + '/feed'), limitToLast(100));
   const atBottom = () => logEl.scrollTop + logEl.clientHeight >= logEl.scrollHeight - 8;
-  onChildAdded(feed, snap => { const stick = atBottom(); feedLine(snap.key, snap.val() || {}); if (stick) logEl.scrollTop = logEl.scrollHeight; });
+  onChildAdded(feed, snap => { const stick = !cfg.events.newest && atBottom(); feedLine(snap.key, snap.val() || {}); if (stick) logEl.scrollTop = logEl.scrollHeight; });
   onChildChanged(feed, snap => feedLine(snap.key, snap.val() || {}));
   onChildRemoved(feed, snap => { const line = feedLines.get(snap.key); if (line) line.remove(); feedLines.delete(snap.key); feedData.delete(snap.key); });
 } else {
