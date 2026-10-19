@@ -65,14 +65,20 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 #teams{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;border-radius:0 0 12px 12px}
 #teamsCard .opts{top:48px;right:10px;width:220px}
 .tgroup + .tgroup{border-top:1px solid var(--border)}
-.objs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--soft)}
-.obj{background:var(--card);padding:10px 14px;display:flex;align-items:center;gap:10px;min-width:0}
-.obj img,.obj > i{width:30px;height:30px;flex:none;object-fit:contain;border-radius:8px;display:grid;place-items:center;font-size:13px}
-.obj img{background:#1a1a1d;padding:4px}
+.objs{display:flex;flex-direction:column;padding:2px 0;overflow-y:auto;scrollbar-width:thin}
+.obj{display:flex;align-items:center;gap:10px;min-width:0;padding:4px 14px;min-height:33px}
+.obj + .obj{border-top:1px solid var(--soft)}
+.obj > img,.obj > i{width:24px;height:24px;flex:none;object-fit:contain;border-radius:6px;display:grid;place-items:center;font-size:11px}
+.obj > img{background:#1a1a1d;padding:3px}
 .obj > i{background:var(--sec);color:var(--muted)}
-.obj .k{font-size:11.5px;color:var(--faint);line-height:1.2}
-.obj .v{font-size:13px;font-weight:600;line-height:1.3}
-.obj .v.ok{color:var(--ok)} .obj .v.bad{color:var(--bad)} .obj .v.warn{color:var(--warn)}
+.obj .k{flex:1;min-width:0;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.obj .v{font-size:12.5px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.obj .v.ok{color:var(--ok)} .obj .v.bad{color:var(--bad)} .obj .v.warn{color:var(--warn)} .obj .v.none{color:var(--faint);font-weight:500}
+.obj .v em{font-style:normal;min-width:50px;display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:1px 7px;border-radius:6px;background:var(--sec);font-size:12px;color:var(--fg)}
+.obj .v em::before{content:'';width:6px;height:6px;border-radius:2px;background:var(--tc);flex:none}
+.obj .v em.rdy{color:var(--ok)}
+.obj .v .it{display:inline-flex;align-items:center;gap:3px;padding:1px 6px 1px 2px;border-radius:6px;background:var(--sec);font-size:12px}
+.obj .v .it img{width:22px;height:16px;border-radius:3px;object-fit:cover}
 #console{min-height:200px}
 #console.pop{height:100vh;border-radius:0;border:0}
 #log{flex:1;overflow:auto;padding:6px 0;scrollbar-width:thin}
@@ -84,7 +90,7 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 .ev .x{color:var(--muted)}
 .ev .x b{color:var(--fg);font-weight:600}
 .ev.a{border-left-color:var(--rad)} .ev.e{border-left-color:var(--dire)} .ev.boss{border-left-color:var(--gold)} .ev.rune{border-left-color:var(--violet)} .ev.scan{border-left-color:var(--blue)} .ev.smoke{border-left-color:var(--faint)}
-.sb{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:18px;padding:10px 16px 12px;max-width:1280px;width:100%;margin:0 auto}
+.sb{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:22px;padding:10px 16px 12px;max-width:1240px;width:100%;margin:0 auto}
 .sb-team{display:flex;flex-direction:column;gap:7px;min-width:0}
 .sb-head{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--faint);font-weight:500;padding:0 2px}
 .sb-team.d .sb-head{flex-direction:row-reverse}
@@ -112,20 +118,21 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 .tile.fog .pt img{filter:saturate(.35) brightness(.7)}
 .tile.fog .pt::after{content:'';position:absolute;inset:0;z-index:2;border:1.5px dashed #e0b44a;border-radius:6px}
 .hb,.mb{position:relative;border-radius:3px;background:var(--sec);overflow:hidden}
-.hb{height:13px} .mb{height:9px}
+.hb{height:12px} .mb{height:8px}
 .hb i,.mb i{position:absolute;inset:0 auto 0 0;border-radius:3px}
 .hb i{background:var(--hp)} .mb i{background:var(--mp)}
 .hb b,.mb b{position:absolute;inset:0;font-weight:700;text-align:center;color:#fff;text-shadow:0 0 2px rgba(0,0,0,.8)}
-.hb b{font-size:9.5px;line-height:13px} .mb b{font-size:8px;line-height:9px}
-.sb-mid{display:flex;flex-direction:column;align-items:center;gap:4px;padding-bottom:6px;min-width:150px}
+.hb b{font-size:9.5px;line-height:12px} .mb b{font-size:7.5px;line-height:8px}
+.sb-mid{display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:18px;min-width:140px}
 .score{display:flex;align-items:center;gap:12px;font-size:30px;font-weight:700;line-height:1}
 .score .r{color:var(--rad)} .score .d{color:var(--dire)}
 .score i{font-style:normal;color:var(--faint);font-size:20px;font-weight:500}
 .daybox{display:flex;align-items:center;gap:7px;padding:4px 10px;border-radius:8px;background:var(--sec);font-size:13px;font-weight:700}
 .daybox i.day{color:#f5c542} .daybox i.night{color:#8fa8ff}
-.daybox span{font-size:11px;color:var(--faint);font-weight:500}
-.gear{position:absolute;right:20px;top:20px;z-index:3;width:28px;height:28px;border-radius:8px;color:var(--faint);display:grid;place-items:center;transition:.15s;background:var(--card);border:1px solid var(--border)}
-.gear:hover,.gear.on{color:var(--fg)}
+.daybox span{font-size:11px;color:var(--faint);font-weight:500;display:inline-flex;align-items:center;gap:4px;padding-left:7px;border-left:1px solid var(--border)}
+.daybox span i{font-size:9px}
+.gear{position:absolute;right:20px;top:20px;z-index:3;width:30px;height:30px;border-radius:8px;color:#d4d4d8;display:grid;place-items:center;transition:.15s;background:rgba(12,12,13,.72);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(6px)}
+.gear:hover,.gear.on{color:#fff;background:rgba(12,12,13,.9)}
 .opts{position:absolute;right:20px;top:54px;z-index:20;width:260px;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.35);padding:8px;display:none}
 .opts.on{display:block;animation:pop .14s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-4px)}}
@@ -139,7 +146,7 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 .opt.on .sw,.sw.on{background:var(--ok)} .opt.on .sw::after,.sw.on::after{left:14px}
 .opt.on{color:var(--fg)}
 .opts .sep{height:1px;background:var(--soft);margin:6px 4px}
-#opts{width:296px;max-height:calc(100% - 64px);overflow-y:auto;scrollbar-width:thin}
+#opts{width:296px;max-height:calc(100% - 70px);overflow-y:auto;scrollbar-width:thin}
 #opts .grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:0 2px}
 #opts .grid .opt{gap:7px;padding:6px 8px;font-size:12px;border:1px solid var(--border);min-width:0}
 #opts .grid .opt span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -167,7 +174,7 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 .mapbtns{display:flex;gap:4px;padding:2px 4px}
 .mapbtns button{flex:1;height:30px;border-radius:8px;background:var(--sec);color:var(--muted);font-size:12px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .mapbtns button:hover{color:var(--fg)}
-#stage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:12px;background:var(--mapbg)}
+#stage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:10px;background:var(--mapbg)}
 #map{border-radius:10px;display:block}
 #marks{position:absolute;pointer-events:none;overflow:hidden;border-radius:10px}
 #marks img{position:absolute;border-radius:50%;box-shadow:0 0 0 2px var(--c),0 2px 8px rgba(0,0,0,.7);transform:translate(-50%,-50%)}
@@ -175,9 +182,9 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 #empty.on{display:flex}
 #empty div{background:rgba(12,12,13,.82);border:1px solid rgba(255,255,255,.08);color:#d4d4d8;border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:center;font-weight:500;backdrop-filter:blur(6px)}
 #empty i{color:#9a9aa1}
-.legend{display:flex;gap:16px;padding:10px 14px;border-top:1px solid var(--soft);font-size:12px;color:var(--faint);flex:none;flex-wrap:wrap}
+.legend{display:flex;justify-content:center;gap:6px 16px;padding:7px 12px;border-top:1px solid var(--soft);font-size:11.5px;color:var(--faint);flex:none;flex-wrap:wrap}
 .legend span{display:inline-flex;align-items:center;gap:7px}
-.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
 .team-h{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--soft);position:sticky;top:0;z-index:2;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(6px)}
 #teams:empty::after{content:attr(data-empty);display:block;color:var(--faint);font-size:13px;padding:14px}
 .team-h .flag{width:8px;height:8px;border-radius:2px}
@@ -342,13 +349,13 @@ const ALL = {
     dead: 'dead', deadIn: 'dead · {n} s', visible: 'visible', maphack: 'fog · {n} s', lastSeen: 'last seen · {n} s',
     tp: 'teleport · {n} s', buyback: 'Buyback', ready: 'ready', sec: '{n} s', gold: 'Gold', nw: 'NW', kda: 'KDA', lhdn: 'LH/DN',
     roshan: 'Roshan', tormentor: 'Tormentor', noData: 'no data', bossDead: 'dead', bossSeen: 'alive', bossHit: 'under attack',
-    glyph: 'Glyph R / D', scan: 'Scan R / D', camps: 'Camps with creeps',
+    glyph: 'Glyph', scan: 'Scan', camps: 'Camps with creeps',
     layers: { heroes: 'Heroes', fog: 'Heroes in fog', creeps: 'Lane creeps', waves: 'Creep waves in fog', jungle: 'Jungle and camps', wards: 'Wards and vision', buildings: 'Buildings', events: 'Map events', couriers: 'Couriers', runes: 'Runes', labels: 'Fog age labels' },
     heroesTitle: 'Heroes', teamShow: 'Show heroes', compactView: 'Compact view', viewMode: 'View', viewAll: 'Both teams', viewAllies: 'Allies only', viewEnemies: 'Enemies only', noHeroes: 'No heroes yet',
     show: 'Show on the map', windows: 'On top of the game', day: 'Day', night: 'Night', nsNight: 'Night Stalker', est: 'counted since the radar started',
-    stock: 'Shop stock', scanCharges: 'Scan charges R / D', dmg: 'Hero damage', heal: 'Healing', wardsPlaced: 'Wards', stacks: 'Stacks', xp: 'XP',
+    stock: 'Shop stock', untilNight: 'night in {t}', untilDay: 'day in {t}', scanCharges: 'Scan charges', dmg: 'Hero damage', heal: 'Healing', wardsPlaced: 'Wards', stacks: 'Stacks', xp: 'XP',
     attrDmg: 'Damage', attrArm: 'Armor', attrMs: 'Move speed', attrAs: 'Attacks per second', ult: 'Ultimate',
-    legend: ['visible', 'in fog (maphack)', 'last seen', 'creep wave in fog (predicted)'],
+    legend: ['visible', 'in fog', 'last seen', 'wave in fog'],
     zone: { mid: 'mid', top: 'top', bot: 'bot' }, side: { r: 'Radiant side', d: 'Dire side', c: 'middle' },
     place: { rosh: 'near Roshan', torm: 'near Tormentor', base_r: 'Radiant base', base_d: 'Dire base' },
     tower: '{team} T{tier} {lane}',
@@ -375,13 +382,13 @@ const ALL = {
     dead: 'мертв', deadIn: 'мертв · {n} с', visible: 'виден', maphack: 'туман · {n} с', lastSeen: 'виден {n} с назад',
     tp: 'телепорт · {n} с', buyback: 'Байбек', ready: 'готов', sec: '{n} с', gold: 'Золото', nw: 'NW', kda: 'KDA', lhdn: 'LH/DN',
     roshan: 'Рошан', tormentor: 'Торментор', noData: 'нет данных', bossDead: 'мертв', bossSeen: 'жив', bossHit: 'бьют',
-    glyph: 'Глиф R / D', scan: 'Скан R / D', camps: 'Кемпы с крипами',
+    glyph: 'Глиф', scan: 'Скан', camps: 'Кемпы с крипами',
     layers: { heroes: 'Герои', fog: 'Герои в тумане', creeps: 'Линейные крипы', waves: 'Волны крипов в тумане', jungle: 'Лес и кемпы', wards: 'Варды и обзор', buildings: 'Здания', events: 'События на карте', couriers: 'Курьеры', runes: 'Руны', labels: 'Подписи времени в тумане' },
     heroesTitle: 'Герои', teamShow: 'Показывать героев', compactView: 'Компактный вид', viewMode: 'Вид', viewAll: 'Обе команды', viewAllies: 'Только союзники', viewEnemies: 'Только враги', noHeroes: 'Героев пока нет',
     show: 'Показывать на карте', windows: 'Поверх игры', day: 'День', night: 'Ночь', nsNight: 'Night Stalker', est: 'посчитано с запуска радара',
-    stock: 'В лавке', scanCharges: 'Заряды скана R / D', dmg: 'Урон по героям', heal: 'Лечение', wardsPlaced: 'Варды', stacks: 'Стаки', xp: 'Опыт',
+    stock: 'В лавке', untilNight: 'ночь через {t}', untilDay: 'день через {t}', scanCharges: 'Заряды скана', dmg: 'Урон по героям', heal: 'Лечение', wardsPlaced: 'Варды', stacks: 'Стаки', xp: 'Опыт',
     attrDmg: 'Урон', attrArm: 'Броня', attrMs: 'Скорость', attrAs: 'Атак в секунду', ult: 'Ультимейт',
-    legend: ['виден', 'в тумане (мапхак)', 'последнее место', 'волна крипов в тумане (прогноз)'],
+    legend: ['виден', 'в тумане', 'последнее место', 'волна в тумане'],
     zone: { mid: 'мид', top: 'верх', bot: 'низ' }, side: { r: 'сторона Radiant', d: 'сторона Dire', c: 'середина' },
     place: { rosh: 'у Рошана', torm: 'у Торментора', base_r: 'база Radiant', base_d: 'база Dire' },
     tower: 'T{tier} {lane} {team}',
@@ -628,10 +635,24 @@ const TORM_ICON = side => 'radar/icons/dota_minimap_assets/tormentor/tormentor_t
 let RAD = [87, 199, 133], DIRE = [239, 107, 107];
 const NEUTRAL = [217, 168, 78];
 
+function fitColumns() {
+  const zone = $('slotCenter'), wide = window.innerWidth > 900 && zone.contains(stage) && !zone.classList.contains('empty');
+  const grow = wide && !$('slotLeft').classList.contains('empty') || wide && !$('slotRight').classList.contains('empty');
+  zone.style.flex = grow ? '0 1 ' + (stage.clientHeight + 2) + 'px' : '';
+  for (const id of ['slotLeft', 'slotRight']) if ($(id).style.flex !== '1') $(id).style.flexGrow = grow ? '1' : '';
+}
+function placeGear() {
+  const right = stage.clientWidth - canvas.offsetLeft - size, top = canvas.offsetTop;
+  $('gear').style.right = (right + 10) + 'px';
+  $('gear').style.top = (top + 10) + 'px';
+  $('opts').style.right = (right + 10) + 'px';
+  $('opts').style.top = (top + 46) + 'px';
+}
 function resize() {
-  const s = Math.max(200, Math.min(stage.clientWidth, stage.clientHeight) - 24);
+  fitColumns();
+  const s = Math.max(200, Math.min(stage.clientWidth, stage.clientHeight) - 20);
   const dpr = window.devicePixelRatio || 1;
-  if (s === size && canvas.width === Math.round(s * dpr)) return;
+  if (s === size && canvas.width === Math.round(s * dpr)) { placeGear(); return; }
   size = s;
   canvas.style.width = s + 'px';
   canvas.style.height = s + 'px';
@@ -639,6 +660,7 @@ function resize() {
   canvas.height = Math.round(s * dpr);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   bgCache = null;
+  placeGear();
 }
 new ResizeObserver(resize).observe(stage);
 resize();
@@ -700,6 +722,7 @@ function remaining(readyAt) {
   return typeof readyAt === 'number' ? Math.max(0, readyAt - gameTime()) : 0;
 }
 function secs(v) {
+  if (v >= 60) return clockText(Math.ceil(v));
   return v > 0.5 ? fmt(TEXT.sec, { n: Math.ceil(v) }) : TEXT.ready;
 }
 function clockText(t) {
@@ -1187,7 +1210,7 @@ function renderScore() {
   const html = '<div class="sb-team r">' + head(2, tr) + '<div class="tiles">' + fill(rad) + '</div></div>' +
     '<div class="sb-mid"><div class="score"><span class="r">' + scoreR + '</span><i>:</i><span class="d">' + scoreD + '</span></div>' +
     '<div class="daybox" title="' + esc(clock.ns ? TEXT.nsNight : (day ? TEXT.day : TEXT.night)) + '"><i class="fa-solid ' + (day ? 'fa-sun day' : 'fa-moon night') + '"></i>' +
-    (clock.in_game ? clockText(gameTime()) : '—') + (next ? '<span>' + esc(next) + '</span>' : '') + '</div></div>' +
+    (clock.in_game ? clockText(gameTime()) : '—') + (next ? '<span title="' + esc(fmt(day ? TEXT.untilNight : TEXT.untilDay, { t: next })) + '"><i class="fa-solid ' + (day ? 'fa-moon' : 'fa-sun') + '"></i>' + esc(next) + '</span>' : '') + '</div></div>' +
     '<div class="sb-team d">' + head(3, td) + '<div class="tiles">' + fill(dire) + '</div></div>';
   if (html !== scoreHtml) { scoreHtml = html; $('score').innerHTML = html; }
 }
@@ -1245,17 +1268,20 @@ function renderObjs() {
     const st = bossState(t);
     cells.push([TORM_ICON(i === 1 ? 'dire' : 'radiant'), TEXT.tormentor + (torms.length > 1 ? ' ' + (i + 1) : ''), st[0], st[1]]);
   });
-  if (o.glyph) cells.push(['fa-shield-halved', TEXT.glyph, cdText(obj.glyph_radiant) + ' / ' + cdText(obj.glyph_dire), '']);
-  if (o.scan) cells.push(['fa-satellite-dish', TEXT.scan, cdText(obj.scan_radiant) + ' / ' + cdText(obj.scan_dire), '']);
+  const chip = (team, v, ready) => '<em style="--tc:var(--' + team + ')"' + (ready ? ' class="rdy"' : '') + ' title="' + esc(team === 'rad' ? TEXT.radiant : TEXT.dire) + '">' + esc(v) + '</em>';
+  const cdPair = (r, d) => { const a = cdText(r), b = cdText(d); return { html: chip('rad', a, a === TEXT.ready) + chip('dire', b, b === TEXT.ready) }; };
+  if (o.glyph) cells.push(['fa-shield-halved', TEXT.glyph, cdPair(obj.glyph_radiant, obj.glyph_dire), '']);
+  if (o.scan) cells.push(['fa-satellite-dish', TEXT.scan, cdPair(obj.scan_radiant, obj.scan_dire), '']);
   const sc = obj.scan_charges || {};
-  if (o.charges && (typeof sc.r === 'number' || typeof sc.d === 'number')) cells.push(['fa-bolt', TEXT.scanCharges, (sc.r ?? '—') + ' / ' + (sc.d ?? '—'), '']);
+  if (o.charges && (typeof sc.r === 'number' || typeof sc.d === 'number')) cells.push(['fa-bolt', TEXT.scanCharges, { html: chip('rad', sc.r ?? '—', sc.r > 0) + chip('dire', sc.d ?? '—', sc.d > 0) }, '']);
   const camps = list(live.camps);
   if (o.camps && camps.length) cells.push(['radar/icons/' + CAMP_ICON, TEXT.camps, camps.filter(c => c.s === 1).length + ' / ' + camps.length, '']);
   const st = obj.stock || {};
-  if (o.stock && typeof st.smoke === 'number') cells.push([itemImg('item_smoke_of_deceit'), TEXT.stock, 'Smoke ' + st.smoke + ' · Obs ' + (st.obs ?? '—') + ' · Sen ' + (st.sen ?? '—'), '']);
-  if (cells.length % 2) cells.push(null);
-  objsEl.innerHTML = cells.map(c => c ? '<div class="obj">' + (c[0].indexOf('fa-') === 0 ? '<i class="fa-solid ' + c[0] + '"></i>' : '<img src="' + esc(c[0]) + '" alt="">') +
-    '<div style="min-width:0"><div class="k">' + esc(c[1]) + '</div><div class="v ' + c[3] + '">' + esc(c[2]) + '</div></div></div>' : '<div class="obj"></div>').join('');
+  const stockItem = (name, n) => '<span class="it" title="' + esc(itemName(name)) + '"><img src="' + esc(itemImg(name)) + '" alt="">' + esc(n ?? '—') + '</span>';
+  if (o.stock && typeof st.smoke === 'number') cells.push([itemImg('item_smoke_of_deceit'), TEXT.stock,
+    { html: stockItem('item_smoke_of_deceit', st.smoke) + stockItem('item_ward_observer', st.obs) + stockItem('item_ward_sentry', st.sen) }, '']);
+  objsEl.innerHTML = cells.map(c => '<div class="obj">' + (c[0].indexOf('fa-') === 0 ? '<i class="fa-solid ' + c[0] + '"></i>' : '<img src="' + esc(c[0]) + '" alt="">') +
+    '<span class="k">' + esc(c[1]) + '</span><span class="v ' + (c[2] === TEXT.noData ? 'none' : c[3]) + '">' + (typeof c[2] === 'object' ? c[2].html : esc(c[2])) + '</span></div>').join('');
 }
 
 function placeText(code) {

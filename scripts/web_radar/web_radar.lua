@@ -362,13 +362,13 @@ local localization = qLocalization.new({
         cr_active_items = "Active items",
         cr_casts = "Other abilities",
         cr_scans = "Scan",
-        cr_profile = "Load mode",
+        cr_profile = "Mode",
         cr_profile_tip = "Sets the send rate and how often data is collected.\nEconomy costs the least FPS, Smooth updates fastest.",
-        cr_profiles_eco = "Economy, 3 Hz",
+        cr_profiles_eco = "Eco, 3 Hz",
         cr_profiles_balanced = "Balanced, 5 Hz",
         cr_profiles_smooth = "Smooth, 10 Hz",
-        cr_performance_wait = "Radar load: waiting for data",
-        cr_performance = "Load: collect %.1f ms, JSON %.1f ms, %.1f KB",
+        cr_performance_wait = "Load: no data yet",
+        cr_performance = "Load: %.1f ms, %.1f KB",
         cr_st_off = "off",
         cr_st_stopping = "stopping",
         cr_st_stopped = "stopped",
@@ -388,10 +388,10 @@ local localization = qLocalization.new({
         cr_st_auth_fail = "sign-in error: HTTP %d",
         cr_st_link_ready = "the link is in the Link field",
         cr_st_send_fail = "upload failed: HTTP %d, retrying",
-        cr_link_hint = "Press Start, then send the link to friends",
+        cr_link_hint = "Start, then send the link",
         cr_effects_tip = "Casts, teleports and scans on the map\nand in the event feed",
         cr_details_tip = "Needs the Heroes layer",
-        cr_version = "Version 2.3.1, radar for friends",
+        cr_version = "Version 2.3.2",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -438,13 +438,13 @@ local localization = qLocalization.new({
         cr_active_items = "Активные предметы",
         cr_casts = "Остальные способности",
         cr_scans = "Скан",
-        cr_profile = "Режим нагрузки",
+        cr_profile = "Режим",
         cr_profile_tip = "Задает частоту передачи и сбора данных.\nЭкономный бережет FPS, Плавный обновляет быстрее всего.",
-        cr_profiles_eco = "Экономный, 3 Гц",
-        cr_profiles_balanced = "Сбалансированный, 5 Гц",
+        cr_profiles_eco = "Эконом, 3 Гц",
+        cr_profiles_balanced = "Баланс, 5 Гц",
         cr_profiles_smooth = "Плавный, 10 Гц",
-        cr_performance_wait = "Нагрузка радара: ожидание данных",
-        cr_performance = "Нагрузка: сбор %.1f мс, JSON %.1f мс, %.1f КБ",
+        cr_performance_wait = "Нагрузка: нет данных",
+        cr_performance = "Нагрузка: %.1f мс, %.1f КБ",
         cr_st_off = "выключен",
         cr_st_stopping = "остановка",
         cr_st_stopped = "остановлен",
@@ -464,10 +464,10 @@ local localization = qLocalization.new({
         cr_st_auth_fail = "ошибка входа: HTTP %d",
         cr_st_link_ready = "ссылка в поле «Ссылка»",
         cr_st_send_fail = "ошибка передачи: HTTP %d, повтор",
-        cr_link_hint = "Нажмите Start и отправьте ссылку друзьям",
+        cr_link_hint = "Start и отправьте ссылку",
         cr_effects_tip = "Касты, телепорты и сканы на карте\nи в ленте событий",
         cr_details_tip = "Нужен слой «Герои»",
-        cr_version = "Версия 2.3.1, радар для друзей",
+        cr_version = "Версия 2.3.2",
     },
 })
 
@@ -475,7 +475,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.3.1"
+script.VERSION = "2.3.2"
 local ui = {}
 local JSON
 local state = {
@@ -562,11 +562,17 @@ local function gameClock()
     return call(GameRules and GameRules.GetGameTime) or 0
 end
 
+local function setLabel(widget, text)
+    if not widget or not text then return end
+    if widget.ForceLocalization then call(widget.ForceLocalization, widget, text) else call(widget.Name, widget, text) end
+end
+
 local function show(key, ...)
     local text = string.format(L(key), ...)
     if state.status == text then return end
     state.status, state.statusKey = text, key
-    if ui.status then call(ui.status.Name, ui.status, string.format(L("cr_status"), text)) end
+    state.statusText = string.format(L("cr_status"), text)
+    setLabel(ui.status, state.statusText)
     if state.ready and ai_bridge and ai_bridge.mcp_log then
         call(ai_bridge.mcp_log, "info", "[Cloud Radar] status", {key = key, args = {...}})
     end
@@ -3250,6 +3256,11 @@ end
 
 function script.OnUpdateEx()
     initMenu()
+    if state.ready and clock() >= (state.nextLabels or 0) then
+        state.nextLabels = clock() + 1
+        setLabel(ui.status, state.statusText)
+        setLabel(ui.performance, state.perfText)
+    end
     if state.retryAt and clock() >= state.retryAt and not state.active and not state.control then
         state.retryAt = nil
         if get(ui.enabled, false) then start() end
@@ -3346,7 +3357,8 @@ function script.OnUpdateEx()
     end)
     if now >= (state.nextPerf or 0) then
         state.nextPerf = now + 2
-        if ui.performance then ui.performance:Name(string.format(L("cr_performance"), state.perf.collect_ms, state.perf.encode_ms, state.perf.bytes / 1024)) end
+        state.perfText = string.format(L("cr_performance"), state.perf.collect_ms, state.perf.bytes / 1024)
+        setLabel(ui.performance, state.perfText)
     end
 end
 

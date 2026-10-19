@@ -1,3 +1,11 @@
+# Fix v2.3.2
+
+- The script menu status shows the real radar state instead of "off". The load line updates too.
+- Shorter menu labels that no longer get cut off.
+- Site: the objectives panel is a list with one row per objective. Glyph, scan and charges use Radiant and Dire color tags, and the shop stock uses item icons.
+- The map is larger, and spare width goes to the side panels. The layers gear sits in the corner of the map itself, and the legend fits on one line.
+- Cooldowns over a minute show as 2:34. Next to the match clock you can see what comes next: day or night.
+
 # Fix v2.3.1
 
 - The script moved to Scripts › Scripts › Cloud Radar. Settings reset once, turn the radar on again.
