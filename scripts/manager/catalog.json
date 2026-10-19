@@ -859,9 +859,9 @@
     },
     {
       "id": "grimstroke_helper",
-      "version": "1.2.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/f08d7b17e8c77f04bce56bc3df7471bc4f2a701c/scripts/grimstroke_helper/grimstroke_helper.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.2.0/grimstroke_helper.lua",
+      "version": "1.3.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/4d42ae3842fbe99ef5a42a08b000eb7cd8179399/scripts/grimstroke_helper/grimstroke_helper.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.3.0/grimstroke_helper.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "! M0RC1 (Discord: wh1teray)",
