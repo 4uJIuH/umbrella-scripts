@@ -363,7 +363,7 @@ local localization = qLocalization.new({
         cr_casts = "Other abilities",
         cr_scans = "Scan",
         cr_profile = "Load mode",
-        cr_profile_tip = "Sets the send rate and\nhow often details refresh",
+        cr_profile_tip = "Economy: lowest FPS cost, slower updates.\nSmooth: fastest updates, more load.",
         cr_profiles_eco = "Economy",
         cr_profiles_balanced = "Balanced",
         cr_profiles_smooth = "Smooth",
@@ -397,7 +397,7 @@ local localization = qLocalization.new({
         cr_st_link_ready = "the link is in the Link field",
         cr_st_send_fail = "upload failed: HTTP %d, retrying",
         cr_link_hint = "Press Start, then send the link to friends",
-        cr_version = "Version 2.2.1, radar for friends",
+        cr_version = "Version 2.3.0, radar for friends",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -445,7 +445,7 @@ local localization = qLocalization.new({
         cr_casts = "Остальные способности",
         cr_scans = "Скан",
         cr_profile = "Режим нагрузки",
-        cr_profile_tip = "Задает частоту передачи\nи обновление деталей",
+        cr_profile_tip = "Экономный: меньше всего FPS, медленнее обновления.\nПлавный: быстрее всего, больше нагрузка.",
         cr_profiles_eco = "Экономный",
         cr_profiles_balanced = "Сбалансированный",
         cr_profiles_smooth = "Плавный",
@@ -479,7 +479,7 @@ local localization = qLocalization.new({
         cr_st_link_ready = "ссылка в поле «Ссылка»",
         cr_st_send_fail = "ошибка передачи: HTTP %d, повтор",
         cr_link_hint = "Нажмите Start и отправьте ссылку друзьям",
-        cr_version = "Версия 2.2.1, радар для друзей",
+        cr_version = "Версия 2.3.0, радар для друзей",
     },
 })
 
@@ -487,7 +487,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.2.1"
+script.VERSION = "2.3.0"
 local ui = {}
 local JSON
 local state = {
@@ -507,6 +507,7 @@ local state = {
     farming = {}, orbParticles = {}, unitMemory = {}, runeMemory = {}, laneMovers = {}, laneCursor = 0, laneList = {},
     courierCosts = {}, nextCouriers = 0, inventoryDirty = {}, courierMotion = {}, courierCursor = 0, courierSamples = {},
     itemKeys = setmetatable({}, {__mode = "k"}), loggedParticles = {},
+    nameCache = {}, nameCacheSize = 0, soundNames = {}, partAt = {}, due = nil,
     fb = {waiters = {}}, sentParts = {}, feedQueue = {}, feedSeq = 0, feedKeys = {}, feedPrune = {}, mem = {}, resendAll = true,
     relay = {units = {}, wards = {}, runes = {}}, kills = {}, kills_by = {},
 }
@@ -540,6 +541,19 @@ local function finite(value)
     return type(value) == "number" and value == value and value ~= math.huge and value ~= -math.huge
 end
 
+local MODES = {
+    [0] = {rate = 3, detail = 1.2, slow = 2.5, scanMs = 0.0008, scanCount = 8, couriers = 1, creeps = 12, roshan = 1,
+        parts = {info = 1.5, units = 1, wards = 2, runes = 1, camps = 4, objectives = 1}},
+    [1] = {rate = 5, detail = 0.7, slow = 1.5, scanMs = 0.0012, scanCount = 12, couriers = 0.5, creeps = 24, roshan = 0.5,
+        parts = {info = 0.8, units = 0.4, wards = 1, runes = 0.5, camps = 2, objectives = 0.5}},
+    [2] = {rate = 10, detail = 0.4, slow = 1, scanMs = 0.0018, scanCount = 20, couriers = 0.25, creeps = 32, roshan = 0.25,
+        parts = {info = 0.5, units = 0.2, wards = 0.5, runes = 0.3, camps = 1, objectives = 0.3}},
+}
+
+local function mode()
+    return MODES[state.profile] or MODES[1]
+end
+
 local function refreshFlags(now)
     if now < state.nextFlags then return end
     for _, key in ipairs({"heroes", "illusions", "wards", "couriers", "creeps", "neutrals", "wisdom", "buildings", "roshan", "tormentors", "runes", "camps", "effects", "items", "abilities", "modifiers", "stats", "buybacks", "teleports", "ultimates", "active_items", "casts", "projectiles", "scans"}) do
@@ -549,6 +563,7 @@ local function refreshFlags(now)
     end
     state.flags.enabled = get(ui.enabled, false)
     state.rate = ({3, 5, 8, 10})[get(ui.frequency, 1) + 1] or 5
+    state.profile = get(ui.profile, 1)
     state.nextFlags = now + 0.5
 end
 
@@ -657,7 +672,7 @@ local function initMenu()
     end
     ui.camps:ToolTip("cr_camps_tip")
     ui.buybacks:ToolTip("cr_buybacks_tip")
-    ui.profile = network:Combo("cr_profile", {"cr_profiles_eco", "cr_profiles_balanced", "cr_profiles_smooth"}, 0)
+    ui.profile = network:Combo("cr_profile", {"cr_profiles_eco", "cr_profiles_balanced", "cr_profiles_smooth"}, 1)
     ui.profile:Icon("\u{f1de}")
     ui.profile:ToolTip("cr_profile_tip")
     ui.frequency = network:Combo("cr_frequency", {"cr_rate_3", "cr_rate_5", "cr_rate_8", "cr_rate_10"}, 1)
@@ -859,6 +874,7 @@ start = function(rotate)
                 call(JSON.encode, JSON, state.fb.uid) or '""')
             dbRequest("PATCH", sid, body, function(_, result)
                 if result >= 200 and result < 300 then
+                    if not state.active then resetMatch() end
                     state.session, state.url = sid, FB.site .. sid
                     savedSet("session", sid)
                     if ui.link then ui.link:Set(state.url) end
@@ -973,12 +989,6 @@ local function base(unit, kind, now)
         hp = call(Entity.GetHealth, unit), max_hp = identity.max_hp,
         mana = kind == "hero" and call(NPC.GetMana, unit) or nil, max_mana = identity.max_mana,
         level = identity.level, player_id = identity.player_id, heading = false}
-    local yaw
-    if kind == "hero" and not hidden and Entity.GetRotationPYR then
-        local ok, pitch, value = pcall(Entity.GetRotationPYR, unit)
-        if ok then yaw = value end
-    end
-    row.heading = yaw or false
     if not hidden then
         cached.x, cached.y, cached.last_seen = row.x, row.y, now
         cached.position_observed_at = now
@@ -1073,7 +1083,7 @@ local function heroDetails(unit, row, now, refresh)
     local signature = tostring(state.flags.items) .. tostring(state.flags.abilities)
         .. tostring(state.flags.modifiers) .. tostring(state.flags.stats) .. tostring(state.flags.buybacks)
     local cached = state.details[row.id]
-    local detailInterval = get(ui.profile, 0) == 0 and 0.75 or 0.5
+    local detailInterval = mode().detail
     if not refresh or (cached and clock() - cached.wall < detailInterval and signature == cached.signature) then
         if state.needFull then
             if cached then
@@ -1379,7 +1389,8 @@ local function slowSnapshot(now)
             campDefs = {}, camps = {}, previousCamps = previous, finishedCamps = {}}
     end
     local job, began, count, campWork = state.scanJob, clock(), 0, 0
-    while count < 16 and clock() - began < 0.0015 do
+    local md = mode()
+    while count < md.scanCount and clock() - began < md.scanMs do
         if job.phase == "camps" then
             if job.campIndex > #job.campList or job.campIndex > 256 then
                 if job.refreshCamps then state.campDefs, state.nextCampDefs = job.campDefs, clock() + 1.5 end
@@ -1491,14 +1502,15 @@ local function slowSnapshot(now)
     state.laneList = {}; for _, entry in pairs(state.laneMovers) do state.laneList[#state.laneList + 1] = entry end
     state.tormentor_units = job.tormentors
     state.camps = state.flags.camps and job.finishedCamps or {}
-    state.scanJob, state.layersDirty, state.nextSlow = nil, true, clock() + (get(ui.profile, 0) == 2 and 1 or 1.5)
+    state.scanJob, state.layersDirty, state.nextSlow = nil, true, clock() + mode().slow
 end
 
 local function objectSnapshot(now, packet)
     -- Small cached sets only. Couriers bypass the full NPC scan; rune and
     -- shrine observations run at 4 Hz, with at most 16 courier samples/packet.
     packet.units_patch = {}
-    if state.flags.couriers then
+    if state.flags.couriers and clock() >= (state.nextCourierSample or 0) then
+        state.nextCourierSample = clock() + mode().couriers
         local count = 0
         for id, unit in pairs(state.movers) do
             if count >= 16 then break end
@@ -1525,7 +1537,7 @@ local function objectSnapshot(now, packet)
     -- Moving lane creeps use a bounded round-robin cache, not NPCs.GetAll.
     if state.flags.creeps then
         local list = state.laneList
-        for step = 1, math.min(32, #list) do
+        for step = 1, math.min(mode().creeps, #list) do
             state.laneCursor = state.laneCursor % #list + 1
             local entry = list[state.laneCursor]
             local row, unit = entry.row, entry.unit
@@ -1927,10 +1939,11 @@ local function collect()
         scan_radiant = cooldown(GameRules.GetGoodScanCD), scan_dire = cooldown(GameRules.GetBadScanCD)}
     if clock() >= state.nextRoshan then
         state.roshan = roshanSnapshot(now)
-        state.nextRoshan = clock() + 0.1
+        state.nextRoshan = clock() + mode().roshan
     end
     packet.objectives.roshan = state.roshan
-    packet.objectives.tormentors = tormentorSnapshot(now)
+    if not state.due or state.due.objectives or not state.tormentorCache then state.tormentorCache = tormentorSnapshot(now) end
+    packet.objectives.tormentors = state.tormentorCache
     local cycleRemaining = call(GameRules.GetNextCycleTime)
     if finite(cycleRemaining) and cycleRemaining >= 0 and cycleRemaining <= 1200 then
         packet.objectives.cycle = {next_at = now + cycleRemaining, source = "native_cycle"}
@@ -2148,9 +2161,18 @@ end
 local function addEvent(data, projectile)
     if not state.active or not state.flags.enabled or type(data) ~= "table" then return end
     if projectile and not state.flags.projectiles then return end
-    local name = tostring(data.name or data.fullName or ""):lower():gsub("\\", "/")
-    local fullName = tostring(data.fullName or data.name or ""):lower():gsub("\\", "/")
-    name = (name:match("([^/]+)$") or name):gsub("%.vpcf_c$", ""):gsub("%.vpcf$", "")
+    local rawKey = tostring(data.name) .. "|" .. tostring(data.fullName)
+    local names = state.nameCache[rawKey]
+    if not names then
+        local short = tostring(data.name or data.fullName or ""):lower():gsub("\\", "/")
+        local full = tostring(data.fullName or data.name or ""):lower():gsub("\\", "/")
+        short = (short:match("([^/]+)$") or short):gsub("%.vpcf_c$", ""):gsub("%.vpcf$", "")
+        names = {short, full, excluded = excludedSpell(short)}
+        state.nameCacheSize = state.nameCacheSize + 1
+        if state.nameCacheSize > 4096 then state.nameCache, state.nameCacheSize = {}, 1 end
+        state.nameCache[rawKey] = names
+    end
+    local name, fullName = names[1], names[2]
     local orbName = name:match("^invoker_(quas)_orb$") or name:match("^invoker_(wex)_orb$") or name:match("^invoker_(exort)_orb$")
     if orbName and not projectile then
         local owner = data.entity or data.entityForModifiers
@@ -2167,7 +2189,7 @@ local function addEvent(data, projectile)
     if not active() then return end
     if name:find("invoker_quas_", 1, true) == 1 or name:find("invoker_wex_", 1, true) == 1
         or name:find("invoker_exort_", 1, true) == 1 then return end -- cosmetic children of the three native orbs
-    if excludedSpell(name) then return end
+    if names.excluded then return end
     if name:find("keeper_light_speed_", 1, true) == 1 then return end -- child visuals duplicate the innate trail
     if name:find("scan_preview", 1, true) or name:find("ambient", 1, true) or name:find("footstep", 1, true) then return end
     local observed = not projectile and observedParticles[name] or nil
@@ -2190,9 +2212,13 @@ local function addEvent(data, projectile)
     -- ambient/cosmetic/attack particles must not flood the event stream.
     local generic = false
     if kind == "effect" and not projectile then
-        local ignored = false
-        for _, token in ipairs({"ambient", "aura", "overhead", "attack", "wearable", "status", "idle", "blood", "illusion", "trail", "body", "footstep"}) do
-            if name:find(token, 1, true) then ignored = true; break end
+        local ignored = names.ignored
+        if ignored == nil then
+            ignored = false
+            for _, token in ipairs({"ambient", "aura", "overhead", "attack", "wearable", "status", "idle", "blood", "illusion", "trail", "body", "footstep"}) do
+                if name:find(token, 1, true) then ignored = true; break end
+            end
+            names.ignored = ignored
         end
         if ignored then return end
         local ownerName = entity and call(NPC.GetUnitName, entity) or ""
@@ -2317,7 +2343,7 @@ function script.OnParticleUpdateEntity(data)
 end
 
 function script.OnUnitAnimation(data)
-    if type(data) ~= "table" then return end
+    if type(data) ~= "table" or not active() then return end
     local ability = data.unit and call(NPC and NPC.GetAbilityByActivity, data.unit, data.activity)
     if ability then
         observeCast(data.unit, ability, "ability_animation", gameClock())
@@ -2347,9 +2373,18 @@ function script.OnStartSound(data)
     if not details then return end
     -- Match only a known native ability and its exact cast/activation sound.
     -- Impact, looping and cosmetic sound suffixes never become new casts.
-    local name = data.name:lower():gsub("^hero_", ""):gsub("[^a-z0-9]", "")
+    local cache = state.soundNames
+    local name = cache[data.name]
+    if not name then
+        name = data.name:lower():gsub("^hero_", ""):gsub("[^a-z0-9]", "")
+        cache[data.name] = name
+    end
     for _, ability in ipairs(details.abilities or {}) do
-        local key = type(ability.name) == "string" and ability.name:gsub("_", "")
+        local key = type(ability.name) == "string" and cache[ability.name]
+        if type(ability.name) == "string" and not key then
+            key = ability.name:gsub("_", "")
+            cache[ability.name] = key
+        end
         if key and (name == key or name == key .. "cast" or name == key .. "activate") then
             observeCast(data.source, nil, "ability_sound", gameClock(), ability)
             return
@@ -2358,6 +2393,7 @@ function script.OnStartSound(data)
 end
 
 function script.OnModifierCreate(entity, modifier)
+    if not state.active then return end
     local id = entity and call(Entity.GetIndex, entity)
     if state.active and id and orbModifiers[call(Modifier.GetName, modifier)] then invalidateDetails(id) end
     if state.active then observeItemEffect(entity, modifier, "modifier_event", gameClock()) end
@@ -2483,6 +2519,7 @@ function script.OnUnitInventoryUpdated(entity)
 end
 
 function script.OnEntityDestroy(entity, confirmedDeath)
+    if not state.active then return end
     local id = call(Entity.GetIndex, entity)
     if id then
         local key = tostring(id)
@@ -2532,6 +2569,7 @@ function script.OnEntityDestroy(entity, confirmedDeath)
 end
 
 function script.OnNpcSpawned(entity)
+    if not state.active then return end
     local id = call(Entity.GetIndex, entity)
     if id then
         local cached = state.heroes[id]
@@ -2753,7 +2791,7 @@ do
         end
     end
 
-    function relay.view(packet)
+    function relay.view(packet, due)
         local gt = packet.game_time or 0
         local now = packet.game_clock or gt
         local offset = gt - now
@@ -2771,7 +2809,8 @@ do
         local function readyAt(observed, remaining)
             return finite(remaining) and remaining > 0.5 and round(observed + remaining + offset) or nil
         end
-        v.pos, v.info = {}, {}
+        v.pos = {}
+        if due.info then v.info = {} end
         for _, h in ipairs(packet.heroes or {}) do
             if finite(h.x) and finite(h.y) then
                 local fog = h.visible == true and 0 or (h.source == "maphack_last" or h.source == "innate_trace") and 1 or 2
@@ -2781,7 +2820,7 @@ do
                     alive = h.alive, level = h.level, me = h["local"] == true or nil,
                     tp = type(h.teleport) == "table" and at(h.teleport.ends_at) or nil,
                     respawn_at = h.alive == false and finite(h.respawn) and h.respawn > 0 and round(gt + h.respawn) or nil}
-                local d = state.details[h.id]
+                local d = due.info and state.details[h.id]
                 if d and finite(d.game) then
                     local info = {items = {}, abilities = {}}
                     for _, item in ipairs(d.items or {}) do
@@ -2840,6 +2879,7 @@ do
         end
         table.sort(v.pos, byId)
         local r = state.relay
+        if due.units then
         v.units = {}
         local visible, alive = {}, {}
         for _, u in pairs(r.units) do
@@ -2873,6 +2913,8 @@ do
         end
         simulateWaves(visible, alive, gt, v.units)
         table.sort(v.units, byId)
+        end
+        if due.wards then
         v.wards = {}
         for _, w in ipairs(r.wards or {}) do
             if finite(w.x) and finite(w.y) then
@@ -2881,6 +2923,8 @@ do
             end
         end
         table.sort(v.wards, byId)
+        end
+        if due.runes then
         v.runes = {}
         for _, rune in ipairs(r.runes or {}) do
             if finite(rune.x) and finite(rune.y) then
@@ -2889,6 +2933,8 @@ do
             end
         end
         table.sort(v.runes, byId)
+        end
+        if due.camps then
         v.camps = {}
         for _, c in ipairs(state.camps or {}) do
             if finite(c.x) and finite(c.y) then
@@ -2896,6 +2942,7 @@ do
                     s = c.state == "occupied" and 1 or c.state == "empty" and 0 or nil,
                     n = c.count, st = finite(c.stack_count) and c.stack_count > 1 and c.stack_count or nil}
             end
+        end
         end
         v.events = {}
         for _, e in ipairs(packet.events or {}) do
@@ -2908,6 +2955,7 @@ do
             end
         end
         table.sort(v.events, byId)
+        if not due.objectives then return v end
         local o = packet.objectives or {}
         v.objectives = {tormentors = {}}
         for _, key in ipairs({"glyph_radiant", "glyph_dire", "scan_radiant", "scan_dire"}) do
@@ -3011,13 +3059,15 @@ do
         local m = state.mem
         m.gt = v.clock.t
         local obj = v.objectives
-        if obj.roshan and obj.roshan.x then m.rosh = {x = obj.roshan.x, y = obj.roshan.y} end
-        local torm = {}
-        for _, t in ipairs(obj.tormentors) do if t.x then torm[#torm + 1] = {x = t.x, y = t.y} end end
-        if #torm > 0 then m.torm = torm end
-        if obj.roshan then trackBoss("rosh", "rosh", obj.roshan) end
-        for _, t in ipairs(obj.tormentors) do
-            trackBoss("torm" .. tostring(t.id), "torm", t, t.x and (t.x + t.y < 0 and "r" or "d") or nil)
+        if obj then
+            if obj.roshan and obj.roshan.x then m.rosh = {x = obj.roshan.x, y = obj.roshan.y} end
+            local torm = {}
+            for _, t in ipairs(obj.tormentors) do if t.x then torm[#torm + 1] = {x = t.x, y = t.y} end end
+            if #torm > 0 then m.torm = torm end
+            if obj.roshan then trackBoss("rosh", "rosh", obj.roshan) end
+            for _, t in ipairs(obj.tormentors) do
+                trackBoss("torm" .. tostring(t.id), "torm", t, t.x and (t.x + t.y < 0 and "r" or "d") or nil)
+            end
         end
 
         m.h, m.runeLog, m.runes, m.ev, m.cd = m.h or {}, m.runeLog or {}, m.runes or {}, m.ev or {}, m.cd or {}
@@ -3066,6 +3116,7 @@ do
         end
 
         local current = {}
+        if v.runes then
         for _, rune in ipairs(v.runes) do
             if rune.f == 0 then
                 current[rune.id] = true
@@ -3088,11 +3139,12 @@ do
                 m.runes[id] = nil
             end
         end
+        end
 
         m.wardSeen = m.wardSeen or {}
         local firstWards = not m.wardInit
-        m.wardInit = true
-        for _, w in ipairs(v.wards) do
+        if v.wards then m.wardInit = true end
+        for _, w in ipairs(v.wards or {}) do
             if not m.wardSeen[w.id] then
                 m.wardSeen[w.id] = true
                 if not firstWards and w.f == 0 and sideOf(w.team) == "e" then
@@ -3134,7 +3186,7 @@ do
             if m.gt - at > 120 or at > m.gt then m.ev[id] = nil end
         end
 
-        for _, key in ipairs({"glyph_radiant", "glyph_dire", "scan_radiant", "scan_dire"}) do
+        for _, key in ipairs(obj and {"glyph_radiant", "glyph_dire", "scan_radiant", "scan_dire"} or {}) do
             local value = obj[key]
             if value then
                 local prev = m.cd[key]
@@ -3150,7 +3202,7 @@ do
         end
     end
 
-    function relay.build(packet)
+    function relay.build(packet, due)
         if packet.in_game and packet.match ~= state.relayMatch then
             state.relayMatch, state.mem, state.feedQueue, state.clearFeed = packet.match, {}, {}, true
             state.feedKeys, state.feedPrune = {}, {}
@@ -3158,17 +3210,20 @@ do
             savedSet("match", tostring(packet.match))
         end
         relay.merge(packet)
-        local v = relay.view(packet)
+        local v = relay.view(packet, due)
         relay.derive(packet, v)
-        for _, key in ipairs({"units", "wards", "runes", "events"}) do strip(v[key]) end
+        for _, key in ipairs({"units", "wards", "runes", "events"}) do if v[key] then strip(v[key]) end end
         return v
     end
 
     function relay.patch(v)
         local began = clock()
         local fields, commit, feedCount = {}, {}, 0
+        local inGame = v.clock and v.clock.in_game
         for _, key in ipairs(PARTS) do
-            local encoded = v[key] ~= nil and call(JSON.encode, JSON, v[key]) or "null"
+            local encoded
+            if v[key] ~= nil then encoded = call(JSON.encode, JSON, v[key])
+            elseif not inGame then encoded = "null" end
             if encoded and (state.resendAll or state.sentParts[key] ~= encoded) then
                 fields[#fields + 1] = '"live/' .. key .. '":' .. encoded
                 commit[key] = encoded
@@ -3240,11 +3295,19 @@ function script.OnUpdateEx()
         end
         return
     end
+    local due = {}
+    local full = state.resendAll or state.needFull
+    for key, period in pairs(mode().parts) do
+        if full or now >= (state.partAt[key] or 0) then
+            due[key], state.partAt[key] = true, now + period
+        end
+    end
+    state.due = due
     local began = clock()
     local ok, packet = pcall(collect)
     state.perf.collect_ms = (clock() - began) * 1000
     if not ok then show("cr_st_collect_fail", tostring(packet)); state.nextSend = now + 1; return end
-    local built, view = pcall(relay.build, packet)
+    local built, view = pcall(relay.build, packet, due)
     if not built then show("cr_st_collect_fail", tostring(view)); state.nextSend = now + 1; return end
     local body, commit, feedCount = relay.patch(view)
     local clearing = state.clearFeed

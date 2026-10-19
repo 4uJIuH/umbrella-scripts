@@ -1,3 +1,11 @@
+# Update v2.3.0
+
+- Optimization: less FPS cost. Heavy parts (units, wards, runes, camps, objectives, hero details) refresh less often than hero positions and are encoded only when due.
+- Load modes now control everything: send rate, refresh of each part, unit scan budget per frame, couriers, creeps, Roshan and hero details.
+- Economy for weak PCs, Balanced by default, Smooth for the fastest map.
+- With the radar off, the script skips game event processing.
+- Particle and sound names are cached, so fights cost less per effect.
+
 # Fix v2.2.1
 
 - The ability list shows only the hero's own abilities: event ones like Season Dark Carnival are gone.

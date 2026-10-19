@@ -139,6 +139,31 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 .opt.on .sw,.sw.on{background:var(--ok)} .opt.on .sw::after,.sw.on::after{left:14px}
 .opt.on{color:var(--fg)}
 .opts .sep{height:1px;background:var(--soft);margin:6px 4px}
+#opts{width:296px;max-height:calc(100% - 64px);overflow-y:auto;scrollbar-width:thin}
+#opts .grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:0 2px}
+#opts .grid .opt{gap:7px;padding:6px 8px;font-size:12px;border:1px solid var(--border);min-width:0}
+#opts .grid .opt span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#opts .grid .opt .sw{display:none}
+#opts .grid .opt.on{background:color-mix(in srgb,var(--ok) 13%,transparent);border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
+#opts .grid .opt.on i{color:var(--ok)}
+.hero.hc{padding:7px 12px}
+.hc-top{display:flex;align-items:center;gap:8px}
+.hc-top img{width:24px;height:24px;border-radius:6px;background:#1a1a1d;object-fit:contain;padding:1px;flex:none}
+.hc-top .name{font-size:13px}
+.hc-top .lvl{font-size:11.5px;color:var(--faint);font-weight:600}
+.hc-top .st{margin-left:auto;font-size:11.5px;font-weight:500;color:var(--muted);white-space:nowrap}
+.hc-top .st.fog{color:var(--warn)} .hc-top .st.dead{color:var(--bad)} .hc-top .st.tp{color:var(--blue)} .hc-top .st.vis{color:var(--faint)}
+.hc-bars{display:grid;gap:2px;margin:5px 0 5px 32px}
+.hc-bars i{display:block;height:3px;border-radius:2px;background:var(--sec);overflow:hidden;position:relative}
+.hc-bars i b{position:absolute;inset:0 auto 0 0;border-radius:2px}
+.hc-bars .h b{background:var(--hp)} .hc-bars .m b{background:var(--mp)}
+.hc-row{display:flex;align-items:center;gap:2px;margin-left:32px;flex-wrap:wrap}
+.hc-row .slot{width:24px;height:24px;border-radius:4px}
+.hc-row .slot.it{width:32px;height:24px}
+.hc-row .slot.nt{width:22px;height:22px;margin-left:2px}
+.hc-row .slot .cd{font-size:9.5px}
+.hc-row .slot .ch{font-size:8px}
+.hc-row .gap{width:8px}
 .mapbtns{display:flex;gap:4px;padding:2px 4px}
 .mapbtns button{flex:1;height:30px;border-radius:8px;background:var(--sec);color:var(--muted);font-size:12px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .mapbtns button:hover{color:var(--fg)}
@@ -319,7 +344,7 @@ const ALL = {
     roshan: 'Roshan', tormentor: 'Tormentor', noData: 'no data', bossDead: 'dead', bossSeen: 'alive', bossHit: 'under attack',
     glyph: 'Glyph R / D', scan: 'Scan R / D', camps: 'Camps with creeps',
     layers: { heroes: 'Heroes', fog: 'Heroes in fog', creeps: 'Lane creeps', waves: 'Creep waves in fog', jungle: 'Jungle and camps', wards: 'Wards and vision', buildings: 'Buildings', events: 'Map events', couriers: 'Couriers', runes: 'Runes', labels: 'Fog age labels' },
-    heroesTitle: 'Heroes', teamShow: 'Show heroes', viewAll: 'Both teams', viewAllies: 'Allies only', viewEnemies: 'Enemies only', noHeroes: 'No heroes yet',
+    heroesTitle: 'Heroes', teamShow: 'Show heroes', compactView: 'Compact view', viewMode: 'View', viewAll: 'Both teams', viewAllies: 'Allies only', viewEnemies: 'Enemies only', noHeroes: 'No heroes yet',
     show: 'Show on the map', windows: 'On top of the game', day: 'Day', night: 'Night', nsNight: 'Night Stalker', est: 'counted since the radar started',
     stock: 'Shop stock', scanCharges: 'Scan charges R / D', dmg: 'Hero damage', heal: 'Healing', wardsPlaced: 'Wards', stacks: 'Stacks', xp: 'XP',
     attrDmg: 'Damage', attrArm: 'Armor', attrMs: 'Move speed', attrAs: 'Attacks per second', ult: 'Ultimate',
@@ -352,7 +377,7 @@ const ALL = {
     roshan: 'Рошан', tormentor: 'Торментор', noData: 'нет данных', bossDead: 'мертв', bossSeen: 'жив', bossHit: 'бьют',
     glyph: 'Глиф R / D', scan: 'Скан R / D', camps: 'Кемпы с крипами',
     layers: { heroes: 'Герои', fog: 'Герои в тумане', creeps: 'Линейные крипы', waves: 'Волны крипов в тумане', jungle: 'Лес и кемпы', wards: 'Варды и обзор', buildings: 'Здания', events: 'События на карте', couriers: 'Курьеры', runes: 'Руны', labels: 'Подписи времени в тумане' },
-    heroesTitle: 'Герои', teamShow: 'Показывать героев', viewAll: 'Обе команды', viewAllies: 'Только союзники', viewEnemies: 'Только враги', noHeroes: 'Героев пока нет',
+    heroesTitle: 'Герои', teamShow: 'Показывать героев', compactView: 'Компактный вид', viewMode: 'Вид', viewAll: 'Обе команды', viewAllies: 'Только союзники', viewEnemies: 'Только враги', noHeroes: 'Героев пока нет',
     show: 'Показывать на карте', windows: 'Поверх игры', day: 'День', night: 'Ночь', nsNight: 'Night Stalker', est: 'посчитано с запуска радара',
     stock: 'В лавке', scanCharges: 'Заряды скана R / D', dmg: 'Урон по героям', heal: 'Лечение', wardsPlaced: 'Варды', stacks: 'Стаки', xp: 'Опыт',
     attrDmg: 'Урон', attrArm: 'Броня', attrMs: 'Скорость', attrAs: 'Атак в секунду', ult: 'Ультимейт',
@@ -383,7 +408,7 @@ const CFG_DEFAULT = {
   layers: { heroes: true, fog: true, labels: true, creeps: true, waves: true, jungle: true, wards: true, runes: true, couriers: true, buildings: true, events: true },
   look: { theme: 'dark', density: 'normal', zoom: 100, rad: '#57c785', dire: '#ef6b6b', mapScale: 100, heroScale: 100, legend: true },
   top: { nw: true, heads: true, mana: true, numbers: true, ult: true, clock: true, corner: 'lh' },
-  heroes: { view: 'all', order: 'mine', name: true, state: true, bars: true, kpis: true, attrs: true, extra: true, items: true, backpack: true, abilities: true },
+  heroes: { view: 'all', order: 'mine', compact: false, name: true, state: true, bars: true, kpis: true, attrs: true, extra: true, items: true, backpack: true, abilities: true },
   events: { death: true, rune: true, tp: true, cast: true, smoke: true, intel: true, ward: true, building: true, boss: true, scan: true, icons: true, newest: false },
   objectives: { rosh: true, torm: true, glyph: true, scan: true, charges: true, camps: true, stock: true },
 };
@@ -492,7 +517,7 @@ function applyText() {
   renderTeamOpts();
   logEl.dataset.empty = TEXT.noEvents;
   $('customText').textContent = CT.customize;
-  $('opts').innerHTML = '<h3>' + esc(TEXT.show) + '</h3>' + LAYER_KEYS.map(([key, ic]) => '<button type="button" class="opt' + (layers[key] ? ' on' : '') + '" data-k="' + key + '"><i class="fa-solid ' + ic + '"></i><span>' + esc(TEXT.layers[key]) + '</span><em class="sw"></em></button>').join('') +
+  $('opts').innerHTML = '<h3>' + esc(TEXT.show) + '</h3><div class="grid">' + LAYER_KEYS.map(([key, ic]) => '<button type="button" class="opt' + (layers[key] ? ' on' : '') + '" data-k="' + key + '" title="' + esc(TEXT.layers[key]) + '"><i class="fa-solid ' + ic + '"></i><span>' + esc(TEXT.layers[key]) + '</span><em class="sw"></em></button>').join('') + '</div>' +
     '<div class="sep"></div><h3>' + esc(TEXT.windows) + '</h3><div class="mapbtns"><button type="button" id="pip"><i class="fa-solid fa-map"></i>' + esc(TEXT.pip) + '</button></div>';
   $('pip').onclick = () => openPip();
   if (!document.pictureInPictureEnabled || !canvas.captureStream) $('pip').style.display = 'none';
@@ -516,11 +541,20 @@ $('opts').onclick = ev => {
 };
 function renderTeamOpts() {
   $('teamOpts').innerHTML = '<h3>' + esc(TEXT.teamShow) + '</h3>' + [['all', 'fa-users', TEXT.viewAll], ['allies', 'fa-user-shield', TEXT.viewAllies], ['enemies', 'fa-skull', TEXT.viewEnemies]]
-    .map(([key, ic, text]) => '<button type="button" class="opt' + (teamView === key ? ' on' : '') + '" data-v="' + key + '"><i class="fa-solid ' + ic + '"></i><span>' + esc(text) + '</span><em class="sw"></em></button>').join('');
+    .map(([key, ic, text]) => '<button type="button" class="opt' + (teamView === key ? ' on' : '') + '" data-v="' + key + '"><i class="fa-solid ' + ic + '"></i><span>' + esc(text) + '</span><em class="sw"></em></button>').join('') +
+    '<div class="sep"></div><h3>' + esc(TEXT.viewMode) + '</h3><button type="button" class="opt' + (cfg.heroes.compact ? ' on' : '') + '" data-compact="1"><i class="fa-solid fa-bars"></i><span>' + esc(TEXT.compactView) + '</span><em class="sw"></em></button>';
 }
 $('teamOpts').onclick = ev => {
   const b = ev.target.closest('.opt');
   if (!b) return;
+  if (b.dataset.compact) {
+    cfg.heroes.compact = !cfg.heroes.compact;
+    saveCfg();
+    renderTeamOpts();
+    sideHtml = '';
+    renderSide();
+    return;
+  }
   teamView = b.dataset.v;
   cfg.heroes.view = teamView;
   saveCfg();
@@ -1050,12 +1084,30 @@ function heroCard(entry) {
     inv += it ? slot(itemImg(it.name), itemName(it.name), { cd: remaining(it.ready_at), charges: it.charges, cls: it.o ? 'old' : '' }) : '<span class="slot"></span>';
   }
   if (bySlot[16]) inv += slot(itemImg(bySlot[16].name), itemName(bySlot[16].name), { cd: remaining(bySlot[16].ready_at), cls: 'nt' + (bySlot[16].o ? ' old' : '') });
+  if (bySlot[15]) inv += '<span class="gap"></span>' + slot(itemImg(bySlot[15].name), itemName(bySlot[15].name), { cd: remaining(bySlot[15].ready_at), charges: bySlot[15].charges });
   let back = '';
   for (const i of [6, 7, 8]) if (bySlot[i]) back += slot(itemImg(bySlot[i].name), itemName(bySlot[i].name), { cd: remaining(bySlot[i].ready_at), cls: 'sm' });
-  if (bySlot[15]) back += '<span class="gap"></span>' + slot(itemImg(bySlot[15].name), itemName(bySlot[15].name), { cd: remaining(bySlot[15].ready_at), cls: 'sm' });
   const own = heroKey(r.name) + '_';
   const abilities = list(info.abilities).filter(a => String(a.name || '').indexOf(own) === 0).map(a => slot(abilityImg(a.name), abilityName(a.name, r.name) + (a.level ? ' (' + a.level + ')' : ''),
     { cd: remaining(a.ready_at), level: a.level, charges: a.charges, cls: 'ab' + (a.level ? '' : ' l0') })).join('');
+  if (cfg.heroes.compact) {
+    let row = abilities;
+    if (items.length) {
+      row += '<span class="gap"></span>';
+      for (let i = 0; i < 6; i++) {
+        const it = bySlot[i];
+        if (it) row += slot(itemImg(it.name), itemName(it.name), { cd: remaining(it.ready_at), charges: it.charges, cls: 'it' + (it.o ? ' old' : '') });
+      }
+      if (bySlot[16]) row += slot(itemImg(bySlot[16].name), itemName(bySlot[16].name), { cd: remaining(bySlot[16].ready_at), cls: 'nt' });
+      if (bySlot[15]) row += slot(itemImg(bySlot[15].name), itemName(bySlot[15].name), { cd: remaining(bySlot[15].ready_at), charges: bySlot[15].charges, cls: 'it' });
+    }
+    const dead = r.alive === false;
+    return '<div class="hero hc' + (r.f ? ' fogrow' : '') + (dead ? ' deadrow' : '') + '" data-id="' + esc(r.id) + '" title="' + esc(info.pn || '') + '">' +
+      '<div class="hc-top"><img src="' + esc(heroImg(r.name)) + '" alt="" onerror="this.style.visibility=\'hidden\'"><span class="name">' + esc(heroName(r.name)) + '</span>' +
+      '<span class="lvl">' + esc(r.level || '') + '</span><span class="st ' + noteCls + '">' + esc(noteCls === 'vis' ? '' : note) + '</span></div>' +
+      '<div class="hc-bars"><i class="h"><b style="width:' + (dead ? 0 : pct(r.hp, r.max_hp)) + '%"></b></i>' + (r.max_mana ? '<i class="m"><b style="width:' + (dead ? 0 : pct(r.mana, r.max_mana)) + '%"></b></i>' : '') + '</div>' +
+      (row ? '<div class="hc-row">' + row + '</div>' : '') + '</div>';
+  }
   const a = info.attr;
   let attrs = '';
   if (a) {
@@ -1486,7 +1538,7 @@ function renderDrawer() {
     h += ctlSeg(CT.corner, 'top.corner', [['lh', CT.cornerLh], ['kda', CT.cornerKda], ['nw', CT.cornerNw], ['none', CT.cornerNone]]);
   } else if (drawerTab === 'heroes') {
     h += '<h3>' + esc(CT.heroWho) + '</h3>' + ctlSeg(CT.heroWho, 'heroes.view', [['all', TEXT.viewAll], ['allies', TEXT.viewAllies], ['enemies', TEXT.viewEnemies]]) +
-      ctlSeg(CT.heroOrder, 'heroes.order', [['mine', CT.orderMine], ['radiant', CT.orderRad]]);
+      ctlSeg(CT.heroOrder, 'heroes.order', [['mine', CT.orderMine], ['radiant', CT.orderRad]]) + ctlSwitch(TEXT.compactView, 'heroes.compact');
     h += '<h3>' + esc(CT.heroParts) + '</h3>' + [['name', CT.hName], ['state', CT.hState], ['bars', CT.hBars], ['kpis', CT.hKpis], ['attrs', CT.hAttrs], ['extra', CT.hExtra], ['items', CT.hItems], ['backpack', CT.hBackpack], ['abilities', CT.hAbilities]]
       .map(([k, t]) => ctlSwitch(t, 'heroes.' + k)).join('');
   } else if (drawerTab === 'events') {
