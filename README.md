@@ -597,32 +597,32 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Auto Shackleshot](scripts/auto_shackleshot) | 17 | `auto-shackleshot-v1.0.0` |
 | [Auto Spark](scripts/auto_spark) | 19 | `auto-spark-v1.0.0` |
 | [Rune Destruction](scripts/rune_destruction) | 22 | `rune-destruction-v1.0.2` |
-| [Earth Spirit Kick Combo](scripts/earth_spirit_kick_combo) | 18 | `earth-spirit-kick-combo-v1.0.0` |
-| [HP/Mana 67 Ping](scripts/hp_mana_67_ping) | 8 | `hp-mana-67-ping-v1.0.1` |
-| [Spirit Bear Pull](scripts/spirit_bear_pull) | 16 | `spirit-bear-pull-v1.0.0` |
+| [Earth Spirit Kick Combo](scripts/earth_spirit_kick_combo) | 19 | `earth-spirit-kick-combo-v1.0.0` |
+| [HP/Mana 67 Ping](scripts/hp_mana_67_ping) | 9 | `hp-mana-67-ping-v1.0.1` |
+| [Spirit Bear Pull](scripts/spirit_bear_pull) | 17 | `spirit-bear-pull-v1.0.0` |
 | [Dorman Combo Assistant](scripts/dorman_combo_assistant) | 1 | `dorman-combo-assistant-v1.0.0` |
 | [Rem Assistant](scripts/rem_assistant) | 2 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
-| [qLocalization](scripts/q_localizer) | 103 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 402 | `script-manager-v2.14.2` |
-| [Dynamic Island](scripts/dynamic_island_dota) | 634 | `v2.5.3` |
+| [qLocalization](scripts/q_localizer) | 105 | `q-localizer-v1.0.0` |
+| [Script Manager](scripts/script_manager) | 407 | `script-manager-v2.14.2` |
+| [Dynamic Island](scripts/dynamic_island_dota) | 635 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 11 | `tinker-smart-escape-v1.0.0` |
-| [Lane Pull](scripts/lane_pull) | 270 | `lane-pull-v1.0.4` |
+| [Lane Pull](scripts/lane_pull) | 271 | `lane-pull-v1.0.4` |
 | [DS Spot Block](scripts/ds_spot_block) | 57 | `ds-spot-block-v1.0.1` |
 | [Custom Background](scripts/custom_background) | 51 | `custom-background-v1.0.0` |
 | [Auto Stack](scripts/auto_stack) | 158 | `auto-stack-v1.1.0` |
 | [Draft Helper](scripts/draft_helper) | 1472 | `draft-helper-v2.0.0-beta.20` |
-| [MusicUI](scripts/musicui) | 732 | `musicui-v1.0.8` |
+| [MusicUI](scripts/musicui) | 735 | `musicui-v1.0.8` |
 | [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 204 | `umbrella-lua-v1.0.4` |
 | [Custom Stats](scripts/custom_stats) | 15 | `custom-stats-v1.0.0` |
 | [Bloodrage AutoCast](scripts/bloodrage_autocast) | 8 | `bloodrage-autocast-v1.0.0` |
-| [Naga PT Abuse](scripts/naga_pt_abuse) | 14 | `naga-pt-abuse-v1.0.0` |
+| [Naga PT Abuse](scripts/naga_pt_abuse) | 15 | `naga-pt-abuse-v1.0.0` |
 | [Auto Aegis Mover](scripts/auto_aegis_mover) | 22 | `auto-aegis-mover-v1.0.0` |
 | [Anti-Rubick](scripts/anti_rubick) | 18 | `anti-rubick-v1.0.0` |
 | [Arc Warden Blocker](scripts/arc_warden_blocker) | 11 | `arc-warden-blocker-v1.0.0` |
 | [Invoker Combo Switcher](scripts/invoker_combo_switcher) | 12 | `invoker-combo-switcher-v1.0.0` |
 | [Magnus Skewer Ally](scripts/magnus_skewer_ally) | 12 | `magnus-skewer-ally-v1.0.0` |
-| [Better Better Techies Combo](scripts/better_better_techies_combo) | 33 | `better-better-techies-combo-v1.0.0` |
+| [Better Better Techies Combo](scripts/better_better_techies_combo) | 34 | `better-better-techies-combo-v1.0.0` |
 | [Chat Translator](scripts/chat_translator) | 17 | `chat-translator-v1.0.0` |
 | [Hero Grid](scripts/hero_grid) | 1 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 12 | `weather-v1.0.0` |
@@ -643,7 +643,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Spirit Breaker Combo & Ghoul 1000-7](scripts/spirit_breaker_bara) | 5 | `spirit-breaker-bara-v1.0.0` |
 | [1000-7 Counter](scripts/ghoul_counter) | 9 | `ghoul-counter-v1.0.0` |
 | [Invoker Jarvis](scripts/invoker_jarvis) | 43 | `v1.3.1` |
-| [TikTok](scripts/umbrella_tiktok) | 308 | `v1.3.2` |
+| [TikTok](scripts/umbrella_tiktok) | 310 | `v1.3.2` |
 | [Invoker AutoStack](scripts/invoker_autostack) | 79 | `v1.4.2` |
 | [Old Last Match](scripts/old_last_match) | 14 | `old-last-match-v1.0.0` |
 | [Unusual Secret](scripts/unusual_secret) | 13 | `unusual-secret-v2.1.0` |
@@ -672,7 +672,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Hoodwink Blast Off Catch](scripts/hoodwink_bushwhack_techies) | 6 | `hoodwink-bushwhack-techies-v1.0.0` |
 | [Ringmaster Eul Combo](scripts/ringmaster_eul_combo) | 8 | `ringmaster-eul-combo-v1.0.0` |
 | [Spirit Breaker Charge Combo](scripts/spirit_breaker_charge) | 14 | `spirit-breaker-charge-v1.0.0` |
-| [Ward Predictor](scripts/ward_predictor) | 20 | `ward-predictor-v1.0.0` |
+| [Ward Predictor](scripts/ward_predictor) | 21 | `ward-predictor-v1.0.0` |
 | [Invoker SS](scripts/invoker_ss) | 3 | `invoker-ss-v138` |
 | [Sentry](scripts/sentry) | 12 | `sentry-v1.0.0` |
 | [Changer](scripts/changer) | 9 | `changer-v1.0.0` |
@@ -728,9 +728,9 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
 | [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 2 | `terrorblade-sunder-dagon-v1.0.0` |
 | [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 2 | `venomancer-ward-controller-v1.0.0` |
-| [Cloud Radar](scripts/web_radar) | 12 | `web-radar-v2.3.3` |
+| [Cloud Radar](scripts/web_radar) | 14 | `web-radar-v2.3.3` |
 | [Murzik Kitty Widget](scripts/murzik) | 1 | `murzik-v1.0.0` |
-| [Трекер привычек](scripts/habits) | 2 | `habits-v1.0.0` |
+| [Трекер привычек](scripts/habits) | 3 | `habits-v1.0.0` |
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |
 | [Календарь](scripts/calendar) | 2 | `calendar-v1.0.0` |
 | [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) | 2 | `arc-warden-clone-pike-v1.0.0` |
