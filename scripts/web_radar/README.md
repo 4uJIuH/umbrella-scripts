@@ -3,10 +3,11 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.1.0/web_radar.lua) — `web-radar-v2.1.0`, 2026-10-19
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.0/web_radar.lua) — `web-radar-v2.2.0`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`web-radar-v2.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.2.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.0/web_radar.lua) | 0 |
 | [`web-radar-v2.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.1.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.1.0/web_radar.lua) | 0 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=web-radar&expanded=true)
@@ -30,6 +31,16 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Обновление v2.2.0
+
+- Волны крипов в тумане: каждые 30 секунд скрипт выпускает волну по каждой линии и ведет ее до встречи с вражеской волной или первой живой вражеской башни. Место встречи уточняется по видимым крипам.
+- Позиции башен запоминаются, поэтому волны работают и после разрушения башен.
+- Панель как в игре над картой: портреты, KDA, HP и мана, ульт и TP, счет, NW команд, время, день и ночь.
+- Настройки слоев карты перенесены в меню-шестеренку в углу карты.
+- Исправлена прокрутка списков Radiant и Dire.
+- Новые данные: ники игроков, атрибуты, урон, броня, скорость, скорость атаки, опыт, урон по героям, лечение, поставленные варды и стаки, заряды скана, варды и Smoke в лавке.
+- K/D врагов считается по убийствам с момента запуска радара.
 
 # Обновление v2.1.0
 
@@ -67,6 +78,16 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Update v2.2.0
+
+- Creep waves in the fog: every 30 seconds the script sends a wave down each lane and walks it until it meets the enemy wave or the first alive enemy tower. Visible creeps refine the meeting point.
+- Tower positions are remembered, so waves keep working after towers fall.
+- In-game style top bar above the map: portraits, KDA, HP and mana, ultimate and TP, score, team net worth, clock, day and night.
+- Map layer settings moved to a gear menu in the map corner.
+- Fixed scrolling in the Radiant and Dire lists.
+- New data: player names, attributes, damage, armor, move speed, attack speed, XP, hero damage, healing, wards placed and stacks, scan charges, wards and Smoke in the shop.
+- Enemy K/D is counted from kills since the radar started.
 
 # Update v2.1.0
 
