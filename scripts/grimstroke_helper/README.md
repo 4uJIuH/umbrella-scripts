@@ -3,11 +3,12 @@
 подбирает цели для Ink Swell и управляет Dark Portrait / selects Ink Swell targets and controls Dark Portrait
 
 <!-- releases:start -->
-Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.3.0/grimstroke_helper.lua) — `grimstroke-helper-v1.3.0`, 2026-10-19
+Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.0/grimstroke_helper.lua) — `grimstroke-helper-v1.4.0`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`grimstroke-helper-v1.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.3.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.3.0/grimstroke_helper.lua) | 0 |
+| [`grimstroke-helper-v1.4.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.0/grimstroke_helper.lua) | 0 |
+| [`grimstroke-helper-v1.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.3.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.3.0/grimstroke_helper.lua) | 3 |
 | [`grimstroke-helper-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.2.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.2.0/grimstroke_helper.lua) | 3 |
 | [`grimstroke-helper-v1.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.1.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.1.0/grimstroke_helper.lua) | 0 |
 
@@ -29,6 +30,15 @@ Grimstroke Helper помогает автоматически выбирать �
 3. Откройте Heroes → Hero List → Grimstroke → Helper.
 
 ## Что нового
+
+# Обновление 1.4.0
+
+- Окно помощника выглядит как панели самого Umbrella (Illusion Controller, Wards): цвета берутся из меню чита, заголовок с переключателем и фильтрами слева, названием по центру и красной стрелкой справа.
+- Одно окно вместо панели союзников и отдельного окна фильтров: кнопка фильтров в заголовке переключает страницу, клавиша фильтров открывает сразу ее.
+- Переключатель в заголовке ставит автоматику на паузу. Окно скрывается из меню или клавишей панели.
+- Окно можно прижать к левому или правому краю экрана и спрятать в него: остается маленькая вкладка со стрелкой и переключателем автоматики.
+- Размер окна настраивается в шестеренке у «Включить».
+- Иконки неиспользуемого списка приглушены: союзники, когда Ink Swell выбирает любого союзника, враги, когда фильтр выключен.
 
 # Обновление 1.3.0
 
@@ -76,6 +86,15 @@ Grimstroke Helper automatically selects an ally for Ink Swell and controls the D
 3. Open Heroes → Hero List → Grimstroke → Helper.
 
 ## Changelog
+
+# Update 1.4.0
+
+- The helper window looks like Umbrella's own panels (Illusion Controller, Wards): colours come from the cheat menu, the header has the switch and filters on the left, the title in the middle and a red chevron on the right.
+- One window instead of the ally panel and a separate filters window: the filters button in the header switches the page, the filters key opens it directly.
+- The header switch pauses the automation. Hide the window from the menu or with the panel key.
+- Drag the window to the left or right screen edge to dock it there: only a small tab with a chevron and the automation switch stays.
+- Window size is set in the gear next to Enable.
+- Icons of a list that is not in use are dimmed: allies when Ink Swell picks any ally, enemies when their filter is off.
 
 # Update 1.3.0
 

@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`auto-support-buy-v1.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/auto-support-buy-v1.0.1) | 2026-10-19 | [auto_support_buy.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.1/auto_support_buy.lua) | 0 |
+| [`auto-support-buy-v1.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/auto-support-buy-v1.0.1) | 2026-10-19 | [auto_support_buy.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.1/auto_support_buy.lua) | 2 |
 | [`auto-support-buy-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/auto-support-buy-v1.0.0) | 2026-10-19 | [auto_support_buy.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.0/auto_support_buy.lua) | 1 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=auto-support-buy&expanded=true)

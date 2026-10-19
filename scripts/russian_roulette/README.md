@@ -3,13 +3,9 @@
 игровая рулетка с выбором пуль / a game of roulette with configurable bullets
 
 <!-- releases:start -->
-Скачать: [russian_roulette.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/russian-roulette-v1.0.0/russian_roulette.lua) — `russian-roulette-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `russian_roulette.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/russian_roulette/russian_roulette.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`russian-roulette-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/russian-roulette-v1.0.0) | 2026-10-13 | [russian_roulette.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/russian-roulette-v1.0.0/russian_roulette.lua) | 2 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=russian-roulette&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=russian-roulette&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -25,12 +21,6 @@
 1. Поместите `russian_roulette.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты.
 3. Перед включением ознакомьтесь с переключателем разбивания предмета.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -49,9 +39,3 @@ A joke roulette with a configurable number of bullets and an on-screen cylinder.
 1. Place `russian_roulette.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Review the item-breaking toggle before enabling it.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.
