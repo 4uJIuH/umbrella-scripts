@@ -43,7 +43,7 @@
 - [Visage Familiar TP Helper](scripts/visage_familiar_tp) — синхронно отводит гаргулий Визажа и запускает Recall
 - [Grimstroke Helper](scripts/grimstroke_helper) — подбирает цели для Ink Swell и управляет Dark Portrait
 - [Phoenix SmartNova](scripts/phoenix_smartnova) — автоматизирует Fire Spirits и спасительную Supernova
-- [BehaviorScoreHelper](scripts/behavior_score_helper) — повышает порядочность: авто GG, авто репорт и авто лайк
+- [BehaviorScoreHelper](scripts/behavior_score_helper) — повышает порядочность: авто GG, авто репорты, анти-тильт и авто лайк
 - [Отмазки](scripts/excuses) — готовые отмазки после смерти — с отправкой в чат
 - [Некрологи](scripts/creep_obituary) — имена и некрологи для крипов
 - [Wrapped](scripts/wrapped) — карточка итогов матча, ачивки и челленджи
@@ -337,7 +337,7 @@ Repository: https://github.com/4uJIuH/umbrella-scripts
 - [Visage Familiar TP Helper](scripts/visage_familiar_tp) — synchronizes Familiar Recall and retreats Visage's familiars
 - [Grimstroke Helper](scripts/grimstroke_helper) — selects Ink Swell targets and controls Dark Portrait
 - [Phoenix SmartNova](scripts/phoenix_smartnova) — automates Fire Spirits and emergency Supernova
-- [BehaviorScoreHelper](scripts/behavior_score_helper) — raises your behavior score: auto GG, auto report, and auto like
+- [BehaviorScoreHelper](scripts/behavior_score_helper) — raises your behavior score: auto GG, auto reports, anti-tilt and auto commend
 - [Отмазки](scripts/excuses) — ready-made excuses after a death, with chat sending
 - [Некрологи](scripts/creep_obituary) — names and obituaries for creeps
 - [Wrapped](scripts/wrapped) — match summary cards, achievements, and challenges
@@ -624,9 +624,9 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Hero Grid](scripts/hero_grid) | 1 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 12 | `weather-v1.0.0` |
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 10 | `visage-familiar-tp-v1.0.0` |
-| [Grimstroke Helper](scripts/grimstroke_helper) | 11 | `grimstroke-helper-v1.2.0` |
+| [Grimstroke Helper](scripts/grimstroke_helper) | 13 | `grimstroke-helper-v1.2.0` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 9 | `phoenix-smartnova-v1.0.0` |
-| [BehaviorScoreHelper](scripts/behavior_score_helper) | 16 | `behavior-score-helper-v1.1.1` |
+| [BehaviorScoreHelper](scripts/behavior_score_helper) | 16 | `behavior-score-helper-v2.0.0` |
 | [Disable Tracker](scripts/disable_tracker) | 5 | `disable-tracker-v1.0.0` |
 | [Russian Roulette](scripts/russian_roulette) | 2 | `russian-roulette-v1.0.0` |
 | [MoM Swapper](scripts/mom_swapper) | 9 | `mom-swapper-v1.0.0` |
@@ -640,7 +640,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Spirit Breaker Combo & Ghoul 1000-7](scripts/spirit_breaker_bara) | 5 | `spirit-breaker-bara-v1.0.0` |
 | [1000-7 Counter](scripts/ghoul_counter) | 9 | `ghoul-counter-v1.0.0` |
 | [Invoker Jarvis](scripts/invoker_jarvis) | 43 | `v1.3.1` |
-| [TikTok](scripts/umbrella_tiktok) | 303 | `v1.3.2` |
+| [TikTok](scripts/umbrella_tiktok) | 304 | `v1.3.2` |
 | [Invoker AutoStack](scripts/invoker_autostack) | 79 | `v1.4.2` |
 | [Old Last Match](scripts/old_last_match) | 14 | `old-last-match-v1.0.0` |
 | [Unusual Secret](scripts/unusual_secret) | 13 | `unusual-secret-v2.1.0` |
@@ -650,7 +650,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Tinker 1x6 Farm](scripts/tinker_1x6_farm) | 4 | `tinker-1x6-farm-v1.0.0` |
 | [Forge Spirit Helper](scripts/forge_spirit_helper) | 18 | `forge-spirit-helper-v1.0.0` |
 | [Gank Threat](scripts/gank_threat) | 14 | `gank-threat-v1.0.0` |
-| [Tinker Helper](scripts/tinker_helper) | 14 | `tinker-helper-v1.0.1` |
+| [Tinker Helper](scripts/tinker_helper) | 15 | `tinker-helper-v1.0.1` |
 | [Old HUD](scripts/old_hud) | 4 | `old-hud-v1.0.0` |
 | [Illusion Tracker](scripts/illusion_tracker) | 3 | `illusion-tracker-v1.0.0` |
 | [Arc Warden Clone Safe Me](scripts/arc_warden_clone_safe_me) | 5 | `arc-warden-clone-safe-me-v1.0.0` |
@@ -659,7 +659,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Creep Aggro](scripts/creep_aggro) | 16 | `creep-aggro-v1.0.0` |
 | [Nyx Assassin Auto Burrow](scripts/nyx_auto_burrow) | 4 | `nyx-auto-burrow-v1.0.0` |
 | [Dawnbreaker Solar Guardian Auto-Save Helper](scripts/dawnbreaker_solar_guardian) | 11 | `dawnbreaker-solar-guardian-v1.0.0` |
-| [Dota 1x6 Pack](scripts/dota1x6_pack) | 31 | `dota-1x6-pack-v1.0.0` |
+| [Dota 1x6 Pack](scripts/dota1x6_pack) | 32 | `dota-1x6-pack-v1.0.0` |
 | [Kez Raptor Dance Dispel](scripts/kez_raptor_dispel) | 8 | `kez-raptor-dispel-v1.0.0` |
 | [Huskar Life Break](scripts/huskar_life_break) | 6 | `huskar-life-break-v1.0.0` |
 | [Dragon Camp Pull](scripts/dragon_camp_pull) | 0 | `dragon-camp-pull-v1.0` |
@@ -670,7 +670,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Ringmaster Eul Combo](scripts/ringmaster_eul_combo) | 7 | `ringmaster-eul-combo-v1.0.0` |
 | [Spirit Breaker Charge Combo](scripts/spirit_breaker_charge) | 14 | `spirit-breaker-charge-v1.0.0` |
 | [Ward Predictor](scripts/ward_predictor) | 19 | `ward-predictor-v1.0.0` |
-| [Invoker SS](scripts/invoker_ss) | 1 | `invoker-ss-v138` |
+| [Invoker SS](scripts/invoker_ss) | 3 | `invoker-ss-v138` |
 | [Sentry](scripts/sentry) | 11 | `sentry-v1.0.0` |
 | [Changer](scripts/changer) | 9 | `changer-v1.0.0` |
 | [Self Play](scripts/self_play_bot) | 6 | `self-play-v1.0.1` |

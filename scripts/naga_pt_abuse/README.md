@@ -3,13 +3,9 @@
 переключение Power Treads при Mirror Image и Manta / Power Treads switching for Mirror Image and Manta
 
 <!-- releases:start -->
-Скачать: [nagapt.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/naga-pt-abuse-v1.0.0/nagapt.lua) — `naga-pt-abuse-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `nagapt.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/naga-pt-abuse-v1.0.0/nagapt.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`naga-pt-abuse-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/naga-pt-abuse-v1.0.0) | 2026-10-13 | [nagapt.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/naga-pt-abuse-v1.0.0/nagapt.lua) | 13 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=naga-pt-abuse&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=naga-pt-abuse&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -24,13 +20,6 @@
 
 1. Поместите `nagapt.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты. Скрипт работает в фоне.
-
-## Что нового
-
-# 1.0.0
-
-- Первый релиз Naga PT Abuse.
-- Добавлено автоматическое переключение Power Treads при Mirror Image и Manta.
 
 ---
 
@@ -48,10 +37,3 @@ When Mirror Image or Manta is used, the script switches Power Treads to Intellig
 
 1. Place `nagapt.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts. The script runs in the background.
-
-## Changelog
-
-# 1.0.0
-
-- Initial Naga PT Abuse release.
-- Added automatic Power Treads switching for Mirror Image and Manta.
