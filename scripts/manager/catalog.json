@@ -6241,8 +6241,8 @@
     {
       "id": "arc_warden_clone_pike",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_clone_pike/pika_arc_clone_pike.lua",
-      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_clone_pike/pika_arc_clone_pike.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/132f750ffbd39cb5744c0ab6d4ec36fba819f7cf/scripts/arc_warden_clone_pike/pika_arc_clone_pike.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-clone-pike-v1.0.0/pika_arc_clone_pike.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "kael'thas' (Discord: feit._.)",
