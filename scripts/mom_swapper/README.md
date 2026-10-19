@@ -3,13 +3,9 @@
 автоматически или вручную меняет MoM на Echo Sabre или Specialist's Array / swaps MoM with Echo Sabre or Specialist's Array
 
 <!-- releases:start -->
-Скачать: [mom_swapper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/mom-swapper-v1.0.0/mom_swapper.lua) — `mom-swapper-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `mom_swapper.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mom_swapper/mom_swapper.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`mom-swapper-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/mom-swapper-v1.0.0) | 2026-10-13 | [mom_swapper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/mom-swapper-v1.0.0/mom_swapper.lua) | 9 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=mom-swapper&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=mom-swapper&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -25,12 +21,6 @@
 1. Поместите `mom_swapper.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты.
 3. Откройте настройки героя и выберите режим переключения.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -49,9 +39,3 @@ Rebuilds Mask of Madness into Echo Sabre or Specialist's Array and back using th
 1. Place `mom_swapper.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Open the hero settings and choose a swap mode.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.
