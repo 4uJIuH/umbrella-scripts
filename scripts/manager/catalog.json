@@ -6142,9 +6142,9 @@
     },
     {
       "id": "web_radar",
-      "version": "2.3.1",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/3612b60c13f570ff5659bca8eaf0f0774ae6ac93/scripts/web_radar/web_radar.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.1/web_radar.lua",
+      "version": "2.3.2",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/cd96b53a8c0393fa29a482fe8b191732d5293b73/scripts/web_radar/web_radar.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.2/web_radar.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "4uJIuH",
