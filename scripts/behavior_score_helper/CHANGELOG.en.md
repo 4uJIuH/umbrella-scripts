@@ -1,3 +1,7 @@
+# Fix v2.0.1
+
+- Dropdowns no longer reset after the cheat language changes. The choice is stored as a number in `configs/behavior_score_helper.txt` and restored on load.
+
 # Update v2.0.0
 
 - The script is reworked on the base of version 2.5: new tabs Chat, Reports, Anti-Tilt and Utilities.

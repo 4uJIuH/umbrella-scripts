@@ -475,7 +475,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.3.2"
+script.VERSION = "2.3.3"
 local ui = {}
 local JSON
 local state = {
@@ -918,15 +918,16 @@ end
 
 local function forgetEntity(id)
     local key, prefix = tostring(id), tostring(id) .. ":"
+    local cached = state.heroes[id]
+    local hero = cached and cached.identity and tostring(cached.identity.name or ""):find("npc_dota_hero_", 1, true) == 1
     state.classifications[id], state.destroyed[id], state.heroes[id] = nil, nil, nil
+    state.casts[key] = nil
     for _, name in ipairs({"details", "wardMemory", "unitMemory", "runeMemory", "wisdom", "movers", "laneMovers",
         "courierMotion", "inventoryDirty", "innatePositions", "teleports", "objectiveMotion", "farming", "roshanAttackers", "genericRates"}) do
         state[name][key] = nil
     end
     state.courierSamples[id] = nil
-    for _, name in ipairs({"casts", "activeEffects"}) do
-        for entry in pairs(state[name]) do if entry:sub(1, #prefix) == prefix then state[name][entry] = nil end end
-    end
+    for entry in pairs(state.activeEffects) do if entry:sub(1, #prefix) == prefix then state.activeEffects[entry] = nil end end
     for index, orb in pairs(state.orbParticles) do if orb.owner_id == key then state.orbParticles[index] = nil end end
     for entry, attacker in pairs(state.tormentorAttackers) do
         if attacker.id == key or attacker.target_id == key then state.tormentorAttackers[entry] = nil end
@@ -943,7 +944,8 @@ local function forgetEntity(id)
     if state.scanJob then for _, name in ipairs({"units", "wards"}) do
         for index = #state.scanJob[name], 1, -1 do if state.scanJob[name][index].id == key then table.remove(state.scanJob[name], index) end end
     end end
-    state.layersDirty, state.needFull = true, true
+    state.layersDirty = true
+    if hero then state.needFull = true end
 end
 
 local function base(unit, kind, now)
@@ -1375,6 +1377,8 @@ local function rememberUnit(unit, row, now)
     end
 end
 
+local WARD_LIFETIME = {observer = 360, sentry = 420}
+
 local function slowSnapshot(now)
     if not state.scanJob then
         local refreshCamps = state.flags.camps and clock() >= state.nextCampDefs
@@ -1463,6 +1467,8 @@ local function slowSnapshot(now)
                                 row.expires_at = row.expires_at or previous.expires_at
                                 if row.visible == false then row.observed_at = previous.observed_at end
                             end
+                            row.first_seen = previous and previous.first_seen or now
+                            row.forget_at = row.first_seen + WARD_LIFETIME[kind]
                             if row.expires_at then row.remaining = math.max(0, row.expires_at - now) end
                             if row.alive == false then state.wardMemory[row.id] = nil
                             else state.wardMemory[row.id] = row; job.wards[#job.wards + 1] = row end
@@ -1489,7 +1495,7 @@ local function slowSnapshot(now)
     for _, row in ipairs(job.wards) do seen[row.id] = true end
     if state.flags.wards then
         for id, row in pairs(state.wardMemory) do
-            if row.alive == false or row.expires_at and row.expires_at <= now then state.wardMemory[id] = nil
+            if row.alive == false or row.expires_at and row.expires_at <= now or row.forget_at and row.forget_at <= now then state.wardMemory[id] = nil
             elseif not seen[id] and #job.wards < 512 then
                 local copy = {}; for key, value in pairs(row) do copy[key] = value end
                 copy.visible, copy.data_stale = false, true
@@ -1645,7 +1651,7 @@ local function objectSnapshot(now, packet)
     state.runes, packet.runes = runes, runes
     local wards = {}
     if state.flags.wards then for id, row in pairs(state.wardMemory) do
-        if row.alive == false or row.expires_at and row.expires_at <= now then state.wardMemory[id] = nil
+        if row.alive == false or row.expires_at and row.expires_at <= now or row.forget_at and row.forget_at <= now then state.wardMemory[id] = nil
         else wards[#wards + 1] = row end
     end end
     state.wards, packet.wards = wards, wards
@@ -2023,8 +2029,9 @@ observeCast = function(unit, ability, source, now, native, effect, ownerIndex)
     local owner = ownerIndex or call(Entity.GetIndex, unit)
     if not name or not owner or excludedSpell(name) then return end
     now = now or gameClock()
-    local key = tostring(owner) .. ":" .. name
-    local seen = state.casts[key] or {}
+    local byOwner = state.casts[tostring(owner)] or {}
+    state.casts[tostring(owner)] = byOwner
+    local seen = byOwner[name] or {}
     local castTime = ability and call(Ability.GetCastStartTime, ability) or nil
     local cooldown = native and native.cooldown or ability and call(Ability.GetCooldown, ability)
     local fresh = source == "ability_animation" or source == "modifier_event" or source == "ability_projectile" or source == "ability_sound"
@@ -2048,7 +2055,7 @@ observeCast = function(unit, ability, source, now, native, effect, ownerIndex)
     end
     seen.castTime, seen.cooldown = castTime, cooldown
     if finite(usedAt) then seen.usedAt = math.max(seen.usedAt or -math.huge, usedAt) end
-    state.casts[key] = seen
+    byOwner[name] = seen
     if not fresh or (seen.wall and clock() - seen.wall < 0.25) then return end
     seen.wall = clock()
     local hidden = call(Entity.IsDormant, unit) == true
@@ -2378,6 +2385,8 @@ function script.OnStartSound(data)
     local cache = state.soundNames
     local name = cache[data.name]
     if not name then
+        state.soundCount = (state.soundCount or 0) + 1
+        if state.soundCount > 4096 then cache, state.soundCount = {}, 1; state.soundNames = cache end
         name = data.name:lower():gsub("^hero_", ""):gsub("[^a-z0-9]", "")
         cache[data.name] = name
     end
@@ -2529,6 +2538,11 @@ function script.OnEntityDestroy(entity, confirmedDeath)
         -- A late removal for an old handle must not erase a new NPC which has
         -- already reused that index.
         if cached and cached.entity and cached.entity ~= entity then return end
+        if not cached and not state.wardMemory[key] and not state.unitMemory[key] and not state.runeMemory[key]
+            and not state.laneMovers[key] and not state.movers[key] and not state.wisdom[key] and not state.details[key] then
+            state.classifications[id], state.destroyed[id] = nil, entity
+            return
+        end
         local remembered = state.wardMemory[key] or state.unitMemory[key] and state.unitMemory[key].row
         local obscured = call(Entity.IsDormant, entity) == true or remembered and remembered.visible == false
         local keep = remembered and obscured and not confirmedDeath
@@ -3359,6 +3373,19 @@ function script.OnUpdateEx()
         state.nextPerf = now + 2
         state.perfText = string.format(L("cr_performance"), state.perf.collect_ms, state.perf.bytes / 1024)
         setLabel(ui.performance, state.perfText)
+    end
+    if get(ui.debug, false) and now >= (state.nextDiag or 0) and ai_bridge and ai_bridge.mcp_log then
+        state.nextDiag = now + 30
+        local sizes = {}
+        for _, name in ipairs({"heroes", "casts", "classifications", "destroyed", "details", "events", "wardMemory",
+            "unitMemory", "laneMovers", "activeEffects", "soundNames", "genericRates"}) do
+            local count = 0
+            for _ in pairs(state[name]) do count = count + 1 end
+            sizes[name] = count
+        end
+        call(ai_bridge.mcp_log, "debug", "[Cloud Radar] perf", {lua_kb = math.floor(collectgarbage("count")),
+            collect_ms = state.perf.collect_ms, encode_ms = state.perf.encode_ms, scan_ms = state.perf.scan_ms,
+            bytes = state.perf.bytes, sizes = sizes})
     end
 end
 

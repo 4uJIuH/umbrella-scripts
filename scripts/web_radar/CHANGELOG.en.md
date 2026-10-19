@@ -1,3 +1,11 @@
+# Fix v2.3.3
+
+- The game no longer starts lagging in the middle and late match. Each time the game reused an entity number (a new creep in place of a dead one), the radar walked its whole list of seen abilities and sent a full packet. Now this is a single step, and a full packet goes out only when a hero changes.
+- Removing entities the radar does not track (projectiles, creeps outside the radar, helper objects) no longer runs extra cleanup and an early map scan.
+- Wards with no known timer are forgotten after 6 minutes for an observer and 7 minutes for a sentry instead of staying in memory until the match ends.
+- The sound cache has a size limit.
+- With debug on, the radar logs Lua memory, collect time and the size of its tables every 30 seconds.
+
 # Fix v2.3.2
 
 - The script menu status shows the real radar state instead of "off". The load line updates too.

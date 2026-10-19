@@ -1,4 +1,4 @@
-local SCRIPT_VERSION = "2.0.0"
+local SCRIPT_VERSION = "2.0.1"
 local bh = {}
 
 local protobuf = require('protobuf')
@@ -385,13 +385,17 @@ end
 
 local store = readStore()
 
-local function storeSet(key, value)
-    if store[key] == value then return end
-    store[key] = value
+local function writeStore()
     local f = io.open(storePath(), "w")
     if not f then return end
     for k, v in pairs(store) do f:write(k, " ", v, "\n") end
     f:close()
+end
+
+local function storeSet(key, value)
+    if store[key] == value then return end
+    store[key] = value
+    writeStore()
 end
 
 local tryProcessLikes
@@ -612,15 +616,45 @@ local function refreshUi()
     ui.notifyDur:Disabled(not ui.notifyScreen:Get())
 end
 
-for _, item in ipairs({
-    ui.greetEnabled, ui.ggEnabled, ui.msgCtrlEnabled, ui.msgCtrlMode,
-    ui.toxicEnabled, ui.toxicReason, ui.voiceEnabled, ui.voiceReason,
-    ui.feedEnabled, ui.feedBuyback, ui.feedWards, ui.wardPile,
-    ui.muteStartEnabled, ui.pingEnabled, ui.pingAction,
-    ui.pingAtMeEnabled, ui.pingAtMeAction, ui.likeEnabled, ui.likeDelayOn, ui.notifyScreen
-}) do
-    item:SetCallback(refreshUi)
+local comboKeys = {
+    "greetChat", "ggChat", "msgCtrlMode", "toxicReason", "toxicMatch", "toxicTarget",
+    "voiceReason", "feedTarget", "muteWho", "pingAction", "pingAtMeAction"
+}
+
+local function saveCombos()
+    local changed = false
+    for _, key in ipairs(comboKeys) do
+        local value = tostring(ui[key]:Get())
+        if store["combo_" .. key] ~= value then
+            store["combo_" .. key] = value
+            changed = true
+        end
+    end
+    if changed then writeStore() end
 end
+
+for _, key in ipairs(comboKeys) do
+    local saved = tonumber(store["combo_" .. key])
+    if saved and saved ~= ui[key]:Get() then ui[key]:Set(saved) end
+end
+
+local function onMenuChange()
+    saveCombos()
+    refreshUi()
+end
+
+local callbackItems = {
+    ui.greetEnabled, ui.ggEnabled, ui.msgCtrlEnabled,
+    ui.toxicEnabled, ui.voiceEnabled,
+    ui.feedEnabled, ui.feedBuyback, ui.feedWards, ui.wardPile,
+    ui.muteStartEnabled, ui.pingEnabled,
+    ui.pingAtMeEnabled, ui.likeEnabled, ui.likeDelayOn, ui.notifyScreen
+}
+for _, key in ipairs(comboKeys) do callbackItems[#callbackItems + 1] = ui[key] end
+for _, item in ipairs(callbackItems) do
+    item:SetCallback(onMenuChange)
+end
+saveCombos()
 refreshUi()
 
 math.randomseed(os.time())
