@@ -3,6 +3,54 @@
   "ratings_url": "https://umbrella-ratings.umbrella-scripts.workers.dev",
   "scripts": [
     {
+      "id": "auto_support_buy",
+      "tag": "auto-support-buy",
+      "title": "Auto Support Buy",
+      "kind": "lua",
+      "category": "dota",
+      "file": "auto_support_buy.lua",
+      "version_marker": "VERSION",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-19",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_support_buy/auto_support_buy.lua",
+        "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.0/auto_support_buy.lua"
+      },
+      "ru": {
+        "tagline": "покупает смоки и варды при полном запасе в лавке",
+        "about": "Auto Support Buy покупает Smoke of Deceit, Observer Ward и Sentry Ward, когда их запас в лавке полный, и выкладывает купленное из тайника на землю у фонтана.",
+        "features": [
+          "Покупает только при полном запасе: Smoke 3, Observer 4, Sentry 8",
+          "Переключатели предметов, минута начала и порог золота на руках (не нетворс)",
+          "Выкладывает купленное из тайника; режим «Оставлять на базе» для покупок у лавки"
+        ],
+        "install": [
+          "Нажмите «Установить» в Script Manager или поместите auto_support_buy.lua в umbrella\\scripts.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте Scripts → Scripts → Auto Support Buy."
+        ]
+      },
+      "en": {
+        "tagline": "buys smokes and wards when the shop stock is full",
+        "about": "Auto Support Buy purchases Smoke of Deceit, Observer Ward and Sentry Ward when their shop stock is full and drops them from the stash onto the ground at the fountain.",
+        "features": [
+          "Buys only at full stock: Smoke 3, Observer 4, Sentry 8",
+          "Item switches, a start minute and a gold-on-hand threshold (not net worth)",
+          "Drops purchases from the stash; \"Leave at base\" mode for items bought at the shop"
+        ],
+        "install": [
+          "Click Install in Script Manager or place auto_support_buy.lua in umbrella\\scripts.",
+          "Reload Lua scripts.",
+          "Open Scripts → Scripts → Auto Support Buy."
+        ]
+      },
+      "author": "4uJIuH",
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/auto_support_buy",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=auto-support-buy&expanded=true",
+      "manager_catalog": true
+    },
+    {
       "id": "tinker_turret_dodge",
       "tag": "tinker-turret-dodge",
       "title": "Tinker Turret Dodge",
