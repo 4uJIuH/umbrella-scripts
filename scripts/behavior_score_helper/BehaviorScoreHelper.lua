@@ -1,4 +1,4 @@
-local SCRIPT_VERSION = "2.1.0"
+local SCRIPT_VERSION = "2.1.1"
 local bh = {}
 
 local protobuf = require('protobuf')
@@ -53,6 +53,7 @@ local localization = qLocalization.new({
         bs_ctrl_chance = "Send chance",
         bs_ctrl_echo = "Show Blocked to Me",
         bs_ctrl_echo_tip = "A blocked message is shown only to you.",
+        bs_ctrl_blocked = "[BH] Message not sent, it has profanity or an insult (%s): %s",
         bs_mute_mic = "Mute My Mic",
         bs_mute_mic_tip = "Your voice is not sent to anyone.",
 
@@ -190,6 +191,7 @@ local localization = qLocalization.new({
         bs_ctrl_chance = "Шанс отправки",
         bs_ctrl_echo = "Показывать сдержанное у себя",
         bs_ctrl_echo_tip = "Сдержанное сообщение видишь только ты.",
+        bs_ctrl_blocked = "[BH] Сообщение не отправлено, в нём мат или оскорбление (%s): %s",
         bs_mute_mic = "Мут своего микрофона",
         bs_mute_mic_tip = "Твой голос никому не отправляется.",
 
@@ -313,17 +315,18 @@ local wordsWhite = {
     "стеб", "гребен", "гребн", "грест", "греб", "требова", "требу", "колеб", "лебед",
     "серебр", "жереб", "амеб", "плацеб", "небылиц", "употреб", "истреб", "потреб", "разгреб",
     "оскорб", "барсук", "сукно", "скипидар",
-    "наход", "монас", "монах", "альманах", "внахлест", "нахлыну", "нахрап"
+    "наход", "монас", "монах", "альманах", "внахлест", "нахлыну", "нахрап",
+    "педикюр", "нигери", "хачапур", "snigger", "shitake", "shiitake", "scunthorpe", "cocktail", "cockpit", "peacock", "hancock"
 }
 
 local fallbackMat = {
-    "хуй", "хуя", "хуе", "хуи", "хули", "пизд", "ебать", "ебал", "ебан", "заеб", "уеб", "охуе", "ахуе",
-    "бля", "бляд", "блять", "сука", "суки", "мудак", "шлюх", "fuck", "shit", "bitch", "cunt"
+    "(на|по|о|а)?ху[йяеиё]\\w*", "хули", "\\w*пизд\\w*", "еб\\w*", "\\w*заеб\\w*", "уеб\\w*", "въеб\\w*",
+    "бля(ть|т|ха|хи|д\\w*)?", "сук[аиу]", "сучк\\w*", "мудак\\w*", "мудил\\w*", "шлюх\\w*", "fuck\\w*", "shit\\w*", "bitch\\w*", "cunt\\w*"
 }
 
 local fallbackOsk = {
-    "пидор", "пидар", "пидр", "гандон", "гондон", "долбоеб", "долбаеб", "еблан", "уебан", "хуесос",
-    "даун", "дегенерат", "сдохни", "kys", "retard", "nigger", "faggot"
+    "пид[оа]?р\\w*", "г[ао]нд[оа]н\\w*", "долб[ао]?[её]б\\w*", "еблан\\w*", "уебан\\w*", "хуесос\\w*",
+    "даун(ы|а|у|е|ом|ов|ам|ами|ах|ский|ская|ское|ские)?", "дебил\\w*", "дегенерат\\w*", "сдохни", "kys", "retard\\w*", "nigg\\w*", "faggot\\w*"
 }
 
 local function resolveScriptDir()
@@ -341,7 +344,7 @@ local function loadWords(filename)
     for rawLine in file:lines() do
         local trimmed = rawLine:match("^%s*(.-)%s*$")
         if trimmed and #trimmed > 0 and not trimmed:match("^#") then
-            words[#words + 1] = low(trimmed)
+            words[#words + 1] = trimmed
         end
     end
     file:close()
@@ -358,15 +361,231 @@ end
 
 local wordsMat = joinLists(loadWords("filter_profanity_russian_cached.txt"), loadWords("filter_profanity_english_cached.txt"))
 local wordsOsk = joinLists(loadWords("filter_banned_russian_cached.txt"), loadWords("filter_banned_english_cached.txt"))
-if #wordsMat == 0 then wordsMat = fallbackMat end
-if #wordsOsk == 0 then wordsOsk = fallbackOsk end
+local rx = { esc = { w = "w", W = "W", d = "d", s = "s" } }
 
-local matSet, oskSet = {}, {}
-for _, w in ipairs(wordsMat) do matSet[w] = true end
-for _, w in ipairs(wordsOsk) do oskSet[w] = true end
+function rx.isWord(cp)
+    return cp >= 128 or (cp >= 48 and cp <= 57) or (cp >= 65 and cp <= 90) or (cp >= 97 and cp <= 122) or cp == 95
+end
 
-local setsMat = { { hash = matSet, list = wordsMat } }
-local setsOsk = { { hash = oskSet, list = wordsOsk } }
+function rx.cps(s)
+    local t = {}
+    local ok = pcall(function()
+        for _, c in utf8.codes(s) do t[#t + 1] = c end
+    end)
+    if not ok then t = { s:byte(1, -1) } end
+    return t
+end
+
+function rx.lowerCp(cp)
+    local ok, c = pcall(utf8.codepoint, low(utf8.char(cp)), 1)
+    return ok and c or cp
+end
+
+function rx.test(node, cp)
+    local k = node.k
+    if k == "ch" then return cp == node.c end
+    if k == "any" then return true end
+    if k == "w" then return rx.isWord(cp) end
+    if k == "W" then return not rx.isWord(cp) end
+    if k == "d" then return cp >= 48 and cp <= 57 end
+    if k == "s" then return cp == 32 or cp == 9 end
+    if k == "set" then
+        local hit = false
+        for _, it in ipairs(node.items) do
+            if (it.k and rx.test(it, cp)) or (it.lo and cp >= it.lo and cp <= it.hi) then
+                hit = true
+                break
+            end
+        end
+        return hit ~= node.neg
+    end
+    return false
+end
+
+function rx.parse(p, i, inGroup)
+    local seq = {}
+    local alts = { seq }
+    while i <= #p do
+        local c = p[i]
+        if c == 41 and inGroup then return alts, i + 1 end
+        if c == 124 then
+            seq = {}
+            alts[#alts + 1] = seq
+            i = i + 1
+        elseif c == 40 then
+            local j = i + 1
+            if p[j] == 63 and p[j + 1] == 58 then j = j + 2 end
+            local sub
+            sub, i = rx.parse(p, j, true)
+            seq[#seq + 1] = { k = "grp", alts = sub }
+        elseif c == 63 or c == 42 or c == 43 then
+            local last = seq[#seq]
+            if last and not last.q then last.q = c end
+            i = i + 1
+        elseif c == 91 then
+            local node = { k = "set", items = {}, neg = false }
+            i = i + 1
+            if p[i] == 94 then
+                node.neg = true
+                i = i + 1
+            end
+            local first = true
+            while i <= #p and (p[i] ~= 93 or first) do
+                first = false
+                local it
+                if p[i] == 92 and p[i + 1] then
+                    local e = rx.esc[utf8.char(p[i + 1])]
+                    local v = rx.lowerCp(p[i + 1])
+                    it = e and { k = e } or { lo = v, hi = v }
+                    i = i + 2
+                elseif p[i + 1] == 45 and p[i + 2] and p[i + 2] ~= 93 then
+                    it = { lo = rx.lowerCp(p[i]), hi = rx.lowerCp(p[i + 2]) }
+                    i = i + 3
+                else
+                    local v = rx.lowerCp(p[i])
+                    it = { lo = v, hi = v }
+                    i = i + 1
+                end
+                node.items[#node.items + 1] = it
+            end
+            i = i + 1
+            seq[#seq + 1] = node
+        elseif c == 92 and p[i + 1] then
+            local e = rx.esc[utf8.char(p[i + 1])]
+            if e then
+                seq[#seq + 1] = { k = e }
+            elseif p[i + 1] == 98 then
+                seq[#seq + 1] = { k = "b" }
+            elseif p[i + 1] ~= 66 then
+                seq[#seq + 1] = { k = "ch", c = rx.lowerCp(p[i + 1]) }
+            end
+            i = i + 2
+        elseif c == 46 then
+            seq[#seq + 1] = { k = "any" }
+            i = i + 1
+        elseif c == 94 or c == 36 then
+            i = i + 1
+        else
+            seq[#seq + 1] = { k = "ch", c = rx.lowerCp(c) }
+            i = i + 1
+        end
+    end
+    return alts, i
+end
+
+function rx.minLen(alts)
+    local best
+    for _, seq in ipairs(alts) do
+        local n = 0
+        for _, node in ipairs(seq) do
+            if node.k ~= "b" and node.q ~= 63 and node.q ~= 42 then
+                n = n + (node.k == "grp" and rx.minLen(node.alts) or 1)
+            end
+        end
+        if not best or n < best then best = n end
+    end
+    return best or 0
+end
+
+function rx.one(node, s, pos, k)
+    if node.k == "grp" then
+        for _, seq in ipairs(node.alts) do
+            if rx.seq(seq, 1, s, pos, k) then return true end
+        end
+        return false
+    end
+    if node.k == "b" then
+        local before = pos > 1 and rx.isWord(s[pos - 1]) or false
+        local after = s[pos] ~= nil and rx.isWord(s[pos]) or false
+        return before ~= after and k(pos)
+    end
+    local cp = s[pos]
+    return cp ~= nil and rx.test(node, cp) and k(pos + 1)
+end
+
+rx.toCyr = {
+    [97] = 1072, [101] = 1077, [111] = 1086, [112] = 1088, [99] = 1089, [120] = 1093, [121] = 1091,
+    [107] = 1082, [109] = 1084, [116] = 1090, [104] = 1085, [117] = 1080, [48] = 1086, [51] = 1079, [54] = 1073
+}
+rx.toLat = {
+    [1072] = 97, [1077] = 101, [1086] = 111, [1088] = 112, [1089] = 99, [1093] = 120, [1091] = 121,
+    [1082] = 107, [1084] = 109, [1090] = 116, [48] = 111, [49] = 105, [51] = 101, [52] = 97, [53] = 115
+}
+
+function rx.norm(s)
+    local n, i = #s, 1
+    while i <= n do
+        if rx.isWord(s[i]) then
+            local j = i
+            while j < n and rx.isWord(s[j + 1]) do j = j + 1 end
+            local cyr, lat = 0, 0
+            for k = i, j do
+                local c = s[k]
+                if c >= 1024 and c <= 1279 then
+                    cyr = cyr + 1
+                elseif c >= 97 and c <= 122 then
+                    lat = lat + 1
+                end
+            end
+            local map = (cyr > 0 and cyr >= lat) and rx.toCyr or (lat > 0 and rx.toLat) or nil
+            if map then
+                for k = i, j do s[k] = map[s[k]] or s[k] end
+            end
+            i = j + 1
+        else
+            i = i + 1
+        end
+    end
+
+    local out = {}
+    i = 1
+    while i <= n do
+        local j = i
+        while j < n and s[j + 1] == s[i] do j = j + 1 end
+        local times = (j - i >= 2 and rx.isWord(s[i])) and 1 or (j - i + 1)
+        for _ = 1, times do out[#out + 1] = s[i] end
+        i = j + 1
+    end
+    return out
+end
+
+function rx.seq(seq, i, s, pos, k)
+    local node = seq[i]
+    if not node then return k(pos) end
+    local function nxt(p) return rx.seq(seq, i + 1, s, p, k) end
+    if node.q == 63 then return rx.one(node, s, pos, nxt) or nxt(pos) end
+    if node.q == 42 or node.q == 43 then
+        local function rep(p, n)
+            if rx.one(node, s, p, function(p2) return p2 > p and rep(p2, n + 1) end) then return true end
+            return (node.q == 42 or n > 0) and nxt(p)
+        end
+        return rep(pos, 0)
+    end
+    return rx.one(node, s, pos, nxt)
+end
+
+function rx.compile(src)
+    local ok, alts = pcall(rx.parse, rx.cps(src), 1, false)
+    if not ok or not alts then return nil end
+    return { node = { k = "grp", alts = alts }, min = rx.minLen(alts) }
+end
+
+local function compileList(...)
+    local res, seen = {}, {}
+    for _, list in ipairs({ ... }) do
+        for _, src in ipairs(list) do
+            if not seen[src] then
+                seen[src] = true
+                local pat = rx.compile(src)
+                if pat and pat.min > 0 then res[#res + 1] = pat end
+            end
+        end
+    end
+    return res
+end
+
+local setsMat = { compileList(wordsMat, fallbackMat) }
+local setsOsk = { compileList(wordsOsk, fallbackOsk) }
 local setsAll = { setsMat[1], setsOsk[1] }
 
 local STEAM_TAIL = 97960265728
@@ -906,38 +1125,45 @@ end
 
 local function checkText(msg, sets, exact, substr)
     if not msg or msg == "" then return false end
-    local lower = low(msg)
-
-    for w in lower:gmatch("[%w%a\128-\255]+") do
-        local isWhite = false
-        for _, wl in ipairs(wordsWhite) do
-            if w:find(wl, 1, true) then
-                isWhite = true
-                break
-            end
-        end
-
-        if not isWhite then
-            for _, s in ipairs(sets) do
-                if (exact or substr) and s.hash[w] then return true, w end
-                if substr then
-                    for _, fw in ipairs(s.list) do
-                        local minBytes = fw:byte(1) >= 192 and 9 or 5
-                        if #fw >= minBytes and w:find(fw, 1, true) then
-                            return true, fw
-                        end
+    local s = rx.norm(rx.cps(low(msg)))
+    local n = #s
+    local wordOf, white = {}, {}
+    local w = 0
+    for i = 1, n do
+        if rx.isWord(s[i]) then
+            if i == 1 or not rx.isWord(s[i - 1]) then
+                w = w + 1
+                local j = i
+                while j < n and rx.isWord(s[j + 1]) do j = j + 1 end
+                local word = utf8.char(table.unpack(s, i, j))
+                for _, wl in ipairs(wordsWhite) do
+                    if word:find(wl, 1, true) then
+                        white[w] = true
+                        break
                     end
                 end
             end
+            wordOf[i] = w
         end
     end
 
-    if substr then
-        for _, s in ipairs(sets) do
-            for _, fw in ipairs(s.list) do
-                local minBytes = fw:byte(1) >= 192 and 9 or 5
-                if #fw >= minBytes and lower:find(fw, 1, true) then
-                    return true, fw
+    for _, list in ipairs(sets) do
+        for _, pat in ipairs(list) do
+            local part = substr and pat.min >= 5
+            for i = 1, n do
+                local wi = wordOf[i]
+                local start = wi and wordOf[i - 1] ~= wi
+                if wi and not white[wi] and (part or (start and (exact or substr))) then
+                    local stop
+                    local hit = rx.one(pat.node, s, i, function(e)
+                        if e <= i then return false end
+                        if part or e > n or not rx.isWord(s[e]) then
+                            stop = e
+                            return true
+                        end
+                        return false
+                    end)
+                    if hit then return true, utf8.char(table.unpack(s, i, stop - 1)) end
                 end
             end
         end
@@ -1812,7 +2038,12 @@ function bh.OnSendNetMessage(msg)
     elseif mode == 1 then
         drop = (math.random(100) > ui.msgCtrlChance:Get())
     elseif mode == 2 then
-        drop = checkText(text, setsAll, true, true)
+        local word
+        drop, word = checkText(text, setsAll, true, true)
+        if drop then
+            Chat.Print("ConsoleChat", string.format(L("bs_ctrl_blocked"), word or "?", text))
+            return false
+        end
     end
 
     if drop then

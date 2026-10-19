@@ -1,3 +1,11 @@
+# Fix v2.1.1
+
+- Block profanity and insults: a blocked message is not sent, and you get a notice in your chat with the word that stopped it. Normal messages are sent as before.
+- The filters now understand the patterns in the `scripts/filters` files (many lines used to never match) and always include the built-in list. Words like "gandon", "daun" and "pidoras" used to get through.
+- The English and Russian profanity and insult filters are much larger.
+- Latin letters and digits inside Russian words (`xуй`, `6лять`), digits in English words (`sh1t`) and stretched letters (`fuuuck`) are caught. Normal words like "class", "assassin", "команда" are not blocked.
+- The toxic report uses the same filters.
+
 # Update v2.1.0
 
 - Ping Spam Filter: new Report on Mute option. When a player is muted for ping spam, the script also reports them for griefing and for chat toxicity. Off by default.
