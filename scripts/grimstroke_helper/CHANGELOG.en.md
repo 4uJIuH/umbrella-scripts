@@ -1,3 +1,12 @@
+# Update 1.4.0
+
+- The helper window looks like Umbrella's own panels (Illusion Controller, Wards): colours come from the cheat menu, the header has the switch and filters on the left, the title in the middle and a red chevron on the right.
+- One window instead of the ally panel and a separate filters window: the filters button in the header switches the page, the filters key opens it directly.
+- The header switch pauses the automation. Hide the window from the menu or with the panel key.
+- Drag the window to the left or right screen edge to dock it there: only a small tab with a chevron and the automation switch stays.
+- Window size is set in the gear next to Enable.
+- Icons of a list that is not in use are dimmed: allies when Ink Swell picks any ally, enemies when their filter is off.
+
 # Update 1.3.0
 
 - New on-screen panel: Ink Swell allies are shown as icons, click an icon to allow or forbid Ink Swell. A green dot means an enemy is near that ally.

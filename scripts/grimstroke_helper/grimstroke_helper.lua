@@ -324,8 +324,8 @@ local localization = qLocalization.new({
         gh_group_combo = "Built-in Combo",
         gh_enable = "Enable",
         gh_enable_tip = "Turns on every feature of this helper.",
-        gh_panel = "Ally Panel",
-        gh_panel_tip = "On-screen panel: click an ally icon to allow or forbid Ink Swell.\nThe header switch pauses the helper.",
+        gh_panel = "Helper Window",
+        gh_panel_tip = "On-screen window: ally icons for Ink Swell and combo filters.\nDrag it to a screen edge to dock it there.",
         gh_ink_enable = "Auto Ink Swell",
         gh_ink_enable_tip = "Casts Ink Swell on an ally standing next to enemies.",
         gh_ink_mode = "Ally Choice",
@@ -362,13 +362,17 @@ local localization = qLocalization.new({
         gh_panel_key_tip = "Shows or hides the ally panel.",
         gh_panel_key_name = "Grimstroke: panel",
         gh_filters_key = "Filters Key",
-        gh_filters_key_tip = "Opens a window with both combo filters.\nClick an enemy icon to check it.",
+        gh_filters_key_tip = "Opens the window on the filters page.\nPress again to close it.",
         gh_filters_key_name = "Grimstroke: filters",
-        gh_hud_filters = "Combo Filters",
-        gh_hud_sb = "Solo Soulbind",
+        gh_size = "Window Size",
+        gh_size_tip = "Scale of the on-screen window.",
+        gh_title = "Grimstroke Helper",
+        gh_hint_filters = "Combo filters",
+        gh_hint_pause = "Pause automation",
+        gh_hint_resume = "Resume automation",
+        gh_no_allies = "Allies appear here in a match",
         gh_hud_ink = "Ink Swell Targets",
         gh_hud_you = " (You)",
-        gh_hud_dp = "Dark Portrait",
         gh_hud_none = "Illusion: none",
         gh_hud_paused = "Automation: paused",
         gh_hud_focus = "Focus: %s (%.0f HP)",
@@ -381,8 +385,8 @@ local localization = qLocalization.new({
         gh_group_combo = "Встроенное комбо",
         gh_enable = "Включить",
         gh_enable_tip = "Включает все функции помощника.",
-        gh_panel = "Панель союзников",
-        gh_panel_tip = "Панель на экране: клик по иконке союзника разрешает Ink Swell.\nПереключатель в заголовке ставит помощника на паузу.",
+        gh_panel = "Окно помощника",
+        gh_panel_tip = "Окно на экране: союзники для Ink Swell и фильтры комбо.\nПеретащите к краю экрана, чтобы прикрепить.",
         gh_ink_enable = "Авто Ink Swell",
         gh_ink_enable_tip = "Кастует Ink Swell на союзника рядом с врагами.",
         gh_ink_mode = "Выбор союзника",
@@ -419,13 +423,17 @@ local localization = qLocalization.new({
         gh_panel_key_tip = "Показывает или прячет панель союзников.",
         gh_panel_key_name = "Grimstroke: панель",
         gh_filters_key = "Клавиша фильтров",
-        gh_filters_key_tip = "Открывает окно с обоими фильтрами комбо.\nКлик по иконке врага отмечает его.",
+        gh_filters_key_tip = "Открывает окно на странице фильтров.\nПовторное нажатие закрывает его.",
         gh_filters_key_name = "Grimstroke: фильтры",
-        gh_hud_filters = "Фильтры комбо",
-        gh_hud_sb = "Соло Soulbind",
+        gh_size = "Размер окна",
+        gh_size_tip = "Масштаб окна на экране.",
+        gh_title = "Grimstroke Helper",
+        gh_hint_filters = "Фильтры комбо",
+        gh_hint_pause = "Пауза автоматики",
+        gh_hint_resume = "Включить автоматику",
+        gh_no_allies = "Союзники появятся здесь в матче",
         gh_hud_ink = "Цели Ink Swell",
         gh_hud_you = " (вы)",
-        gh_hud_dp = "Dark Portrait",
         gh_hud_none = "Иллюзии нет",
         gh_hud_paused = "Автоматика на паузе",
         gh_hud_focus = "Цель: %s (%.0f HP)",
@@ -438,7 +446,7 @@ local L = localization.Get
 
 --by m0rc1
 
-local VERSION = "1.3.0"
+local VERSION = "1.4.0"
 local GrimHelper = {}
 
 -- ============================================================================
@@ -446,6 +454,7 @@ local GrimHelper = {}
 -- ============================================================================
 local ui_enabled            = nil
 local ui_draw_panel         = nil
+local ui_scale              = nil
 
 -- Ink Swell settings
 local ui_ink_enabled        = nil
@@ -499,36 +508,6 @@ local combo = {
     last_soul_t = 0,
     updating = false
 }
-
--- ============================================================================
--- On-Screen Panel State & Animation
--- ============================================================================
-local win = {
-    main = { x = 40, y = 160, alpha = 0 },
-    filters = { x = 300, y = 160, alpha = 0, open = false },
-    hot = nil,
-    drag = nil,
-    swallow = false,
-    fonts = nil
-}
-
--- Fonts
-local font_main = nil
-local font_bold = nil
-local font_icon = nil
-
-pcall(function()
-    font_main = Render.LoadFont("MuseoSansEx", Enum.FontCreate.FONTFLAG_ANTIALIAS, 500)
-    font_bold = Render.LoadFont("MuseoSansEx", Enum.FontCreate.FONTFLAG_ANTIALIAS, 700)
-    font_icon = Render.LoadFont("FontAwesomeEx", Enum.FontCreate.FONTFLAG_ANTIALIAS, 400)
-end)
-
-if not font_main then
-    pcall(function()
-        font_main = Render.LoadFont("Segoe UI", Enum.FontCreate.FONTFLAG_ANTIALIAS, 400)
-        font_bold = Render.LoadFont("Segoe UI", Enum.FontCreate.FONTFLAG_ANTIALIAS, 700)
-    end)
-end
 
 -- ============================================================================
 -- Whitelist Storage & Built-in Combo Settings
@@ -650,6 +629,7 @@ local function RefreshDisabled()
     local dp_on = on and MenuOn(ui_dp_enabled)
     ui_draw_panel:Disabled(not on)
     ui_debug:Disabled(not on)
+    ui_scale:Disabled(not on)
     ui_panel_key:Disabled(not on)
     ui_filters_key:Disabled(not on)
     ui_ink_enabled:Disabled(not on)
@@ -686,6 +666,9 @@ local function SetupMenu()
     local g_extra = ui_enabled:Gear("gh_gear_extra")
     ui_debug = g_extra:Switch("gh_debug", true, "\u{f188}")
     ui_debug:ToolTip("gh_debug_tip")
+    ui_scale = g_extra:Slider("gh_size", 70, 150, 100, "%d%%")
+    ui_scale:Icon("\u{f065}")
+    ui_scale:ToolTip("gh_size_tip")
     ui_draw_panel = g_main:Switch("gh_panel", true, "\u{f05a}")
     ui_draw_panel:ToolTip("gh_panel_tip")
     ui_panel_key = g_main:Bind("gh_panel_key", Enum.ButtonCode.KEY_NONE, "\u{f11c}")
@@ -754,15 +737,6 @@ local function GetVal(item)
     return item:Get()
 end
 
-
-local hero_icons = {}
-
-local function HeroIcon(name)
-    if hero_icons[name] == nil then
-        hero_icons[name] = Render.LoadImage("panorama/images/heroes/icons/" .. name .. "_png.vtex_c") or false
-    end
-    return hero_icons[name] or nil
-end
 
 local hero_names = {}
 
@@ -1267,289 +1241,1556 @@ function GrimHelper.OnUpdate()
 end
 
 -- ============================================================================
--- On-Screen Panels
+-- UI Kit (umbrella-ui)
 -- ============================================================================
-local UI_K = {
-    W = 248,
+
+local K = {
+    NAME = "Grimstroke Helper",
+    CFG = "grimstroke_helper_ui",
+    W = 260,
+    HEAD = 22,
     PAD = 10,
-    HEAD = 40,
-    ICON = 32,
-    GAP = 6,
-    ROUND = Enum.DrawFlags.RoundCornersAll,
-    C_WIN = Color(25, 25, 27, 240),
-    C_CARD = Color(34, 34, 37, 255),
-    C_OFF = Color(58, 58, 63, 255),
-    C_ACCENT = Color(76, 130, 247, 255),
-    C_KNOB = Color(200, 200, 205, 255),
-    C_WHITE = Color(255, 255, 255, 255),
-    C_TEXT = Color(240, 240, 242, 255),
-    C_MUTED = Color(150, 154, 160, 255),
-    C_GOOD = Color(48, 209, 88, 255),
-    C_WARN = Color(255, 159, 10, 255),
-    G_CLOSE = "\u{f00d}",
-    G_FOLD = "\u{f077}",
-    G_UNFOLD = "\u{f078}"
+    EVERYWHERE = false,
+    SMALL = true,
+    DOCK = true,
+    SNAP = 24,
+    THEME = "umbrella",
+    ACCENT = "umbrella",
+    SINK_ID = "GrimstrokeHelperInput",
+    SINK_ALIVE = 0.4,
+    SINK_TIMEOUT = 1500,
+    TIP_DELAY = 0.35,
+    TOAST_TIME = 4,
+    WHEEL = 56,
+    DOUBLE = 0.35,
+    G = {
+        close = "\u{f00d}", up = "\u{f077}", down = "\u{f078}", gear = "\u{f013}", check = "\u{f00c}",
+        left = "\u{f053}", right = "\u{f054}",
+        search = "\u{f002}", info = "\u{f05a}", warn = "\u{f071}", ok = "\u{f058}", empty = "\u{f49e}",
+    },
 }
-UI_K.PER_ROW = math.floor((UI_K.W - UI_K.PAD * 4 + UI_K.GAP) / (UI_K.ICON + UI_K.GAP))
-UI_K.ICON_SIZE = Vec2(UI_K.ICON, UI_K.ICON)
-UI_K.UV0, UI_K.UV1 = Vec2(0, 0), Vec2(1, 1)
 
-local function Log(text, data)
-    if not ai_bridge or not ai_bridge.mcp_log or not GetVal(ui_debug) then return end
-    ai_bridge.mcp_log("info", "[Grimstroke Helper] " .. text, data)
-end
+local ROUND = Enum.DrawFlags.RoundCornersAll
+local KEY = Enum.ButtonCode
 
-local function UiFonts()
-    if not win.fonts then
-        local bold = Render.LoadFont("Inter", Enum.FontCreate.FONTFLAG_ANTIALIAS, Enum.FontWeight.BOLD)
-        local normal = Render.LoadFont("Inter", Enum.FontCreate.FONTFLAG_ANTIALIAS, Enum.FontWeight.NORMAL)
-        win.fonts = { bold = bold or font_bold or font_main, normal = normal or font_main, icon = font_icon }
+local function clamp(v, a, b) return v < a and a or (v > b and b or v) end
+local function ease_out(t) return 1 - (1 - t) * (1 - t) end
+local function ease_in_out(t) return t < 0.5 and 2 * t * t or 1 - (-2 * t + 2) ^ 2 / 2 end
+
+local THEME_ORDER = { "umbrella", "graphite", "midnight", "purple", "forest", "oled" }
+local THEMES = {
+    graphite = { win = { 25, 25, 27 }, card = { 34, 34, 37 }, menu = { 42, 42, 46 }, off = { 58, 58, 63 } },
+    midnight = { win = { 17, 20, 31 }, card = { 25, 30, 45 }, menu = { 34, 40, 58 }, off = { 52, 60, 84 } },
+    purple = { win = { 22, 17, 32 }, card = { 32, 25, 47 }, menu = { 46, 36, 67 }, off = { 62, 49, 88 } },
+    forest = { win = { 17, 25, 21 }, card = { 24, 35, 29 }, menu = { 37, 52, 44 }, off = { 52, 70, 60 } },
+    oled = { win = { 0, 0, 0 }, card = { 15, 15, 17 }, menu = { 28, 28, 31 }, off = { 44, 44, 48 } },
+    umbrella = {
+        win = { 16, 17, 21 }, card = { 19, 21, 25 }, menu = { 23, 26, 28 }, off = { 36, 38, 46 },
+        line = { 51, 51, 51 }, knob = { 102, 102, 102 },
+        t1 = { 245, 245, 245 }, t2 = { 207, 209, 222 }, t3 = { 176, 176, 176 }, t4 = { 115, 117, 130 },
+    },
+}
+
+local ACCENT_ORDER = { "umbrella", "blue", "teal", "green", "purple", "orange", "pink" }
+local ACCENTS = {
+    umbrella = { 207, 54, 54 }, blue = { 76, 130, 247 }, teal = { 38, 166, 154 }, green = { 52, 168, 83 },
+    purple = { 138, 99, 210 }, orange = { 240, 140, 40 }, red = { 226, 75, 75 }, pink = { 232, 90, 150 },
+}
+
+local UMBRELLA_STYLE = {
+    win = "main_background", card = "group_background", menu = "button_background", off = "slider_background",
+    line = "outline", knob = "disabled_switch_circle", t1 = "active_widgets_text", t2 = "primary_first_tab_text",
+    t3 = "primary_widgets_text", t4 = "section_group_text", accent = "primary",
+}
+
+local T = {
+    t1 = { 250, 250, 252 }, t2 = { 218, 218, 224 }, t3 = { 160, 160, 168 }, t4 = { 120, 120, 128 },
+    white = { 255, 255, 255 }, black = { 0, 0, 0 }, knob = { 142, 142, 147 },
+    green = { 104, 214, 126 }, red = { 255, 110, 100 }, yellow = { 255, 204, 64 },
+}
+local T_BASE = { t1 = T.t1, t2 = T.t2, t3 = T.t3, t4 = T.t4, knob = T.knob }
+
+local function valid(list, v, default)
+    for _, o in ipairs(list) do
+        if o == v then return v end
     end
-    return win.fonts
+    return default
 end
 
-local text_sizes = {}
+local P = {
+    open = true, alpha = 0, wx = nil, wy = nil, h = 0, dt = 0, now = 0,
+    tweens = {}, press = nil, drag = nil, slide = nil, sb_drag = nil, moved = false,
+    menu = nil, menu_req = nil, tip_req = nil, tip_id = nil, tip_since = 0,
+    scroll = {}, toasts = {}, last_click = { id = nil, t = -10 }, draw_error = nil,
+    focus = nil, focus_id = nil, saved = {},
+    set = {
+        theme = Config.ReadString(K.CFG, "theme", K.THEME),
+        accent = Config.ReadString(K.CFG, "accent", K.ACCENT),
+        scale = Config.ReadInt(K.CFG, "scale", 100),
+        opacity = Config.ReadInt(K.CFG, "opacity", 94),
+        collapsed = Config.ReadInt(K.CFG, "collapsed", 0) == 1,
+        docked = Config.ReadInt(K.CFG, "docked", 0) == 1,
+    },
+}
+P.set.theme = K.SMALL and "umbrella" or valid(THEME_ORDER, P.set.theme, "umbrella")
+P.set.accent = K.SMALL and "umbrella" or valid(ACCENT_ORDER, P.set.accent, "umbrella")
+P.set.scale = clamp(P.set.scale, 70, 150)
+P.set.opacity = clamp(P.set.opacity, 40, 100)
+for k, v in pairs(P.set) do P.saved[k] = type(v) == "boolean" and (v and 1 or 0) or v end
 
-local function TextSize(font, size, text)
-    local key = font .. ":" .. size .. ":" .. text
-    local ts = text_sizes[key]
-    if not ts then
-        ts = Render.TextSize(font, size, text)
-        text_sizes[key] = ts
+local C, A, AT = {}, { 0, 0, 0 }, { 0, 0, 0 }
+local U = { flat = false }
+
+local function style_rgb(name, fallback)
+    local ok, c = pcall(Menu.Style, name)
+    if not ok or type(c) ~= "userdata" and type(c) ~= "table" or not c.r then return fallback end
+    return { math.floor(c.r + 0.5), math.floor(c.g + 0.5), math.floor(c.b + 0.5) }
+end
+
+local function apply_theme()
+    local umbrella = P.set.theme == "umbrella"
+    U.flat = umbrella
+    for name in pairs(C) do C[name] = nil end
+    for name, v in pairs(T_BASE) do T[name] = v end
+    for name, v in pairs(THEMES[P.set.theme]) do
+        if umbrella then v = style_rgb(UMBRELLA_STYLE[name], v) end
+        if T_BASE[name] then T[name] = v else C[name] = { v[1], v[2], v[3] } end
     end
-    return ts
-end
-
-local function Fade(c, a)
-    if a >= 0.999 then return c end
-    return Color(c.r, c.g, c.b, math.floor(c.a * a))
-end
-
-local function Mix(c1, c2, k)
-    if k <= 0.001 then return c1 end
-    if k >= 0.999 then return c2 end
-    return Color(
-        math.floor(c1.r + (c2.r - c1.r) * k),
-        math.floor(c1.g + (c2.g - c1.g) * k),
-        math.floor(c1.b + (c2.b - c1.b) * k),
-        math.floor(c1.a + (c2.a - c1.a) * k))
-end
-
-local function Approach(cur, target, speed)
-    if math.abs(target - cur) < 0.002 then return target end
-    return cur + (target - cur) * (1 - math.exp(-win.dt * speed))
-end
-
-local function SetHot(x, y, w, h, kind, arg_a, arg_b)
-    if Input.IsCursorInRect(x, y, w, h) then
-        win.hot_kind, win.hot_a, win.hot_b = kind, arg_a, arg_b
-        return true
-    end
-    return false
-end
-
-local function DrawSwitch(x, cy, on, a, id)
-    local k = Approach(win.anim[id] or (on and 1 or 0), on and 1 or 0, 18)
-    win.anim[id] = k
-    Render.FilledRect(Vec2(x, cy - 10), Vec2(x + 34, cy + 10), Fade(Mix(UI_K.C_OFF, UI_K.C_ACCENT, k), a), 10, UI_K.ROUND)
-    Render.FilledCircle(Vec2(x + 10 + 14 * k, cy), 8, Fade(Mix(UI_K.C_KNOB, UI_K.C_WHITE, k), a))
-end
-
-local function DrawGlyphButton(cx, cy, glyph, a, kind, arg)
-    local f = UiFonts()
-    if not f.icon then return end
-    local hover = SetHot(cx - 12, cy - 12, 24, 24, kind, arg)
-    if hover then Render.FilledCircle(Vec2(cx, cy), 11, Color(255, 255, 255, math.floor(20 * a))) end
-    local gs = TextSize(f.icon, 12, glyph)
-    Render.Text(f.icon, 12, glyph, Vec2(cx - gs.x / 2, cy - gs.y / 2), Fade(hover and UI_K.C_TEXT or UI_K.C_MUTED, a))
-end
-
-local function DrawShadow(x, y, w, h, a)
-    for i = 1, 4 do
-        local e = i * 3
-        Render.FilledRect(Vec2(x - e, y - e + 4), Vec2(x + w + e, y + h + e + 4),
-            Color(0, 0, 0, math.floor(18 * (1 - (i - 1) / 4) * a)), 14 + e, UI_K.ROUND)
+    local a = ACCENTS[P.set.accent]
+    if P.set.accent == "umbrella" then a = style_rgb(UMBRELLA_STYLE.accent, a) end
+    for i = 1, 3 do
+        A[i] = a[i]
+        AT[i] = math.floor(a[i] + (255 - a[i]) * 0.35 + 0.5)
     end
 end
 
-local function DrawWindowBase(w, h, title, a)
-    local tl, br = Vec2(w.x, w.y), Vec2(w.x + UI_K.W, w.y + h)
-    DrawShadow(w.x, w.y, UI_K.W, h, a)
-    Render.Blur(tl, br, a, 1.0, 14, UI_K.ROUND)
-    Render.FilledRect(tl, br, Fade(UI_K.C_WIN, a), 14, UI_K.ROUND)
-    local folded = h <= UI_K.HEAD + 1
-    Render.FilledRect(tl, Vec2(w.x + UI_K.W, w.y + math.min(h, UI_K.HEAD)), Fade(UI_K.C_ACCENT, a * 0.10), 14,
-        folded and UI_K.ROUND or Enum.DrawFlags.RoundCornersTop)
-    local f = UiFonts()
-    local ts = TextSize(f.bold, 14, title)
-    Render.Text(f.bold, 14, title, Vec2(w.x + 14, w.y + (UI_K.HEAD - ts.y) / 2), Fade(UI_K.C_TEXT, a))
-    SetHot(w.x, w.y, UI_K.W, h, "body")
-    SetHot(w.x, w.y, UI_K.W, UI_K.HEAD, "drag", w)
+apply_theme()
+
+local function say(text)
+    if K.DEBUG and K.DEBUG() then Log.Write("[" .. K.NAME .. "] " .. text) end
 end
 
-local function DrawCard(x, y, h, a)
-    Render.FilledRect(Vec2(x, y), Vec2(x + UI_K.W - UI_K.PAD * 2, y + h), Fade(UI_K.C_CARD, a), 10, UI_K.ROUND)
-end
-
-local function IconRowHeight(count)
-    local rows = math.max(1, math.ceil(count / UI_K.PER_ROW))
-    return rows * (UI_K.ICON + UI_K.GAP) - UI_K.GAP
-end
-
-local function ListCardHeight(row_h)
-    return UI_K.PAD + 28 + row_h + UI_K.PAD
-end
-
-local function DrawIcon(name, ix, iy, on, lit, a, kind, list)
-    local hover = SetHot(ix, iy, UI_K.ICON, UI_K.ICON, kind, name, list)
-    local pos = Vec2(ix, iy)
-    local icon = HeroIcon(name)
-    local alpha = math.floor((on and 255 or (hover and 170 or 110)) * a)
-    if icon then
-        Render.Image(icon, pos, UI_K.ICON_SIZE, Color(255, 255, 255, alpha), 8, UI_K.ROUND, UI_K.UV0, UI_K.UV1, on and 0 or 1)
+local function save(key, value)
+    if type(value) == "boolean" then value = value and 1 or 0 end
+    if P.saved[key] == value then return end
+    P.saved[key] = value
+    if type(value) == "number" then
+        Config.WriteInt(K.CFG, key, math.floor(value))
     else
-        Render.FilledRect(pos, pos + UI_K.ICON_SIZE, Fade(UI_K.C_OFF, alpha / 255), 8, UI_K.ROUND)
-    end
-    if on then
-        Render.Rect(pos, pos + UI_K.ICON_SIZE, Fade(UI_K.C_ACCENT, a), 8, UI_K.ROUND, 1.5)
-        if lit then Render.FilledCircle(Vec2(ix + UI_K.ICON - 4, iy + 4), 3.5, Fade(UI_K.C_GOOD, a)) end
-    elseif hover then
-        Render.Rect(pos, pos + UI_K.ICON_SIZE, Color(255, 255, 255, math.floor(60 * a)), 8, UI_K.ROUND, 1)
+        Config.WriteString(K.CFG, key, tostring(value))
     end
 end
 
-local function IconPos(x, y, i)
-    local col = (i - 1) % UI_K.PER_ROW
-    local row = (i - 1) // UI_K.PER_ROW
-    return x + col * (UI_K.ICON + UI_K.GAP), y + row * (UI_K.ICON + UI_K.GAP)
-end
+-- ---------------------------------------------------------------------------
+-- assets
+-- ---------------------------------------------------------------------------
 
-local function DrawSectionHead(x, cy, title, a)
-    local f = UiFonts()
-    Render.FilledRect(Vec2(x, cy - 7), Vec2(x + 3, cy + 7), Fade(UI_K.C_ACCENT, a), 1.5, UI_K.ROUND)
-    local ts = TextSize(f.bold, 12, title)
-    Render.Text(f.bold, 12, title, Vec2(x + 10, cy - ts.y / 2), Fade(UI_K.C_TEXT, a))
-    return ts.x
-end
+local asset = { fonts = {}, sizes = {}, size_n = 0, images = {}, dims = {}, budget = 3 }
 
-local function DrawBadge(right, cy, text, a)
-    local f = UiFonts()
-    local bs = TextSize(f.bold, 10, text)
-    local bw = bs.x + 12
-    Render.FilledRect(Vec2(right - bw, cy - 8), Vec2(right, cy + 8), Fade(UI_K.C_ACCENT, a * 0.18), 8, UI_K.ROUND)
-    Render.Text(f.bold, 10, text, Vec2(right - bw + 6, cy - bs.y / 2), Fade(UI_K.C_ACCENT, a))
-end
-
-local function RefreshPanelData()
-    local now = os.clock()
-    if now < (win.next_data_t or 0) then return end
-    win.next_data_t = now + 0.1
-
-    if win.allies_src ~= cache.allies then
-        win.allies_src = cache.allies
-        win.ally_names = {}
-        for i, node in ipairs(cache.allies) do win.ally_names[i] = node.name end
+function asset.font(weight)
+    local f = asset.fonts[weight]
+    if not f then
+        f = Render.LoadFont("Inter", Enum.FontCreate.FONTFLAG_ANTIALIAS, weight)
+        asset.fonts[weight] = f
     end
-    win.ally_count = string.format("%d / %d", cache.allowed_count, #cache.allies)
-
-    if not panel_active then
-        win.dp_text, win.dp_col = L("gh_hud_paused"), UI_K.C_WARN
-    elseif #cache.illusions == 0 then
-        win.dp_text, win.dp_col = L("gh_hud_none"), UI_K.C_MUTED
-    elseif cache.illu_target and Entity.IsAlive(cache.illu_target) then
-        local t_name = HeroDisplayName(NPC.GetUnitName(cache.illu_target))
-        win.dp_text, win.dp_col = string.format(L("gh_hud_focus"), t_name, Entity.GetHealth(cache.illu_target)), UI_K.C_TEXT
-    else
-        win.dp_text, win.dp_col = L("gh_hud_follow"), UI_K.C_TEXT
-    end
+    return f
 end
 
-local function DrawMainPanel(a)
-    local w = win.main
-    local allies = cache.allies
-    local names = win.ally_names or {}
-    local row_h = IconRowHeight(#names)
-    local card_h = ListCardHeight(row_h)
-    local body_h = card_h + 8 + 40 + UI_K.PAD
-    w.fold = Approach(w.fold or 1, w.collapsed and 0 or 1, 16)
-    local h = UI_K.HEAD + math.floor(body_h * w.fold)
-    local cx = w.x + UI_K.PAD
-    local x = cx + UI_K.PAD
-    local right = w.x + UI_K.W - 18
-
-    DrawWindowBase(w, h, "Grimstroke Helper", a)
-    DrawGlyphButton(right, w.y + UI_K.HEAD / 2, UI_K.G_CLOSE, a, "close_main")
-    DrawGlyphButton(right - 26, w.y + UI_K.HEAD / 2, w.collapsed and UI_K.G_UNFOLD or UI_K.G_FOLD, a, "fold")
-    local sw_x = right - 26 - 14 - 40
-    DrawSwitch(sw_x, w.y + UI_K.HEAD / 2, panel_active, a, "pause")
-    SetHot(sw_x - 4, w.y + UI_K.HEAD / 2 - 14, 42, 28, "pause")
-
-    if w.fold < 0.02 then return end
-    local ba = a * w.fold
-    Render.PushClip(Vec2(w.x, w.y + UI_K.HEAD), Vec2(w.x + UI_K.W, w.y + h), true)
-
-    local y = w.y + UI_K.HEAD
-    DrawCard(cx, y, card_h, ba)
-    DrawSectionHead(x, y + UI_K.PAD + 10, L("gh_hud_ink"), ba)
-    DrawBadge(w.x + UI_K.W - UI_K.PAD * 2, y + UI_K.PAD + 10, win.ally_count or "", ba)
-    local max_dist = GetVal(ui_ink_max_dist) or 650
-    local iy0 = y + UI_K.PAD + 28
-    for i, node in ipairs(allies) do
-        local ix, iy = IconPos(x, iy0, i)
-        DrawIcon(node.name, ix, iy, allowed_allies[node.name] == true, node.enemy_dist <= max_dist, ba, "ally")
+function asset.icons()
+    local f = asset.fonts.icon
+    if not f then
+        f = Render.LoadFont("FontAwesomeEx", Enum.FontCreate.FONTFLAG_ANTIALIAS, 400)
+        asset.fonts.icon = f
     end
-    y = y + card_h + 8
-
-    DrawCard(cx, y, 40, ba)
-    local label_w = DrawSectionHead(x, y + 20, L("gh_hud_dp"), ba)
-    local f = UiFonts()
-    local status = win.dp_text or ""
-    local ss = TextSize(f.normal, 11, status)
-    local sx = math.max(x + 10 + label_w + 12, w.x + UI_K.W - UI_K.PAD * 2 - ss.x)
-    Render.PushClip(Vec2(x, y), Vec2(w.x + UI_K.W - UI_K.PAD * 2, y + 40), true)
-    Render.Text(f.normal, 11, status, Vec2(sx, y + 20 - ss.y / 2), Fade(win.dp_col or UI_K.C_MUTED, ba))
-    Render.PopClip()
-
-    Render.PopClip()
+    return f
 end
 
-local function DrawFilterCard(cx, y, title, kind, switch_w, names, list_h, a)
-    local x = cx + UI_K.PAD
-    local card_h = ListCardHeight(list_h)
-    local on = GetVal(switch_w)
-    local cy = y + UI_K.PAD + 10
-    local sw_x = cx + UI_K.W - UI_K.PAD * 3 - 34
-    DrawCard(cx, y, card_h, a)
-    DrawSectionHead(x, cy, title, a)
-    DrawSwitch(sw_x, cy, on, a, kind)
-    SetHot(sw_x - 4, cy - 14, 42, 28, "wl_switch", kind)
-    local iy0 = y + UI_K.PAD + 28
-    if #names == 0 then
-        Render.Text(UiFonts().normal, 11, L("gh_wl_empty"), Vec2(x, iy0), Fade(UI_K.C_MUTED, a))
-    else
-        local list = whitelist[kind]
-        local ia = on and a or a * 0.6
-        for i, name in ipairs(names) do
-            local ix, iy = IconPos(x, iy0, i)
-            DrawIcon(name, ix, iy, list[name] == true, false, ia, "wl", kind)
+function asset.size(font, px, str)
+    local by_font = asset.sizes[font]
+    if not by_font then
+        by_font = {}
+        asset.sizes[font] = by_font
+    end
+    local by_px = by_font[px]
+    if not by_px then
+        by_px = {}
+        by_font[px] = by_px
+    end
+    local v = by_px[str]
+    if not v then
+        if asset.size_n >= 6000 then
+            asset.sizes, asset.size_n = {}, 0
+        end
+        v = Render.TextSize(font, px, str)
+        by_px[str] = v
+        asset.size_n = asset.size_n + 1
+    end
+    return v
+end
+
+function asset.image(path)
+    local img = asset.images[path]
+    if img == nil then
+        if asset.budget <= 0 then return nil end
+        asset.budget = asset.budget - 1
+        img = Render.LoadImage(path)
+        if not img or img == 0 then img = false end
+        asset.images[path] = img
+    end
+    return img or nil
+end
+
+function asset.hero(npc_name)
+    return asset.image("panorama/images/heroes/icons/" .. npc_name .. "_png.vtex_c")
+end
+
+function asset.item(item_name)
+    return asset.image("panorama/images/items/" .. item_name:gsub("^item_", "") .. "_png.vtex_c")
+end
+
+function asset.ability(ability_name)
+    return asset.image("panorama/images/spellicons/" .. ability_name .. "_png.vtex_c")
+end
+
+-- ---------------------------------------------------------------------------
+-- drawing in window units: g.x/g.y is the origin, g.s the scale, g.a the alpha
+-- ---------------------------------------------------------------------------
+
+local g = { x = 0, y = 0, s = 1, a = 1, depth = 0, clips = {}, fits = {}, fit_n = 0, wraps = {} }
+local hit = { list = {}, hover = nil, clip = nil }
+
+function g.px(x) return math.floor(g.x + x * g.s + 0.5) end
+function g.py(y) return math.floor(g.y + y * g.s + 0.5) end
+function g.v(x, y) return Vec2(g.px(x), g.py(y)) end
+function g.fs(size) return math.max(1, math.floor(size * g.s + 0.5)) end
+function g.hair() return math.max(1, math.floor(g.s)) end
+
+function g.origin(x, y)
+    g.x, g.y = x, y
+end
+
+function g.col(c, a)
+    return Color(math.floor(c[1] + 0.5), math.floor(c[2] + 0.5), math.floor(c[3] + 0.5),
+        math.floor(clamp((c[4] or 255) * (a or 1) * g.a, 0, 255) + 0.5))
+end
+
+function g.r(r, w, h)
+    r = r or 0
+    if U.flat and r < math.min(w, h) / 2 then return math.min(r, 5) end
+    return r
+end
+
+function g.rect(x, y, w, h, c, r, a, flags)
+    Render.FilledRect(g.v(x, y), g.v(x + w, y + h), g.col(c, a), g.r(r, w, h) * g.s, flags or ROUND)
+end
+
+function g.frame(x, y, w, h, c, r, a, t, flags)
+    Render.Rect(g.v(x, y), g.v(x + w, y + h), g.col(c, a), g.r(r, w, h) * g.s, flags or ROUND, (t or 1) * g.s)
+end
+
+function g.hl(x, y, w, c, a)
+    local y0 = g.py(y)
+    Render.FilledRect(Vec2(g.px(x), y0), Vec2(g.px(x + w), y0 + g.hair()), g.col(c, a))
+end
+
+function g.vl(x, y, h, c, a)
+    local x0 = g.px(x)
+    Render.FilledRect(Vec2(x0, g.py(y)), Vec2(x0 + g.hair(), g.py(y + h)), g.col(c, a))
+end
+
+function g.dot(cx, cy, r, c, a)
+    Render.FilledCircle(Vec2(g.x + cx * g.s, g.y + cy * g.s), r * g.s, g.col(c, a), 0, 1, 24)
+end
+
+function g.ring(cx, cy, r, c, a, t)
+    Render.Circle(Vec2(g.x + cx * g.s, g.y + cy * g.s), r * g.s, g.col(c, a), (t or 1) * g.s, 0, 1, false, 48)
+end
+
+function g.width(weight, size, str)
+    return asset.size(asset.font(weight), g.fs(size), str).x / g.s
+end
+
+function g.text(weight, size, str, x, cy, c, a, align)
+    local font, px = asset.font(weight), g.fs(size)
+    local ts = asset.size(font, px, str)
+    local x0 = g.x + x * g.s
+    if align == "r" then x0 = x0 - ts.x elseif align == "c" then x0 = x0 - ts.x / 2 end
+    Render.Text(font, px, str, Vec2(math.floor(x0 + 0.5), math.floor(g.y + cy * g.s - ts.y / 2 + 0.5)), g.col(c, a))
+    return ts.x / g.s
+end
+
+function g.glyph(glyph, size, cx, cy, c, a)
+    local font, px = asset.icons(), g.fs(size)
+    local ts = asset.size(font, px, glyph)
+    Render.Text(font, px, glyph, Vec2(math.floor(g.x + cx * g.s - ts.x / 2 + 0.5), math.floor(g.y + cy * g.s - ts.y / 2 + 0.5)),
+        g.col(c, a))
+end
+
+function g.chars(str)
+    local out = {}
+    for _, c in utf8.codes(str) do out[#out + 1] = utf8.char(c) end
+    return out
+end
+
+function g.fit(weight, size, str, max_w)
+    local key = weight .. ":" .. size .. ":" .. math.floor(max_w) .. ":" .. g.s .. ":" .. str
+    local out = g.fits[key]
+    if out then return out end
+    out = str
+    if g.width(weight, size, str) > max_w then
+        local chars = g.chars(str)
+        out = "…"
+        for n = #chars - 1, 1, -1 do
+            local s = table.concat(chars, "", 1, n):gsub("%s+$", "") .. "…"
+            if g.width(weight, size, s) <= max_w then
+                out = s
+                break
+            end
         end
     end
-    return y + card_h
+    if g.fit_n >= 3000 then g.fits, g.fit_n = {}, 0 end
+    g.fits[key], g.fit_n = out, g.fit_n + 1
+    return out
 end
 
-local function DrawFiltersWindow(a)
-    local w = win.filters
-    local names = combo.enemy_names or {}
-    local list_h = #names == 0 and 16 or IconRowHeight(#names)
-    local h = UI_K.HEAD + ListCardHeight(list_h) * 2 + 8 + UI_K.PAD
-    local cx = w.x + UI_K.PAD
+function g.wrap(weight, size, str, max_w)
+    local key = weight .. ":" .. size .. ":" .. math.floor(max_w) .. ":" .. g.s .. ":" .. str
+    local out = g.wraps[key]
+    if out then return out end
+    out = {}
+    local line = ""
+    for word in str:gmatch("%S+") do
+        local candidate = line == "" and word or line .. " " .. word
+        if line ~= "" and g.width(weight, size, candidate) > max_w then
+            out[#out + 1] = line
+            line = word
+        else
+            line = candidate
+        end
+    end
+    if line ~= "" then out[#out + 1] = line end
+    g.wraps[key] = out
+    return out
+end
 
-    DrawWindowBase(w, h, L("gh_hud_filters"), a)
-    DrawGlyphButton(w.x + UI_K.W - 18, w.y + UI_K.HEAD / 2, UI_K.G_CLOSE, a, "close_filters")
+function g.clip(x, y, w, h)
+    Render.PushClip(g.v(x, y), g.v(x + w, y + h), true)
+    g.depth = g.depth + 1
+    g.clips[#g.clips + 1] = hit.clip or false
+    local c = { g.x + x * g.s, g.y + y * g.s, g.x + (x + w) * g.s, g.y + (y + h) * g.s }
+    local p = hit.clip
+    if p then c = { math.max(c[1], p[1]), math.max(c[2], p[2]), math.min(c[3], p[3]), math.min(c[4], p[4]) } end
+    hit.clip = c
+end
 
-    local y = w.y + UI_K.HEAD
-    y = DrawFilterCard(cx, y, L("gh_hud_dp"), "dp", ui_dp_wl_enabled, names, list_h, a)
-    DrawFilterCard(cx, y + 8, L("gh_hud_sb"), "sb", ui_sb_wl_enabled, names, list_h, a)
+function g.unclip()
+    Render.PopClip()
+    g.depth = g.depth - 1
+    hit.clip = g.clips[#g.clips] or nil
+    g.clips[#g.clips] = nil
+end
+
+function g.reset()
+    for _ = 1, g.depth do Render.PopClip() end
+    g.depth, g.clips, g.a, hit.clip = 0, {}, 1, nil
+end
+
+function g.shadow(x, y, w, h, r, a)
+    if U.flat then return end
+    for i = 1, 5 do
+        local e = i * 2.5
+        g.rect(x - e, y - e + 4, w + e * 2, h + e * 2, T.black, r + e, (a or 0.07) * (1 - (i - 1) / 5))
+    end
+end
+
+function g.square(img, label, x, y, size, a, r, gray)
+    if img then
+        local dim = asset.dims[img]
+        if not dim then
+            dim = Render.ImageSize(img)
+            asset.dims[img] = dim
+        end
+        local u0, v0, u1, v1 = 0, 0, 1, 1
+        if dim.x > dim.y and dim.y > 0 then
+            local d = (1 - dim.y / dim.x) / 2
+            u0, u1 = d, 1 - d
+        elseif dim.y > dim.x and dim.x > 0 then
+            local d = (1 - dim.x / dim.y) / 2
+            v0, v1 = d, 1 - d
+        end
+        local px = math.floor(size * g.s + 0.5)
+        Render.Image(img, g.v(x, y), Vec2(px, px), g.col(T.white, a), g.r(r, size, size) * g.s, ROUND, Vec2(u0, v0), Vec2(u1, v1), gray or 0)
+    else
+        g.rect(x, y, size, size, T.white, r, 0.10 * (a or 1))
+        local first = label and label:sub(1, (utf8.offset(label, 2) or 2) - 1) or "?"
+        g.text(700, size * 0.45, first:upper(), x + size / 2, y + size / 2, T.t3, a, "c")
+    end
+end
+
+-- ---------------------------------------------------------------------------
+-- hit testing and animation
+-- ---------------------------------------------------------------------------
+
+function hit.begin()
+    local prev = hit.list
+    hit.list, hit.clip = {}, nil
+    local mx, my = Input.GetCursorPos()
+    hit.hover = nil
+    for i = #prev, 1, -1 do
+        local h = prev[i]
+        if mx >= h[1] and mx < h[3] and my >= h[2] and my < h[4] then
+            hit.hover = h[5]
+            break
+        end
+    end
+    if P.press and P.press.id and hit.hover ~= P.press.id then hit.hover = nil end
+    if P.drag or P.slide or P.sb_drag then hit.hover = nil end
+end
+
+function hit.add(x, y, w, h, id, on)
+    local x1, y1, x2, y2 = g.x + x * g.s, g.y + y * g.s, g.x + (x + w) * g.s, g.y + (y + h) * g.s
+    if hit.clip then
+        x1, y1 = math.max(x1, hit.clip[1]), math.max(y1, hit.clip[2])
+        x2, y2 = math.min(x2, hit.clip[3]), math.min(y2, hit.clip[4])
+        if x2 <= x1 or y2 <= y1 then return end
+    end
+    hit.list[#hit.list + 1] = { x1, y1, x2, y2, id, on or {} }
+end
+
+function hit.is(id) return hit.hover == id end
+
+function hit.at(mx, my, field)
+    for i = #hit.list, 1, -1 do
+        local h = hit.list[i]
+        if mx >= h[1] and mx < h[3] and my >= h[2] and my < h[4] and (not field or h[6][field]) then return h end
+    end
+    return nil
+end
+
+local anim = {}
+
+function anim.tween(key, target, time, curve)
+    local t = P.tweens[key]
+    if not t or (t.seen and P.now - t.seen > 0.1) then
+        t = { from = target, to = target, v = target, k = 1 }
+        P.tweens[key] = t
+    end
+    t.seen = P.now
+    if t.to ~= target then t.from, t.to, t.k = t.v, target, 0 end
+    if t.k < 1 then
+        t.k = math.min(1, t.k + P.dt / time)
+        t.v = t.from + (t.to - t.from) * (curve or ease_out)(t.k)
+    else
+        t.v = t.to
+    end
+    return t.v
+end
+
+function anim.snap(key, value)
+    P.tweens[key] = { from = value, to = value, v = value, k = 1, seen = P.now }
+end
+
+function anim.hover(id, on)
+    if on == nil then on = hit.hover == id end
+    return anim.tween("hv:" .. id, on and 1 or 0, 0.12)
+end
+
+function anim.mix(a, b, k)
+    return { a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k, a[3] + (b[3] - a[3]) * k }
+end
+
+-- ---------------------------------------------------------------------------
+-- widgets (all coordinates in window units, cy = vertical center)
+-- ---------------------------------------------------------------------------
+
+local view = {}
+
+function view.icon_button(x, y, size, glyph, id, active, click, danger)
+    local hv = anim.hover(id)
+    local ak = anim.tween("ib:" .. id, active and 1 or 0, 0.16)
+    if U.flat then
+        local c = danger and anim.mix(T.knob, T.red, hv) or anim.mix(anim.mix(T.knob, T.t3, hv), A, ak)
+        g.glyph(glyph, 11, x + size / 2, y + size / 2, c, 1 - 0.2 * ak)
+        hit.add(x, y, size, size, id, { click = click })
+        return
+    end
+    if danger then
+        g.rect(x, y, size, size, T.red, 8, 0.16 * hv)
+    else
+        g.rect(x, y, size, size, T.white, 8, 0.10 * ak + 0.08 * hv * (1 - ak))
+    end
+    local c = danger and anim.mix(T.t3, T.red, hv) or anim.mix(T.t3, T.t1, math.max(ak, hv))
+    g.glyph(glyph, 12, x + size / 2, y + size / 2, c)
+    hit.add(x, y, size, size, id, { click = click })
+end
+
+function view.button(x, y, w, h, label, kind, id, click)
+    local hv = anim.hover(id)
+    if U.flat then
+        local c = kind == "accent" and A or C.menu
+        g.rect(x, y, w, h, c, 4)
+        if hv > 0.01 then g.rect(x, y, w, h, T.white, 4, 0.05 * hv) end
+        g.text(500, 12.5, label, x + w / 2, y + h / 2, kind == "accent" and T.white or anim.mix(T.t3, T.t1, hv), 1, "c")
+    elseif kind == "accent" then
+        g.rect(x, y, w, h, A, h / 2, 0.88 + 0.12 * hv)
+        g.text(600, 12.5, label, x + w / 2, y + h / 2, T.white, 1, "c")
+    elseif kind == "soft" then
+        g.rect(x, y, w, h, T.white, h / 2, 0.10 + 0.05 * hv)
+        g.text(600, 12.5, label, x + w / 2, y + h / 2, T.t1, 1, "c")
+    else
+        g.rect(x, y, w, h, T.white, h / 2, 0.06 * hv)
+        g.text(500, 12.5, label, x + w / 2, y + h / 2, anim.mix(T.t3, T.t1, hv), 1, "c")
+    end
+    hit.add(x, y, w, h, id, { click = click })
+end
+
+function view.badge(right, cy, text, c)
+    local w = g.width(700, 10, text) + 12
+    g.rect(right - w, cy - 8, w, 16, c or A, 8, 0.18)
+    g.text(700, 10, text, right - w / 2, cy, c or AT, 1, "c")
+    return w
+end
+
+function view.card(x, y, w, h)
+    g.rect(x, y, w, h, C.card, 10)
+end
+
+function view.section(x, y, w, title, count)
+    g.rect(x, y + 3, 3, 14, A, 1.5)
+    g.text(700, 12.5, title, x + 10, y + 10, T.t1)
+    if count ~= nil then view.badge(x + w, y + 10, tostring(count)) end
+    return 22
+end
+
+function view.caption(x, y, w, text, count)
+    local wt = U.flat and 500 or 600
+    local cw = count ~= nil and g.text(wt, 11.5, tostring(count), x + w, y + 7, T.t4, nil, "r") + 8 or 0
+    g.text(wt, 11.5, g.fit(wt, 11.5, text, w - cw), x, y + 7, T.t3)
+    return 22
+end
+
+function view.switch(x, cy, on, id, click, mini)
+    local k = anim.tween("sw:" .. id, on and 1 or 0, 0.18, ease_in_out)
+    if U.flat then
+        local w, h = mini and 18 or 26, mini and 11 or 14
+        g.rect(x, cy - h / 2, w, h, anim.mix(C.off, A, k), h / 2, 1 - 0.2 * k)
+        g.dot(x + h / 2 + (w - h) * k, cy, h / 2 - 3, anim.mix(T.knob, C.win, k))
+        hit.add(x - 4, cy - h / 2 - 4, w + 8, h + 8, id, { click = click })
+        return
+    end
+    local w, h = mini and 24 or 34, mini and 14 or 20
+    g.rect(x, cy - h / 2, w, h, anim.mix(C.off, A, k), h / 2)
+    g.dot(x + h / 2 + (w - h) * k, cy, h / 2 - 2, anim.mix(T.knob, T.white, k))
+    hit.add(x - 4, cy - h / 2 - 4, w + 8, h + 8, id, { click = click })
+end
+
+function view.toggle_row(x, y, w, label, on, id, click, sub)
+    local hv = anim.hover(id)
+    if U.flat then
+        local h = sub and 40 or 28
+        if sub then
+            g.text(500, 12.5, g.fit(500, 12.5, label, w - 50), x + 10, y + 13, anim.mix(T.t3, T.t1, hv))
+            g.text(500, 11, g.fit(500, 11, sub, w - 50), x + 10, y + 28, T.t4)
+        else
+            g.text(500, 12.5, g.fit(500, 12.5, label, w - 50), x + 10, y + h / 2, anim.mix(T.t3, T.t1, hv))
+        end
+        view.switch(x + w - 36, y + h / 2, on, id .. ":sw", click)
+        hit.add(x, y, w - 40, h, id, { click = click })
+        return h
+    end
+    local h = sub and 44 or 36
+    g.rect(x, y, w, h, T.white, 8, 0.04 * hv)
+    if sub then
+        g.text(600, 12.5, g.fit(600, 12.5, label, w - 70), x + 10, y + 15, T.t1)
+        g.text(500, 11, g.fit(500, 11, sub, w - 70), x + 10, y + 31, T.t3)
+    else
+        g.text(600, 12.5, g.fit(600, 12.5, label, w - 70), x + 10, y + h / 2, T.t1)
+    end
+    view.switch(x + w - 44, y + h / 2, on, id .. ":sw", click)
+    hit.add(x, y, w - 50, h, id, { click = click })
+    return h
+end
+
+function view.slider(x, cy, w, id, value, min, max, step, on_change, on_done, fmt)
+    local v = clamp((value - min) / (max - min), 0, 1)
+    local hot = hit.is(id) or (P.slide ~= nil and P.slide.id == id)
+    local label = fmt and string.format(fmt, value) or tostring(value)
+    local lw = 44
+    local tx, tw = x, w - lw - 8
+    local th, kr = U.flat and 5 or 4, U.flat and (hot and 6.5 or 5.5) or (hot and 8.5 or 7.5)
+    g.rect(tx, cy - th / 2, tw, th, C.off, th / 2)
+    if v > 0 then g.rect(tx, cy - th / 2, tw * v, th, A, th / 2) end
+    g.dot(tx + tw * v, cy, kr, T.white)
+    g.text(U.flat and 500 or 600, 12, label, x + w, cy, T.t3, 1, "r")
+    local ax, aw = g.x + tx * g.s, tw * g.s
+    hit.add(tx - 10, cy - 14, tw + 20, 28, id, { down = function(mx)
+        P.slide = { id = id, x = ax, w = aw, min = min, max = max, step = step or 1,
+            change = on_change, done = on_done, value = value }
+        view.slide_to(mx)
+    end })
+end
+
+function view.slide_to(mx)
+    local sl = P.slide
+    local v = clamp((mx - sl.x) / sl.w, 0, 1)
+    local value = sl.min + math.floor((sl.max - sl.min) * v / sl.step + 0.5) * sl.step
+    if value ~= sl.value then
+        sl.value = value
+        if sl.change then sl.change(value) end
+    end
+end
+
+function view.tabs(x, y, w, labels, cur, pick, id)
+    id = id or "tabs"
+    local seg = w / #labels
+    g.rect(x, y, w, 32, T.white, 9, 0.055)
+    local hx = anim.tween(id .. ":x", cur - 1, 0.22, ease_in_out)
+    g.rect(x + 2 + hx * seg, y + 2, seg - 4, 28, A, 7, 0.26)
+    for i, label in ipairs(labels) do
+        local tid = id .. ":" .. i
+        local hv = anim.hover(tid)
+        local on = i == cur
+        local c = on and T.white or anim.mix(T.t3, T.t1, hv)
+        g.text(on and 700 or 600, 12, g.fit(600, 12, label, seg - 10), x + (i - 0.5) * seg, y + 16, c, 1, "c")
+        hit.add(x + (i - 1) * seg, y, seg, 32, tid, { click = function()
+            if i ~= cur then pick(i) end
+        end })
+    end
+    return 32
+end
+
+function view.row(x, y, w, h, o)
+    local hv = o.id and anim.hover(o.id) or 0
+    local sel = anim.tween("row_sel:" .. (o.id or ""), o.selected and 1 or 0, 0.14)
+    if sel > 0.01 then g.rect(x, y, w, h, A, 8, 0.16 * sel) end
+    if hv > 0.01 then g.rect(x, y, w, h, T.white, 8, 0.05 * hv) end
+    local tx = x + 10
+    local icon = math.min(h - 10, 28)
+    if o.img or o.img_label then
+        g.square(o.img, o.img_label or o.title, tx, y + (h - icon) / 2, icon, 1, 6, o.gray and 1 or 0)
+        tx = tx + icon + 10
+    elseif o.glyph then
+        g.glyph(o.glyph, 13, tx + 8, y + h / 2, o.glyph_c or T.t3)
+        tx = tx + 26
+    end
+    local vw = 0
+    if o.value then
+        vw = g.text(700, 12.5, o.value, x + w - 10, y + h / 2, o.value_c or T.t1, 1, "r") + 12
+    end
+    local max_w = x + w - 10 - vw - tx
+    if o.sub then
+        g.text(600, 12.5, g.fit(600, 12.5, o.title, max_w), tx, y + h / 2 - 8, T.t1)
+        g.text(500, 11, g.fit(500, 11, o.sub, max_w), tx, y + h / 2 + 8, T.t3)
+    else
+        g.text(600, 12.5, g.fit(600, 12.5, o.title, max_w), tx, y + h / 2, T.t1)
+    end
+    if o.id then hit.add(x, y, w, h, o.id, { click = o.click, rclick = o.rclick }) end
+    return h
+end
+
+function view.grid(x, y, w, items, size, gap, id, click)
+    size, gap = size or 32, gap or 6
+    local per_row = math.max(1, math.floor((w + gap) / (size + gap)))
+    for i, it in ipairs(items) do
+        local col, row = (i - 1) % per_row, (i - 1) // per_row
+        local ix, iy = x + col * (size + gap), y + row * (size + gap)
+        local cid = id .. ":" .. tostring(it.key)
+        local hv = anim.hover(cid)
+        local on = it.on ~= false
+        local k = anim.tween("gr:" .. cid, on and 1 or 0, 0.14)
+        local r = U.flat and 2 or 8
+        g.square(it.img, it.label, ix, iy, size, 0.45 + 0.55 * math.max(k, hv * 0.6), r, 1 - k)
+        if k > 0.01 and not U.flat then g.frame(ix, iy, size, size, A, r, k, 1.5) end
+        if hv > 0.01 and (U.flat or k < 0.99) then g.frame(ix, iy, size, size, T.white, r, 0.25 * hv) end
+        if it.dot then g.dot(ix + size - 4, iy + 4, 3.5, it.dot) end
+        hit.add(ix, iy, size, size, cid, { click = function() click(it, i) end })
+        if it.label then view.hint(cid, it.label) end
+    end
+    local rows = math.max(1, math.ceil(#items / per_row))
+    return rows * (size + gap) - gap
+end
+
+function view.status(x, cy, w, glyph, text, c)
+    c = c or T.t3
+    local tx = x
+    if glyph then
+        g.glyph(glyph, 11, x + 6, cy, c)
+        tx = x + 18
+    end
+    g.text(500, 11.5, g.fit(500, 11.5, text, w - (tx - x)), tx, cy, c)
+end
+
+function view.empty(x, y, w, h, glyph, text)
+    g.glyph(glyph or K.G.empty, 20, x + w / 2, y + h / 2 - 12, T.t4)
+    local lines = g.wrap(500, 12, text, w - 32)
+    for i = 1, math.min(3, #lines) do
+        g.text(500, 12, lines[i], x + w / 2, y + h / 2 + 10 + (i - 1) * 16, T.t3, 1, "c")
+    end
+end
+
+function view.swatches(right, cy, order, cur, color, pick, prefix)
+    local size, gap = 18, 8
+    local x = right - (#order * size + (#order - 1) * gap)
+    for i, id in ipairs(order) do
+        local key = prefix .. id
+        local hv = anim.hover(key)
+        local on = anim.tween("swt:" .. key, cur == id and 1 or 0, 0.16)
+        local sx = x + (i - 1) * (size + gap) + size / 2
+        g.dot(sx, cy, size / 2 - 1 + 0.8 * hv, color(id))
+        g.ring(sx, cy, size / 2 - 1, T.white, 0.14, 1)
+        if on > 0.01 then g.ring(sx, cy, size / 2 + 3, T.white, 0.85 * on, 1.5) end
+        hit.add(sx - size / 2 - gap / 2, cy - size / 2 - 4, size + gap, size + 8, key, { click = function() pick(id) end })
+    end
+end
+
+function view.theme_settings(x, y, w, labels)
+    local rows = 0
+    if not K.SMALL then
+        g.text(600, 12.5, labels.theme, x, y + 14, T.t2)
+        view.swatches(x + w, y + 14, THEME_ORDER, P.set.theme, function(id) return THEMES[id].card end, function(id)
+            P.set.theme = id
+            apply_theme()
+            save("theme", id)
+        end, "th:")
+        g.text(600, 12.5, labels.accent, x, y + 46, T.t2)
+        view.swatches(x + w, y + 46, ACCENT_ORDER, P.set.accent, function(id) return ACCENTS[id] end, function(id)
+            P.set.accent = id
+            apply_theme()
+            save("accent", id)
+        end, "ac:")
+        rows = 64
+    end
+    g.text(600, 12.5, labels.scale, x, y + rows + 14, T.t2)
+    view.slider(x + w * 0.42, y + rows + 14, w * 0.58, "set_scale", P.set.scale, 70, 150, 5,
+        function(v) P.set.scale = v end, function(v) save("scale", v) end, "%d%%")
+    g.text(600, 12.5, labels.opacity, x, y + rows + 46, T.t2)
+    view.slider(x + w * 0.42, y + rows + 46, w * 0.58, "set_opacity", P.set.opacity, 40, 100, 5,
+        function(v) P.set.opacity = v end, function(v) save("opacity", v) end, "%d%%")
+    return rows + 64
+end
+
+-- ---------------------------------------------------------------------------
+-- dropdown: the field is drawn in place, the open list is drawn last, above everything
+-- ---------------------------------------------------------------------------
+
+function view.dropdown(x, y, w, id, options, cur, pick)
+    local did = "dd:" .. id
+    local open = P.menu == id
+    local hv = anim.hover(did)
+    local k = anim.tween("dd_on:" .. id, open and 1 or 0, 0.16)
+    g.rect(x, y, w, 28, C.menu, 7)
+    local fa = 0.14 * hv + (0.18 - 0.14 * hv) * k
+    if fa > 0.005 then g.frame(x, y, w, 28, T.white, 7, fa) end
+    local label = "?"
+    for _, o in ipairs(options) do
+        if o.value == cur then label = o.label end
+    end
+    g.text(500, 12, g.fit(500, 12, label, w - 34), x + 10, y + 14, T.t2)
+    g.glyph(open and K.G.up or K.G.down, 9, x + w - 14, y + 14, T.t3)
+    hit.add(x, y, w, 28, did, { click = function() P.menu = open and nil or id end })
+    if open or k > 0.01 then
+        P.menu_req = { x = g.x + x * g.s, y = g.y + (y + 32) * g.s, w = w, id = id, options = options, cur = cur, pick = pick, k = k }
+    end
+end
+
+function view.draw_menu()
+    local m = P.menu_req
+    P.menu_req = nil
+    if not m or m.k <= 0.01 then return end
+    local ox, oy, oa = g.x, g.y, g.a
+    g.x, g.y = m.x, m.y
+    g.a = oa * m.k
+    local h = 8 + #m.options * 28
+    local dy = -6 * (1 - m.k)
+    g.shadow(0, dy, m.w, h, 8, 0.10)
+    g.rect(0, dy, m.w, h, C.menu, 8)
+    g.frame(0, dy, m.w, h, T.white, 8, 0.10)
+    hit.add(0, dy, m.w, h, "menu:" .. m.id .. ":bg")
+    for i, o in ipairs(m.options) do
+        local oid = "menu:" .. m.id .. ":" .. tostring(o.value)
+        local iy = dy + 4 + (i - 1) * 28
+        local hv = anim.hover(oid)
+        g.rect(4, iy, m.w - 8, 28, T.white, 5, 0.08 * hv)
+        local on = o.value == m.cur
+        g.text(on and 600 or 500, 12, g.fit(500, 12, o.label, m.w - 36), 12, iy + 14, on and AT or T.t2)
+        if on then g.glyph(K.G.check, 10, m.w - 16, iy + 14, AT) end
+        if P.menu == m.id then
+            hit.add(4, iy, m.w - 8, 28, oid, { click = function()
+                P.menu = nil
+                if o.value ~= m.cur then m.pick(o.value) end
+            end })
+        end
+    end
+    g.x, g.y, g.a = ox, oy, oa
+end
+
+-- ---------------------------------------------------------------------------
+-- scroll areas (one state per id; wheel and a draggable thumb)
+-- ---------------------------------------------------------------------------
+
+function view.scroll_begin(id, x, y, w, h)
+    local s = P.scroll[id]
+    if not s then
+        s = { f = 0, to = 0, v = 0, content = 0, view = h, t = -10 }
+        P.scroll[id] = s
+    end
+    s.view, s.area = h, { x, y, w, h }
+    local diff = s.to - s.f
+    if math.abs(diff) * g.s < 0.5 then s.f = s.to else s.f = s.f + diff * (1 - math.exp(-P.dt * 18)) end
+    s.v = math.floor(s.f * g.s + 0.5) / g.s
+    hit.add(x, y, w, h, "scroll:" .. id, { wheel = function(dir)
+        s.n = (P.now - (s.wt or -10) < 0.12) and math.min((s.n or 0) + 1, 6) or 0
+        s.wt = P.now
+        s.to = clamp(s.to + dir * K.WHEEL * (1 + s.n * 0.25), 0, math.max(0, s.content - s.view))
+        s.t = P.now
+    end })
+    g.clip(x, y, w, h)
+    return y - s.v
+end
+
+function view.scroll_end(id, content_h)
+    local s = P.scroll[id]
+    g.unclip()
+    s.content = content_h
+    local max_scroll = math.max(0, content_h - s.view)
+    if s.to > max_scroll then s.to, s.f, s.v = max_scroll, max_scroll, max_scroll end
+    local ax, ay, aw, ah = s.area[1], s.area[2], s.area[3], s.area[4]
+    local ta = clamp(s.v / 14, 0, 1)
+    if ta > 0.01 then g.hl(ax + 10, ay, aw - 20, T.white, 0.08 * ta) end
+    if max_scroll <= 0 then return end
+    local track = ah - 8
+    local thumb = math.max(24, track * s.view / content_h)
+    local span = math.max(1, track - thumb)
+    local top = ay + 4 + span * clamp(s.v / max_scroll, 0, 1)
+    local sid = "sb:" .. id
+    local hot = hit.is(sid) or (P.sb_drag ~= nil and P.sb_drag.id == id)
+    local sa = anim.tween(sid, (hot or P.now - s.t < 0.9) and 1 or 0, 0.2)
+    if sa > 0.01 then
+        local bw = hot and 5 or 3
+        g.rect(ax + aw - bw - 2, top, bw, thumb, T.white, bw / 2, (hot and 0.42 or 0.24) * sa)
+    end
+    hit.add(ax + aw - 12, ay + 4, 12, track, sid, { down = function(_, my)
+        P.sb_drag = { id = id, my = my, v = s.v, k = max_scroll / span }
+        s.t = P.now
+    end })
+end
+
+function view.scroll_drag(my)
+    local d = P.sb_drag
+    local s = P.scroll[d.id]
+    if not s then return end
+    local v = clamp(d.v + (my - d.my) / g.s * d.k, 0, math.max(0, s.content - s.view))
+    s.to, s.f, s.v, s.t = v, v, v, P.now
+end
+
+-- ---------------------------------------------------------------------------
+-- hover hints and toasts (screen space, drawn after the window)
+-- ---------------------------------------------------------------------------
+
+function view.hint(id, text)
+    if hit.is(id) then P.tip_req = { id = id, text = text } end
+end
+
+function view.draw_tip()
+    local req = P.tip_req
+    P.tip_req = nil
+    local id = req and req.id
+    if id ~= P.tip_id then P.tip_id, P.tip_since = id, P.now end
+    if not req or P.drag or P.slide or P.press then return end
+    local k = clamp((P.now - P.tip_since - K.TIP_DELAY) / 0.12, 0, 1)
+    if k <= 0 then return end
+    local ox, oy, oa = g.x, g.y, g.a
+    g.x, g.y, g.a = 0, 0, k
+    local mx, my = Input.GetCursorPos()
+    local screen = Render.ScreenSize()
+    local w = g.width(600, 12, req.text) + 20
+    local x = clamp(mx / g.s - w / 2, 4, screen.x / g.s - w - 4)
+    local y = my / g.s + 22
+    if (y + 30) * g.s > screen.y then y = my / g.s - 36 end
+    g.rect(x, y, w, 26, C.menu, 7)
+    g.frame(x, y, w, 26, T.white, 7, 0.12)
+    g.text(600, 12, req.text, x + 10, y + 13, T.t1)
+    g.x, g.y, g.a = ox, oy, oa
+end
+
+function view.toast(text, kind)
+    table.insert(P.toasts, 1, { text = text, kind = kind or "info", t = P.now, id = tostring(P.now) .. text })
+    while #P.toasts > 4 do table.remove(P.toasts) end
+end
+
+function view.draw_toasts()
+    if #P.toasts == 0 then return end
+    local ox, oy, oa = g.x, g.y, g.a
+    local screen = Render.ScreenSize()
+    g.x, g.y = 0, 0
+    local w = 280
+    local x = screen.x / g.s - w - 20
+    local y = screen.y / g.s - 90
+    for i = #P.toasts, 1, -1 do
+        local t = P.toasts[i]
+        local age = P.now - t.t
+        if age > K.TOAST_TIME + 0.3 or t.closed then table.remove(P.toasts, i) end
+    end
+    for i, t in ipairs(P.toasts) do
+        local age = P.now - t.t
+        local k = math.min(1, age / 0.18) * clamp((K.TOAST_TIME + 0.3 - age) / 0.3, 0, 1)
+        local target = (i - 1) * 50
+        t.slide = t.slide and t.slide + (target - t.slide) * (1 - math.exp(-P.dt * 14)) or target
+        local ty = y - t.slide + (1 - k) * 10
+        g.a = k
+        local c = t.kind == "ok" and T.green or (t.kind == "error" and T.red or (t.kind == "warn" and T.yellow or A))
+        local glyph = t.kind == "ok" and K.G.ok or ((t.kind == "error" or t.kind == "warn") and K.G.warn or K.G.info)
+        g.shadow(x, ty, w, 42, 10, 0.10)
+        g.rect(x, ty, w, 42, C.win, 10, 0.97)
+        g.frame(x, ty, w, 42, T.white, 10, 0.10)
+        g.glyph(glyph, 13, x + 20, ty + 21, c)
+        g.text(500, 12.5, g.fit(500, 12.5, t.text, w - 48), x + 36, ty + 21, T.t1)
+        hit.add(x, ty, w, 42, "toast:" .. t.id, { click = function() t.closed = true end })
+    end
+    g.x, g.y, g.a = ox, oy, oa
+end
+
+-- ---------------------------------------------------------------------------
+-- on-screen pill (small overlays: icon on the left, short text, dark rounded capsule)
+-- ---------------------------------------------------------------------------
+
+function view.pill(x, cy, o)
+    local h = 26
+    local tw = o.text and g.width(700, 12, o.text) or 0
+    local dw = o.detail and (g.width(500, 11, o.detail) + 17) or 0
+    local w = h + (tw > 0 and tw + 10 or 0) + dw + (tw > 0 and 10 or 0)
+    local y = cy - h / 2
+    g.rect(x, y, w, h, { 14, 16, 18 }, h / 2, 0.72)
+    local isz = h - 6
+    if o.img then
+        g.square(o.img, o.text, x + 3, y + 3, isz, 1, isz / 2, o.gray and 1 or 0)
+    elseif o.glyph then
+        g.glyph(o.glyph, 11, x + h / 2, cy, o.c or T.t1)
+    end
+    local tx = x + h + 4
+    if tw > 0 then
+        g.text(700, 12, o.text, tx, cy, o.c or T.t1)
+        tx = tx + tw + 8
+    end
+    if dw > 0 then
+        g.vl(tx, cy - 7, 14, T.white, 0.18)
+        g.text(500, 11, o.detail, tx + 8, cy, T.t3)
+    end
+    if o.id then hit.add(x, y, w, h, o.id, { click = o.click }) end
+    return w
+end
+
+-- ---------------------------------------------------------------------------
+-- text input: typed text comes from a hidden Panorama TextEntry (any layout, Cyrillic, Ctrl+V)
+-- ---------------------------------------------------------------------------
+
+local JS_SINK = [[
+(function () {
+    let root = $.GetContextPanel();
+    while (root.GetParent()) root = root.GetParent();
+    let sink = root.FindChild('%s');
+    const drop = () => {
+        sink.text = '';
+        sink.DeleteAsync(0);
+    };
+    if (%s) {
+        if (!sink) {
+            sink = $.CreatePanel('TextEntry', root, '%s');
+            sink.style.width = '1px';
+            sink.style.height = '1px';
+            sink.style.opacity = '0';
+            sink.hittest = false;
+            sink.SetPanelEvent('ontextentrychange', () => {
+                if (!sink.IsValid() || sink.text === '') return;
+                const typed = sink.GetAttributeString('typed', '') + sink.text;
+                sink.text = '';
+                sink.SetAttributeString('typed', typed);
+            });
+            const watch = () => {
+                if (!sink.IsValid()) return;
+                if (Date.now() - Number(sink.GetAttributeString('alive', '0')) > %d) return drop();
+                $.Schedule(0.25, watch);
+            };
+            $.Schedule(0.25, watch);
+        }
+        sink.SetAttributeString('alive', String(Date.now()));
+        sink.text = '';
+        sink.SetFocus();
+    } else if (sink) {
+        drop();
+    }
+})();
+]]
+
+local CHARS = {}
+for i = 0, 25 do
+    local letter = string.char(65 + i)
+    CHARS[KEY["KEY_" .. letter]] = letter:lower()
+end
+for i = 0, 9 do CHARS[KEY["KEY_" .. i]] = tostring(i) end
+CHARS[KEY.KEY_SPACE] = " "
+
+local edit = { sink_on = false, sink_at = 0, typed_ok = false, pend = {}, pend_t = 0, panel = nil, find_at = -10 }
+
+function edit.sink(on, force)
+    if edit.sink_on == on and not force and not (on and P.now >= edit.sink_at) then return end
+    edit.sink_on, edit.sink_at = on, P.now + K.SINK_ALIVE
+    Engine.RunScript(JS_SINK:format(K.SINK_ID, on and "true" or "false", K.SINK_ID, K.SINK_TIMEOUT))
+end
+
+function edit.field(f)
+    f.text = f.text or ""
+    f.caret = f.caret or #g.chars(f.text)
+    return f
+end
+
+function edit.range(f)
+    if f.anchor and f.anchor ~= f.caret then return math.min(f.anchor, f.caret), math.max(f.anchor, f.caret) end
+    return nil
+end
+
+function edit.put(f, chars, caret)
+    f.text, f.caret, f.anchor = table.concat(chars), caret, nil
+    f.blink = P.now
+    if f.on_change then f.on_change(f.text) end
+end
+
+function edit.cut(f, chars)
+    local lo, hi = edit.range(f)
+    if not lo then return chars, f.caret end
+    local out = {}
+    for i = 1, lo do out[#out + 1] = chars[i] end
+    for i = hi + 1, #chars do out[#out + 1] = chars[i] end
+    return out, lo
+end
+
+function edit.insert(f, str)
+    local chars, caret = edit.cut(f, g.chars(f.text))
+    if #chars >= (f.max or 64) then return end
+    table.insert(chars, caret + 1, str)
+    edit.put(f, chars, caret + 1)
+end
+
+local function is_gap(c) return c == " " end
+
+function edit.word_left(chars, i)
+    while i > 0 and is_gap(chars[i]) do i = i - 1 end
+    while i > 0 and not is_gap(chars[i]) do i = i - 1 end
+    return i
+end
+
+function edit.word_right(chars, i)
+    local n = #chars
+    while i < n and is_gap(chars[i + 1]) do i = i + 1 end
+    while i < n and not is_gap(chars[i + 1]) do i = i + 1 end
+    return i
+end
+
+function edit.erase(f, forward, word)
+    local chars = g.chars(f.text)
+    if not edit.range(f) then
+        local a, b = f.caret, f.caret
+        if forward then
+            b = word and edit.word_right(chars, f.caret) or math.min(#chars, f.caret + 1)
+        else
+            a = word and edit.word_left(chars, f.caret) or math.max(0, f.caret - 1)
+        end
+        if a == b then return end
+        f.anchor, f.caret = a, b
+    end
+    local out, caret = edit.cut(f, chars)
+    edit.put(f, out, caret)
+end
+
+function edit.move(f, to, shift)
+    if shift then f.anchor = f.anchor or f.caret else f.anchor = nil end
+    f.caret, f.blink = to, P.now
+end
+
+function edit.focus(f, id)
+    if P.focus == f then return end
+    P.focus, P.focus_id = f, id
+    edit.pend = {}
+    edit.sink(f ~= nil, true)
+end
+
+function edit.blur()
+    if not P.focus then return end
+    P.focus, P.focus_id = nil, nil
+    edit.pend = {}
+    edit.sink(false, true)
+end
+
+function edit.key(key)
+    local f = P.focus
+    if not f then return end
+    local ctrl = Input.IsKeyDown(KEY.KEY_LCONTROL) or Input.IsKeyDown(KEY.KEY_RCONTROL)
+    local shift = Input.IsKeyDown(KEY.KEY_LSHIFT) or Input.IsKeyDown(KEY.KEY_RSHIFT)
+    local chars = g.chars(f.text)
+    local n = #chars
+    local lo, hi = edit.range(f)
+    if ctrl and key == KEY.KEY_A then
+        f.anchor, f.caret = 0, n
+    elseif key == KEY.KEY_LEFT then
+        if lo and not shift then edit.move(f, lo, false) else edit.move(f, ctrl and edit.word_left(chars, f.caret) or math.max(0, f.caret - 1), shift) end
+    elseif key == KEY.KEY_RIGHT then
+        if hi and not shift then edit.move(f, hi, false) else edit.move(f, ctrl and edit.word_right(chars, f.caret) or math.min(n, f.caret + 1), shift) end
+    elseif key == KEY.KEY_HOME then
+        edit.move(f, 0, shift)
+    elseif key == KEY.KEY_END then
+        edit.move(f, n, shift)
+    elseif key == KEY.KEY_BACKSPACE then
+        edit.erase(f, false, ctrl)
+    elseif key == KEY.KEY_DELETE then
+        edit.erase(f, true, ctrl)
+    elseif key == KEY.KEY_ESCAPE then
+        if lo then f.anchor = nil else edit.blur() end
+    elseif key == KEY.KEY_ENTER or key == KEY.KEY_PAD_ENTER then
+        if f.on_enter then f.on_enter(f.text) end
+        edit.blur()
+    elseif not ctrl and CHARS[key] and not edit.typed_ok then
+        edit.pend[#edit.pend + 1] = shift and CHARS[key]:upper() or CHARS[key]
+        edit.pend_t = P.now
+    end
+end
+
+function edit.poll()
+    local f = P.focus
+    if not f then return end
+    local p = edit.panel
+    if not p or not p:IsValid() then
+        edit.panel = nil
+        if P.now - edit.find_at < 0.2 then return end
+        edit.find_at = P.now
+        p = Panorama.GetPanelByName(K.SINK_ID, false)
+        if not p then return end
+        edit.panel = p
+    end
+    local typed = p:GetAttribute("typed", "")
+    if type(typed) == "string" and typed ~= "" then
+        p:SetAttribute("typed", "")
+        edit.typed_ok, edit.pend = true, {}
+        local clean = typed:gsub("%c", "")
+        pcall(function()
+            for _, ch in utf8.codes(clean) do edit.insert(f, utf8.char(ch)) end
+        end)
+    elseif #edit.pend > 0 and P.now - edit.pend_t > 0.08 then
+        for _, ch in ipairs(edit.pend) do edit.insert(f, ch) end
+        edit.pend = {}
+    end
+end
+
+function view.input(x, y, w, id, f, placeholder, glyph)
+    edit.field(f)
+    local h = 32
+    local focused = P.focus == f
+    local fa = anim.tween("in_f:" .. id, focused and 1 or 0, 0.16)
+    g.rect(x, y, w, h, T.white, 9, 0.06 + 0.04 * fa)
+    if fa > 0.01 then g.frame(x, y, w, h, A, 9, 0.6 * fa) end
+    local tx = x + 10
+    if glyph then
+        g.glyph(glyph, 12, x + 16, y + h / 2, anim.mix(T.t3, T.t1, fa))
+        tx = x + 30
+    end
+    local maxw = x + w - 10 - tx
+    local chars = g.chars(f.text)
+    local widths = { [0] = 0 }
+    for i = 1, #chars do widths[i] = g.width(400, 13, table.concat(chars, "", 1, i)) end
+    local caret_x = widths[f.caret] or widths[#chars]
+    f.off = f.off or 0
+    if caret_x - f.off > maxw then f.off = caret_x - maxw elseif caret_x < f.off then f.off = caret_x end
+    f.off = clamp(f.off, 0, math.max(0, widths[#chars] - maxw))
+    g.clip(tx - 2, y, maxw + 4, h)
+    if f.text == "" and placeholder then g.text(400, 13, placeholder, tx, y + h / 2, T.t4) end
+    local lo, hi = edit.range(f)
+    if focused and lo then g.rect(tx + widths[lo] - f.off, y + 8, widths[hi] - widths[lo], 16, A, 3, 0.45) end
+    if f.text ~= "" then g.text(400, 13, f.text, tx - f.off, y + h / 2, T.t1) end
+    if focused then
+        local t = P.now - (f.blink or 0)
+        local blink = t < 0.5 and 1 or (math.cos((t - 0.5) * math.pi * 2) + 1) / 2
+        g.rect(tx + caret_x - f.off, y + 8, 1.5, 16, T.t1, 0, blink)
+    end
+    g.unclip()
+    local gx, gs = g.x, g.s
+    hit.add(x, y, w, h, id, { down = function(mx)
+        edit.focus(f, id)
+        local lx = (mx - gx) / gs - tx + f.off
+        local best = #chars
+        for k = 1, #chars do
+            if lx < (widths[k - 1] + widths[k]) / 2 then
+                best = k - 1
+                break
+            end
+        end
+        edit.move(f, best, false)
+    end })
+    return h
+end
+
+-- ---------------------------------------------------------------------------
+-- window: position, fade, drag, fold, close; body is drawn by the script
+-- ---------------------------------------------------------------------------
+
+function view.home()
+    local screen = Render.ScreenSize()
+    local wx, wy = Config.ReadInt(K.CFG, "wx", -1), Config.ReadInt(K.CFG, "wy", -1)
+    if wx < 0 or wy < 0 or wx > screen.x - 40 or wy > screen.y - 40 then
+        wx, wy = math.floor(screen.x * 0.5 - K.W * g.s / 2), math.floor(screen.y * 0.18)
+    end
+    P.wx, P.wy = wx, wy
+    P.saved.wx, P.saved.wy = wx, wy
+end
+
+function view.reset_pos()
+    save("wx", -1)
+    save("wy", -1)
+    P.wx = nil
+end
+
+function view.fold()
+    P.set.collapsed = not P.set.collapsed
+    save("collapsed", P.set.collapsed)
+    if P.set.collapsed then P.menu = nil end
+end
+
+-- side docking (K.SMALL and K.DOCK): a window that touches the left or right
+-- screen wall can slide into it, leaving a small tab with a chevron
+function view.edge()
+    if not (K.SMALL and K.DOCK) or not P.wx then return nil end
+    local sw = Render.ScreenSize().x
+    if P.wx <= K.SNAP then return -1 end
+    if P.wx + K.W * g.s >= sw - K.SNAP then return 1 end
+    return nil
+end
+
+function view.pin()
+    local edge = view.edge()
+    if edge then P.wx = edge < 0 and 0 or math.floor(Render.ScreenSize().x - K.W * g.s) end
+    return edge
+end
+
+function view.dock(on)
+    if on == nil then on = not P.set.docked end
+    P.set.docked = on and view.edge() ~= nil
+    save("docked", P.set.docked)
+    if P.set.docked then
+        P.menu = nil
+        edit.blur()
+    end
+end
+
+function view.dock_tab(o, edge, d)
+    local tw, th = 20 + (o.tab_w or 0), 22
+    local sw = Render.ScreenSize().x
+    g.origin(edge > 0 and sw - tw * g.s or 0, P.wy)
+    g.a = P.alpha * d
+    local flags = edge > 0 and Enum.DrawFlags.RoundCornersLeft or Enum.DrawFlags.RoundCornersRight
+    g.shadow(0, 0, tw, th, 6, 0.07)
+    g.rect(0, 0, tw, th, C.win, 6, P.set.opacity / 100, flags)
+    if C.line then g.frame(0, 0, tw, th, C.line, 6, 1, 1, flags) else g.frame(0, 0, tw, th, T.white, 6, 0.09, 1, flags) end
+    hit.add(0, 0, tw, th, "dock_tab", {
+        down = function(mx, my) P.drag, P.moved = { mx = mx, my = my, wx = P.wx, wy = P.wy, lock = true }, false end,
+    })
+    local cx = edge > 0 and 10 or tw - 10
+    local cc = U.flat and T.t4 or T.t3
+    g.glyph(edge > 0 and K.G.left or K.G.right, 10, cx, th / 2, anim.mix(cc, T.t1, anim.hover("btn_undock")))
+    hit.add(cx - 10, 0, 20, th, "btn_undock", { click = function() view.dock(false) end })
+    if o.tab then o.tab(edge > 0 and (U.flat and 22 or 20) or 6, th / 2) end
+end
+
+function view.close()
+    P.open = false
+    P.menu = nil
+    edit.blur()
+    if K.ON_CLOSE then K.ON_CLOSE() end
+end
+
+function view.flat_head(o, W, edge)
+    local H, bs = K.HEAD, K.HEAD - 6
+    local by = (H - bs) / 2
+    hit.add(0, 0, W, H, "drag", {
+        down = function(mx, my) P.drag, P.moved = { mx = mx, my = my, wx = P.wx, wy = P.wy }, false end,
+        dbl = view.fold,
+    })
+    local x = 6
+    if o.switch then
+        view.switch(x, H / 2, o.switch.on, o.switch.id or "head_sw", o.switch.click, true)
+        x = x + 26
+    end
+    for _, b in ipairs(o.buttons or {}) do
+        view.icon_button(x, by, bs, b.glyph, b.id, b.active, b.click)
+        x = x + bs + 2
+    end
+    local rx = W - 6 - bs
+    local glyph = edge and (edge > 0 and K.G.right or K.G.left) or (P.set.collapsed and K.G.down or K.G.left)
+    view.icon_button(rx, by, bs, glyph, "btn_head", true, edge and function() view.dock(true) end or view.fold)
+    local room = 2 * math.min(W / 2 - x - 4, rx - W / 2 - 4)
+    g.text(500, 13, g.fit(500, 13, o.title, room), W / 2, H / 2, T.t2, nil, "c")
+end
+
+function view.window(o)
+    g.s = P.set.scale / 100
+    if not P.wx then view.home() end
+    local W = K.W
+    local edge = P.drag and view.edge() or view.pin()
+    local d = anim.tween("dock", P.set.docked and edge and 1 or 0, 0.22, ease_in_out)
+    if edge and d > 0.01 then view.dock_tab(o, edge, d) end
+    if d > 0.99 then return end
+    local fold = anim.tween("fold", P.set.collapsed and 0 or 1, 0.22, ease_in_out)
+    local body_h = o.body_h or 0
+    local flat = U.flat
+    local gap = flat and body_h > 0 and 4 or 0
+    local h = K.HEAD + math.floor((body_h + gap) * fold + 0.5)
+    local top = K.HEAD + gap
+    P.h = h
+    g.origin(P.wx + (edge or 0) * d * (W + 8) * g.s, P.wy)
+    g.a = P.alpha * (1 - d)
+    local opacity = P.set.opacity / 100
+    local R = K.SMALL and 10 or 14
+    hit.add(0, 0, W, h, "win")
+    if opacity < 1 then Render.Blur(g.v(0, 0), g.v(W, h), P.alpha, 1.0, g.r(R, W, h) * g.s, ROUND) end
+    if flat then
+        g.rect(0, 0, W, K.HEAD, C.win, R, opacity)
+        g.frame(0, 0, W, K.HEAD, C.line, R)
+        if h > top + 0.5 and not o.bare then
+            g.rect(0, top, W, h - top, C.win, R, opacity)
+            g.frame(0, top, W, h - top, C.line, R)
+        end
+        view.flat_head(o, W, edge)
+    else
+        local bs = K.SMALL and 22 or 28
+        local step = bs + (K.SMALL and 2 or 4)
+        local bx, by = W - (K.SMALL and (K.HEAD - bs) / 2 or 12) - bs, (K.HEAD - bs) / 2
+        local left = bx - step * (1 + (edge and 1 or 0) + #(o.buttons or {}))
+        g.shadow(0, 0, W, h, R, 0.07 * opacity)
+        g.rect(0, 0, W, h, C.win, R, opacity)
+        g.clip(0, 0, W, math.min(h, K.HEAD))
+        g.rect(0, 0, W, K.HEAD + 24, A, R, 0.10)
+        g.unclip()
+        hit.add(0, 0, left, K.HEAD, "drag", {
+            down = function(mx, my) P.drag, P.moved = { mx = mx, my = my, wx = P.wx, wy = P.wy }, false end,
+            dbl = view.fold,
+        })
+        local tx = K.SMALL and 12 or 16
+        if o.glyph then
+            g.rect(14, (K.HEAD - 30) / 2, 30, 30, A, 9, 0.22)
+            g.glyph(o.glyph, 13, 29, K.HEAD / 2, AT)
+            tx = 54
+        end
+        local fs, tw = K.SMALL and 13 or 14.5, left - tx - 8
+        if o.sub then
+            g.text(700, fs, g.fit(700, fs, o.title, tw), tx, K.HEAD / 2 - 8, T.t1)
+            g.text(500, 11.5, g.fit(500, 11.5, o.sub, tw), tx, K.HEAD / 2 + 9, T.t3)
+        else
+            g.text(700, fs, g.fit(700, fs, o.title, tw), tx, K.HEAD / 2, T.t1)
+        end
+        view.icon_button(bx, by, bs, K.G.close, "btn_close", false, view.close, true)
+        bx = bx - step
+        view.icon_button(bx, by, bs, P.set.collapsed and K.G.down or K.G.up, "btn_fold", false, view.fold)
+        if edge then
+            bx = bx - step
+            view.icon_button(bx, by, bs, edge > 0 and K.G.right or K.G.left, "btn_dock", false,
+                function() view.dock(true) end)
+        end
+        for _, b in ipairs(o.buttons or {}) do
+            bx = bx - step
+            view.icon_button(bx, by, bs, b.glyph, b.id, b.active, b.click)
+        end
+    end
+
+    if fold > 0.01 and body_h > 0 then
+        if not flat then g.hl(14, K.HEAD - 1, W - 28, T.white, 0.07 * fold) end
+        g.clip(0, top, W, h - top)
+        local base = g.a
+        g.a = base * fold ^ 1.5
+        o.body(top)
+        g.a = base
+        g.unclip()
+    end
+    if not flat then g.frame(0, 0, W, h, T.white, R, 0.09) end
+    view.draw_menu()
+end
+
+-- ---------------------------------------------------------------------------
+-- input routing and the frame driver
+-- ---------------------------------------------------------------------------
+
+local input = { swallow = false, held = {} }
+
+function input.press(mx, my, button)
+    local h = hit.at(mx, my)
+    local id, on = h and h[5], h and h[6] or {}
+    if P.menu and not (id and (id:sub(1, 5) == "menu:" or id == "dd:" .. P.menu)) then
+        P.menu = nil
+        P.press = { id = false }
+        return
+    end
+    if P.focus and id ~= P.focus_id then edit.blur() end
+    if button == 2 then
+        if on.rclick then on.rclick(mx, my) end
+        return
+    end
+    P.press = { id = id or false, on = on }
+    if on.down then on.down(mx, my) end
+end
+
+function input.release(mx, my)
+    local press = P.press
+    P.press = nil
+    if not press or not press.id then return end
+    if P.moved then
+        P.moved = false
+        return
+    end
+    local h = hit.at(mx, my)
+    if not h or h[5] ~= press.id then return end
+    local on = press.on
+    if on.dbl and P.last_click.id == press.id and P.now - P.last_click.t < K.DOUBLE then
+        P.last_click.id = nil
+        on.dbl()
+        return
+    end
+    P.last_click.id, P.last_click.t = press.id, P.now
+    if on.click then on.click(mx, my) end
+end
+
+function input.end_drag()
+    if P.drag then
+        view.pin()
+        save("wx", math.floor(P.wx))
+        save("wy", math.floor(P.wy))
+    end
+    if P.slide and P.slide.done then P.slide.done(P.slide.value) end
+    P.drag, P.slide, P.sb_drag = nil, nil, nil
+end
+
+function input.tick()
+    if P.press and not Input.IsKeyDown(KEY.KEY_MOUSE1, true) then
+        input.end_drag()
+        P.press = nil
+    end
+    for key in pairs(input.held) do
+        if not Input.IsKeyDown(key, true) then input.held[key] = nil end
+    end
+    local mx, my = Input.GetCursorPos()
+    if P.drag then
+        if math.abs(mx - P.drag.mx) + math.abs(my - P.drag.my) > 4 then P.moved = true end
+        if not P.drag.lock then P.wx = P.drag.wx + mx - P.drag.mx end
+        P.wy = P.drag.wy + my - P.drag.my
+    end
+    if P.slide then view.slide_to(mx) end
+    if P.sb_drag then view.scroll_drag(my) end
+    if P.focus then
+        if P.alpha < 0.5 then
+            edit.blur()
+        else
+            edit.sink(true)
+            edit.poll()
+        end
+    end
+end
+
+function input.event(e)
+    if P.alpha <= 0.02 and #P.toasts == 0 then return true end
+    local mx, my = Input.GetCursorPos()
+    local over = hit.at(mx, my) ~= nil
+
+    if e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_UP or e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_DOWN then
+        if not over then return true end
+        local h = hit.at(mx, my, "wheel")
+        if h then h[6].wheel(e.event == Enum.EKeyEvent.EKeyEvent_SCROLL_DOWN and 1 or -1) end
+        return false
+    end
+
+    if e.key == KEY.KEY_MOUSE1 or e.key == KEY.KEY_MOUSE2 then
+        local left = e.key == KEY.KEY_MOUSE1
+        if e.event == Enum.EKeyEvent.EKeyEvent_KEY_DOWN then
+            if input.held[e.key] then return not input.swallow end
+            input.held[e.key] = true
+            if not over then
+                if P.focus then edit.blur() end
+                P.menu = nil
+                if left then P.press = { id = false } end
+                return true
+            end
+            input.swallow = true
+            input.press(mx, my, left and 1 or 2)
+            return false
+        elseif e.event == Enum.EKeyEvent.EKeyEvent_KEY_UP then
+            input.held[e.key] = nil
+            if left then
+                input.end_drag()
+                input.release(mx, my)
+            end
+            if input.swallow then
+                input.swallow = false
+                return false
+            end
+        end
+        return true
+    end
+
+    if P.focus then
+        if e.event == Enum.EKeyEvent.EKeyEvent_KEY_DOWN then
+            edit.sink(true, true)
+            edit.key(e.key)
+        end
+        return false
+    end
+
+    if e.event == Enum.EKeyEvent.EKeyEvent_KEY_DOWN and e.key == KEY.KEY_ESCAPE and over and P.menu then
+        P.menu = nil
+        return false
+    end
+    return true
+end
+
+function input.frame(draw)
+    local frame = GlobalVars.GetAbsFrameTime()
+    P.now = os.clock()
+    P.dt = clamp(frame > 0 and frame or 0.016, 0, 0.1)
+    asset.budget = 3
+    P.alpha = anim.tween("window", P.open and 1 or 0, 0.18)
+    input.tick()
+    hit.begin()
+    local ok, err = true, nil
+    if P.alpha > 0.001 then
+        ok, err = pcall(draw)
+    else
+        P.press, P.drag, P.slide, P.sb_drag, P.menu = nil, nil, nil, nil, nil
+    end
+    g.reset()
+    if ok then ok, err = pcall(view.draw_toasts) end
+    g.reset()
+    if ok then ok, err = pcall(view.draw_tip) end
+    g.reset()
+    if not ok and err ~= P.draw_error then
+        P.draw_error = err
+        Log.Write("[" .. K.NAME .. "] draw error: " .. tostring(err))
+    end
+end
+
+function input.shutdown()
+    if edit.sink_on then Engine.RunScript(JS_SINK:format(K.SINK_ID, "false", K.SINK_ID, K.SINK_TIMEOUT)) end
+end
+
+-- ============================================================================
+-- Helper Window
+-- ============================================================================
+P.set.opacity = 100
+
+local GW = {
+    filters = Config.ReadInt(K.CFG, "tab", 1) == 2,
+    body_h = 120,
+    next_data_t = 0,
+    allies = {},
+    dp_text = "",
+    dp_col = T.t3
+}
+
+local function BridgeLog(text, data)
+    if not ai_bridge or not ai_bridge.mcp_log or not GetVal(ui_debug) then return end
+    ai_bridge.mcp_log("info", "[Grimstroke Helper] " .. text, data)
 end
 
 local function SetWhitelist(kind, name, value)
@@ -1563,92 +2804,171 @@ local function SetWhitelist(kind, name, value)
     SaveWhitelist()
 end
 
-local function Click(kind, arg_a, arg_b)
-    if kind == "pause" then
-        panel_active = not panel_active
-        Log("click: pause", { active = panel_active })
-    elseif kind == "fold" then
-        win.main.collapsed = not win.main.collapsed
-        Log("click: fold", { collapsed = win.main.collapsed })
-    elseif kind == "close_main" then
-        ui_draw_panel:Set(false)
-        Log("click: close panel")
-    elseif kind == "close_filters" then
-        win.filters.open = false
-        Log("click: close filters")
-    elseif kind == "ally" then
-        allowed_allies[arg_a] = not allowed_allies[arg_a]
-        Log("click: ally", { hero = arg_a, allowed = allowed_allies[arg_a] })
-    elseif kind == "wl" then
-        SetWhitelist(arg_b, arg_a, not whitelist[arg_b][arg_a])
-        Log("click: filter hero", { list = arg_b, hero = arg_a, on = whitelist[arg_b][arg_a] })
-    elseif kind == "wl_switch" then
-        local sw = arg_a == "dp" and ui_dp_wl_enabled or ui_sb_wl_enabled
-        sw:Set(not sw:Get())
-        RefreshDisabled()
-        Log("click: filter switch", { list = arg_a, on = sw:Get() })
-    elseif kind == "drag" then
-        local cx, cy = Input.GetCursorPos()
-        win.drag = { win = arg_a, dx = cx - arg_a.x, dy = cy - arg_a.y }
+local function RefreshWindowData()
+    if P.now < GW.next_data_t then return end
+    GW.next_data_t = P.now + 0.1
+
+    local max_dist = GetVal(ui_ink_max_dist) or 650
+    local allies = {}
+    for i, node in ipairs(cache.allies) do
+        allies[i] = {
+            key = node.name,
+            img = asset.hero(node.name),
+            label = HeroDisplayName(node.name),
+            on = allowed_allies[node.name] == true,
+            dot = (allowed_allies[node.name] and node.enemy_dist <= max_dist) and T.green or nil
+        }
     end
+    GW.allies = allies
+
+    if not panel_active then
+        GW.dp_text, GW.dp_col = L("gh_hud_paused"), T.yellow
+    elseif #cache.illusions == 0 then
+        GW.dp_text, GW.dp_col = L("gh_hud_none"), T.t4
+    elseif cache.illu_target and Entity.IsAlive(cache.illu_target) then
+        local t_name = HeroDisplayName(NPC.GetUnitName(cache.illu_target))
+        GW.dp_text, GW.dp_col = string.format(L("gh_hud_focus"), t_name, Entity.GetHealth(cache.illu_target)), AT
+    else
+        GW.dp_text, GW.dp_col = L("gh_hud_follow"), T.t2
+    end
+end
+
+local function EnemyItems(kind)
+    local items = {}
+    for i, name in ipairs(combo.enemy_names or {}) do
+        items[i] = { key = name, img = asset.hero(name), label = HeroDisplayName(name), on = whitelist[kind][name] == true }
+    end
+    return items
+end
+
+local function Grid(x, y, w, items, id, dim, empty, click)
+    if #items == 0 then
+        view.status(x, y + 10, w, K.G.info, empty, T.t4)
+        return 20
+    end
+    local base = g.a
+    if dim then g.a = base * 0.45 end
+    local h = view.grid(x, y, w, items, 30, 6, id, click)
+    g.a = base
+    return h
+end
+
+local function BodyInk(y)
+    local x, w = K.PAD, K.W - K.PAD * 2
+    local top = y
+    local items = GW.allies
+    local whitelist_on = GetVal(ui_ink_enabled) and GetVal(ui_ink_mode) ~= 0
+    y = y + view.caption(x, y, w, L("gh_hud_ink"), #items > 0 and string.format("%d/%d", cache.allowed_count, #items) or nil)
+    y = y + Grid(x, y, w, items, "ally", not whitelist_on, L("gh_no_allies"), function(it)
+        allowed_allies[it.key] = not allowed_allies[it.key]
+        GW.next_data_t = 0
+        BridgeLog("click: ally", { hero = it.key, allowed = allowed_allies[it.key] })
+    end) + 12
+    view.status(x, y + 8, w, "\u{f6e2}", GW.dp_text, GW.dp_col)
+    return y + 16 - top
+end
+
+local function FilterRows(x, y, w, kind, label, switch_w)
+    local top = y
+    local on = GetVal(switch_w)
+    y = y + view.toggle_row(x - 10, y, w + 20, label, on, "wl_sw:" .. kind, function()
+        switch_w:Set(not switch_w:Get())
+        RefreshDisabled()
+        BridgeLog("click: filter switch", { list = kind, on = switch_w:Get() })
+    end)
+    y = y + Grid(x, y + 6, w, EnemyItems(kind), "wl:" .. kind, not on, L("gh_wl_empty"), function(it)
+        SetWhitelist(kind, it.key, not whitelist[kind][it.key])
+        BridgeLog("click: filter hero", { list = kind, hero = it.key, on = whitelist[kind][it.key] })
+    end) + 6
+    return y - top
+end
+
+local function BodyFilters(y)
+    local x, w = K.PAD, K.W - K.PAD * 2
+    local top = y
+    y = y + FilterRows(x, y, w, "dp", L("gh_dp_wl"), ui_dp_wl_enabled) + 6
+    y = y + FilterRows(x, y, w, "sb", L("gh_sb_wl"), ui_sb_wl_enabled)
+    return y - top
+end
+
+local function SetFilters(on)
+    if GW.filters == on then return end
+    GW.filters = on
+    save("tab", on and 2 or 1)
+    BridgeLog("click: filters", { on = on })
+end
+
+local function TogglePause()
+    panel_active = not panel_active
+    GW.next_data_t = 0
+    BridgeLog("click: pause", { active = panel_active })
+end
+
+local function DrawHelperWindow()
+    RefreshWindowData()
+    P.set.scale = GetVal(ui_scale) or 100
+    view.window({
+        title = L("gh_title"),
+        body_h = anim.tween("gh_body_h", GW.body_h, 0.2),
+        switch = { on = panel_active, id = "head_sw", click = TogglePause },
+        buttons = {
+            { glyph = "\u{f0b0}", id = "btn_filters", active = GW.filters, click = function() SetFilters(not GW.filters) end },
+        },
+        tab_w = 28,
+        tab = function(x, cy) view.switch(x, cy, panel_active, "tab_on", TogglePause, true) end,
+        body = function(y)
+            local top = y
+            y = y + 10
+            y = y + (GW.filters and BodyFilters or BodyInk)(y)
+            GW.body_h = y - top + K.PAD
+        end
+    })
+    view.hint("btn_filters", L("gh_hint_filters"))
+    view.hint("head_sw", L(panel_active and "gh_hint_pause" or "gh_hint_resume"))
 end
 
 local function HandleKeys()
     if Input.IsInputCaptured() then return end
     if ui_panel_key:IsPressed() then
         ui_draw_panel:Set(not ui_draw_panel:Get())
-        Log("key: panel", { shown = ui_draw_panel:Get() })
+        BridgeLog("key: panel", { shown = ui_draw_panel:Get() })
     end
     if ui_filters_key:IsPressed() then
-        win.filters.open = not win.filters.open
-        Log("key: filters", { open = win.filters.open })
+        if ui_draw_panel:Get() and GW.filters then
+            ui_draw_panel:Set(false)
+        else
+            ui_draw_panel:Set(true)
+            SetFilters(true)
+            if P.set.docked then view.dock(false) end
+        end
+        BridgeLog("key: filters", { shown = ui_draw_panel:Get(), filters = GW.filters })
     end
+end
+
+K.DEBUG = function() return GetVal(ui_debug) end
+K.ON_CLOSE = function()
+    ui_draw_panel:Set(false)
+    BridgeLog("click: close panel")
 end
 
 function GrimHelper.OnDraw()
-    win.hot_kind = nil
     if not Engine.IsInGame() or not GetVal(ui_enabled) or not IsGrimstroke(Heroes.GetLocal()) then
-        win.main.alpha, win.filters.alpha, win.drag = 0, 0, nil
+        if P.alpha > 0 then
+            P.alpha, P.open = 0, false
+            hit.list = {}
+            edit.blur()
+            input.end_drag()
+        end
         return
     end
-
     HandleKeys()
-    win.dt = math.min(0.1, GlobalVars.GetAbsFrameTime() or 0.016)
-    win.anim = win.anim or {}
-
-    if win.drag then
-        if Input.IsKeyDown(Enum.ButtonCode.KEY_MOUSE1) then
-            local cx, cy = Input.GetCursorPos()
-            win.drag.win.x, win.drag.win.y = cx - win.drag.dx, cy - win.drag.dy
-        else
-            win.drag = nil
-        end
-    end
-
-    win.main.alpha = Approach(win.main.alpha, GetVal(ui_draw_panel) and 1 or 0, 20)
-    win.filters.alpha = Approach(win.filters.alpha, win.filters.open and 1 or 0, 20)
-
-    if win.main.alpha > 0.02 then
-        RefreshPanelData()
-        DrawMainPanel(win.main.alpha)
-    end
-    if win.filters.alpha > 0.02 then DrawFiltersWindow(win.filters.alpha) end
-    if win.main.alpha < 0.5 and win.filters.alpha < 0.5 then win.hot_kind = nil end
+    P.open = GetVal(ui_draw_panel)
+    input.frame(DrawHelperWindow)
 end
 
 function GrimHelper.OnKeyEvent(data)
-    if data.key ~= Enum.ButtonCode.KEY_MOUSE1 then return true end
-    if data.event == Enum.EKeyEvent.EKeyEvent_KEY_DOWN then
-        if win.hot_kind and not Input.IsInputCaptured() then
-            Click(win.hot_kind, win.hot_a, win.hot_b)
-            win.swallow = true
-            return false
-        end
-    elseif data.event == Enum.EKeyEvent.EKeyEvent_KEY_UP and win.swallow then
-        win.swallow = false
-        return false
-    end
-    return true
+    if not GetVal(ui_enabled) then return true end
+    return input.event(data)
 end
 
 -- ============================================================================
