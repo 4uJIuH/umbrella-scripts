@@ -591,6 +591,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 <!-- stats:start -->
 | script | downloads | latest |
 | --- | --- | --- |
+| [Auto Support Buy](scripts/auto_support_buy) | 0 | `auto-support-buy-v1.0.0` |
 | [Tinker Turret Dodge](scripts/tinker_turret_dodge) | 36 | `tinker-turret-dodge-v1.1.5` |
 | [Tinker Auto Farm](scripts/tinker_auto_farm) | 14 | `tinker-auto-farm-v1.0.4` |
 | [Auto Shackleshot](scripts/auto_shackleshot) | 16 | `auto-shackleshot-v1.0.0` |
