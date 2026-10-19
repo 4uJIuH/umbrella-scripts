@@ -1,6 +1,405 @@
+--[[
+     ~ qLocalization
+     ~ automatic localization wrapper for Lua menu interfaces
+
+     ~ author: qfun (qfun_g9s)
+]]
+
+local qLocalization = (function()
+	local lib = {}
+
+	local a = function(...)
+		return ...
+	end
+
+	local state = {
+		lang = Menu.Find("SettingsHidden", "", "", "", "Main", "Language"),
+		instances = {},
+	}
+
+	local setters = {
+		ToolTip = "tooltip",
+	}
+
+	local helpers
+	do
+		helpers = {
+			resolve = a(function(root, path)
+				for key in path:gmatch("[^.]+") do
+					if type(root) ~= "table" then
+						return
+					end
+
+					root = root[key]
+				end
+
+				return root
+			end),
+
+			is_object = a(function(value)
+				return type(value) == "table" or type(value) == "userdata"
+			end),
+
+			has_method = a(function(object, name)
+				return helpers.is_object(object) and type(object[name]) == "function"
+			end),
+
+			is_menu_object = a(function(value)
+				return helpers.has_method(value, "Name") and helpers.has_method(value, "Type")
+			end),
+
+			is_list = a(function(value)
+				if type(value) ~= "table" or #value == 0 then
+					return false
+				end
+
+				for i = 1, #value do
+					if type(value[i]) ~= "string" then
+						return false
+					end
+				end
+
+				return true
+			end),
+
+			is_indexed_list = a(function(object)
+				return helpers.has_method(object, "List") and not helpers.has_method(object, "ListEnabled")
+			end),
+		}
+	end
+
+	function lib.new(translations)
+		local languages = {}
+
+		for i, name in ipairs(state.lang and state.lang:List() or {}) do
+			local code = name:match("%a+")
+
+			if code and translations[code] then
+				languages[i - 1] = code
+			end
+		end
+
+		local localization = {
+			translations = translations,
+			languages = languages,
+			objects = {},
+		}
+
+		local methods
+		do
+			methods = {
+				get_language = a(function(language_index)
+					if language_index == nil and state.lang then
+						language_index = state.lang:Get()
+					end
+
+					return localization.languages[language_index] or "en"
+				end),
+
+				localize = a(function(path, language_index)
+					if type(path) ~= "string" then
+						return path
+					end
+
+					local language = methods.get_language(language_index)
+
+					return helpers.resolve(localization.translations[language], path)
+						or helpers.resolve(localization.translations.en, path)
+						or path
+				end),
+
+				has = a(function(path)
+					if type(path) ~= "string" then
+						return false
+					end
+
+					return helpers.resolve(localization.translations.en, path) ~= nil
+						or helpers.resolve(localization.translations[methods.get_language()], path) ~= nil
+				end),
+
+				localize_items = a(function(items, language_index)
+					local result, localized = {}, false
+
+					for i = 1, #items do
+						local value = items[i]
+
+						if methods.has(value) then
+							result[i] = methods.localize(value, language_index)
+							localized = true
+						else
+							result[i] = value
+						end
+					end
+
+					return result, localized
+				end),
+
+				apply = a(function(object, kind, path, language_index)
+					if kind == "label" then
+						object:ForceLocalization(methods.localize(path, language_index))
+					elseif kind == "tooltip" then
+						object:ToolTip(methods.localize(path, language_index))
+					elseif kind == "items" then
+						local value = object:Get()
+
+						object:Update((methods.localize_items(path, language_index)))
+						object:Set(value)
+					end
+				end),
+
+				track = a(function(object, kind, path, apply_now)
+					local record = localization.objects[object]
+
+					if record == nil then
+						record = {}
+						localization.objects[object] = record
+					end
+
+					record[kind] = path
+
+					if apply_now then
+						methods.apply(object, kind, path)
+					end
+				end),
+
+				register = a(function(object, path)
+					if not methods.has(path) or not helpers.has_method(object, "ForceLocalization") then
+						return
+					end
+
+					methods.track(object, "label", path, true)
+				end),
+
+				update = a(function(language_index)
+					for object, record in pairs(localization.objects) do
+						for kind, path in pairs(record) do
+							methods.apply(object, kind, path, language_index)
+						end
+					end
+				end),
+
+				wrap = a(function(target, bind_self)
+					if not helpers.is_object(target) then
+						return target
+					end
+
+					local proxy
+
+					proxy = setmetatable({}, {
+						__index = function(_, key)
+							local member = target[key]
+
+							if type(member) ~= "function" then
+								return member
+							end
+
+							return function(...)
+								local args = table.pack(...)
+
+								if bind_self and args[1] == proxy then
+									table.remove(args, 1)
+									args.n = args.n - 1
+								end
+
+								if key == "Switch" and args.n < 2 then
+									args[2] = false
+									args.n = 2
+								end
+
+								local name_path, item_paths
+
+								if setters[key] then
+									if methods.has(args[1]) then
+										methods.track(target, setters[key], args[1], false)
+
+										args[1] = methods.localize(args[1])
+									end
+								else
+									local name_index = bind_self and 1 or args.n
+
+									if methods.has(args[name_index]) then
+										name_path = args[name_index]
+									end
+
+									local items_index
+
+									if key == "Combo" then
+										items_index = 2
+									elseif key == "Update" and helpers.is_indexed_list(target) then
+										items_index = 1
+									end
+
+									if items_index ~= nil and helpers.is_list(args[items_index]) then
+										local items, localized = methods.localize_items(args[items_index])
+
+										if localized then
+											item_paths = args[items_index]
+											args[items_index] = items
+										end
+									end
+								end
+
+								local results
+
+								if bind_self then
+									results = table.pack(member(target, table.unpack(args, 1, args.n)))
+								else
+									results = table.pack(member(table.unpack(args, 1, args.n)))
+								end
+
+								for i = 1, results.n do
+									local result = results[i]
+
+									if helpers.is_menu_object(result) then
+										if name_path then
+											methods.register(result, name_path)
+										end
+
+										if item_paths then
+											methods.track(result, "items", item_paths, false)
+											item_paths = nil
+										end
+
+										results[i] = methods.wrap(result, true)
+									end
+								end
+
+								if item_paths then
+									methods.track(target, "items", item_paths, false)
+								end
+
+								return table.unpack(results, 1, results.n)
+							end
+						end,
+
+						__newindex = function(_, key, value)
+							target[key] = value
+						end,
+					})
+
+					return proxy
+				end),
+			}
+		end
+
+		state.instances[methods] = true
+
+		return {
+			GetLanguage = methods.get_language,
+
+			Get = methods.localize,
+			Localize = methods.localize,
+
+			Update = methods.update,
+			Register = methods.register,
+
+			Wrap = methods.wrap,
+
+			WrapLibrary = function(library)
+				return methods.wrap(library, false)
+			end,
+		}
+	end
+
+	if state.lang then
+		state.lang:SetCallback(function(this)
+			local language_index = this:Get()
+
+			for methods in pairs(state.instances) do
+				methods.update(language_index)
+			end
+		end, true)
+	else
+		Log.Write("[qLocalization] Language widget not found, using English fallback")
+	end
+
+	return lib
+end)()
+
+local localization = qLocalization.new({
+    en = {
+        gh_group_main = "Grimstroke Helper",
+        gh_group_ink = "Ink Swell",
+        gh_group_dp = "Dark Portrait Illusion",
+        gh_group_combo = "Built-in Combo",
+        gh_enable = "Enable",
+        gh_enable_tip = "Turns on every feature of this helper.",
+        gh_panel = "Ally Panel",
+        gh_panel_tip = "On-screen panel: click an ally to allow or forbid Ink Swell on them.\nThe header button pauses the helper.",
+        gh_ink_enable = "Auto Ink Swell",
+        gh_ink_enable_tip = "Casts Ink Swell on an ally standing next to enemies.",
+        gh_ink_mode = "Ally Choice",
+        gh_ink_mode_tip = "Allies are allowed or forbidden in the on-screen panel.",
+        gh_ink_modes_closest = "Any ally near enemies",
+        gh_ink_modes_whitelist = "Allowed ally closest to enemies",
+        gh_ink_modes_whitelist_range = "Allowed ally near enemies",
+        gh_ink_dist = "Ally to Enemy Distance",
+        gh_ink_dist_tip = "An ally farther than this from every enemy is skipped.\nNot used in the second mode.",
+        gh_ink_self = "Allow Self by Default",
+        gh_ink_self_tip = "Whether Grimstroke himself starts as allowed in the panel.",
+        gh_dp_enable = "Control Illusion",
+        gh_dp_enable_tip = "Sends the Dark Portrait illusion to attack automatically.",
+        gh_dp_priority = "Target Priority",
+        gh_dp_priorities_hp = "Lowest HP",
+        gh_dp_priorities_pct = "Lowest HP %",
+        gh_dp_heroes = "Heroes Only",
+        gh_dp_heroes_tip = "Off: the illusion also attacks creeps when no enemy hero is visible.",
+        gh_dp_idle = "No Visible Heroes",
+        gh_dp_idles_follow = "Follow Grimstroke",
+        gh_dp_idles_attack = "Attack nearest enemies",
+        gh_dp_idles_hold = "Stay in place",
+        gh_dp_wl = "Dark Portrait Whitelist",
+        gh_dp_wl_tip = "While the combo key is held, the built-in combo casts Dark Portrait only on checked enemies.\nOther abilities are not affected.",
+        gh_dp_list = "Dark Portrait Targets",
+        gh_sb_wl = "Solo Soulbind Whitelist",
+        gh_sb_wl_tip = "With the level 15 talent, the combo Soulbinds a checked enemy even when alone.\nOther enemies still need a second enemy in link range.",
+        gh_sb_list = "Solo Soulbind Targets",
+    },
+    ru = {
+        gh_group_main = "Grimstroke Helper",
+        gh_group_ink = "Ink Swell",
+        gh_group_dp = "Иллюзия Dark Portrait",
+        gh_group_combo = "Встроенное комбо",
+        gh_enable = "Включить",
+        gh_enable_tip = "Включает все функции помощника.",
+        gh_panel = "Панель союзников",
+        gh_panel_tip = "Панель на экране: клик по союзнику разрешает или запрещает Ink Swell на него.\nКнопка в заголовке ставит помощника на паузу.",
+        gh_ink_enable = "Авто Ink Swell",
+        gh_ink_enable_tip = "Кастует Ink Swell на союзника рядом с врагами.",
+        gh_ink_mode = "Выбор союзника",
+        gh_ink_mode_tip = "Разрешенные союзники отмечаются в панели на экране.",
+        gh_ink_modes_closest = "Любой рядом с врагами",
+        gh_ink_modes_whitelist = "Разрешенный, ближайший к врагам",
+        gh_ink_modes_whitelist_range = "Разрешенный рядом с врагами",
+        gh_ink_dist = "Дистанция до врага",
+        gh_ink_dist_tip = "Союзник дальше этого от всех врагов пропускается.\nВо втором режиме не используется.",
+        gh_ink_self = "Себя разрешить сразу",
+        gh_ink_self_tip = "Разрешен ли сам Grimstroke в панели при старте.",
+        gh_dp_enable = "Управлять иллюзией",
+        gh_dp_enable_tip = "Иллюзия Dark Portrait сама атакует цель.",
+        gh_dp_priority = "Приоритет цели",
+        gh_dp_priorities_hp = "Меньше всего HP",
+        gh_dp_priorities_pct = "Меньше всего HP в %",
+        gh_dp_heroes = "Только герои",
+        gh_dp_heroes_tip = "Выключено: без видимых героев иллюзия бьет и крипов.",
+        gh_dp_idle = "Нет видимых героев",
+        gh_dp_idles_follow = "Идти за Grimstroke",
+        gh_dp_idles_attack = "Атаковать ближайших",
+        gh_dp_idles_hold = "Стоять на месте",
+        gh_dp_wl = "Белый список Dark Portrait",
+        gh_dp_wl_tip = "Пока зажата клавиша комбо, встроенное комбо кастует Dark Portrait только на отмеченных врагов.\nОстальные способности работают как обычно.",
+        gh_dp_list = "Цели Dark Portrait",
+        gh_sb_wl = "Белый список Soulbind в одиночку",
+        gh_sb_wl_tip = "С талантом 15 уровня комбо связывает отмеченного врага, даже если он один.\nОстальным врагам по-прежнему нужен второй враг рядом.",
+        gh_sb_list = "Цели Soulbind в одиночку",
+    },
+})
+
+local UI = localization.WrapLibrary(Menu)
+
 --by m0rc1
 
-local VERSION = "1.1.0"
+local VERSION = "1.2.0"
 local GrimHelper = {}
 
 -- ============================================================================
@@ -201,62 +600,86 @@ LoadWhitelist()
 -- ============================================================================
 -- Menu Setup (Heroes -> Hero List -> Grimstroke -> Helper)
 -- ============================================================================
+local function MenuOn(w)
+    return w ~= nil and w:Get()
+end
+
+local function RefreshDisabled()
+    local on = MenuOn(ui_enabled)
+    local ink_on = on and MenuOn(ui_ink_enabled)
+    local dp_on = on and MenuOn(ui_dp_enabled)
+    ui_draw_panel:Disabled(not on)
+    ui_ink_enabled:Disabled(not on)
+    ui_ink_mode:Disabled(not ink_on)
+    ui_ink_max_dist:Disabled(not ink_on or MenuOn(ui_ink_mode) == 1)
+    ui_ink_self:Disabled(not ink_on)
+    ui_dp_enabled:Disabled(not on)
+    ui_dp_target_mode:Disabled(not dp_on)
+    ui_dp_heroes_only:Disabled(not dp_on)
+    ui_dp_fallback:Disabled(not dp_on)
+    ui_dp_wl_enabled:Disabled(not on)
+    ui_dp_wl:Disabled(not on or not MenuOn(ui_dp_wl_enabled))
+    ui_sb_wl_enabled:Disabled(not on)
+    ui_sb_wl:Disabled(not on or not MenuOn(ui_sb_wl_enabled))
+end
+
 local function SetupMenu()
     if ui_enabled ~= nil then return end
 
-    local function group(name)
-        return Menu.Find("Heroes", "Hero List", "Grimstroke", "Helper", name)
-            or Menu.Create("Heroes", "Hero List", "Grimstroke", "Helper", name)
-            or Menu.Find("Heroes", "Hero List", "Grimstroke", name)
-            or Menu.Create("Heroes", "Hero List", "Grimstroke", name)
+    local page = UI.Create("Heroes", "Hero List", "Grimstroke", "Helper")
+    local g_main = page:Create("gh_group_main", Enum.GroupSide.Left)
+    local g_ink = page:Create("gh_group_ink", Enum.GroupSide.Left)
+    local g_dp = page:Create("gh_group_dp", Enum.GroupSide.Right)
+    local g_combo = page:Create("gh_group_combo", Enum.GroupSide.Right)
+
+    ui_enabled = g_main:Switch("gh_enable", true, "\u{f011}")
+    ui_enabled:ToolTip("gh_enable_tip")
+    ui_draw_panel = g_main:Switch("gh_panel", true, "\u{f05a}")
+    ui_draw_panel:ToolTip("gh_panel_tip")
+
+    ui_ink_enabled = g_ink:Switch("gh_ink_enable", true, "\u{f0e7}")
+    ui_ink_enabled:ToolTip("gh_ink_enable_tip")
+    ui_ink_mode = g_ink:Combo("gh_ink_mode", { "gh_ink_modes_closest", "gh_ink_modes_whitelist", "gh_ink_modes_whitelist_range" }, 2)
+    ui_ink_mode:Icon("\u{f05b}")
+    ui_ink_mode:ToolTip("gh_ink_mode_tip")
+    ui_ink_max_dist = g_ink:Slider("gh_ink_dist", 300, 1000, 650, "%d")
+    ui_ink_max_dist:Icon("\u{f337}")
+    ui_ink_max_dist:ToolTip("gh_ink_dist_tip")
+    ui_ink_self = g_ink:Switch("gh_ink_self", true, "\u{f007}")
+    ui_ink_self:ToolTip("gh_ink_self_tip")
+
+    ui_dp_enabled = g_dp:Switch("gh_dp_enable", true, "\u{f6e2}")
+    ui_dp_enabled:ToolTip("gh_dp_enable_tip")
+    ui_dp_target_mode = g_dp:Combo("gh_dp_priority", { "gh_dp_priorities_hp", "gh_dp_priorities_pct" }, 0)
+    ui_dp_target_mode:Icon("\u{f004}")
+    ui_dp_heroes_only = g_dp:Switch("gh_dp_heroes", true, "\u{f505}")
+    ui_dp_heroes_only:ToolTip("gh_dp_heroes_tip")
+    ui_dp_fallback = g_dp:Combo("gh_dp_idle", { "gh_dp_idles_follow", "gh_dp_idles_attack", "gh_dp_idles_hold" }, 0)
+    ui_dp_fallback:Icon("\u{f070}")
+
+    ui_dp_wl_enabled = g_combo:Switch("gh_dp_wl", false, "\u{f03e}")
+    ui_dp_wl_enabled:ToolTip("gh_dp_wl_tip")
+    ui_dp_wl = g_combo:MultiSelect("gh_dp_list", WhitelistItems("dp", {}), true)
+    ui_dp_wl:Icon("\u{f05b}")
+    ui_sb_wl_enabled = g_combo:Switch("gh_sb_wl", false, "\u{f0c1}")
+    ui_sb_wl_enabled:ToolTip("gh_sb_wl_tip")
+    ui_sb_wl = g_combo:MultiSelect("gh_sb_list", WhitelistItems("sb", {}), true)
+    ui_sb_wl:Icon("\u{f05b}")
+
+    for kind, list in pairs({ dp = ui_dp_wl, sb = ui_sb_wl }) do
+        list:SetCallback(function()
+            if combo.updating then return end
+            for _, id in ipairs(list:List()) do
+                whitelist[kind][id] = list:Get(id) == true
+            end
+            SaveWhitelist()
+        end)
     end
 
-    local main_grp = group("Main Settings")
-    if main_grp then
-        ui_enabled      = main_grp:Switch("Enable Script", true)
-        ui_draw_panel   = main_grp:Switch("Show Interactive Panel", true)
+    for _, w in ipairs({ ui_enabled, ui_ink_enabled, ui_ink_mode, ui_dp_enabled, ui_dp_wl_enabled, ui_sb_wl_enabled }) do
+        w:SetCallback(RefreshDisabled)
     end
-
-    local ink_grp = group("Ink Swell (3rd Ability)")
-    if ink_grp then
-        ui_ink_enabled  = ink_grp:Switch("Auto-Cast Ink Swell", true)
-        ui_ink_mode     = ink_grp:Combo("Target Selection Mode", { "Closest to Enemy", "Whitelist Only", "Closest from Whitelist" }, 2)
-        ui_ink_max_dist = ink_grp:Slider("Max Ally-to-Enemy Distance", 300, 1000, 650)
-        ui_ink_self     = ink_grp:Switch("Allow Self-Cast by Default", true)
-    end
-
-    local dp_grp = group("Dark Portrait (Aghanim's Illusion)")
-    if dp_grp then
-        ui_dp_enabled     = dp_grp:Switch("Auto-Control Illusion", true)
-        ui_dp_target_mode = dp_grp:Combo("Target Priority", { "Lowest HP (Amount)", "Lowest HP (%)" }, 0)
-        ui_dp_heroes_only = dp_grp:Switch("Attack Heroes Only", true)
-        ui_dp_fallback    = dp_grp:Combo("If No Heroes in Vision", { "Follow Grimstroke", "Attack Nearest Enemies", "Hold Position" }, 0)
-    end
-
-    local wl_grp = group("Combo Whitelists")
-    if wl_grp then
-        ui_dp_wl_enabled = wl_grp:Switch("Dark Portrait Whitelist", false)
-        ui_dp_wl_enabled:ToolTip("The built-in combo casts Dark Portrait only on checked enemies.\nOther abilities are not affected.")
-        ui_dp_wl = wl_grp:MultiSelect("Dark Portrait Targets", WhitelistItems("dp", {}), true)
-
-        ui_sb_wl_enabled = wl_grp:Switch("Soulbind Solo Whitelist", false)
-        ui_sb_wl_enabled:ToolTip("With the level 15 talent, the combo Soulbinds a checked enemy even when alone.\nOther enemies still need a second enemy in link range.")
-        ui_sb_wl = wl_grp:MultiSelect("Soulbind Solo Targets", WhitelistItems("sb", {}), true)
-
-        for kind, pair in pairs({ dp = { ui_dp_wl_enabled, ui_dp_wl }, sb = { ui_sb_wl_enabled, ui_sb_wl } }) do
-            local switch, list = pair[1], pair[2]
-            list:SetCallback(function()
-                if combo.updating then return end
-                for _, id in ipairs(list:List()) do
-                    whitelist[kind][id] = list:Get(id) == true
-                end
-                SaveWhitelist()
-            end)
-            switch:SetCallback(function()
-                list:Disabled(not switch:Get())
-            end, true)
-        end
-    end
+    RefreshDisabled()
 
     RestoreBuiltin()
 end
@@ -847,8 +1270,8 @@ function GrimHelper.OnDraw()
     local c_green  = GetThemeColor("multiselect_item_selected", Color(63, 191, 95, 245))
     local c_red    = GetThemeColor("multiselect_item", Color(224, 50, 45, 245))
 
-    local f_bold = font_bold or Render.LoadFont("Segoe UI", 12, Enum.FontCreate.FONTFLAG_ANTIALIAS, 700)
-    local f_main = font_main or Render.LoadFont("Segoe UI", 11, Enum.FontCreate.FONTFLAG_ANTIALIAS, 400)
+    local f_bold = font_bold or Render.LoadFont("Segoe UI", Enum.FontCreate.FONTFLAG_ANTIALIAS, 700)
+    local f_main = font_main or Render.LoadFont("Segoe UI", Enum.FontCreate.FONTFLAG_ANTIALIAS, 400)
 
     -- 1. Frosted Glass Body Background
     Render.Blur(tl, br, 2.0, 1.0, 7)
