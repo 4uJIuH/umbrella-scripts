@@ -28,6 +28,7 @@ local FALLBACK_JUNGLE_SPOTS = {
 }
 
 local IniConfig = Config
+local Config, Constants, State, L
 
 -- ── Custom camps + camp mirror ──────────────────────────────
 local CUSTOM_CAMP_BASE_INDEX = 1000
@@ -75,12 +76,7 @@ local showIndicator = false
 
 
 
--- Fallback Camp functions if not available
-if not Camp then
-  Camp = {}
-end
-if not Camp.GetGoldBounty then
-  function Camp.GetGoldBounty(camp, useBounty)
+local function campGoldBounty(camp, useBounty)
     local gold = 0
     if camp.type == 1 then -- Small camp
       gold = useBounty and 71 or 43
@@ -92,7 +88,6 @@ if not Camp.GetGoldBounty then
       gold = useBounty and 162 or 97
     end
     return gold
-  end
 end
 
 local script        = {}
@@ -1389,7 +1384,7 @@ local function GetNeutralSnapshot()
   end
 
   local out = {}
-  for _, unit in ipairs(NPCs.GetAll(Enum.UnitTypeFlags.TYPE_NEUTRAL_CREEP) or {}) do
+  for _, unit in ipairs(NPCs.GetAll(Enum.UnitTypeFlags.TYPE_CREEP) or {}) do
     if unit and Entity.IsEntity(unit) and Entity.IsAlive(unit)
         and NPC.IsCreep(unit)
         and (not NPC.IsWaitingToSpawn or not NPC.IsWaitingToSpawn(unit)) then
@@ -2150,7 +2145,7 @@ function Tinker.FindBestJungleSpot(wantAncient, wantNonAnc)
             local center        = (campA.pos + campB.pos) / 2
             local distScore     = myPos:Distance(center) / 100.0
             local spreadPenalty = AB / 200.0
-            local gold          = (Camp.GetGoldBounty(campA, true) + Camp.GetGoldBounty(campB, true))
+            local gold          = (campGoldBounty(campA, true) + campGoldBounty(campB, true))
             local bountyScore   = (gold / 50.0) * bountyK
 
             local anchorPos     = Tinker.IntendedKeenTPPos(center)
@@ -2189,7 +2184,7 @@ function Tinker.FindBestJungleSpot(wantAncient, wantNonAnc)
   local bestSingle, bestSingleScore, bestSingleGold = nil, math.huge, 0
   for camp, _ in pairs(selectedSet) do
     local distScore   = myPos:Distance(camp.pos) / 100.0
-    local gold        = Camp.GetGoldBounty(camp, true)
+    local gold        = campGoldBounty(camp, true)
     local bountyScore = (gold / 50.0) * bountyK
 
     local anchorPos   = Tinker.IntendedKeenTPPos(camp.pos)
@@ -4570,7 +4565,7 @@ local function DrawDockOverlay()
   Render.FilledRect(start, end_, Theme.bg2, UI.rounding)
   Render.Rect(start, end_, Theme.border, UI.rounding, nil, 1.0)
 
-  Chip(Vec2(x + pad, y - 22), "Auto Push&Farm — Debug", Theme.text, Color(18, 20, 26, 230))
+  Chip(Vec2(x + pad, y - 22), "Auto Push&Farm, Debug", Theme.text, Color(18, 20, 26, 230))
 
   local ry = y + pad + 6
   for _, r in ipairs(lines) do
