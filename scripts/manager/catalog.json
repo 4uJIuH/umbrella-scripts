@@ -1707,9 +1707,9 @@
     },
     {
       "id": "tinker_helper",
-      "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_helper/tinker_helper.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-helper-v1.0.0/tinker_helper.lua",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/1f1696eb6632bf55a20f33776c759e0375e1caa1/scripts/tinker_helper/tinker_helper.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-helper-v1.0.1/tinker_helper.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "\u0435\u0431\u0430\u0448\u0443 \u0432 \u0434\u043e\u0442\u0443 (Discord: trikossik)",
@@ -1721,7 +1721,7 @@
           "Heroes \u2192 Hero List \u2192 Tinker"
         ]
       },
-      "date": "2026-10-13",
+      "date": "2026-10-19",
       "heroes": [
         "tinker"
       ],
