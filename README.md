@@ -608,7 +608,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [DS Spot Block](scripts/ds_spot_block) | 57 | `ds-spot-block-v1.0.1` |
 | [Custom Background](scripts/custom_background) | 49 | `custom-background-v1.0.0` |
 | [Auto Stack](scripts/auto_stack) | 158 | `auto-stack-v1.1.0` |
-| [Draft Helper](scripts/draft_helper) | 1461 | `draft-helper-v2.0.0-beta.20` |
+| [Draft Helper](scripts/draft_helper) | 1462 | `draft-helper-v2.0.0-beta.20` |
 | [MusicUI](scripts/musicui) | 727 | `musicui-v1.0.8` |
 | [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 204 | `umbrella-lua-v1.0.4` |
 | [Custom Stats](scripts/custom_stats) | 14 | `custom-stats-v1.0.0` |
@@ -641,7 +641,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [1000-7 Counter](scripts/ghoul_counter) | 9 | `ghoul-counter-v1.0.0` |
 | [Invoker Jarvis](scripts/invoker_jarvis) | 43 | `v1.3.1` |
 | [TikTok](scripts/umbrella_tiktok) | 303 | `v1.3.2` |
-| [Invoker AutoStack](scripts/invoker_autostack) | 78 | `v1.4.2` |
+| [Invoker AutoStack](scripts/invoker_autostack) | 79 | `v1.4.2` |
 | [Old Last Match](scripts/old_last_match) | 14 | `old-last-match-v1.0.0` |
 | [Unusual Secret](scripts/unusual_secret) | 13 | `unusual-secret-v2.1.0` |
 | [Atmospheric Fog Restorer](scripts/atmospheric_fog) | 6 | `atmospheric-fog-v1.0.0` |
@@ -725,7 +725,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
 | [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 2 | `terrorblade-sunder-dagon-v1.0.0` |
 | [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 2 | `venomancer-ward-controller-v1.0.0` |
-| [Cloud Radar](scripts/web_radar) | 2 | `web-radar-v2.3.1` |
+| [Cloud Radar](scripts/web_radar) | 2 | `web-radar-v2.3.2` |
 | [Murzik Kitty Widget](scripts/murzik) | 1 | `murzik-v1.0.0` |
 | [Трекер привычек](scripts/habits) | 1 | `habits-v1.0.0` |
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |

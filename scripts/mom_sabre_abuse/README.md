@@ -3,13 +3,9 @@
 автоматизирует ручной или автоматический абуз MoM и Sabre / automates manual or automatic Mask of Madness and Echo Sabre abuse
 
 <!-- releases:start -->
-Скачать: [mom_sabre_abuse.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/mom-sabre-abuse-v2.0.0/mom_sabre_abuse.lua) — `mom-sabre-abuse-v2.0.0`, 2026-10-13
+Последняя версия: [`v2.0.0` — `mom_sabre_abuse.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mom_sabre_abuse/mom_sabre_abuse.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`mom-sabre-abuse-v2.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/mom-sabre-abuse-v2.0.0) | 2026-10-13 | [mom_sabre_abuse.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/mom-sabre-abuse-v2.0.0/mom_sabre_abuse.lua) | 6 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=mom-sabre-abuse&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=mom-sabre-abuse&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -23,12 +19,6 @@
 
 1. Поместите `mom_sabre_abuse.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и настройте режим в меню скрипта.
-
-## Что нового
-
-# Релиз v2.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -45,9 +35,3 @@ Sequences Mask of Madness and Echo Sabre usage; the author's description mention
 
 1. Place `mom_sabre_abuse.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts and configure the mode in its menu.
-
-## Changelog
-
-# Release v2.0.0
-
-- Release version: the first publication of the script.

@@ -3,10 +3,11 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.1/web_radar.lua) — `web-radar-v2.3.1`, 2026-10-19
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.2/web_radar.lua) — `web-radar-v2.3.2`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`web-radar-v2.3.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.2) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.2/web_radar.lua) | 0 |
 | [`web-radar-v2.3.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.1/web_radar.lua) | 0 |
 | [`web-radar-v2.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.0/web_radar.lua) | 0 |
 | [`web-radar-v2.2.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.2.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.1/web_radar.lua) | 0 |
@@ -34,6 +35,14 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Исправление v2.3.2
+
+- Статус в меню скрипта показывает реальное состояние радара, а не «выключен». Строка нагрузки тоже обновляется.
+- Подписи в меню короче и больше не обрезаются.
+- Сайт: панель целей стала списком, по одной строке на цель. Глиф, скан и заряды показаны цветными метками Radiant и Dire, лавка показана иконками предметов.
+- Карта стала крупнее, а лишняя ширина отдается боковым панелям. Шестеренка слоев стоит в углу самой карты, легенда помещается в одну строку.
+- Перезарядки больше минуты показаны как 2:34. Рядом со временем матча видно, что наступит дальше: день или ночь.
 
 # Исправление v2.3.1
 
@@ -103,6 +112,14 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Fix v2.3.2
+
+- The script menu status shows the real radar state instead of "off". The load line updates too.
+- Shorter menu labels that no longer get cut off.
+- Site: the objectives panel is a list with one row per objective. Glyph, scan and charges use Radiant and Dire color tags, and the shop stock uses item icons.
+- The map is larger, and spare width goes to the side panels. The layers gear sits in the corner of the map itself, and the legend fits on one line.
+- Cooldowns over a minute show as 2:34. Next to the match clock you can see what comes next: day or night.
 
 # Fix v2.3.1
 
