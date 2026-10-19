@@ -601,14 +601,14 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Rem Assistant](scripts/rem_assistant) | 2 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
 | [qLocalization](scripts/q_localizer) | 103 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 382 | `script-manager-v2.14.2` |
+| [Script Manager](scripts/script_manager) | 383 | `script-manager-v2.14.2` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 633 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 10 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 270 | `lane-pull-v1.0.4` |
 | [DS Spot Block](scripts/ds_spot_block) | 57 | `ds-spot-block-v1.0.1` |
 | [Custom Background](scripts/custom_background) | 49 | `custom-background-v1.0.0` |
 | [Auto Stack](scripts/auto_stack) | 158 | `auto-stack-v1.1.0` |
-| [Draft Helper](scripts/draft_helper) | 1460 | `draft-helper-v2.0.0-beta.20` |
+| [Draft Helper](scripts/draft_helper) | 1461 | `draft-helper-v2.0.0-beta.20` |
 | [MusicUI](scripts/musicui) | 727 | `musicui-v1.0.8` |
 | [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 204 | `umbrella-lua-v1.0.4` |
 | [Custom Stats](scripts/custom_stats) | 14 | `custom-stats-v1.0.0` |
@@ -685,7 +685,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [SteamSync](scripts/steam_sync) | 203 | `v1.0.1` |
 | [Techies Brain Combo](scripts/techies_brain) | 4 | `techies-brain-v0.2.6` |
 | [Creep Control](scripts/creep_control) | 14 | `creep-control-v1.0.1` |
-| [KOTL Illuminate Pro](scripts/kotl_illuminate_pro) | 25 | `kotl-illuminate-pro-v1.0.0` |
+| [KOTL Illuminate Pro](scripts/kotl_illuminate_pro) | 26 | `kotl-illuminate-pro-v1.0.0` |
 | [Lycan Auto Control](scripts/lycan_auto_control) | 10 | `lycan-auto-control-v1.0.0` |
 | [Mute Voice Lines](scripts/mute_voice_lines) | 2 | `mute-voice-lines-v1.0.0` |
 | [Tinker Glimmer during Rearm](scripts/tinker_glimmer_rearm) | 0 | `tinker-glimmer-rearm-v1.3` |
@@ -725,12 +725,12 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
 | [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 2 | `terrorblade-sunder-dagon-v1.0.0` |
 | [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 2 | `venomancer-ward-controller-v1.0.0` |
-| [Cloud Radar](scripts/web_radar) | 0 | `web-radar-v2.2.1` |
+| [Cloud Radar](scripts/web_radar) | 2 | `web-radar-v2.3.0` |
 | [Murzik Kitty Widget](scripts/murzik) | 1 | `murzik-v1.0.0` |
 | [Трекер привычек](scripts/habits) | 1 | `habits-v1.0.0` |
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |
 | [Календарь](scripts/calendar) | 1 | `calendar-v1.0.0` |
-| [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) | 1 | `arc-warden-clone-pike-v1.0.0` |
+| [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) | 2 | `arc-warden-clone-pike-v1.0.0` |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/stats/stats-dark.svg">

@@ -3,13 +3,14 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.1/web_radar.lua) — `web-radar-v2.2.1`, 2026-10-19
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.0/web_radar.lua) — `web-radar-v2.3.0`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`web-radar-v2.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.0/web_radar.lua) | 0 |
 | [`web-radar-v2.2.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.2.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.1/web_radar.lua) | 0 |
-| [`web-radar-v2.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.2.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.0/web_radar.lua) | 0 |
-| [`web-radar-v2.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.1.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.1.0/web_radar.lua) | 0 |
+| [`web-radar-v2.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.2.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.0/web_radar.lua) | 1 |
+| [`web-radar-v2.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.1.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.1.0/web_radar.lua) | 1 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=web-radar&expanded=true)
 <!-- releases:end -->
@@ -32,6 +33,14 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Обновление v2.3.0
+
+- Оптимизация: меньше нагрузки на FPS. Тяжелые части (юниты, варды, руны, кемпы, цели, детали героев) обновляются реже, чем позиции героев, и кодируются только когда пора.
+- Режимы нагрузки теперь управляют всем: частотой передачи, обновлением каждой части, бюджетом сканирования юнитов за кадр, курьерами, крипами, Рошаном и деталями героев.
+- Экономный режим для слабых ПК, Сбалансированный по умолчанию, Плавный для самой быстрой карты.
+- Когда радар выключен, скрипт не обрабатывает события игры.
+- Имена частиц и звуков кэшируются, в драках меньше работы на каждый эффект.
 
 # Исправление v2.2.1
 
@@ -85,6 +94,14 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Update v2.3.0
+
+- Optimization: less FPS cost. Heavy parts (units, wards, runes, camps, objectives, hero details) refresh less often than hero positions and are encoded only when due.
+- Load modes now control everything: send rate, refresh of each part, unit scan budget per frame, couriers, creeps, Roshan and hero details.
+- Economy for weak PCs, Balanced by default, Smooth for the fastest map.
+- With the radar off, the script skips game event processing.
+- Particle and sound names are cached, so fights cost less per effect.
 
 # Fix v2.2.1
 
