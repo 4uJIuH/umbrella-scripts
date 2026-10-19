@@ -29,7 +29,7 @@
 
 1. Поместите `web_radar.lua` в папку `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты.
-3. Откройте `Scripts → Main → Cloud Radar`, включите радар и нажмите Start.
+3. Откройте `Scripts → Scripts → Cloud Radar`, включите радар и нажмите Start.
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
@@ -90,7 +90,7 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 
 1. Place `web_radar.lua` in the `umbrella\scripts` folder.
 2. Reload the Lua scripts.
-3. Open `Scripts → Main → Cloud Radar`, enable the radar and press Start.
+3. Open `Scripts → Scripts → Cloud Radar`, enable the radar and press Start.
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog

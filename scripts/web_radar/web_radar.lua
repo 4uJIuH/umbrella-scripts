@@ -323,7 +323,7 @@ local localization = qLocalization.new({
         cr_group_objects = "Map objects",
         cr_group_details = "Hero info",
         cr_group_events = "Event types",
-        cr_group_extras = "Extra objects",
+        cr_group_extras = "Units and camps",
         cr_enabled = "Enable Cloud Radar",
         cr_enabled_tip = "Turn it on, then press Start.\nStop closes the session and the old link.",
         cr_gear_extra = "Diagnostics",
@@ -345,7 +345,7 @@ local localization = qLocalization.new({
         cr_roshan = "Roshan",
         cr_tormentors = "Tormentor",
         cr_runes = "Runes",
-        cr_effects = "Map events",
+        cr_effects = "Send events",
         cr_layer_couriers = "Couriers",
         cr_layer_creeps = "Lane creeps",
         cr_layer_neutrals = "Neutral creeps",
@@ -363,11 +363,10 @@ local localization = qLocalization.new({
         cr_casts = "Other abilities",
         cr_scans = "Scan",
         cr_profile = "Load mode",
-        cr_profile_tip = "Economy: lowest FPS cost, slower updates.\nSmooth: fastest updates, more load.",
-        cr_profiles_eco = "Economy",
-        cr_profiles_balanced = "Balanced",
-        cr_profiles_smooth = "Smooth",
-        cr_frequency = "Send rate",
+        cr_profile_tip = "Sets the send rate and how often data is collected.\nEconomy costs the least FPS, Smooth updates fastest.",
+        cr_profiles_eco = "Economy, 3 Hz",
+        cr_profiles_balanced = "Balanced, 5 Hz",
+        cr_profiles_smooth = "Smooth, 10 Hz",
         cr_performance_wait = "Radar load: waiting for data",
         cr_performance = "Load: collect %.1f ms, JSON %.1f ms, %.1f KB",
         cr_st_off = "off",
@@ -385,19 +384,14 @@ local localization = qLocalization.new({
         cr_st_collect_fail = "data collection error: %s",
         cr_st_running = "radar is running",
         cr_st_waiting = "waiting for a match",
-        cr_group_server = "Network",
-        cr_rate_3 = "3 Hz, lowest load",
-        cr_rate_5 = "5 Hz",
-        cr_rate_8 = "8 Hz",
-        cr_rate_10 = "10 Hz, smooth",
-        cr_preset_smooth = "Smooth map, 10 Hz",
-        cr_preset_light = "Lowest load, 3 Hz",
         cr_st_auth = "signing in",
         cr_st_auth_fail = "sign-in error: HTTP %d",
         cr_st_link_ready = "the link is in the Link field",
         cr_st_send_fail = "upload failed: HTTP %d, retrying",
         cr_link_hint = "Press Start, then send the link to friends",
-        cr_version = "Version 2.3.0, radar for friends",
+        cr_effects_tip = "Casts, teleports and scans on the map\nand in the event feed",
+        cr_details_tip = "Needs the Heroes layer",
+        cr_version = "Version 2.3.1, radar for friends",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -405,7 +399,7 @@ local localization = qLocalization.new({
         cr_group_objects = "Объекты",
         cr_group_details = "Информация",
         cr_group_events = "Типы событий",
-        cr_group_extras = "Дополнительные объекты",
+        cr_group_extras = "Юниты и кемпы",
         cr_enabled = "Включить Cloud Radar",
         cr_enabled_tip = "После включения нажмите Start.\nStop закрывает сессию и старую ссылку.",
         cr_gear_extra = "Диагностика",
@@ -427,7 +421,7 @@ local localization = qLocalization.new({
         cr_roshan = "Рошан",
         cr_tormentors = "Торментор",
         cr_runes = "Руны",
-        cr_effects = "События на карте",
+        cr_effects = "Передавать события",
         cr_layer_couriers = "Курьеры",
         cr_layer_creeps = "Линейные крипы",
         cr_layer_neutrals = "Лесные крипы",
@@ -445,11 +439,10 @@ local localization = qLocalization.new({
         cr_casts = "Остальные способности",
         cr_scans = "Скан",
         cr_profile = "Режим нагрузки",
-        cr_profile_tip = "Экономный: меньше всего FPS, медленнее обновления.\nПлавный: быстрее всего, больше нагрузка.",
-        cr_profiles_eco = "Экономный",
-        cr_profiles_balanced = "Сбалансированный",
-        cr_profiles_smooth = "Плавный",
-        cr_frequency = "Частота передачи",
+        cr_profile_tip = "Задает частоту передачи и сбора данных.\nЭкономный бережет FPS, Плавный обновляет быстрее всего.",
+        cr_profiles_eco = "Экономный, 3 Гц",
+        cr_profiles_balanced = "Сбалансированный, 5 Гц",
+        cr_profiles_smooth = "Плавный, 10 Гц",
         cr_performance_wait = "Нагрузка радара: ожидание данных",
         cr_performance = "Нагрузка: сбор %.1f мс, JSON %.1f мс, %.1f КБ",
         cr_st_off = "выключен",
@@ -467,19 +460,14 @@ local localization = qLocalization.new({
         cr_st_collect_fail = "ошибка сбора данных: %s",
         cr_st_running = "радар работает",
         cr_st_waiting = "ожидание матча",
-        cr_group_server = "Сеть",
-        cr_rate_3 = "3 Гц, минимум нагрузки",
-        cr_rate_5 = "5 Гц",
-        cr_rate_8 = "8 Гц",
-        cr_rate_10 = "10 Гц, плавно",
-        cr_preset_smooth = "Плавная карта, 10 Гц",
-        cr_preset_light = "Минимум нагрузки, 3 Гц",
         cr_st_auth = "вход",
         cr_st_auth_fail = "ошибка входа: HTTP %d",
         cr_st_link_ready = "ссылка в поле «Ссылка»",
         cr_st_send_fail = "ошибка передачи: HTTP %d, повтор",
         cr_link_hint = "Нажмите Start и отправьте ссылку друзьям",
-        cr_version = "Версия 2.3.0, радар для друзей",
+        cr_effects_tip = "Касты, телепорты и сканы на карте\nи в ленте событий",
+        cr_details_tip = "Нужен слой «Герои»",
+        cr_version = "Версия 2.3.1, радар для друзей",
     },
 })
 
@@ -487,7 +475,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.3.0"
+script.VERSION = "2.3.1"
 local ui = {}
 local JSON
 local state = {
@@ -562,7 +550,6 @@ local function refreshFlags(now)
         state.flags[key] = enabled
     end
     state.flags.enabled = get(ui.enabled, false)
-    state.rate = ({3, 5, 8, 10})[get(ui.frequency, 1) + 1] or 5
     state.profile = get(ui.profile, 1)
     state.nextFlags = now + 0.5
 end
@@ -611,6 +598,10 @@ local function resetMatch()
     state.localTeam, state.roshanLastHp, state.roshanLastTime, state.roshanDamageUntil = nil, nil, nil, 0
 end
 
+local DETAILS = {"items", "abilities", "modifiers", "stats", "buybacks"}
+local EVENTS = {"teleports", "ultimates", "active_items", "casts", "scans"}
+local LAYERS = {"wards", "wisdom", "buildings", "roshan", "tormentors", "runes", "couriers", "creeps", "neutrals", "camps"}
+
 local function refreshDisabled()
     local on = get(ui.enabled, false)
     for key, widget in pairs(ui) do
@@ -618,74 +609,79 @@ local function refreshDisabled()
             call(widget.Disabled, widget, not on)
         end
     end
+    local heroes, effects = get(ui.heroes, true), get(ui.effects, true)
+    for _, key in ipairs(DETAILS) do call(ui[key].Disabled, ui[key], not on or not heroes) end
+    for _, key in ipairs(EVENTS) do call(ui[key].Disabled, ui[key], not on or not effects) end
+    state.nextFlags = 0
 end
 
 local function initMenu()
     if state.ready or not UI or not UI.Create then return end
-    local root = UI.Create("Scripts", "Main", "Cloud Radar")
+    local root = UI.Create("Scripts", "Scripts", "Cloud Radar")
     if not root then return end
     root:Icon("\u{f279}")
     local main = root:Create("Main")
-    local filters = root:Create("Layers")
-    local settings = root:Create("Settings")
+    local data = root:Create("Data")
     local connection = main:Create("cr_group_main", Enum.GroupSide.Left)
     local link = main:Create("cr_group_link", Enum.GroupSide.Right)
-    local objects = filters:Create("cr_group_objects", Enum.GroupSide.Left)
-    local details = filters:Create("cr_group_details", Enum.GroupSide.Right)
-    local events = filters:Create("cr_group_events", Enum.GroupSide.Right)
-    local network = settings:Create("cr_group_server", Enum.GroupSide.Left)
-    local extras = settings:Create("cr_group_extras", Enum.GroupSide.Right)
+    local objects = data:Create("cr_group_objects", Enum.GroupSide.Left)
+    local extras = data:Create("cr_group_extras", Enum.GroupSide.Left)
+    local details = data:Create("cr_group_details", Enum.GroupSide.Right)
+    local events = data:Create("cr_group_events", Enum.GroupSide.Right)
+
     ui.enabled = connection:Switch("cr_enabled", false, "\u{f011}")
     ui.enabled:ToolTip("cr_enabled_tip")
     local gear = ui.enabled:Gear("cr_gear_extra")
     ui.debug = gear:Switch("cr_debug", false, "\u{f188}")
     ui.debug:ToolTip("cr_debug_tip")
-    ui.status = connection:Label("cr_st_off", "\u{f05a}")
-    connection:Label("cr_version", "\u{f02b}")
     ui.start = connection:Button("cr_start", function() start() end)
     ui.start:Icon("\u{f144}")
     ui.stop = connection:Button("cr_stop", function() stop() end)
     ui.stop:Icon("\u{f04d}")
+    ui.status = connection:Label("cr_st_off", "\u{f05a}")
+    ui.profile = connection:Combo("cr_profile", {"cr_profiles_eco", "cr_profiles_balanced", "cr_profiles_smooth"}, 1)
+    ui.profile:Icon("\u{f1de}")
+    ui.profile:ToolTip("cr_profile_tip")
+    ui.performance = connection:Label("cr_performance_wait", "\u{f080}")
+    connection:Label("cr_version", "\u{f02b}")
+
     ui.link = link:Input("cr_link", "", "\u{f0c1}")
     ui.link:ToolTip("cr_link_tip")
     ui.getLink = link:Button("cr_get_link", function() copyLink() end)
     ui.getLink:Icon("\u{f0c5}")
     ui.getLink:ToolTip("cr_get_link_tip")
-    ui.linkHint = link:Label("cr_link_hint", "\u{f05a}")
     ui.newLink = link:Button("cr_new_link", function() start(true) end)
     ui.newLink:Icon("\u{f021}")
     ui.newLink:ToolTip("cr_new_link_tip")
+    ui.linkHint = link:Label("cr_link_hint", "\u{f05a}")
+
     for _, row in ipairs({{"heroes", "\u{f007}"}, {"wards", "\u{f06e}"}, {"wisdom", "\u{f0eb}"},
-        {"buildings", "\u{f447}"}, {"roshan", "\u{f6d5}"}, {"tormentors", "\u{f3ed}"}, {"runes", "\u{f219}"}, {"effects", "\u{f0f3}"}}) do
+        {"buildings", "\u{f447}"}, {"roshan", "\u{f6d5}"}, {"tormentors", "\u{f3ed}"}, {"runes", "\u{f219}"}}) do
         ui[row[1]] = objects:Switch("cr_" .. row[1], true, row[2])
     end
     for _, row in ipairs({{"couriers", "\u{f0d1}"}, {"creeps", "\u{f0c0}"}, {"neutrals", "\u{f1bb}"}, {"camps", "\u{f3c5}"}}) do
         ui[row[1]] = extras:Switch("cr_layer_" .. row[1], true, row[2])
     end
-    for _, row in ipairs({{"items", "\u{f290}"}, {"abilities", "\u{f0e7}"},
-        {"modifiers", "\u{f1de}"}, {"stats", "\u{f080}"}, {"buybacks", "\u{f155}"}}) do
-        ui[row[1]] = details:Switch("cr_" .. row[1], true, row[2])
+    local detailIcons = {items = "\u{f290}", abilities = "\u{f0e7}", modifiers = "\u{f1de}", stats = "\u{f080}", buybacks = "\u{f155}"}
+    for _, key in ipairs(DETAILS) do
+        ui[key] = details:Switch("cr_" .. key, true, detailIcons[key])
     end
-    for _, row in ipairs({{"teleports", "\u{f0ec}"}, {"ultimates", "\u{f005}"},
-        {"active_items", "\u{f135}"}, {"casts", "\u{f0d0}"}, {"scans", "\u{f002}"}}) do
-        ui[row[1]] = events:Switch("cr_" .. row[1], true, row[2])
+    ui.effects = events:Switch("cr_effects", true, "\u{f0f3}")
+    ui.effects:ToolTip("cr_effects_tip")
+    local eventIcons = {teleports = "\u{f0ec}", ultimates = "\u{f005}", active_items = "\u{f135}", casts = "\u{f0d0}", scans = "\u{f002}"}
+    for _, key in ipairs(EVENTS) do
+        ui[key] = events:Switch("cr_" .. key, true, eventIcons[key])
     end
     ui.camps:ToolTip("cr_camps_tip")
+    ui.items:ToolTip("cr_details_tip")
     ui.buybacks:ToolTip("cr_buybacks_tip")
-    ui.profile = network:Combo("cr_profile", {"cr_profiles_eco", "cr_profiles_balanced", "cr_profiles_smooth"}, 1)
-    ui.profile:Icon("\u{f1de}")
-    ui.profile:ToolTip("cr_profile_tip")
-    ui.frequency = network:Combo("cr_frequency", {"cr_rate_3", "cr_rate_5", "cr_rate_8", "cr_rate_10"}, 1)
-    ui.frequency:Icon("\u{f1da}")
-    ui.profile:SetCallback(function()
-        ui.frequency:Set(({0, 1, 3})[get(ui.profile, 0) + 1] or 1)
-        state.nextFlags = 0
-    end)
-    ui.presetSmooth = network:Button("cr_preset_smooth", function() ui.frequency:Set(3); state.nextFlags = 0 end)
-    ui.presetSmooth:Icon("\u{f04e}")
-    ui.presetLight = network:Button("cr_preset_light", function() ui.frequency:Set(0); state.nextFlags = 0 end)
-    ui.presetLight:Icon("\u{f06c}")
-    ui.performance = network:Label("cr_performance_wait", "\u{f05a}")
+
+    ui.heroes:SetCallback(refreshDisabled)
+    ui.effects:SetCallback(refreshDisabled)
+    ui.profile:SetCallback(function() state.nextFlags = 0 end)
+    for _, list in ipairs({LAYERS, DETAILS, EVENTS}) do
+        for _, key in ipairs(list) do ui[key]:SetCallback(function() state.nextFlags = 0 end) end
+    end
     ui.enabled:SetCallback(function()
         state.flags.enabled = ui.enabled:Get()
         refreshDisabled()
@@ -3283,7 +3279,7 @@ function script.OnUpdateEx()
         state.needFull, state.layersDirty, state.resendAll = true, true, true
     end
     if now < state.nextSend then return end
-    local rate = state.rate or 5
+    local rate = mode().rate
     -- Keep the cadence across game frames (90 / 20 is not an integer).
     -- Reset after a long stall instead of sending a catch-up burst.
     local period = 1 / rate

@@ -1,3 +1,11 @@
+# Fix v2.3.1
+
+- The script moved to Scripts › Scripts › Cloud Radar. Settings reset once, turn the radar on again.
+- Two menu tabs. Main: enable, Start and Stop, status, load mode, load readout and the link for friends. Data: what is sent to the site.
+- The load mode now sets the send rate itself (3, 5 or 10 Hz). The separate Send rate combo and preset buttons that fought it are gone.
+- "Send events" heads the event types and greys them out when off. Hero info greys out when the Heroes layer is off.
+- Menu changes apply at once.
+
 # Update v2.3.0
 
 - Optimization: less FPS cost. Heavy parts (units, wards, runes, camps, objectives, hero details) refresh less often than hero positions and are encoded only when due.

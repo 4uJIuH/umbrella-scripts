@@ -11460,7 +11460,7 @@
         "install": [
           "Поместите `web_radar.lua` в папку `umbrella\\scripts`.",
           "Перезагрузите Lua-скрипты.",
-          "Откройте `Scripts → Main → Cloud Radar`, включите радар и нажмите Start.",
+          "Откройте `Scripts → Scripts → Cloud Radar`, включите радар и нажмите Start.",
           "Скопируйте ссылку из поля «Ссылка» и отправьте друзьям."
         ]
       },
@@ -11477,7 +11477,7 @@
         "install": [
           "Place `web_radar.lua` in the `umbrella\\scripts` folder.",
           "Reload the Lua scripts.",
-          "Open `Scripts → Main → Cloud Radar`, enable the radar and press Start.",
+          "Open `Scripts → Scripts → Cloud Radar`, enable the radar and press Start.",
           "Copy the link from the Link field and send it to friends."
         ]
       }
