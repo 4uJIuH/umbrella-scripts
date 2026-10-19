@@ -976,6 +976,7 @@ function tile(entry) {
   const r = entry.row, info = entry.info || {}, s = info.stats || {};
   const dead = r.alive === false;
   const kda = typeof s.k === 'number' ? s.k + '/' + s.d + (typeof s.a === 'number' ? '/' + s.a : '') : '';
+  const creeps = typeof s.lh === 'number' ? s.lh + '/' + (s.dn || 0) : '';
   let ult = '';
   if (info.ult) {
     const cd = remaining(info.ult.ready_at);
@@ -983,7 +984,7 @@ function tile(entry) {
   }
   return '<div class="tile' + (dead ? ' dead' : '') + (r.f && !dead ? ' fog' : '') + '" data-id="' + esc(r.id) + '" style="--tc:var(--' + (r.team === 2 ? 'rad' : 'dire') + ')" title="' + esc(heroName(r.name) + (info.pn ? ' · ' + info.pn : '')) + '">' +
     '<div class="pt"><img src="' + esc(portraitImg(r.name)) + '" alt="" onerror="this.src=\'' + esc(heroImg(r.name)) + '\';this.onerror=null">' + ult +
-    '<span class="lv">' + esc(r.level || '') + '</span>' + (kda ? '<span class="k">' + esc(kda) + '</span>' : '') +
+    '<span class="lv">' + esc(r.level || '') + '</span>' + (creeps ? '<span class="k" title="' + esc(TEXT.lhdn + (kda ? ' · ' + TEXT.kda + ' ' + kda : '')) + '">' + esc(creeps) + '</span>' : '') +
     '<span class="dt">' + (dead && r.respawn_at ? Math.ceil(remaining(r.respawn_at)) : '') + '</span></div>' +
     '<div class="hb"><i style="width:' + (dead ? 0 : pct(r.hp, r.max_hp)) + '%"></i><b>' + (dead || !r.max_hp ? '' : esc(r.hp)) + '</b></div>' +
     '<div class="mb"><i style="width:' + (dead ? 0 : pct(r.mana, r.max_mana)) + '%"></i><b>' + (dead || !r.max_mana ? '' : esc(r.mana)) + '</b></div></div>';
