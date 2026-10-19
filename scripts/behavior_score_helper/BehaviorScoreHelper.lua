@@ -1,4 +1,4 @@
-local SCRIPT_VERSION = "2.0.1"
+local SCRIPT_VERSION = "2.1.0"
 local bh = {}
 
 local protobuf = require('protobuf')
@@ -106,6 +106,8 @@ local localization = qLocalization.new({
         bs_actions_timed = "Mute for N min",
         bs_mute_min = "Mute Duration",
         bs_ping_ability = "Count Ability Pings",
+        bs_ping_report = "Report on Mute",
+        bs_ping_report_tip = "On a mute also reports for griefing\nand chat toxicity.",
 
         bs_pingme_enable_tip = "Mutes players who ping your death timer,\nyour XP or your hero.",
         bs_pingme_dead = "Death Timer Ping",
@@ -140,6 +142,7 @@ local localization = qLocalization.new({
         bs_lbl_ping_xp = "XP ping",
         bs_lbl_ping_hero = "ping on my hero",
         bs_tr_msgs = "%d messages",
+        bs_tr_pings = "%d pings in %d s",
         bs_tr_mic_sec = "mic %d s",
         bs_tr_mic = "turned on the mic",
         bs_tr_buyback = "buyback at %d min",
@@ -240,6 +243,8 @@ local localization = qLocalization.new({
         bs_actions_timed = "Замутить на N минут",
         bs_mute_min = "На сколько минут",
         bs_ping_ability = "Считать пинги способностей",
+        bs_ping_report = "Репорт при муте",
+        bs_ping_report_tip = "При муте также репортит за препятствование\nигре и токсичность в чате.",
 
         bs_pingme_enable_tip = "Мутит игроков за пинг твоего таймера смерти,\nопыта или героя.",
         bs_pingme_dead = "Пинг что я умер",
@@ -274,6 +279,7 @@ local localization = qLocalization.new({
         bs_lbl_ping_xp = "пинг опыта",
         bs_lbl_ping_hero = "пинг по моему герою",
         bs_tr_msgs = "%d сообщ.",
+        bs_tr_pings = "%d пингов за %d сек",
         bs_tr_mic_sec = "микрофон %d сек",
         bs_tr_mic = "включил микрофон",
         bs_tr_buyback = "байбек на %d мин",
@@ -513,6 +519,8 @@ do
     ui.pingMuteMin = gPing:Slider("bs_mute_min", 1, 15, 5, fmtMin)
     ui.pingMuteMin:Icon("\u{f017}")
     ui.pingAbility = gPing:Switch("bs_ping_ability", true, "\u{f002}")
+    ui.pingReport = gPing:Switch("bs_ping_report", false, "\u{f024}")
+    ui.pingReport:ToolTip("bs_ping_report_tip")
 
     ui.pingAtMeEnabled = gPingMe:Switch("bs_enable", false, "\u{f05e}")
     ui.pingAtMeEnabled:ToolTip("bs_pingme_enable_tip")
@@ -597,6 +605,7 @@ local function refreshUi()
     ui.pingWindow:Disabled(not pingOn)
     ui.pingAction:Disabled(not pingOn)
     ui.pingAbility:Disabled(not pingOn)
+    ui.pingReport:Disabled(not pingOn)
     ui.pingMuteMin:Disabled(not pingOn)
     ui.pingMuteMin:Visible(ui.pingAction:Get() == 1)
 
@@ -1205,6 +1214,7 @@ local function handlePing(msgId, data)
         end
 
         if #times > ui.pingCount:Get() then
+            local count = #times
             pingTimes[pid] = {}
             pingCd[pid] = t + 3.0
             syncPlayers(false)
@@ -1214,6 +1224,11 @@ local function handlePing(msgId, data)
             local p = m_players[pid]
             local pName = (p and p.name) or ("Player " .. pid)
             notify(string.format(L("bs_msg_mute"), L("bs_lbl_ping_spam"), pName, muteText(forever, mins)))
+            if ui.pingReport:Get() then
+                local trig = string.format(L("bs_tr_pings"), count, ui.pingWindow:Get())
+                addReportQueue(pid, 5, "bs_lbl_feed", trig, false)
+                addReportQueue(pid, 2, "bs_lbl_toxic", trig, false)
+            end
         end
     end
 end

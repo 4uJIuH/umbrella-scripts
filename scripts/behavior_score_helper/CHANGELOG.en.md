@@ -1,3 +1,7 @@
+# Update v2.1.0
+
+- Ping Spam Filter: new Report on Mute option. When a player is muted for ping spam, the script also reports them for griefing and for chat toxicity. Off by default.
+
 # Fix v2.0.1
 
 - Dropdowns no longer reset after the cheat language changes. The choice is stored as a number in `configs/behavior_score_helper.txt` and restored on load.
