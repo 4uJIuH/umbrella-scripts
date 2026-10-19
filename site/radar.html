@@ -356,7 +356,7 @@ const ALL = {
     tp: 'teleport · {n} s', buyback: 'Buyback', ready: 'ready', sec: '{n} s', gold: 'Gold', nw: 'NW', kda: 'KDA', lhdn: 'LH/DN',
     roshan: 'Roshan', tormentor: 'Tormentor', noData: 'no data', bossDead: 'dead', bossSeen: 'alive', bossHit: 'under attack',
     glyph: 'Glyph', scan: 'Scan', camps: 'Camps with creeps',
-    layers: { heroes: 'Heroes', fog: 'Heroes in fog', creeps: 'Lane creeps', waves: 'Creep waves in fog', jungle: 'Jungle and camps', wards: 'Wards and vision', buildings: 'Buildings', events: 'Map events', couriers: 'Couriers', runes: 'Runes', labels: 'Fog age labels' },
+    layers: { heroes: 'Heroes', bars: 'HP and mana under heroes', fog: 'Heroes in fog', creeps: 'Lane creeps', waves: 'Creep waves in fog', jungle: 'Jungle and camps', wards: 'Wards and vision', buildings: 'Buildings', events: 'Map events', couriers: 'Couriers', runes: 'Runes', labels: 'Fog age labels' },
     heroesTitle: 'Heroes', teamShow: 'Show heroes', compactView: 'Compact view', viewMode: 'View', viewAll: 'Both teams', viewAllies: 'Allies only', viewEnemies: 'Enemies only', noHeroes: 'No heroes yet',
     show: 'Show on the map', windows: 'On top of the game', day: 'Day', night: 'Night', nsNight: 'Night Stalker', est: 'counted since the radar started',
     stock: 'Shop stock', untilNight: 'night in {t}', untilDay: 'day in {t}', scanCharges: 'Scan charges', dmg: 'Hero damage', heal: 'Healing', wardsPlaced: 'Wards', stacks: 'Stacks', xp: 'XP',
@@ -389,7 +389,7 @@ const ALL = {
     tp: 'телепорт · {n} с', buyback: 'Байбек', ready: 'готов', sec: '{n} с', gold: 'Золото', nw: 'NW', kda: 'KDA', lhdn: 'LH/DN',
     roshan: 'Рошан', tormentor: 'Торментор', noData: 'нет данных', bossDead: 'мертв', bossSeen: 'жив', bossHit: 'бьют',
     glyph: 'Глиф', scan: 'Скан', camps: 'Кемпы с крипами',
-    layers: { heroes: 'Герои', fog: 'Герои в тумане', creeps: 'Линейные крипы', waves: 'Волны крипов в тумане', jungle: 'Лес и кемпы', wards: 'Варды и обзор', buildings: 'Здания', events: 'События на карте', couriers: 'Курьеры', runes: 'Руны', labels: 'Подписи времени в тумане' },
+    layers: { heroes: 'Герои', bars: 'HP и мана под героями', fog: 'Герои в тумане', creeps: 'Линейные крипы', waves: 'Волны крипов в тумане', jungle: 'Лес и кемпы', wards: 'Варды и обзор', buildings: 'Здания', events: 'События на карте', couriers: 'Курьеры', runes: 'Руны', labels: 'Подписи времени в тумане' },
     heroesTitle: 'Герои', teamShow: 'Показывать героев', compactView: 'Компактный вид', viewMode: 'Вид', viewAll: 'Обе команды', viewAllies: 'Только союзники', viewEnemies: 'Только враги', noHeroes: 'Героев пока нет',
     show: 'Показывать на карте', windows: 'Поверх игры', day: 'День', night: 'Ночь', nsNight: 'Night Stalker', est: 'посчитано с запуска радара',
     stock: 'В лавке', untilNight: 'ночь через {t}', untilDay: 'день через {t}', scanCharges: 'Заряды скана', dmg: 'Урон по героям', heal: 'Лечение', wardsPlaced: 'Варды', stacks: 'Стаки', xp: 'Опыт',
@@ -418,7 +418,7 @@ let LANG = localStorage.getItem('cr_lang') || ((navigator.language || '').toLowe
 let TEXT = ALL[LANG];
 const CFG_DEFAULT = {
   layout: { top: ['score'], left: ['objectives', 'events'], center: ['map'], right: ['heroes'], hidden: [], wl: 320, wr: 380, auto: true, h: {} },
-  layers: { heroes: true, fog: true, labels: true, creeps: true, waves: true, jungle: true, wards: true, runes: true, couriers: true, buildings: true, events: true },
+  layers: { heroes: true, bars: true, fog: true, labels: true, creeps: true, waves: true, jungle: true, wards: true, runes: true, couriers: true, buildings: true, events: true },
   look: { theme: 'dark', density: 'normal', zoom: 100, rad: '#57c785', dire: '#ef6b6b', mapScale: 100, heroScale: 100, legend: true },
   top: { nw: true, heads: true, mana: true, numbers: true, ult: true, clock: true, corner: 'lh' },
   heroes: { view: 'all', order: 'mine', compact: false, name: true, state: true, bars: true, kpis: true, attrs: true, extra: true, items: true, backpack: true, abilities: true },
@@ -503,7 +503,7 @@ const consoleEl = $('console'), objsEl = $('objs'), logEl = $('log'), teamsEl = 
 
 let openPip = () => {};
 let teamView = cfg.heroes.view;
-const LAYER_KEYS = [['heroes', 'fa-user'], ['fog', 'fa-eye-slash'], ['labels', 'fa-clock'], ['creeps', 'fa-people-group'], ['waves', 'fa-route'], ['jungle', 'fa-tree'],
+const LAYER_KEYS = [['heroes', 'fa-user'], ['bars', 'fa-heart-pulse'], ['fog', 'fa-eye-slash'], ['labels', 'fa-clock'], ['creeps', 'fa-people-group'], ['waves', 'fa-route'], ['jungle', 'fa-tree'],
   ['wards', 'fa-eye'], ['runes', 'fa-gem'], ['couriers', 'fa-horse'], ['buildings', 'fa-chess-rook'], ['events', 'fa-bolt']];
 const layers = cfg.layers;
 
@@ -1006,7 +1006,7 @@ function drawHero(h, t) {
   if (r.f) { ctx.setLineDash([4, 3]); ctx.strokeStyle = r.f === 1 ? '#e0b44a' : '#94a3b8'; }
   ctx.stroke();
   ctx.setLineDash([]);
-  if (!r.f && r.max_hp > 0 && r.hp >= 0) {
+  if (layers.bars && !r.f && r.max_hp > 0 && r.hp >= 0) {
     const w = s + 6, top = y + s / 2 + 4;
     const k = Math.max(0, Math.min(1, r.hp / r.max_hp));
     ctx.fillStyle = 'rgba(12,12,13,.85)';
