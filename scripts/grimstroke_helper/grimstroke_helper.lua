@@ -1,6 +1,6 @@
 --by m0rc1
 
-local VERSION = "1.0.0"
+local VERSION = "1.1.0"
 local GrimHelper = {}
 
 -- ============================================================================
@@ -21,6 +21,12 @@ local ui_dp_target_mode     = nil
 local ui_dp_heroes_only     = nil
 local ui_dp_fallback        = nil
 
+-- Built-in combo whitelists
+local ui_dp_wl_enabled      = nil
+local ui_dp_wl              = nil
+local ui_sb_wl_enabled      = nil
+local ui_sb_wl              = nil
+
 -- ============================================================================
 -- State & Performance Cache
 -- ============================================================================
@@ -36,6 +42,20 @@ local cache = {
     illusions = {},
     illu_target = nil,
     allowed_count = 0
+}
+
+local SOLO_SOUL_TALENT  = "special_bonus_unique_grimstroke_soul_chain_reflect_damage"
+local SOUL_LATCH_RADIUS = 600
+
+local whitelist = { dp = {}, sb = {} }
+local builtin   = {}
+local combo = {
+    target = nil,
+    saved = {},
+    enemy_key = nil,
+    next_list_t = 0,
+    last_soul_t = 0,
+    updating = false
 }
 
 -- ============================================================================
@@ -72,6 +92,113 @@ if not font_main then
 end
 
 -- ============================================================================
+-- Whitelist Storage & Built-in Combo Settings
+-- ============================================================================
+local function StoragePath()
+    local dir = Engine.GetCheatDirectory and Engine.GetCheatDirectory()
+    if not dir or dir == "" then return nil end
+    return (dir:gsub("[\\/]+$", "")) .. "/configs/grimstroke_helper.txt"
+end
+
+local function SaveWhitelist()
+    local path = StoragePath()
+    local file = path and io.open(path, "w")
+    if not file then return end
+    for kind, list in pairs(whitelist) do
+        for name, on in pairs(list) do
+            if on then file:write(kind, " ", name, "\n") end
+        end
+    end
+    for key, value in pairs(combo.saved) do
+        file:write("restore ", key, " ", value and "1" or "0", "\n")
+    end
+    file:close()
+end
+
+local function LoadWhitelist()
+    local path = StoragePath()
+    local file = path and io.open(path, "r")
+    if not file then return end
+    for line in file:lines() do
+        local kind, name, value = line:match("^(%S+)%s+(%S+)%s*(%S*)")
+        if kind == "restore" then
+            combo.saved[name] = value == "1"
+        elseif kind and whitelist[kind] then
+            whitelist[kind][name] = true
+        end
+    end
+    file:close()
+end
+
+local function WhitelistItems(kind, names)
+    if #names == 0 then
+        for name, on in pairs(whitelist[kind]) do
+            if on then table.insert(names, name) end
+        end
+        table.sort(names)
+    end
+    local items = {}
+    for i, name in ipairs(names) do
+        items[i] = { name, "panorama/images/heroes/icons/" .. name .. "_png.vtex_c", whitelist[kind][name] == true }
+    end
+    return items
+end
+
+local BUILTIN_PATHS = {
+    abilities = { "Main Settings", "Hero Settings", "Abilities" },
+    key       = { "Main Settings", "Hero Settings", "Combo Key" },
+    solo      = { "Main Settings", "Hero Settings", "Use in Solo Target with Talent" },
+    range     = { "Extra Settings", "Target Selection", "Search Range" }
+}
+
+local function BuiltinWidget(key)
+    if builtin[key] == nil then
+        local p = BUILTIN_PATHS[key]
+        builtin[key] = Menu.Find("Heroes", "Hero List", "Grimstroke", p[1], p[2], p[3]) or false
+    end
+    return builtin[key] or nil
+end
+
+local function GetBuiltin(key)
+    if key == "dp" then
+        local w = BuiltinWidget("abilities")
+        return w, w and w:Get("grimstroke_dark_portrait")
+    end
+    local w = BuiltinWidget("solo")
+    return w, w and w:Get()
+end
+
+local function WriteBuiltin(key, w, value)
+    if key == "dp" then w:Set("grimstroke_dark_portrait", value) else w:Set(value) end
+end
+
+local function SetBuiltin(key, allowed)
+    local w, current = GetBuiltin(key)
+    if not w then return end
+    local original = combo.saved[key]
+    if original == nil then original = current end
+    local value = original and allowed
+    if value == current then return end
+    if combo.saved[key] == nil then
+        combo.saved[key] = original
+        SaveWhitelist()
+    end
+    WriteBuiltin(key, w, value)
+end
+
+local function RestoreBuiltin()
+    if next(combo.saved) == nil then return end
+    for key, original in pairs(combo.saved) do
+        local w, current = GetBuiltin(key)
+        if w and current ~= original then WriteBuiltin(key, w, original) end
+    end
+    combo.saved = {}
+    SaveWhitelist()
+end
+
+LoadWhitelist()
+
+-- ============================================================================
 -- Menu Setup (Heroes -> Hero List -> Grimstroke -> Helper)
 -- ============================================================================
 local function SetupMenu()
@@ -105,6 +232,33 @@ local function SetupMenu()
         ui_dp_heroes_only = dp_grp:Switch("Attack Heroes Only", true)
         ui_dp_fallback    = dp_grp:Combo("If No Heroes in Vision", { "Follow Grimstroke", "Attack Nearest Enemies", "Hold Position" }, 0)
     end
+
+    local wl_grp = group("Combo Whitelists")
+    if wl_grp then
+        ui_dp_wl_enabled = wl_grp:Switch("Dark Portrait Whitelist", false)
+        ui_dp_wl_enabled:ToolTip("The built-in combo casts Dark Portrait only on checked enemies.\nOther abilities are not affected.")
+        ui_dp_wl = wl_grp:MultiSelect("Dark Portrait Targets", WhitelistItems("dp", {}), true)
+
+        ui_sb_wl_enabled = wl_grp:Switch("Soulbind Solo Whitelist", false)
+        ui_sb_wl_enabled:ToolTip("With the level 15 talent, the combo Soulbinds a checked enemy even when alone.\nOther enemies still need a second enemy in link range.")
+        ui_sb_wl = wl_grp:MultiSelect("Soulbind Solo Targets", WhitelistItems("sb", {}), true)
+
+        for kind, pair in pairs({ dp = { ui_dp_wl_enabled, ui_dp_wl }, sb = { ui_sb_wl_enabled, ui_sb_wl } }) do
+            local switch, list = pair[1], pair[2]
+            list:SetCallback(function()
+                if combo.updating then return end
+                for _, id in ipairs(list:List()) do
+                    whitelist[kind][id] = list:Get(id) == true
+                end
+                SaveWhitelist()
+            end)
+            switch:SetCallback(function()
+                list:Disabled(not switch:Get())
+            end, true)
+        end
+    end
+
+    RestoreBuiltin()
 end
 
 -- ============================================================================
@@ -458,12 +612,134 @@ local function ProcessDarkPortrait(my_hero, my_player)
 end
 
 -- ============================================================================
+-- Built-in Combo Whitelists
+-- ============================================================================
+local function RefreshWhitelistWidgets(my_hero)
+    local now = GameRules.GetGameTime()
+    if now < combo.next_list_t then return end
+    combo.next_list_t = now + 1
+
+    local my_team = Entity.GetTeamNum(my_hero)
+    local names, seen = {}, {}
+    local all_heroes = Heroes.GetAll() or {}
+    for i = 1, #all_heroes do
+        local h = all_heroes[i]
+        if h and Entity.GetTeamNum(h) ~= my_team and not NPC.IsIllusion(h) then
+            local name = NPC.GetUnitName(h) or ""
+            if name:find("^npc_dota_hero_") and not seen[name] then
+                seen[name] = true
+                table.insert(names, name)
+            end
+        end
+    end
+    if #names == 0 then return end
+    table.sort(names)
+
+    local key = table.concat(names, ",")
+    if key == combo.enemy_key then return end
+    combo.enemy_key = key
+
+    combo.updating = true
+    if ui_dp_wl then ui_dp_wl:Update(WhitelistItems("dp", names), true, false) end
+    if ui_sb_wl then ui_sb_wl:Update(WhitelistItems("sb", names), true, false) end
+    combo.updating = false
+end
+
+local function GetVisibleEnemies(my_hero)
+    local my_team = Entity.GetTeamNum(my_hero)
+    local list = {}
+    local all_heroes = Heroes.GetAll() or {}
+    for i = 1, #all_heroes do
+        local h = all_heroes[i]
+        if h and Entity.IsAlive(h) and not Entity.IsDormant(h) and Entity.GetTeamNum(h) ~= my_team and not NPC.IsIllusion(h) then
+            table.insert(list, h)
+        end
+    end
+    return list
+end
+
+local function GetComboTarget(enemies)
+    local t = combo.target
+    if t and Entity.IsAlive(t) and not Entity.IsDormant(t) then return t end
+
+    local range_w = BuiltinWidget("range")
+    local best_dist = range_w and range_w:Get() or 800
+    local cursor = Input.GetWorldCursorPos()
+    local best = nil
+    for i = 1, #enemies do
+        local d = (Entity.GetAbsOrigin(enemies[i]) - cursor):Length2D()
+        if d <= best_dist then
+            best_dist = d
+            best = enemies[i]
+        end
+    end
+    combo.target = best
+    return best
+end
+
+local function TrySoloSoulbind(my_hero, target, enemies)
+    local abilities = BuiltinWidget("abilities")
+    if abilities and not abilities:Get("grimstroke_soul_chain") then return end
+
+    local talent = NPC.GetAbility(my_hero, SOLO_SOUL_TALENT)
+    if not talent or Ability.GetLevel(talent) == 0 then return end
+
+    local soul = NPC.GetAbility(my_hero, "grimstroke_soul_chain")
+    if not soul or not IsAbilityReady(my_hero, soul) then return end
+    if NPC.IsLinkensProtected(target) then return end
+
+    local target_pos = Entity.GetAbsOrigin(target)
+    for i = 1, #enemies do
+        local e = enemies[i]
+        if e ~= target and (Entity.GetAbsOrigin(e) - target_pos):Length2D() <= SOUL_LATCH_RADIUS then return end
+    end
+
+    local cast_range = Ability.GetCastRange(soul) + (NPC.GetCastRangeBonus(my_hero) or 0)
+    if (target_pos - Entity.GetAbsOrigin(my_hero)):Length2D() > cast_range + 50 then return end
+
+    local now = GameRules.GetGameTime()
+    if now - combo.last_soul_t < 0.3 then return end
+    combo.last_soul_t = now
+    Ability.CastTarget(soul, target, false, false, true, "GrimHelperSoulbind")
+end
+
+local function ProcessComboWhitelists(my_hero)
+    local dp_on = GetVal(ui_dp_wl_enabled)
+    local sb_on = GetVal(ui_sb_wl_enabled)
+    local key_w = BuiltinWidget("key")
+
+    if not panel_active or not (dp_on or sb_on) or not key_w or not key_w:IsDown() then
+        combo.target = nil
+        RestoreBuiltin()
+        return
+    end
+
+    local enemies = GetVisibleEnemies(my_hero)
+    local target = GetComboTarget(enemies)
+    local name = target and NPC.GetUnitName(target)
+
+    if dp_on then
+        SetBuiltin("dp", name ~= nil and whitelist.dp[name] == true)
+    end
+
+    if sb_on then
+        SetBuiltin("solo", false)
+        if name and whitelist.sb[name] and not IsHeroDisabled(my_hero) then
+            TrySoloSoulbind(my_hero, target, enemies)
+        end
+    end
+end
+
+-- ============================================================================
 -- Main Logic Loop
 -- ============================================================================
 function GrimHelper.OnUpdate()
     SetupMenu()
 
-    if not Engine.IsInGame() or not GetVal(ui_enabled) then return end
+    if not Engine.IsInGame() or not GetVal(ui_enabled) then
+        RestoreBuiltin()
+        return
+    end
 
     local my_hero = Heroes.GetLocal()
     if not IsGrimstroke(my_hero) then return end
@@ -472,6 +748,8 @@ function GrimHelper.OnUpdate()
     if not my_player then return end
 
     UpdateThrottledData(my_hero)
+    RefreshWhitelistWidgets(my_hero)
+    ProcessComboWhitelists(my_hero)
 
     if not panel_active then return end
 
