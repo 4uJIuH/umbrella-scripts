@@ -48,6 +48,10 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 .gut::after{content:'';position:absolute;left:5px;top:40%;bottom:40%;width:2px;border-radius:1px;background:var(--border);opacity:0;transition:opacity .15s}
 .gut:hover::after,.gut.drag::after{opacity:1}
 .gut.off{cursor:default;pointer-events:none}
+.hgut{flex:none;height:12px;margin:-6px 0;cursor:row-resize;position:relative;z-index:4}
+.hgut::after{content:'';position:absolute;top:5px;left:40%;right:40%;height:2px;border-radius:1px;background:var(--border);opacity:0;transition:opacity .15s}
+.hgut:hover::after,.hgut.drag::after{opacity:1}
+.zone.sized > .card{min-height:60px!important}
 .zone > .card{flex:none}
 .zone > #mapCard,.zone > #console,.zone > #teamsCard{flex:1 1 0;min-height:220px}
 .zone.top > #mapCard{flex:none;height:70vh}
@@ -153,24 +157,26 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 #opts .grid .opt .sw{display:none}
 #opts .grid .opt.on{background:color-mix(in srgb,var(--ok) 13%,transparent);border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
 #opts .grid .opt.on i{color:var(--ok)}
-.hero.hc{padding:7px 12px}
-.hc-top{display:flex;align-items:center;gap:8px}
-.hc-top img{width:24px;height:24px;border-radius:6px;background:#1a1a1d;object-fit:contain;padding:1px;flex:none}
-.hc-top .name{font-size:13px}
-.hc-top .lvl{font-size:11.5px;color:var(--faint);font-weight:600}
-.hc-top .st{margin-left:auto;font-size:11.5px;font-weight:500;color:var(--muted);white-space:nowrap}
-.hc-top .st.fog{color:var(--warn)} .hc-top .st.dead{color:var(--bad)} .hc-top .st.tp{color:var(--blue)} .hc-top .st.vis{color:var(--faint)}
-.hc-bars{display:grid;gap:2px;margin:5px 0 5px 32px}
-.hc-bars i{display:block;height:3px;border-radius:2px;background:var(--sec);overflow:hidden;position:relative}
-.hc-bars i b{position:absolute;inset:0 auto 0 0;border-radius:2px}
-.hc-bars .h b{background:var(--hp)} .hc-bars .m b{background:var(--mp)}
-.hc-row{display:flex;align-items:center;gap:2px;margin-left:32px;flex-wrap:wrap}
-.hc-row .slot{width:24px;height:24px;border-radius:4px}
-.hc-row .slot.it{width:32px;height:24px}
-.hc-row .slot.nt{width:22px;height:22px;margin-left:2px}
-.hc-row .slot .cd{font-size:9.5px}
+.hero.hc{display:flex;align-items:center;gap:8px;padding:3px 12px;min-height:30px}
+.hc-ic{position:relative;width:24px;height:24px;flex:none;border-radius:6px;background:#1a1a1d}
+.hc-ic img{width:100%;height:100%;object-fit:contain;padding:1px;display:block;border-radius:6px}
+.hc-ic b{position:absolute;right:-4px;bottom:-4px;min-width:15px;height:13px;padding:0 3px;border-radius:4px;background:var(--fg);color:var(--bg);font-size:9px;font-weight:700;line-height:13px;text-align:center}
+.hc-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.hc-row{display:flex;align-items:center;gap:2px;overflow:hidden;white-space:nowrap}
+.hc-row .slot{width:20px;height:20px;border-radius:4px}
+.hc-row .slot.it{width:27px;height:20px}
+.hc-row .slot.nt{width:19px;height:19px;margin-left:2px}
+.hc-row .slot .cd{font-size:9px}
 .hc-row .slot .ch{font-size:8px}
-.hc-row .gap{width:8px}
+.hc-row .gap{width:6px;flex:none}
+.hc-bars{display:grid;gap:1px}
+.hc-bars i{display:block;height:2px;border-radius:1px;background:var(--sec);overflow:hidden;position:relative}
+.hc-bars i b{position:absolute;inset:0 auto 0 0;border-radius:1px}
+.hc-bars .h b{background:var(--hp)} .hc-bars .m b{background:var(--mp)}
+.hero.hc .st{flex:none;font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap}
+.hero.hc .st.fog{color:var(--warn)} .hero.hc .st.dead{color:var(--bad)} .hero.hc .st.tp{color:var(--blue)}
+#teams.cview .team-h{padding:5px 12px}
+#teams.cview .team-h + .hero{border-top:0}
 .mapbtns{display:flex;gap:4px;padding:2px 4px}
 .mapbtns button{flex:1;height:30px;border-radius:8px;background:var(--sec);color:var(--muted);font-size:12px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .mapbtns button:hover{color:var(--fg)}
@@ -411,7 +417,7 @@ const ALL = {
 let LANG = localStorage.getItem('cr_lang') || ((navigator.language || '').toLowerCase().startsWith('ru') ? 'ru' : 'en');
 let TEXT = ALL[LANG];
 const CFG_DEFAULT = {
-  layout: { top: ['score'], left: ['objectives', 'events'], center: ['map'], right: ['heroes'], hidden: [], wl: 320, wr: 380 },
+  layout: { top: ['score'], left: ['objectives', 'events'], center: ['map'], right: ['heroes'], hidden: [], wl: 320, wr: 380, auto: true, h: {} },
   layers: { heroes: true, fog: true, labels: true, creeps: true, waves: true, jungle: true, wards: true, runes: true, couriers: true, buildings: true, events: true },
   look: { theme: 'dark', density: 'normal', zoom: 100, rad: '#57c785', dire: '#ef6b6b', mapScale: 100, heroScale: 100, legend: true },
   top: { nw: true, heads: true, mana: true, numbers: true, ult: true, clock: true, corner: 'lh' },
@@ -426,6 +432,7 @@ function mergeCfg(base, extra) {
     const b = base[key], e = extra[key];
     if (e === undefined) continue;
     if (Array.isArray(b)) out[key] = Array.isArray(e) ? e.filter(x => typeof x === 'string') : b.slice();
+    else if (b && typeof b === 'object' && !Object.keys(b).length) out[key] = e && typeof e === 'object' ? Object.fromEntries(Object.entries(e).filter(([, v]) => typeof v === 'number' && v > 0)) : {};
     else if (b && typeof b === 'object') out[key] = mergeCfg(b, e);
     else if (typeof e === typeof b) out[key] = e;
   }
@@ -637,7 +644,7 @@ const NEUTRAL = [217, 168, 78];
 
 function fitColumns() {
   const zone = $('slotCenter'), wide = window.innerWidth > 900 && zone.contains(stage) && !zone.classList.contains('empty');
-  const grow = wide && !$('slotLeft').classList.contains('empty') || wide && !$('slotRight').classList.contains('empty');
+  const grow = cfg.layout.auto && wide && (!$('slotLeft').classList.contains('empty') || !$('slotRight').classList.contains('empty'));
   zone.style.flex = grow ? '0 1 ' + (stage.clientHeight + 2) + 'px' : '';
   for (const id of ['slotLeft', 'slotRight']) if ($(id).style.flex !== '1') $(id).style.flexGrow = grow ? '1' : '';
 }
@@ -1125,11 +1132,11 @@ function heroCard(entry) {
       if (bySlot[15]) row += slot(itemImg(bySlot[15].name), itemName(bySlot[15].name), { cd: remaining(bySlot[15].ready_at), charges: bySlot[15].charges, cls: 'it' });
     }
     const dead = r.alive === false;
-    return '<div class="hero hc' + (r.f ? ' fogrow' : '') + (dead ? ' deadrow' : '') + '" data-id="' + esc(r.id) + '" title="' + esc(info.pn || '') + '">' +
-      '<div class="hc-top"><img src="' + esc(heroImg(r.name)) + '" alt="" onerror="this.style.visibility=\'hidden\'"><span class="name">' + esc(heroName(r.name)) + '</span>' +
-      '<span class="lvl">' + esc(r.level || '') + '</span><span class="st ' + noteCls + '">' + esc(noteCls === 'vis' ? '' : note) + '</span></div>' +
-      '<div class="hc-bars"><i class="h"><b style="width:' + (dead ? 0 : pct(r.hp, r.max_hp)) + '%"></b></i>' + (r.max_mana ? '<i class="m"><b style="width:' + (dead ? 0 : pct(r.mana, r.max_mana)) + '%"></b></i>' : '') + '</div>' +
-      (row ? '<div class="hc-row">' + row + '</div>' : '') + '</div>';
+    return '<div class="hero hc' + (r.f ? ' fogrow' : '') + (dead ? ' deadrow' : '') + '" data-id="' + esc(r.id) + '" title="' + esc(heroName(r.name) + (info.pn ? ' · ' + info.pn : '')) + '">' +
+      '<div class="hc-ic"><img src="' + esc(heroImg(r.name)) + '" alt="" onerror="this.style.visibility=\'hidden\'"><b>' + esc(r.level || '') + '</b></div>' +
+      '<div class="hc-main"><div class="hc-row">' + (row || '<span class="st">' + esc(heroName(r.name)) + '</span>') + '</div>' +
+      '<div class="hc-bars"><i class="h"><b style="width:' + (dead ? 0 : pct(r.hp, r.max_hp)) + '%"></b></i>' + (r.max_mana ? '<i class="m"><b style="width:' + (dead ? 0 : pct(r.mana, r.max_mana)) + '%"></b></i>' : '') + '</div></div>' +
+      (noteCls !== 'vis' && note ? '<span class="st ' + noteCls + '">' + esc(note) + '</span>' : '') + '</div>';
   }
   const a = info.attr;
   let attrs = '';
@@ -1245,6 +1252,7 @@ function renderSide() {
       (hasNw ? '<span>' + esc(TEXT.nwTotal) + ' <b>' + (partial ? '≥' : '') + kilo(nw) + '</b></span>' : '') + '</span></div>' + members.map(heroCard).join('') + '</div>');
   }
   const html = groups.join('');
+  teamsEl.classList.toggle('cview', !!cfg.heroes.compact);
   if (html !== sideHtml) { sideHtml = html; teamsEl.innerHTML = html; }
 }
 
@@ -1405,7 +1413,7 @@ function refreshStatus() {
 
 const CFG_TEXT = {
   en: {
-    customize: 'Customize', title: 'Customize the radar', exportCfg: 'Copy', importCfg: 'Paste', resetCfg: 'Reset', copied: 'Settings copied to the clipboard',
+    customize: 'Customize', dragHeight: 'Drag to resize, double-click to reset', title: 'Customize the radar', exportCfg: 'Copy', importCfg: 'Paste', resetCfg: 'Reset', copied: 'Settings copied to the clipboard',
     pastePrompt: 'Paste the settings text', badCfg: 'These settings could not be read', resetAsk: 'Reset all radar settings to the defaults?',
     tabs: { layout: 'Layout', map: 'Map', top: 'Top bar', heroes: 'Heroes', events: 'Events', look: 'Look' },
     panels: { score: 'Top bar', objectives: 'Objectives', events: 'Events', map: 'Map', heroes: 'Heroes' },
@@ -1426,7 +1434,7 @@ const CFG_TEXT = {
     zoom: 'Text and panel size', colors: 'Team colors', radColor: 'Radiant', direColor: 'Dire', colorsReset: 'Default colors', lang: 'Language',
   },
   ru: {
-    customize: 'Настроить', title: 'Настройка радара', exportCfg: 'Копировать', importCfg: 'Вставить', resetCfg: 'Сбросить', copied: 'Настройки скопированы в буфер обмена',
+    customize: 'Настроить', dragHeight: 'Потяните, чтобы изменить высоту. Двойной клик сбрасывает', title: 'Настройка радара', exportCfg: 'Копировать', importCfg: 'Вставить', resetCfg: 'Сбросить', copied: 'Настройки скопированы в буфер обмена',
     pastePrompt: 'Вставьте текст настроек', badCfg: 'Не удалось прочитать эти настройки', resetAsk: 'Сбросить все настройки радара?',
     tabs: { layout: 'Расположение', map: 'Карта', top: 'Верхняя панель', heroes: 'Герои', events: 'События', look: 'Вид' },
     panels: { score: 'Верхняя панель', objectives: 'Цели', events: 'События', map: 'Карта', heroes: 'Герои' },
@@ -1451,9 +1459,9 @@ let CT = CFG_TEXT[LANG];
 const PANELS = { score: 'scoreCard', objectives: 'objCard', events: 'console', map: 'mapCard', heroes: 'teamsCard' };
 const SLOTS = { top: 'slotTop', left: 'slotLeft', center: 'slotCenter', right: 'slotRight' };
 const PRESETS = {
-  classic: { top: ['score'], left: ['objectives', 'events'], center: ['map'], right: ['heroes'], hidden: [], wl: 320, wr: 380 },
-  map: { top: ['score'], left: [], center: ['map'], right: ['heroes', 'objectives', 'events'], hidden: [], wl: 320, wr: 400 },
-  stream: { top: [], left: [], center: ['map'], right: ['score', 'events'], hidden: ['objectives', 'heroes'], wl: 320, wr: 460 },
+  classic: { top: ['score'], left: ['objectives', 'events'], center: ['map'], right: ['heroes'], hidden: [], wl: 320, wr: 380, auto: true, h: {} },
+  map: { top: ['score'], left: [], center: ['map'], right: ['heroes', 'objectives', 'events'], hidden: [], wl: 320, wr: 400, auto: true, h: {} },
+  stream: { top: [], left: [], center: ['map'], right: ['score', 'events'], hidden: ['objectives', 'heroes'], wl: 320, wr: 460, auto: true, h: {} },
 };
 let drawerTab = 'layout';
 
@@ -1484,7 +1492,66 @@ function applyLayout() {
   $('gutL').classList.toggle('off', $('slotLeft').classList.contains('empty'));
   $('gutR').classList.toggle('off', $('slotRight').classList.contains('empty'));
   if (!centerOn) { $('slotRight').style.flex = '1'; } else { $('slotRight').style.flex = ''; }
+  applyHeights();
   resize();
+}
+function zonePanels(zone) {
+  return [...zone.children].filter(c => c.classList.contains('card') && !c.hidden);
+}
+function panelId(el) {
+  return Object.keys(PANELS).find(k => PANELS[k] === el.id);
+}
+function applyHeights() {
+  const H = cfg.layout.h;
+  for (const zoneId of ['slotLeft', 'slotCenter', 'slotRight']) {
+    const zone = $(zoneId);
+    zone.querySelectorAll(':scope > .hgut').forEach(g => g.remove());
+    const cards = zonePanels(zone);
+    const sized = cards.length > 1 && cards.every(c => H[panelId(c)] > 0);
+    zone.classList.toggle('sized', sized);
+    for (const c of cards) c.style.flex = sized ? H[panelId(c)] + ' 1 0px' : '';
+    for (let i = 1; i < cards.length; i++) {
+      const g = document.createElement('div');
+      g.className = 'hgut';
+      g.title = CT.dragHeight;
+      zone.insertBefore(g, cards[i]);
+      bindHgut(g, zone);
+    }
+  }
+}
+function bindHgut(g, zone) {
+  g.addEventListener('pointerdown', ev => {
+    ev.preventDefault();
+    g.setPointerCapture(ev.pointerId);
+    g.classList.add('drag');
+    const cards = zonePanels(zone);
+    for (const c of cards) cfg.layout.h[panelId(c)] = Math.max(60, Math.round(c.offsetHeight));
+    const above = g.previousElementSibling, below = g.nextElementSibling;
+    const a0 = cfg.layout.h[panelId(above)], b0 = cfg.layout.h[panelId(below)], y0 = ev.clientY;
+    zone.classList.add('sized');
+    for (const c of cards) c.style.flex = cfg.layout.h[panelId(c)] + ' 1 0px';
+    const move = e => {
+      const a = Math.max(60, Math.min(a0 + b0 - 60, a0 + e.clientY - y0));
+      cfg.layout.h[panelId(above)] = a;
+      cfg.layout.h[panelId(below)] = a0 + b0 - a;
+      above.style.flex = a + ' 1 0px';
+      below.style.flex = (a0 + b0 - a) + ' 1 0px';
+      resize();
+    };
+    const up = () => {
+      g.classList.remove('drag');
+      g.removeEventListener('pointermove', move);
+      g.removeEventListener('pointerup', up);
+      saveCfg();
+    };
+    g.addEventListener('pointermove', move);
+    g.addEventListener('pointerup', up);
+  });
+  g.addEventListener('dblclick', () => {
+    for (const c of zonePanels(zone)) delete cfg.layout.h[panelId(c)];
+    saveCfg();
+    applyLayout();
+  });
 }
 function applyLook() {
   const dark = themeDark();
@@ -1679,9 +1746,17 @@ for (const [gutId, key, sign] of [['gutL', 'wl', 1], ['gutR', 'wr', -1]]) {
     ev.preventDefault();
     gut.setPointerCapture(ev.pointerId);
     gut.classList.add('drag');
-    const startX = ev.clientX, start = cfg.layout[key];
+    if (cfg.layout.auto) {
+      cfg.layout.wl = Math.round($('slotLeft').offsetWidth) || cfg.layout.wl;
+      cfg.layout.wr = Math.round($('slotRight').offsetWidth) || cfg.layout.wr;
+      cfg.layout.auto = false;
+      applyLayout();
+    }
+    const startX = ev.clientX, start = cfg.layout[key], other = key === 'wl' ? 'wr' : 'wl';
     const move = e => {
-      cfg.layout[key] = Math.max(240, Math.min(720, Math.round(start + sign * (e.clientX - startX))));
+      const otherW = $(other === 'wl' ? 'slotLeft' : 'slotRight').classList.contains('empty') ? 0 : cfg.layout[other];
+      const max = Math.max(200, $('slotCenter').parentElement.clientWidth - otherW - 24 - 280);
+      cfg.layout[key] = Math.max(200, Math.min(max, Math.round(start + sign * (e.clientX - startX))));
       $(key === 'wl' ? 'slotLeft' : 'slotRight').style.width = cfg.layout[key] + 'px';
       resize();
     };
@@ -1695,7 +1770,7 @@ for (const [gutId, key, sign] of [['gutL', 'wl', 1], ['gutR', 'wr', -1]]) {
     gut.addEventListener('pointermove', move);
     gut.addEventListener('pointerup', up);
   });
-  gut.addEventListener('dblclick', () => { cfg.layout[key] = CFG_DEFAULT.layout[key]; saveCfg(); applyLayout(); });
+  gut.addEventListener('dblclick', () => { cfg.layout.wl = CFG_DEFAULT.layout.wl; cfg.layout.wr = CFG_DEFAULT.layout.wr; cfg.layout.auto = true; saveCfg(); applyLayout(); });
 }
 function toast(text) {
   const t = $('toast');
