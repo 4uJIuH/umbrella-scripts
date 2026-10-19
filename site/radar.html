@@ -6,55 +6,94 @@
 <meta name="robots" content="noindex">
 <title>Cloud Radar</title>
 <style>
-:root { --bg:#0e1116; --panel:#161b22; --line:#2a313c; --text:#e6edf3; --dim:#8b949e; --rad:#4ade80; --dire:#f87171; }
+:root { --bg:#0b0e13; --panel:#141921; --panel2:#1b212b; --line:#262e3a; --text:#e6edf3; --dim:#8b949e; --rad:#4ade80; --dire:#f87171; --gold:#fbbf24; --blue:#60a5fa; }
 * { box-sizing:border-box; }
-
-html, body { margin:0; height:100%; background:var(--bg); color:var(--text); font:14px/1.4 system-ui, "Segoe UI", sans-serif; }
+html, body { margin:0; height:100%; background:var(--bg); color:var(--text); font:13px/1.4 system-ui, "Segoe UI", sans-serif; }
 #app { display:flex; height:100%; }
 #stage { flex:1; min-width:0; display:flex; align-items:center; justify-content:center; position:relative; }
-#side { width:300px; background:var(--panel); border-left:1px solid var(--line); overflow:auto; padding:12px; }
-#status, #clock { position:absolute; top:12px; padding:4px 10px; border-radius:999px; background:var(--panel); border:1px solid var(--line); color:var(--dim); font-size:12px; }
-#status { left:12px; }
-#clock { right:12px; color:var(--text); font-variant-numeric:tabular-nums; }
+#side { width:360px; background:var(--panel); border-left:1px solid var(--line); overflow:auto; padding:10px 12px; }
+.pill { position:absolute; padding:4px 10px; border-radius:999px; background:rgba(20,25,33,.92); border:1px solid var(--line); font-size:12px; }
+#status { top:12px; left:12px; color:var(--dim); }
+#status.ok { color:var(--rad); }
+#clock { top:12px; right:12px; font-variant-numeric:tabular-nums; font-weight:600; }
 #clock:empty { display:none; }
-#pip, #popcon { position:absolute; right:12px; padding:6px 12px; border-radius:8px; background:var(--panel); border:1px solid var(--line); color:var(--text); font:inherit; cursor:pointer; }
-#pip { bottom:12px; }
-#popcon { bottom:48px; }
-#pip:hover, #popcon:hover { border-color:var(--dim); }
-#console { border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:8px; background:var(--panel); }
+#layers { position:absolute; top:44px; left:12px; display:flex; flex-direction:column; gap:4px; }
+#layers button { text-align:left; padding:3px 9px; border-radius:6px; background:rgba(20,25,33,.92); border:1px solid var(--line); color:var(--dim); font:inherit; font-size:12px; cursor:pointer; }
+#layers button.on { color:var(--text); border-color:#3b4656; }
+#layers button.on::before { content:'●'; color:var(--rad); margin-right:6px; font-size:9px; vertical-align:1px; }
+#layers button:not(.on)::before { content:'○'; margin-right:6px; font-size:9px; vertical-align:1px; }
+#tools { position:absolute; right:12px; bottom:12px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
+#tools button { padding:6px 12px; border-radius:8px; background:var(--panel); border:1px solid var(--line); color:var(--text); font:inherit; cursor:pointer; }
+#tools button:hover { border-color:var(--dim); }
+#marks { position:absolute; pointer-events:none; overflow:hidden; border-radius:10px; }
+#marks img { position:absolute; border-radius:50%; box-shadow:0 0 0 2px var(--c), 0 0 6px rgba(0,0,0,.8); transform:translate(-50%,-50%); }
+#legend { position:absolute; left:12px; bottom:12px; color:var(--dim); font-size:11px; background:rgba(20,25,33,.85); border:1px solid var(--line); border-radius:8px; padding:6px 9px; display:grid; gap:2px; }
+#legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
+h3 { margin:6px 0 6px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--dim); font-weight:600; }
+#console { border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:6px; background:var(--panel); }
 #console.pop { height:100vh; display:flex; flex-direction:column; margin:0; padding:8px; }
 #console.pop #log { flex:1; height:auto; }
-#objs { font-size:12px; padding:2px 0 8px; display:grid; gap:3px; }
-#objs .o { display:flex; justify-content:space-between; gap:8px; }
+#objs { font-size:12px; padding:2px 0 8px; display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; }
+#objs .o { display:flex; justify-content:space-between; gap:6px; }
 #objs .o span:first-child { color:var(--dim); }
-#log { height:240px; overflow:auto; font:12px/1.5 ui-monospace, Consolas, monospace; }
-#log .t { color:var(--dim); margin-right:6px; }
-#log .a { color:var(--rad); }
-#log .e { color:var(--dire); }
-#log .boss { color:#fbbf24; }
-#log .rune { color:#c084fc; }
-#log .scan { color:#60a5fa; }
+#log { height:260px; overflow:auto; font:12px/1.55 system-ui, sans-serif; }
+#log > div { display:flex; gap:6px; align-items:flex-start; padding:1px 0; }
+#log .t { color:var(--dim); font:11px/1.7 ui-monospace, Consolas, monospace; flex:none; width:38px; }
+#log img { width:18px; height:18px; border-radius:3px; flex:none; margin-top:1px; }
+#log .a { color:#a7f3c0; } #log .e { color:#fca5a5; } #log .boss { color:var(--gold); } #log .rune { color:#d8b4fe; } #log .scan { color:#93c5fd; } #log .smoke { color:#cbd5e1; }
+.team { margin-top:4px; }
 .row { padding:8px 0; border-bottom:1px solid var(--line); }
 .row .top { display:flex; align-items:center; gap:8px; }
-.row .top img { width:24px; height:24px; border-radius:4px; flex:none; }
+.row .top > img { width:40px; height:23px; border-radius:3px; flex:none; object-fit:cover; }
 .row .name { font-weight:600; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.row .meta { color:var(--dim); font-size:12px; }
-.row .items { color:var(--dim); font-size:11px; margin-top:3px; }
-.row .items b { color:var(--text); font-weight:500; }
-.bar { height:5px; border-radius:3px; background:#222a35; margin-top:5px; overflow:hidden; }
+.row .lvl { font-size:11px; padding:1px 6px; border-radius:4px; background:var(--panel2); color:var(--text); }
+.row .note { font-size:11px; color:var(--dim); margin-top:2px; }
+.row .note.fogged { color:#fcd34d; }
+.row .note.dead { color:var(--dire); }
+.row .note.tp { color:var(--blue); }
+.bars { display:grid; gap:2px; margin-top:4px; }
+.bar { position:relative; height:9px; border-radius:2px; background:#222a35; overflow:hidden; }
 .bar > i { display:block; height:100%; }
-.hp > i { background:#4ade80; }
-.mp > i { background:#60a5fa; }
+.bar > b { position:absolute; inset:0; font:600 8px/9px system-ui; text-align:center; color:#fff; text-shadow:0 0 2px #000; }
+.hp > i { background:linear-gradient(#4ade80,#22a35a); }
+.mp > i { background:linear-gradient(#60a5fa,#2f6fd0); }
+.stats { font-size:11px; color:var(--dim); margin-top:4px; display:flex; gap:8px; flex-wrap:wrap; }
+.stats b { color:var(--text); font-weight:600; }
+.stats > span { white-space:nowrap; }
+.slots { display:flex; gap:3px; margin-top:5px; flex-wrap:wrap; align-items:center; }
+.slot { position:relative; width:33px; height:24px; border-radius:3px; background:#0f141b; border:1px solid var(--line); overflow:hidden; flex:none; }
+.slot img { width:100%; height:100%; object-fit:cover; display:block; }
+.slot.small { width:25px; height:18px; opacity:.6; }
+.slot.neutral { border-radius:50%; width:24px; height:24px; }
+.slot.old img { filter:grayscale(.7) brightness(.7); }
+.slot em { display:none; position:absolute; inset:0; font:600 7px/1.1 system-ui; color:var(--dim); padding:1px; overflow:hidden; font-style:normal; }
+.slot.noimg em { display:block; }
+.slot .cd { position:absolute; inset:0; background:rgba(0,0,0,.62); color:#fff; font:700 10px/24px system-ui; text-align:center; }
+.slot.small .cd { line-height:18px; font-size:9px; }
+.slot .ch { position:absolute; right:1px; bottom:0; font:700 8px/1 system-ui; color:#fff; text-shadow:0 0 2px #000; }
+.slot.ab { width:26px; height:26px; }
+.slot.ab .cd { line-height:26px; }
+.slot.ab.l0 img { filter:grayscale(1) brightness(.45); }
+.slot .pips { position:absolute; left:1px; right:1px; bottom:1px; display:flex; gap:1px; }
+.slot .pips i { flex:1; height:2px; background:var(--gold); border-radius:1px; }
+.sep { width:6px; }
 .team-2 .name { color:var(--rad); }
 .team-3 .name { color:var(--dire); }
-.fog { opacity:.55; }
-@media (max-width:700px) { #app { flex-direction:column; } #side { width:100%; height:38%; border-left:0; border-top:1px solid var(--line); } }
+.row.fog { opacity:.78; }
+.row.deadrow { opacity:.55; }
+@media (max-width:760px) { #app { flex-direction:column; } #side { width:100%; height:42%; border-left:0; border-top:1px solid var(--line); } #legend { display:none; } }
 </style>
 </head>
 <body>
 <div id="app">
-  <div id="stage"><canvas id="map"></canvas><div id="status"></div><div id="clock"></div><button id="pip" type="button"></button><button id="popcon" type="button"></button></div>
-  <div id="side"><div id="console"><div id="objs"></div><div id="log"></div></div><div id="heroes"></div></div>
+  <div id="stage">
+    <canvas id="map"></canvas><div id="marks"></div>
+    <div id="status" class="pill"></div><div id="clock" class="pill"></div>
+    <div id="layers"></div>
+    <div id="legend"></div>
+    <div id="tools"><button id="popcon" type="button"></button><button id="pip" type="button"></button></div>
+  </div>
+  <div id="side"><div id="console"><h3 id="hObj"></h3><div id="objs"></div><h3 id="hLog"></h3><div id="log"></div></div><div id="heroes"></div></div>
 </div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
@@ -73,19 +112,28 @@ const TEXT = {
   en: {
     connecting: 'Connecting', online: 'Online', stale: 'No fresh data', closed: 'Link closed', missing: 'Session not found',
     offline: 'No connection', waiting: 'Waiting for a match', badLink: 'Invalid link', pip: 'Map on top of the game',
-    popcon: 'Console on top of the game', noWindow: 'Window did not open: ', dead: 'dead', visible: 'visible',
-    fog: 'in fog, {n} s ago', lvl: 'lvl', buyback: 'buyback', ult: 'ult', ready: 'ready', sec: '{n} s',
-    roshan: 'Roshan', tormentor: 'Tormentor', noData: 'no data', bossDead: 'dead', bossSeen: 'visible', bossHit: 'under attack',
-    glyph: 'Glyph Radiant / Dire', scan: 'Scan Radiant / Dire',
+    popcon: 'Console on top of the game', noWindow: 'Window did not open: ', paused: 'paused',
+    objectives: 'Objectives', events: 'Events', allies: 'Allies', enemies: 'Enemies', radiant: 'Radiant', dire: 'Dire',
+    dead: 'dead', deadIn: 'dead, respawn in {n} s', visible: 'visible', maphack: 'in fog, maphack {n} s ago', lastSeen: 'in fog, last seen {n} s ago',
+    tp: 'teleporting, {n} s', buyback: 'buyback', ready: 'ready', sec: '{n} s', gold: 'gold', nw: 'NW', lhdn: 'LH/DN',
+    roshan: 'Roshan', tormentor: 'Tormentor', noData: 'no data', bossDead: 'dead', bossSeen: 'alive', bossHit: 'under attack',
+    glyph: 'Glyph R / D', scan: 'Scan R / D', camps: 'Camps seen',
+    layers: { heroes: 'Heroes', fog: 'Heroes in fog', creeps: 'Lane creeps', jungle: 'Jungle', wards: 'Wards and vision', buildings: 'Buildings', events: 'Map events' },
+    legend: ['visible', 'in fog (maphack)', 'creeps in fog (predicted)'],
     zone: { mid: 'mid', top: 'top', bot: 'bot' }, side: { r: 'Radiant side', d: 'Dire side', c: 'middle' },
     place: { rosh: 'near Roshan', torm: 'near Tormentor', base_r: 'Radiant base', base_d: 'Dire base' },
+    tower: '{team} T{tier} {lane}',
     runes: ['double damage', 'haste', 'illusion', 'invisibility', 'regeneration', 'bounty', 'arcane', 'water', 'wisdom', 'shield'],
     boss: { rosh: 'Roshan', torm: 'Tormentor', tormSide: 'Tormentor ({side})', r: 'Radiant', d: 'Dire' },
+    ward: { o: 'observer', s: 'sentry' },
     feed: {
       death: '{h} died', deathRespawn: '{h} died (respawn in {r} s)', rune: '{h} took a rune: {a}', runeAt: '{h} took a rune: {a} ({p})',
-      tp_from: '{h}: teleport started from {p}', tp_to: '{h}: teleport, target: {p}', scan: 'Scan: {p}',
+      tp_from: '{h}: teleport from {p}', tp_to: '{h}: teleporting to {p}', scan: 'Scan: {p}',
       scan_used: '{team}: scan used', scan_usedAt: '{team}: scan used, {p}', glyph: '{team}: glyph used',
       blink: '{h}: blink ({p})', ult: '{h}: {a} ({p})', ability: '{h}: {a} ({p})',
+      smoke: '{h}: Smoke of Deceit ({p})', smokeAnon: 'Smoke of Deceit ({p})',
+      spot: '{h} spotted in fog: {p}', farm: '{h} is farming the jungle: {p}', ward: 'Enemy {w} ward: {p}',
+      tower: '{team} tower destroyed: {p}', rax: '{team} barracks destroyed: {p}',
       boss_dead: '{b} killed', boss_up: '{b} respawned', boss_hit: '{b}: under attack, HP {v}{n}', boss_hp: '{b}: HP {v}{n}',
       boss_calm: '{b}: attack stopped, HP {v}',
     },
@@ -93,62 +141,114 @@ const TEXT = {
   ru: {
     connecting: 'Подключение', online: 'Онлайн', stale: 'Нет свежих данных', closed: 'Ссылка закрыта', missing: 'Сессия не найдена',
     offline: 'Нет связи', waiting: 'Ожидание матча', badLink: 'Неверная ссылка', pip: 'Карта поверх игры',
-    popcon: 'Консоль поверх игры', noWindow: 'Окно не открылось: ', dead: 'мертв', visible: 'виден',
-    fog: 'в тумане, {n} с назад', lvl: 'ур.', buyback: 'байбек', ult: 'ульт', ready: 'готов', sec: '{n} с',
-    roshan: 'Рошан', tormentor: 'Торментор', noData: 'нет данных', bossDead: 'мертв', bossSeen: 'виден', bossHit: 'бьют',
-    glyph: 'Глиф Radiant / Dire', scan: 'Скан Radiant / Dire',
+    popcon: 'Консоль поверх игры', noWindow: 'Окно не открылось: ', paused: 'пауза',
+    objectives: 'Цели', events: 'События', allies: 'Союзники', enemies: 'Враги', radiant: 'Radiant', dire: 'Dire',
+    dead: 'мертв', deadIn: 'мертв, возрождение через {n} с', visible: 'виден', maphack: 'в тумане, мапхак {n} с назад', lastSeen: 'в тумане, виден {n} с назад',
+    tp: 'телепорт, {n} с', buyback: 'байбек', ready: 'готов', sec: '{n} с', gold: 'золото', nw: 'NW', lhdn: 'LH/DN',
+    roshan: 'Рошан', tormentor: 'Торментор', noData: 'нет данных', bossDead: 'мертв', bossSeen: 'жив', bossHit: 'бьют',
+    glyph: 'Глиф R / D', scan: 'Скан R / D', camps: 'Кемпы видны',
+    layers: { heroes: 'Герои', fog: 'Герои в тумане', creeps: 'Линейные крипы', jungle: 'Лес', wards: 'Варды и обзор', buildings: 'Здания', events: 'События на карте' },
+    legend: ['виден', 'в тумане (мапхак)', 'крипы в тумане (прогноз)'],
     zone: { mid: 'мид', top: 'верх', bot: 'низ' }, side: { r: 'сторона Radiant', d: 'сторона Dire', c: 'середина' },
     place: { rosh: 'у Рошана', torm: 'у Торментора', base_r: 'база Radiant', base_d: 'база Dire' },
+    tower: 'T{tier} {lane} {team}',
     runes: ['двойной урон', 'скорость', 'иллюзии', 'невидимость', 'регенерация', 'баунти', 'аркейн', 'вода', 'мудрость', 'щит'],
     boss: { rosh: 'Рошан', torm: 'Торментор', tormSide: 'Торментор ({side})', r: 'Radiant', d: 'Dire' },
+    ward: { o: 'Observer', s: 'Sentry' },
     feed: {
       death: '{h} погиб', deathRespawn: '{h} погиб (возрождение {r} с)', rune: '{h} взял руну: {a}', runeAt: '{h} взял руну: {a} ({p})',
-      tp_from: '{h}: начал телепорт из: {p}', tp_to: '{h}: телепорт, цель: {p}', scan: 'Скан: {p}',
+      tp_from: '{h}: телепорт из: {p}', tp_to: '{h}: телепорт на: {p}', scan: 'Скан: {p}',
       scan_used: '{team}: использован скан', scan_usedAt: '{team}: использован скан, {p}', glyph: '{team}: использован глиф',
       blink: '{h}: блинк ({p})', ult: '{h}: {a} ({p})', ability: '{h}: {a} ({p})',
+      smoke: '{h}: Smoke of Deceit ({p})', smokeAnon: 'Smoke of Deceit ({p})',
+      spot: '{h} замечен в тумане: {p}', farm: '{h} фармит лес: {p}', ward: 'Вражеский {w}: {p}',
+      tower: 'Башня {team} уничтожена: {p}', rax: 'Казармы {team} уничтожены: {p}',
       boss_dead: '{b} убит', boss_up: '{b} возродился', boss_hit: '{b}: начали бить, HP {v}{n}', boss_hp: '{b}: HP {v}{n}',
       boss_calm: '{b}: перестали бить, HP {v}',
     },
   },
 }[LANG];
 
+const HERO_NAMES = {
+  antimage: 'Anti-Mage', furion: "Nature's Prophet", nevermore: 'Shadow Fiend', doom_bringer: 'Doom', obsidian_destroyer: 'Outworld Destroyer',
+  skeleton_king: 'Wraith King', rattletrap: 'Clockwerk', shredder: 'Timbersaw', wisp: 'Io', zuus: 'Zeus', windrunner: 'Windranger',
+  abyssal_underlord: 'Underlord', queenofpain: 'Queen of Pain', necrolyte: 'Necrophos', life_stealer: 'Lifestealer', magnataur: 'Magnus',
+  treant: 'Treant Protector', centaur: 'Centaur Warrunner', vengefulspirit: 'Vengeful Spirit', keeper_of_the_light: 'Keeper of the Light',
+};
+
 function fmt(text, values) {
   return text.replace(/\{(\w+)\}/g, (_, key) => values[key] == null ? '?' : values[key]);
 }
+function esc(text) {
+  return String(text == null ? '' : text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+}
+function words(text) {
+  return String(text || '').split('_').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+function heroKey(name) {
+  return String(name || '').replace('npc_dota_hero_', '');
+}
+function heroName(name) {
+  const key = heroKey(name);
+  return HERO_NAMES[key] || words(key);
+}
+function itemName(name) {
+  return words(String(name || '').replace(/^item_/, '').replace(/^recipe_/, 'recipe_'));
+}
+function abilityName(name, hero) {
+  let key = String(name || '');
+  const prefix = hero ? heroKey(hero) + '_' : '';
+  if (prefix && key.indexOf(prefix) === 0) key = key.slice(prefix.length);
+  return key.indexOf('item_') === 0 ? itemName(key) : words(key);
+}
+const CDN = 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/';
+function itemImg(name) {
+  return CDN + 'items/' + String(name || '').replace(/^item_/, '') + '.png';
+}
+function abilityImg(name) {
+  return String(name || '').indexOf('item_') === 0 ? itemImg(name) : CDN + 'abilities/' + name + '.png';
+}
+function heroImg(name) {
+  return 'radar/icons/hero/' + heroKey(name) + '.png';
+}
 
 const sessionId = location.hash.replace(/^#\/?/, '');
-const canvas = document.getElementById('map');
-const ctx = canvas.getContext('2d');
-const stage = document.getElementById('stage');
-const side = document.getElementById('side');
-const consoleEl = document.getElementById('console');
-const objsEl = document.getElementById('objs');
-const logEl = document.getElementById('log');
-const heroesEl = document.getElementById('heroes');
-const statusEl = document.getElementById('status');
-const clockEl = document.getElementById('clock');
-document.getElementById('pip').textContent = TEXT.pip;
-document.getElementById('popcon').textContent = TEXT.popcon;
+const $ = id => document.getElementById(id);
+const canvas = $('map'), ctx = canvas.getContext('2d'), stage = $('stage'), side = $('side');
+const consoleEl = $('console'), objsEl = $('objs'), logEl = $('log'), heroesEl = $('heroes'), statusEl = $('status'), clockEl = $('clock');
+$('pip').textContent = TEXT.pip;
+$('popcon').textContent = TEXT.popcon;
+$('hObj').textContent = TEXT.objectives;
+$('hLog').textContent = TEXT.events;
 statusEl.textContent = TEXT.connecting;
+
+const LAYER_KEYS = ['heroes', 'fog', 'creeps', 'jungle', 'wards', 'buildings', 'events'];
+const layers = Object.assign(Object.fromEntries(LAYER_KEYS.map(k => [k, true])), JSON.parse(localStorage.getItem('cr_layers') || '{}'));
+for (const key of LAYER_KEYS) {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = TEXT.layers[key];
+  b.className = layers[key] ? 'on' : '';
+  b.onclick = () => { layers[key] = !layers[key]; b.className = layers[key] ? 'on' : ''; localStorage.setItem('cr_layers', JSON.stringify(layers)); };
+  $('layers').appendChild(b);
+}
+$('legend').innerHTML = '<div><i style="background:#4ade80"></i>' + esc(TEXT.legend[0]) + '</div>' +
+  '<div><i style="border:2px dashed #fcd34d;background:transparent"></i>' + esc(TEXT.legend[1]) + '</div>' +
+  '<div><i style="border:2px solid #f87171;background:transparent"></i>' + esc(TEXT.legend[2]) + '</div>';
 
 let size = 600;
 let heroes = {};
-let order = [];
 let roster = {};
 let live = {};
-let meta = null;
-let metaSeen = false;
-let connected = false;
-let serverOffset = 0;
-let stale = true;
-let bgCache = null;
-let dotaImg = null;
+let meta = null, metaSeen = false, connected = false, serverOffset = 0, stale = true;
+let bgCache = null, dotaImg = null;
+let liveAt = performance.now();
 {
   const im = new Image();
   im.onload = function () { dotaImg = im; bgCache = null; };
   im.src = 'radar/map/dota.jpg';
 }
-const view = { cx: 0, cy: 0, half: 8000 };
+const view = { cx: 0, cy: 0, half: 10240 };
 
 const ICONS = {};
 function icon(path) {
@@ -156,20 +256,14 @@ function icon(path) {
   if (!entry) {
     entry = ICONS[path] = { img: new Image(), ok: false };
     entry.img.onload = function () { entry.ok = true; };
-    entry.img.src = 'radar/icons/' + path;
+    entry.img.src = /^radar\//.test(path) ? path : 'radar/icons/' + path;
   }
   return entry.ok ? entry.img : null;
-}
-function heroIcon(name) {
-  return 'hero/' + String(name || '').replace('npc_dota_hero_', '') + '.png';
 }
 const RUNE_ICONS = { 0: 'rune_strong.png', 1: 'rune_speed.png', 2: 'rune_ilusion.png', 3: 'rune_invisible.png', 4: 'rune_regeniration.png',
   5: 'rune_bounty.png', 6: 'rune_magic.png', 7: 'rune_water.png', 8: 'Wisdom.png', 9: 'rune_shield.png' };
 const TOWER_ICON = 'dota_minimap_assets/towers/minimap_tower90_psd_a98bbc61.png';
-
-function esc(text) {
-  return String(text == null ? '' : text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-}
+const CAMP_ICON = 'dota_minimap_assets/camps/minimap_creepcamp_psd_72d26740.png';
 
 function resize() {
   const s = Math.max(200, Math.min(stage.clientWidth, stage.clientHeight) - 24);
@@ -189,130 +283,11 @@ function toScreen(x, y) {
   const k = size / (2 * view.half);
   return [(x - (view.cx - view.half)) * k, ((view.cy + view.half) - y) * k];
 }
-
-function pretty(unit) {
-  return String(unit || '').replace('npc_dota_hero_', '').replace(/^item_/, '').split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+function world(r) {
+  return r * size / (2 * view.half);
 }
-
-function rng(seed) {
-  let a = seed;
-  return function () {
-    a |= 0; a = a + 0x6D2B79F5 | 0;
-    let t = Math.imul(a ^ a >>> 15, 1 | a);
-    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  };
-}
-
-function segDist(px, py, ax, ay, bx, by) {
-  const dx = bx - ax, dy = by - ay;
-  const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)));
-  return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
-}
-
-const LANES = [
-  [[0.10, 0.90], [0.07, 0.62], [0.07, 0.07], [0.38, 0.07], [0.90, 0.10]],
-  [[0.12, 0.88], [0.50, 0.50], [0.88, 0.12]],
-  [[0.10, 0.90], [0.38, 0.93], [0.93, 0.93], [0.93, 0.38], [0.90, 0.10]],
-];
-
-function riverV(u) {
-  return u + 0.035 * Math.sin(u * 9);
-}
-
-function nearAny(u, v, polys, limit) {
-  for (const poly of polys) {
-    for (let i = 0; i < poly.length - 1; i++) {
-      if (segDist(u, v, poly[i][0], poly[i][1], poly[i + 1][0], poly[i + 1][1]) < limit) return true;
-    }
-  }
-  return false;
-}
-
-function paintDota(g, s) {
-  const base = g.createLinearGradient(0, s, s, 0);
-  base.addColorStop(0, '#4d8a3a');
-  base.addColorStop(0.5, '#3b6b2f');
-  base.addColorStop(1, '#4b5127');
-  g.fillStyle = base;
-  g.fillRect(0, 0, s, s);
-
-  const dark = g.createRadialGradient(s * 0.5, s * 0.5, s * 0.3, s * 0.5, s * 0.5, s * 0.75);
-  dark.addColorStop(0, 'rgba(0,0,0,0)');
-  dark.addColorStop(1, 'rgba(0,0,0,.35)');
-  g.fillStyle = dark;
-  g.fillRect(0, 0, s, s);
-
-  const rand = rng(11);
-  for (let i = 0; i < 2600; i++) {
-    const u = 0.03 + rand() * 0.94, v = 0.03 + rand() * 0.94;
-    if (nearAny(u, v, LANES, 0.055)) continue;
-    if (Math.abs(v - riverV(u)) < 0.06) continue;
-    if (Math.hypot(u - 0.1, v - 0.9) < 0.15 || Math.hypot(u - 0.9, v - 0.1) < 0.15) continue;
-    const r = s * (0.006 + rand() * 0.007);
-    g.fillStyle = rand() < 0.5 ? 'rgba(20,52,24,.75)' : 'rgba(30,70,30,.65)';
-    g.beginPath();
-    g.arc(u * s, v * s, r, 0, 7);
-    g.fill();
-  }
-
-  g.lineCap = 'round';
-  g.lineJoin = 'round';
-  const path = (pts) => {
-    g.beginPath();
-    pts.forEach((p, i) => i ? g.lineTo(p[0] * s, p[1] * s) : g.moveTo(p[0] * s, p[1] * s));
-  };
-
-  const river = [];
-  for (let u = 0; u <= 1.001; u += 0.02) river.push([u, riverV(u)]);
-  g.strokeStyle = '#2b6f95';
-  g.lineWidth = s * 0.085;
-  path(river);
-  g.stroke();
-  g.strokeStyle = '#3f93bd';
-  g.lineWidth = s * 0.06;
-  path(river);
-  g.stroke();
-  g.strokeStyle = 'rgba(160,220,245,.35)';
-  g.lineWidth = s * 0.02;
-  path(river);
-  g.stroke();
-
-  for (const lane of LANES) {
-    g.strokeStyle = '#6f5f38';
-    g.lineWidth = s * 0.05;
-    path(lane);
-    g.stroke();
-    g.strokeStyle = '#a58f58';
-    g.lineWidth = s * 0.036;
-    path(lane);
-    g.stroke();
-  }
-
-  const rad = g.createRadialGradient(s * 0.09, s * 0.91, 0, s * 0.09, s * 0.91, s * 0.19);
-  rad.addColorStop(0, '#76b85a');
-  rad.addColorStop(0.7, '#5c9a45');
-  rad.addColorStop(1, 'rgba(92,154,69,0)');
-  g.fillStyle = rad;
-  g.fillRect(0, s * 0.6, s * 0.4, s * 0.4);
-  const dire = g.createRadialGradient(s * 0.91, s * 0.09, 0, s * 0.91, s * 0.09, s * 0.19);
-  dire.addColorStop(0, '#a5714a');
-  dire.addColorStop(0.7, '#855a3a');
-  dire.addColorStop(1, 'rgba(133,90,58,0)');
-  g.fillStyle = dire;
-  g.fillRect(s * 0.6, 0, s * 0.4, s * 0.4);
-
-  g.fillStyle = '#e8e2c4';
-  g.strokeStyle = '#3d7a2c';
-  g.lineWidth = 2;
-  g.beginPath(); g.arc(s * 0.075, s * 0.925, s * 0.02, 0, 7); g.fill(); g.stroke();
-  g.fillStyle = '#f3d9c4';
-  g.strokeStyle = '#8a3a2a';
-  g.beginPath(); g.arc(s * 0.925, s * 0.075, s * 0.02, 0, 7); g.fill(); g.stroke();
-
-  g.strokeStyle = 'rgba(255,255,255,.12)';
-  g.lineWidth = 1;
-  g.strokeRect(0.5, 0.5, s - 1, s - 1);
+function unit() {
+  return Math.max(0.7, size / 700);
 }
 
 function drawMap() {
@@ -329,191 +304,34 @@ function drawMap() {
     bgCache.height = Math.round(size * dpr);
     const g = bgCache.getContext('2d');
     g.scale(dpr, dpr);
-    if (dotaImg) {
-      g.fillStyle = '#0e1218';
-      g.fillRect(0, 0, size, size);
-      g.drawImage(dotaImg, 0, 0, size, size);
-    } else {
-      paintDota(g, size);
-    }
+    g.fillStyle = '#121a14';
+    g.fillRect(0, 0, size, size);
+    if (dotaImg) g.drawImage(dotaImg, 0, 0, size, size);
+    g.fillStyle = 'rgba(5,8,12,.18)';
+    g.fillRect(0, 0, size, size);
   }
   ctx.drawImage(bgCache, 0, 0, size, size);
   ctx.restore();
 }
 
-function teamColor(team) {
-  return team === 2 ? '#4ade80' : (team === 3 ? '#f87171' : '#fbbf24');
+function teamColor(team, alpha) {
+  const c = team === 2 ? [74, 222, 128] : (team === 3 ? [248, 113, 113] : [251, 191, 36]);
+  return 'rgba(' + c.join(',') + ',' + (alpha == null ? 1 : alpha) + ')';
 }
-
-function drawIcon(path, x, y, s) {
-  const im = icon(path);
-  if (!im) return false;
-  ctx.drawImage(im, x - s / 2, y - s / 2, s, s);
-  return true;
-}
-
-function drawHero(h) {
-  const r = h.row;
-  const [x, y] = toScreen(h.cx, h.cy);
-  ctx.globalAlpha = r.alive === false ? 0.35 : (stale ? 0.5 : 1);
-  const im = icon(heroIcon(r.name));
-  ctx.fillStyle = teamColor(r.team);
-  ctx.beginPath();
-  ctx.arc(x, y, im ? 12 : 9, 0, 7);
-  ctx.fill();
-  if (im) {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(x, y, 10, 0, 7);
-    ctx.clip();
-    ctx.drawImage(im, x - 10, y - 10, 20, 20);
-    ctx.restore();
-  }
-  if (r.max_hp > 0 && r.hp >= 0) {
-    ctx.fillStyle = 'rgba(0,0,0,.6)';
-    ctx.fillRect(x - 11, y + 14, 22, 4);
-    ctx.fillStyle = '#4ade80';
-    ctx.fillRect(x - 11, y + 14, 22 * Math.max(0, Math.min(1, r.hp / r.max_hp)), 4);
-  }
-  if (!im) {
-    ctx.fillStyle = '#e6edf3';
-    ctx.font = '11px system-ui, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(pretty(r.name), x, y - 14);
-  }
-  ctx.globalAlpha = 1;
-}
-
 function list(value) {
   return Array.isArray(value) ? value.filter(Boolean) : (value && typeof value === 'object' ? Object.values(value) : []);
 }
-
-function drawBoss(path, x, y) {
-  if (!drawIcon(path, x, y, 22)) { ctx.fillStyle = '#fbbf24'; ctx.beginPath(); ctx.arc(x, y, 8, 0, 7); ctx.fill(); }
-}
-
-function drawLayers() {
-  for (const u of list(live.units)) {
-    if (typeof u.x !== 'number' || typeof u.y !== 'number') continue;
-    const [x, y] = toScreen(u.x, u.y);
-    ctx.globalAlpha = 0.95;
-    ctx.fillStyle = teamColor(u.team);
-    if (u.kind === 'building') {
-      ctx.beginPath(); ctx.arc(x, y, 7, 0, 7); ctx.fill();
-      if (!drawIcon(TOWER_ICON, x, y, 12)) ctx.fillRect(x - 4, y - 4, 8, 8);
-    } else if (u.kind === 'roshan') {
-      drawBoss('roshan.png', x, y);
-    } else if (u.kind === 'tormentor') {
-      drawBoss('dota_minimap_assets/tormentor/tormentor_timer_icon_' + (u.x + u.y < 0 ? 'radiant' : 'dire') + '_png.png', x, y);
-    } else if (u.kind === 'wisdom') {
-      drawBoss('Wisdom.png', x, y);
-    } else {
-      ctx.beginPath(); ctx.arc(x, y, u.kind === 'courier' ? 4 : 2.5, 0, 7); ctx.fill();
-    }
-  }
-  for (const w of list(live.wards)) {
-    if (typeof w.x !== 'number' || typeof w.y !== 'number') continue;
-    const [x, y] = toScreen(w.x, w.y);
-    const sentry = w.kind === 'sentry';
-    ctx.globalAlpha = 0.95;
-    if (!drawIcon(sentry ? 'centry_ward.png' : 'Observer_ward.png', x, y, 16)) {
-      ctx.strokeStyle = sentry ? '#60a5fa' : '#facc15';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.arc(x, y, 5, 0, 7); ctx.stroke();
-    }
-  }
-  for (const r of list(live.runes)) {
-    if (typeof r.x !== 'number' || typeof r.y !== 'number') continue;
-    const [x, y] = toScreen(r.x, r.y);
-    ctx.globalAlpha = 1;
-    if (!(RUNE_ICONS[r.rune_type] && drawIcon(RUNE_ICONS[r.rune_type], x, y, 16))) {
-      ctx.fillStyle = '#c084fc';
-      ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x + 5, y); ctx.lineTo(x, y + 6); ctx.lineTo(x - 5, y); ctx.fill();
-    }
-  }
-  for (const e of list(live.events)) {
-    if (typeof e.x !== 'number' || typeof e.y !== 'number') continue;
-    const [x, y] = toScreen(e.x, e.y);
-    ctx.globalAlpha = 0.9;
-    ctx.strokeStyle = '#fb923c';
-    ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(x, y, 12, 0, 7); ctx.stroke();
-    ctx.fillStyle = '#fed7aa';
-    ctx.font = '10px system-ui, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(e.a ? pretty(e.a) : String(e.kind || ''), x, y - 16);
-  }
-  ctx.globalAlpha = 1;
-}
-
-let lastFrame = performance.now();
-function frame() {
-  const nowMs = performance.now();
-  const k = 1 - Math.exp(-Math.min(0.1, (nowMs - lastFrame) / 1000) * 12);
-  lastFrame = nowMs;
-  drawMap();
-  drawLayers();
-  for (const id of order) {
-    const h = heroes[id];
-    if (!h) continue;
-    h.cx += (h.row.x - h.cx) * k;
-    h.cy += (h.row.y - h.cy) * k;
-    drawHero(h);
-  }
-}
-
 function gameTime() {
-  return (live.clock && live.clock.t) || 0;
+  const c = live.clock || {};
+  const t = c.t || 0;
+  return c.in_game && !c.paused && !stale ? t + Math.min(1.5, (performance.now() - liveAt) / 1000) : t;
 }
-
-function pct(a, b) {
-  return b > 0 ? Math.max(0, Math.min(100, a / b * 100)) : 0;
-}
-
 function remaining(readyAt) {
   return typeof readyAt === 'number' ? Math.max(0, readyAt - gameTime()) : 0;
 }
-
 function secs(v) {
   return v > 0.5 ? fmt(TEXT.sec, { n: Math.ceil(v) }) : TEXT.ready;
 }
-
-function heroExtras(info) {
-  if (!info) return '';
-  const parts = [];
-  const s = info.stats;
-  if (s) {
-    if (typeof s.k === 'number') parts.push(s.k + '/' + s.d + '/' + s.a);
-    if (typeof s.nw === 'number') parts.push((s.partial ? '≥' : '') + Math.round(s.nw / 100) / 10 + 'k');
-  }
-  if (info.buyback) parts.push(TEXT.buyback + ' ' + secs(remaining(info.buyback.ready_at)));
-  if (info.ult) parts.push(TEXT.ult + ' ' + secs(remaining(info.ult.ready_at)));
-  let html = parts.length ? '<div class="items">' + esc(parts.join(' · ')) + '</div>' : '';
-  const items = list(info.items).map(i => {
-    const cd = remaining(i.ready_at);
-    return '<b>' + esc(pretty(i.name)) + '</b>' + (cd > 0.5 ? ' ' + esc(fmt(TEXT.sec, { n: Math.ceil(cd) })) : '');
-  });
-  if (items.length) html += '<div class="items">' + items.join(', ') + '</div>';
-  return html;
-}
-
-function renderSide() {
-  const now = Date.now() / 1000;
-  const rows = Object.values(roster).sort((a, b) => a.row.team - b.row.team || String(a.row.id).localeCompare(String(b.row.id)));
-  heroesEl.innerHTML = rows.map(entry => {
-    const r = entry.row;
-    const inView = !!heroes[String(r.id)];
-    const note = r.alive === false ? TEXT.dead + (r.respawn_at ? ', ' + secs(remaining(r.respawn_at)) : '')
-      : (inView ? TEXT.visible : fmt(TEXT.fog, { n: Math.round(now - entry.seen) }));
-    return '<div class="row team-' + esc(r.team) + (inView ? '' : ' fog') + '">' +
-      '<div class="top"><img src="radar/icons/' + esc(heroIcon(r.name)) + '" alt="" onerror="this.style.visibility=\'hidden\'"><span class="name">' + esc(pretty(r.name)) + '</span><span class="meta">' + esc(TEXT.lvl) + ' ' + esc(r.level || '?') + '</span></div>' +
-      '<div class="meta">' + esc(note) + '</div>' +
-      '<div class="bar hp"><i style="width:' + pct(r.hp, r.max_hp) + '%"></i></div>' +
-      '<div class="bar mp"><i style="width:' + pct(r.mana, r.max_mana) + '%"></i></div>' +
-      heroExtras(entry.info) + '</div>';
-  }).join('');
-}
-
 function clockText(t) {
   t = Math.trunc(t || 0);
   const sign = t < 0 ? '-' : '';
@@ -521,63 +339,456 @@ function clockText(t) {
   return sign + Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0');
 }
 
+function circle(x, y, r) {
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+}
+function drawIcon(path, x, y, s, round) {
+  const im = icon(path);
+  if (!im) return false;
+  if (round) {
+    ctx.save();
+    circle(x, y, s / 2);
+    ctx.clip();
+    ctx.drawImage(im, x - s / 2, y - s / 2, s, s);
+    ctx.restore();
+  } else ctx.drawImage(im, x - s / 2, y - s / 2, s, s);
+  return true;
+}
+function label(text, x, y, color, px) {
+  ctx.font = '600 ' + (px || 10) + 'px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = 'rgba(0,0,0,.75)';
+  ctx.strokeText(text, x, y);
+  ctx.fillStyle = color || '#e6edf3';
+  ctx.fillText(text, x, y);
+}
+
+function drawVision() {
+  if (!layers.wards) return;
+  for (const w of list(live.wards)) {
+    if (typeof w.r !== 'number' || w.r <= 0) continue;
+    const [x, y] = toScreen(w.x, w.y);
+    const r = world(w.r);
+    const sentry = w.kind === 'sentry';
+    circle(x, y, r);
+    ctx.fillStyle = sentry ? 'rgba(96,165,250,.07)' : teamColor(w.team, 0.08);
+    ctx.fill();
+    ctx.setLineDash(w.f ? [4, 4] : []);
+    ctx.strokeStyle = sentry ? 'rgba(96,165,250,.45)' : teamColor(w.team, 0.4);
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function drawCamps() {
+  if (!layers.jungle) return;
+  const u = unit();
+  for (const c of list(live.camps)) {
+    const [x, y] = toScreen(c.x, c.y);
+    ctx.globalAlpha = c.s === 1 ? 0.95 : (c.s === 0 ? 0.3 : 0.55);
+    if (!drawIcon(CAMP_ICON, x, y, 12 * u)) { ctx.fillStyle = '#e2b84a'; ctx.fillRect(x - 3 * u, y - 3 * u, 6 * u, 6 * u); }
+    ctx.globalAlpha = 1;
+    if (c.st) label('x' + c.st, x + 9 * u, y - 7 * u, '#fde68a', 9);
+    else if (c.s === 0) label('×', x + 7 * u, y - 6 * u, '#94a3b8', 10);
+  }
+}
+
+function drawUnits() {
+  const u = unit();
+  const all = list(live.units);
+  for (const row of all) {
+    if (typeof row.x !== 'number') continue;
+    const [x, y] = toScreen(row.x, row.y);
+    const kind = row.kind;
+    if (kind === 'building') {
+      if (!layers.buildings) continue;
+      ctx.globalAlpha = row.f ? 0.55 : 1;
+      circle(x, y, 7 * u);
+      ctx.fillStyle = teamColor(row.team, 0.9);
+      ctx.fill();
+      drawIcon(TOWER_ICON, x, y, 11 * u);
+      if (typeof row.hp === 'number' && row.hp < 100) {
+        ctx.beginPath();
+        ctx.arc(x, y, 9.5 * u, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * row.hp / 100);
+        ctx.strokeStyle = row.hp > 50 ? '#bbf7d0' : (row.hp > 25 ? '#fde68a' : '#fecaca');
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    } else if (kind === 'creep') {
+      if (!layers.creeps) continue;
+      const r = (row.s ? 3.6 : 2.6) * u;
+      if (row.f === 2) {
+        ctx.globalAlpha = 0.85;
+        circle(x, y, r);
+        ctx.strokeStyle = teamColor(row.team);
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+      } else {
+        ctx.globalAlpha = 1;
+        if (row.s) { ctx.fillStyle = teamColor(row.team); ctx.fillRect(x - r, y - r, r * 2, r * 2); }
+        else { circle(x, y, r); ctx.fillStyle = teamColor(row.team); ctx.fill(); }
+        ctx.strokeStyle = 'rgba(0,0,0,.6)';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    } else if (kind === 'neutral') {
+      if (!layers.jungle) continue;
+      ctx.globalAlpha = row.f ? 0.35 : 0.95;
+      circle(x, y, 2.3 * u);
+      ctx.fillStyle = '#e2b84a';
+      ctx.fill();
+    } else if (kind === 'courier') {
+      if (!layers.heroes) continue;
+      ctx.globalAlpha = row.f ? 0.45 : 1;
+      ctx.beginPath();
+      ctx.moveTo(x, y - 5 * u); ctx.lineTo(x + 4 * u, y); ctx.lineTo(x, y + 5 * u); ctx.lineTo(x - 4 * u, y); ctx.closePath();
+      ctx.fillStyle = teamColor(row.team);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,.7)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    } else if (kind === 'roshan') {
+      ctx.globalAlpha = 1;
+      drawIcon('roshan.png', x, y, 22 * u);
+    } else if (kind === 'tormentor') {
+      ctx.globalAlpha = row.f ? 0.6 : 1;
+      drawIcon('dota_minimap_assets/tormentor/tormentor_timer_icon_' + (row.x + row.y < 0 ? 'radiant' : 'dire') + '_png.png', x, y, 20 * u);
+    } else if (kind === 'wisdom') {
+      ctx.globalAlpha = row.f ? 0.6 : 1;
+      drawIcon('Wisdom.png', x, y, 18 * u);
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawWards() {
+  if (!layers.wards) return;
+  const u = unit();
+  for (const w of list(live.wards)) {
+    const [x, y] = toScreen(w.x, w.y);
+    const sentry = w.kind === 'sentry';
+    ctx.globalAlpha = w.f ? 0.6 : 1;
+    circle(x, y, 8 * u);
+    ctx.fillStyle = teamColor(w.team, 0.85);
+    ctx.fill();
+    if (!drawIcon(sentry ? 'centry_ward.png' : 'Observer_ward.png', x, y, 14 * u)) {
+      circle(x, y, 4 * u);
+      ctx.fillStyle = sentry ? '#60a5fa' : '#facc15';
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (typeof w.e === 'number' && w.team !== (live.clock || {}).team) {
+      const left = remaining(w.e);
+      if (left > 0) label(clockText(left), x, y + 13 * u, '#fde68a', 9);
+    }
+  }
+}
+
+function drawRunes() {
+  const u = unit();
+  for (const r of list(live.runes)) {
+    const [x, y] = toScreen(r.x, r.y);
+    ctx.globalAlpha = r.f ? 0.45 : 1;
+    if (!(RUNE_ICONS[r.rune_type] && drawIcon(RUNE_ICONS[r.rune_type], x, y, 16 * u))) {
+      ctx.fillStyle = '#c084fc';
+      ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x + 5, y); ctx.lineTo(x, y + 6); ctx.lineTo(x - 5, y); ctx.fill();
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawEvents() {
+  if (!layers.events) return;
+  const u = unit();
+  const t = gameTime();
+  const pulse = (performance.now() % 1200) / 1200;
+  for (const e of list(live.events)) {
+    const [x, y] = toScreen(e.x, e.y);
+    const age = typeof e.t0 === 'number' ? Math.max(0, t - e.t0) : 0;
+    const color = e.team === 2 || e.team === 3 ? teamColor(e.team) : '#fb923c';
+    if (e.kind === 'teleport') {
+      if (e.ph === 'destination' && typeof e.ox === 'number') {
+        const [ox, oy] = toScreen(e.ox, e.oy);
+        ctx.setLineDash([6, 5]);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(x, y); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      circle(x, y, (10 + 6 * pulse) * u);
+      ctx.strokeStyle = 'rgba(96,165,250,' + (1 - pulse) + ')';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      circle(x, y, 7 * u);
+      ctx.strokeStyle = color;
+      ctx.stroke();
+      if (e.ph === 'destination' && typeof e.te === 'number') label('TP ' + Math.ceil(remaining(e.te)), x, y - 15 * u, '#bfdbfe', 10);
+      continue;
+    }
+    if (e.kind === 'scan') {
+      circle(x, y, world(900));
+      ctx.fillStyle = 'rgba(96,165,250,.10)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(96,165,250,' + (0.9 - pulse * 0.6) + ')';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      continue;
+    }
+    if (e.kind === 'smoke') {
+      circle(x, y, 18 * u);
+      ctx.fillStyle = 'rgba(148,163,184,.35)';
+      ctx.fill();
+      label('SMOKE', x, y, '#e2e8f0', 9);
+      continue;
+    }
+    if (e.kind === 'innate') continue;
+    const alpha = Math.max(0.35, 1 - age / 6) * (e.f ? 0.7 : 1);
+    ctx.globalAlpha = alpha;
+    circle(x, y, (6 + 4 * Math.min(1, age)) * u);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    circle(x, y, 2.5 * u);
+    ctx.fillStyle = color;
+    ctx.fill();
+    if (e.a && !document.pictureInPictureElement) marks.push({ src: abilityImg(e.a), x: x, y: y - 16 * u, s: 20 * u, c: color, o: alpha, t: abilityName(e.a, e.h) });
+    else if (e.a) label(abilityName(e.a, e.h), x, y - 14 * u, '#fed7aa', 10);
+    ctx.globalAlpha = 1;
+  }
+}
+
+function drawHero(h, t) {
+  const r = h.row;
+  if (r.alive === false) return;
+  if (r.f && !layers.fog) return;
+  if (!r.f && !layers.heroes) return;
+  const u = unit();
+  const [x, y] = toScreen(h.cx, h.cy);
+  const age = r.f && typeof r.seen === 'number' ? Math.max(0, t - r.seen) : 0;
+  const alpha = r.f === 2 ? 0.4 : (r.f === 1 ? Math.max(0.45, 1 - age / 60) : 1);
+  const s = 22 * u;
+  ctx.globalAlpha = alpha;
+  circle(x, y, s / 2 + 2.5);
+  ctx.fillStyle = 'rgba(0,0,0,.7)';
+  ctx.fill();
+  if (!drawIcon(heroImg(r.name), x, y, s, true)) {
+    circle(x, y, s / 2);
+    ctx.fillStyle = teamColor(r.team);
+    ctx.fill();
+  }
+  circle(x, y, s / 2 + 1.5);
+  ctx.lineWidth = r.me ? 3 : 2;
+  ctx.strokeStyle = r.me ? '#ffffff' : teamColor(r.team);
+  if (r.f) { ctx.setLineDash([4, 3]); ctx.strokeStyle = r.f === 1 ? '#fcd34d' : '#94a3b8'; }
+  ctx.stroke();
+  ctx.setLineDash([]);
+  if (!r.f && r.max_hp > 0 && r.hp >= 0) {
+    const w = s + 4;
+    ctx.fillStyle = 'rgba(0,0,0,.75)';
+    ctx.fillRect(x - w / 2, y + s / 2 + 3, w, 4);
+    ctx.fillStyle = r.hp / r.max_hp > 0.5 ? '#4ade80' : (r.hp / r.max_hp > 0.25 ? '#facc15' : '#f87171');
+    ctx.fillRect(x - w / 2, y + s / 2 + 3, w * Math.max(0, Math.min(1, r.hp / r.max_hp)), 4);
+    if (r.max_mana > 0) {
+      ctx.fillStyle = '#60a5fa';
+      ctx.fillRect(x - w / 2, y + s / 2 + 7, w * Math.max(0, Math.min(1, r.mana / r.max_mana)), 2);
+    }
+  }
+  ctx.globalAlpha = 1;
+  if (r.f) label(Math.round(age) + 's', x + s / 2 + 4, y - s / 2, r.f === 1 ? '#fde68a' : '#cbd5e1', 9);
+  if (typeof r.tp === 'number' && remaining(r.tp) > 0) {
+    ctx.beginPath();
+    ctx.arc(x, y, s / 2 + 5, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * ((performance.now() / 700) % 1));
+    ctx.strokeStyle = '#60a5fa';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+}
+
+const marksEl = $('marks');
+const markPool = [];
+let marks = [];
+function syncMarks() {
+  marksEl.style.left = canvas.offsetLeft + 'px';
+  marksEl.style.top = canvas.offsetTop + 'px';
+  marksEl.style.width = size + 'px';
+  marksEl.style.height = size + 'px';
+  marks.forEach((m, i) => {
+    let im = markPool[i];
+    if (!im) { im = markPool[i] = document.createElement('img'); im.alt = ''; im.onerror = () => { im.style.visibility = 'hidden'; }; marksEl.appendChild(im); }
+    if (im.dataset.src !== m.src) { im.dataset.src = m.src; im.style.visibility = ''; im.src = m.src; }
+    im.style.display = '';
+    im.style.left = m.x + 'px';
+    im.style.top = m.y + 'px';
+    im.style.width = im.style.height = m.s + 'px';
+    im.style.opacity = m.o;
+    im.style.setProperty('--c', m.c);
+    im.title = m.t;
+  });
+  for (let i = marks.length; i < markPool.length; i++) markPool[i].style.display = 'none';
+}
+
+let lastFrame = performance.now();
+function frame() {
+  marks = [];
+  const nowMs = performance.now();
+  const k = 1 - Math.exp(-Math.min(0.1, (nowMs - lastFrame) / 1000) * 12);
+  lastFrame = nowMs;
+  drawMap();
+  drawVision();
+  drawCamps();
+  drawUnits();
+  drawWards();
+  drawRunes();
+  drawEvents();
+  const t = gameTime();
+  const ids = Object.keys(heroes).sort((a, b) => (heroes[b].row.f || 0) - (heroes[a].row.f || 0));
+  for (const id of ids) {
+    const h = heroes[id];
+    h.cx += (h.row.x - h.cx) * k;
+    h.cy += (h.row.y - h.cy) * k;
+    drawHero(h, t);
+  }
+  syncMarks();
+}
+
+function pct(a, b) {
+  return b > 0 ? Math.max(0, Math.min(100, a / b * 100)) : 0;
+}
+
+function slot(src, title, opts) {
+  opts = opts || {};
+  const cd = opts.cd > 0.5 ? '<span class="cd">' + Math.ceil(opts.cd) + '</span>' : '';
+  const ch = opts.charges ? '<span class="ch">' + esc(opts.charges) + '</span>' : '';
+  const pips = opts.level ? '<span class="pips">' + '<i></i>'.repeat(Math.min(opts.level, 7)) + '</span>' : '';
+  return '<span class="slot ' + (opts.cls || '') + '" title="' + esc(title) + '"><img src="' + esc(src) + '" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'noimg\');this.remove()"><em>' + esc(title) + '</em>' + cd + ch + pips + '</span>';
+}
+
+function heroCard(entry) {
+  const r = entry.row, info = entry.info || {};
+  const t = gameTime();
+  let note, noteCls = '';
+  if (r.alive === false) { note = r.respawn_at ? fmt(TEXT.deadIn, { n: Math.ceil(remaining(r.respawn_at)) }) : TEXT.dead; noteCls = 'dead'; }
+  else if (typeof r.tp === 'number' && remaining(r.tp) > 0) { note = fmt(TEXT.tp, { n: Math.ceil(remaining(r.tp)) }); noteCls = 'tp'; }
+  else if (r.f) { note = fmt(r.f === 1 ? TEXT.maphack : TEXT.lastSeen, { n: Math.round(Math.max(0, t - (r.seen || t))) }); noteCls = 'fogged'; }
+  else note = TEXT.visible;
+  const s = info.stats || {};
+  const stats = [];
+  if (typeof s.k === 'number') stats.push('<b>' + s.k + '/' + s.d + '/' + s.a + '</b>');
+  if (typeof s.nw === 'number') stats.push(TEXT.nw + ' <b>' + (s.partial ? '≥' : '') + (Math.round(s.nw / 100) / 10) + 'k</b>');
+  if (typeof s.lh === 'number') stats.push(TEXT.lhdn + ' <b>' + s.lh + '/' + (s.dn || 0) + '</b>');
+  if (typeof s.g === 'number') stats.push(TEXT.gold + ' <b>' + s.g + '</b>');
+  if (info.buyback) stats.push(TEXT.buyback + ' <b>' + esc(secs(remaining(info.buyback.ready_at))) + '</b>');
+  const items = list(info.items);
+  const bySlot = {};
+  for (const it of items) bySlot[it.slot] = it;
+  let inv = '';
+  for (let i = 0; i < 6; i++) {
+    const it = bySlot[i];
+    inv += it ? slot(itemImg(it.name), itemName(it.name), { cd: remaining(it.ready_at), charges: it.charges, cls: it.o ? 'old' : '' }) : '<span class="slot"></span>';
+  }
+  if (bySlot[16]) inv += '<span class="sep"></span>' + slot(itemImg(bySlot[16].name), itemName(bySlot[16].name), { cd: remaining(bySlot[16].ready_at), cls: 'neutral' + (bySlot[16].o ? ' old' : '') });
+  let back = '';
+  for (const i of [6, 7, 8]) if (bySlot[i]) back += slot(itemImg(bySlot[i].name), itemName(bySlot[i].name), { cd: remaining(bySlot[i].ready_at), cls: 'small' });
+  if (bySlot[15]) back += '<span class="sep"></span>' + slot(itemImg(bySlot[15].name), itemName(bySlot[15].name), { cd: remaining(bySlot[15].ready_at), cls: 'small' });
+  const abilities = list(info.abilities).map(a => slot(abilityImg(a.name), abilityName(a.name, r.name) + (a.level ? ' (' + a.level + ')' : ''),
+    { cd: remaining(a.ready_at), level: a.level, charges: a.charges, cls: 'ab' + (a.level ? '' : ' l0') })).join('');
+  return '<div class="row team-' + esc(r.team) + (r.f ? ' fog' : '') + (r.alive === false ? ' deadrow' : '') + '">' +
+    '<div class="top"><img src="' + esc(heroImg(r.name)) + '" alt="" onerror="this.style.visibility=\'hidden\'"><span class="name">' + esc(heroName(r.name)) + '</span><span class="lvl">' + esc(r.level || '?') + '</span></div>' +
+    '<div class="note ' + noteCls + '">' + esc(note) + '</div>' +
+    '<div class="bars"><div class="bar hp"><i style="width:' + pct(r.hp, r.max_hp) + '%"></i><b>' + (r.max_hp ? esc(r.hp + ' / ' + r.max_hp) : '') + '</b></div>' +
+    (r.max_mana ? '<div class="bar mp"><i style="width:' + pct(r.mana, r.max_mana) + '%"></i><b>' + esc(r.mana + ' / ' + r.max_mana) + '</b></div>' : '') + '</div>' +
+    (stats.length ? '<div class="stats">' + stats.map(x => '<span>' + x + '</span>').join('') + '</div>' : '') +
+    (items.length ? '<div class="slots">' + inv + '</div>' : '') +
+    (back ? '<div class="slots">' + back + '</div>' : '') +
+    (abilities ? '<div class="slots">' + abilities + '</div>' : '') + '</div>';
+}
+
+let sideHtml = '';
+function renderSide() {
+  const mine = (live.clock || {}).team;
+  const rows = Object.values(roster).sort((a, b) => a.row.team - b.row.team || String(a.row.id).localeCompare(String(b.row.id)));
+  const groups = [];
+  for (const team of (mine === 3 ? [3, 2] : [2, 3])) {
+    const members = rows.filter(e => e.row.team === team);
+    if (!members.length) continue;
+    const title = (team === 2 ? TEXT.radiant : TEXT.dire) + (mine === 2 || mine === 3 ? ' · ' + (team === mine ? TEXT.allies : TEXT.enemies) : '');
+    groups.push('<h3 class="team">' + esc(title) + '</h3>' + members.map(heroCard).join(''));
+  }
+  const html = groups.join('');
+  if (html !== sideHtml) { sideHtml = html; heroesEl.innerHTML = html; }
+}
+
 function cdText(v) {
   return typeof v === 'number' ? secs(remaining(v)) : '—';
 }
-
 function bossText(o) {
   if (o.alive === false) return TEXT.bossDead;
   const hp = typeof o.hp === 'number' ? 'HP ' + o.hp + '%' : TEXT.bossSeen;
   return hp + (o.under_attack ? ' · ' + TEXT.bossHit : '');
 }
-
 function renderObjs() {
   const obj = live.objectives || {};
   const rows = [[TEXT.roshan, obj.roshan ? bossText(obj.roshan) : TEXT.noData]];
   const torms = list(obj.tormentors);
-  torms.forEach(function (t, i) {
-    rows.push([TEXT.tormentor + (torms.length > 1 ? ' ' + (i + 1) : ''), bossText(t)]);
-  });
+  torms.forEach((t, i) => rows.push([TEXT.tormentor + (torms.length > 1 ? ' ' + (i + 1) : ''), bossText(t)]));
   rows.push([TEXT.glyph, cdText(obj.glyph_radiant) + ' / ' + cdText(obj.glyph_dire)]);
   rows.push([TEXT.scan, cdText(obj.scan_radiant) + ' / ' + cdText(obj.scan_dire)]);
+  const camps = list(live.camps);
+  if (camps.length) rows.push([TEXT.camps, camps.filter(c => c.s === 1).length + ' / ' + camps.length]);
   objsEl.innerHTML = rows.map(r => '<div class="o"><span>' + esc(r[0]) + '</span><span>' + esc(r[1]) + '</span></div>').join('');
 }
 
 function placeText(code) {
   if (!code) return null;
-  return String(code).split(',').map(function (one) {
+  return String(code).split(',').map(one => {
     if (TEXT.place[one]) return TEXT.place[one];
+    const tower = /^t([rd])(\d)_(\w+)$/.exec(one);
+    if (tower) return fmt(TEXT.tower, { team: TEXT.boss[tower[1]], tier: tower[2], lane: TEXT.zone[tower[3]] || tower[3] });
     const parts = one.split('_');
     return TEXT.zone[parts[0]] && TEXT.side[parts[1]] ? TEXT.zone[parts[0]] + ', ' + TEXT.side[parts[1]] : one;
   }).join(', ');
 }
-
 function bossName(e) {
   if (e.b === 'rosh') return TEXT.boss.rosh;
   return e.team ? fmt(TEXT.boss.tormSide, { side: TEXT.boss[e.team] }) : TEXT.boss.torm;
 }
-
 function feedText(e) {
   const f = TEXT.feed;
   const values = {
-    h: e.h ? pretty(e.h) : null, p: placeText(e.p), r: typeof e.r === 'number' ? Math.round(e.r) : null,
-    a: typeof e.a === 'number' ? TEXT.runes[e.a] : (e.a ? pretty(e.a) : null),
-    team: e.team ? TEXT.boss[e.team] : null, b: e.b ? bossName(e) : null,
-    v: typeof e.v === 'number' ? e.v + '%' : '?', n: e.n ? ' (' + list(e.n).map(pretty).join(', ') + ')' : '',
+    h: e.h ? heroName(e.h) : null, p: placeText(e.p), r: typeof e.r === 'number' ? Math.round(e.r) : null,
+    a: typeof e.a === 'number' ? TEXT.runes[e.a] : (e.a ? abilityName(e.a, e.h) : null),
+    team: e.team ? TEXT.boss[e.team] : null, b: e.b ? bossName(e) : null, w: e.w ? TEXT.ward[e.w] : null,
+    v: typeof e.v === 'number' ? e.v + '%' : '?', n: e.n ? ' (' + list(e.n).map(heroName).join(', ') + ')' : '',
   };
   let key = e.k;
   if (key === 'death' && values.r) key = 'deathRespawn';
   if (key === 'rune' && values.p) key = 'runeAt';
   if (key === 'scan_used' && values.p) key = 'scan_usedAt';
-  return f[key] ? fmt(f[key], values) : String(e.k || '');
+  if (key === 'smoke' && !values.h) key = 'smokeAnon';
+  return f[key] ? fmt(f[key], values).replace(/ \(\?\)$/, '') : String(e.k || '');
 }
-
 function feedClass(e) {
   const k = String(e.k || '');
   if (k.indexOf('boss') === 0) return 'boss';
-  if (k === 'rune') return 'rune ' + (e.s || '');
+  if (k === 'rune') return 'rune';
   if (k === 'scan' || k === 'scan_used' || k === 'glyph') return 'scan';
+  if (k === 'smoke') return 'smoke';
   return e.s || '';
+}
+function feedIcon(e) {
+  if (typeof e.a === 'string' && (e.k === 'ability' || e.k === 'ult')) return abilityImg(e.a);
+  if (e.k === 'smoke') return itemImg('item_smoke_of_deceit');
+  if (e.k === 'ward') return 'radar/icons/' + (e.w === 's' ? 'centry_ward.png' : 'Observer_ward.png');
+  if (e.k === 'rune' && typeof e.a === 'number' && RUNE_ICONS[e.a]) return 'radar/icons/' + RUNE_ICONS[e.a];
+  if (e.k === 'tp_from' || e.k === 'tp_to') return itemImg('item_tpscroll');
+  if (e.k === 'blink') return itemImg('item_blink');
+  if (e.b === 'rosh') return 'radar/icons/roshan.png';
+  if (e.h) return heroImg(e.h);
+  return null;
 }
 
 const feedLines = new Map();
@@ -596,28 +807,38 @@ function feedLine(key, e) {
   t.className = 't';
   t.textContent = clockText(e.t);
   line.appendChild(t);
-  line.appendChild(document.createTextNode(feedText(e)));
+  const src = feedIcon(e);
+  if (src) {
+    const im = document.createElement('img');
+    im.src = src;
+    im.alt = '';
+    im.onerror = () => im.remove();
+    line.appendChild(im);
+  }
+  const text = document.createElement('span');
+  text.textContent = feedText(e);
+  line.appendChild(text);
 }
 
 function applyLive() {
+  liveAt = performance.now();
   const clock = live.clock || {};
-  clockEl.textContent = clock.in_game ? clockText(clock.t) : '';
-  if (!clock.in_game) { roster = {}; heroes = {}; order = []; }
+  clockEl.textContent = clock.in_game ? clockText(clock.t) + (clock.paused ? ' · ' + TEXT.paused : '') : '';
+  if (!clock.in_game) { roster = {}; heroes = {}; }
   const info = live.info || {};
   const next = {};
-  const ids = [];
-  const now = Date.now() / 1000;
+  const nextRoster = {};
   for (const row of list(live.pos)) {
     if (typeof row.x !== 'number' || typeof row.y !== 'number') continue;
     const key = String(row.id);
     const old = heroes[key];
-    next[key] = { row: row, cx: old ? old.cx : row.x, cy: old ? old.cy : row.y };
+    const jump = !old || old.row.f !== row.f || Math.hypot(old.cx - row.x, old.cy - row.y) > 2500;
+    next[key] = { row: row, cx: jump ? row.x : old.cx, cy: jump ? row.y : old.cy };
     const prev = roster[key];
-    roster[key] = { row: row, seen: now, info: info['h' + key] || (prev && prev.info) };
-    ids.push(key);
+    nextRoster[key] = { row: row, info: info['h' + key] || (prev && prev.info) };
   }
   heroes = next;
-  order = ids;
+  roster = nextRoster;
   renderObjs();
   renderSide();
 }
@@ -634,6 +855,7 @@ function refreshStatus() {
   }
   if (!meta) stale = true;
   statusEl.textContent = text;
+  statusEl.className = 'pill' + (meta && !stale ? ' ok' : '');
 }
 
 if (/^[A-Za-z0-9]{20}$/.test(sessionId)) {
@@ -667,7 +889,7 @@ try {
 }
 window.addEventListener('hashchange', () => location.reload());
 
-const popBtn = document.getElementById('popcon');
+const popBtn = $('popcon');
 if (!window.documentPictureInPicture) popBtn.style.display = 'none';
 popBtn.onclick = async function () {
   try {
@@ -675,7 +897,7 @@ popBtn.onclick = async function () {
       window.documentPictureInPicture.window.close();
       return;
     }
-    const w = await window.documentPictureInPicture.requestWindow({ width: 380, height: 340 });
+    const w = await window.documentPictureInPicture.requestWindow({ width: 400, height: 380 });
     for (const st of document.querySelectorAll('style')) w.document.head.appendChild(st.cloneNode(true));
     consoleEl.classList.add('pop');
     w.document.body.appendChild(consoleEl);
@@ -688,7 +910,7 @@ popBtn.onclick = async function () {
   }
 };
 
-const pipBtn = document.getElementById('pip');
+const pipBtn = $('pip');
 let pipVideo = null;
 if (!document.pictureInPictureEnabled || !canvas.captureStream) pipBtn.style.display = 'none';
 pipBtn.onclick = async function () {

@@ -11449,11 +11449,12 @@
       },
       "ru": {
         "tagline": "живой радар матча для друзей по ссылке",
-        "about": "Показывает друзьям карту вашего матча в браузере: героев, варды, руны, вышки, Рошана и ленту событий. Сервер не нужен: нажмите Start и отправьте ссылку. Передается только то, что видит ваша команда.",
+        "about": "Показывает друзьям карту вашего матча в браузере: героев, в том числе в тумане войны, крипов, варды, кемпы, руны, вышки, Рошана и ленту событий. Сервер не нужен: нажмите Start и отправьте ссылку.",
         "features": [
           "Карта с иконками героев, вардов, рун и вышек",
-          "Предметы, ульт, KDA и байбек у видимых героев",
-          "Лента событий: смерти, руны, телепорты, сканы, Рошан и Торментор",
+          "Герои в тумане по мапхаку и прогноз волн крипов в тумане",
+          "Предметы, способности с перезарядками, KDA, NW и байбек",
+          "Лента событий: смерти, руны, телепорты, Smoke, фарм леса, варды, башни, Рошан и Торментор",
           "Карта и консоль поверх игры (картинка в картинке)"
         ],
         "install": [
@@ -11465,11 +11466,12 @@
       },
       "en": {
         "tagline": "live match radar for friends via a link",
-        "about": "Shows your match map to friends in a browser: heroes, wards, runes, towers, Roshan and an event feed. No server needed: press Start and send the link. Only what your team can see is shared.",
+        "about": "Shows your match map to friends in a browser: heroes, including those in the fog of war, creeps, wards, camps, runes, towers, Roshan and an event feed. No server needed: press Start and send the link.",
         "features": [
           "Map with hero, ward, rune and tower icons",
-          "Items, ultimate, KDA and buyback for visible heroes",
-          "Event feed: deaths, runes, teleports, scans, Roshan and Tormentor",
+          "Heroes in the fog from maphack and predicted creep waves in the fog",
+          "Items, abilities with cooldowns, KDA, net worth and buyback",
+          "Event feed: deaths, runes, teleports, Smoke, jungle farming, wards, towers, Roshan and Tormentor",
           "Map and console on top of the game (picture in picture)"
         ],
         "install": [

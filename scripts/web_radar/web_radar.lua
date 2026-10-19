@@ -346,10 +346,10 @@ local localization = qLocalization.new({
         cr_tormentors = "Tormentor",
         cr_runes = "Runes",
         cr_effects = "Map events",
-        cr_couriers = "Couriers",
-        cr_creeps = "Lane creeps",
-        cr_neutrals = "Neutral creeps",
-        cr_camps = "Neutral camps",
+        cr_layer_couriers = "Couriers",
+        cr_layer_creeps = "Lane creeps",
+        cr_layer_neutrals = "Neutral creeps",
+        cr_layer_camps = "Neutral camps",
         cr_camps_tip = "Shows camps and seen neutrals.\nNo visible creeps does not mean farmed.",
         cr_items = "Items",
         cr_abilities = "Abilities and cooldowns",
@@ -397,7 +397,7 @@ local localization = qLocalization.new({
         cr_st_link_ready = "the link is in the Link field",
         cr_st_send_fail = "upload failed: HTTP %d, retrying",
         cr_link_hint = "Press Start, then send the link to friends",
-        cr_version = "Version 2.0.0, radar for friends",
+        cr_version = "Version 2.1.0, radar for friends",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -428,10 +428,10 @@ local localization = qLocalization.new({
         cr_tormentors = "Торментор",
         cr_runes = "Руны",
         cr_effects = "События на карте",
-        cr_couriers = "Курьеры",
-        cr_creeps = "Линейные крипы",
-        cr_neutrals = "Лесные крипы",
-        cr_camps = "Нейтральные кемпы",
+        cr_layer_couriers = "Курьеры",
+        cr_layer_creeps = "Линейные крипы",
+        cr_layer_neutrals = "Лесные крипы",
+        cr_layer_camps = "Нейтральные кемпы",
         cr_camps_tip = "Показывает кемпы и замеченных нейтралов.\nНет видимых крипов не значит зафармлен.",
         cr_items = "Предметы",
         cr_abilities = "Способности и перезарядки",
@@ -479,7 +479,7 @@ local localization = qLocalization.new({
         cr_st_link_ready = "ссылка в поле «Ссылка»",
         cr_st_send_fail = "ошибка передачи: HTTP %d, повтор",
         cr_link_hint = "Нажмите Start и отправьте ссылку друзьям",
-        cr_version = "Версия 2.0.0, радар для друзей",
+        cr_version = "Версия 2.1.0, радар для друзей",
     },
 })
 
@@ -487,6 +487,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
+script.VERSION = "2.1.0"
 local ui = {}
 local JSON
 local state = {
@@ -507,7 +508,7 @@ local state = {
     courierCosts = {}, nextCouriers = 0, inventoryDirty = {}, courierMotion = {}, courierCursor = 0, courierSamples = {},
     itemKeys = setmetatable({}, {__mode = "k"}), loggedParticles = {},
     fb = {waiters = {}}, sentParts = {}, feedQueue = {}, feedSeq = 0, feedKeys = {}, feedPrune = {}, mem = {}, resendAll = true,
-    relay = {units = {}, wards = {}, runes = {}},
+    relay = {units = {}, wards = {}, runes = {}}, kills = {},
 }
 local start, stop, copyLink
 local observeCast
@@ -542,7 +543,7 @@ end
 local function refreshFlags(now)
     if now < state.nextFlags then return end
     for _, key in ipairs({"heroes", "illusions", "wards", "couriers", "creeps", "neutrals", "wisdom", "buildings", "roshan", "tormentors", "runes", "camps", "effects", "items", "abilities", "modifiers", "stats", "buybacks", "teleports", "ultimates", "active_items", "casts", "projectiles", "scans"}) do
-        local enabled = get(ui[key], key ~= "illusions" and key ~= "creeps" and key ~= "projectiles")
+        local enabled = get(ui[key], key ~= "illusions" and key ~= "projectiles")
         if state.flags[key] ~= enabled then state.layersDirty, state.needFull = true, true end
         state.flags[key] = enabled
     end
@@ -579,7 +580,7 @@ local function resetMatch()
     state.innatePositions = {}
     state.orbParticles = {}
     state.teleports, state.tormentor_units, state.tormentorAttackers, state.objectiveMotion = {}, {}, {}, {}
-    state.farming = {}
+    state.farming, state.kills = {}, {}
     state.unitMemory, state.runeMemory, state.laneMovers, state.laneCursor = {}, {}, {}, 0
     state.laneList = {}
     state.courierCosts, state.nextCouriers, state.inventoryDirty = {}, 0, {}
@@ -644,7 +645,7 @@ local function initMenu()
         ui[row[1]] = objects:Switch("cr_" .. row[1], true, row[2])
     end
     for _, row in ipairs({{"couriers", "\u{f0d1}"}, {"creeps", "\u{f0c0}"}, {"neutrals", "\u{f1bb}"}, {"camps", "\u{f3c5}"}}) do
-        ui[row[1]] = extras:Switch("cr_" .. row[1], false, row[2])
+        ui[row[1]] = extras:Switch("cr_layer_" .. row[1], true, row[2])
     end
     for _, row in ipairs({{"items", "\u{f290}"}, {"abilities", "\u{f0e7}"},
         {"modifiers", "\u{f1de}"}, {"stats", "\u{f080}"}, {"buybacks", "\u{f155}"}}) do
@@ -1430,7 +1431,7 @@ local function slowSnapshot(now)
                                 if finite(ending) and ending > now then row.expires_at, row.remaining = ending, ending - now end
                             end
                         end
-                        if row.team ~= state.localTeam and #job.wards < 512 then
+                        if #job.wards < 512 then
                             row.observed_at = now
                             local previous = state.wardMemory[row.id]
                             if previous then
@@ -1527,6 +1528,11 @@ local function objectSnapshot(now, packet)
                 elseif not entry.hidden then
                     local p = pos(call(Entity.GetAbsOrigin, unit))
                     if p then
+                        local dt = entry.seenAt and now - entry.seenAt
+                        if dt and dt > 0 and dt <= 2 and finite(row.x) then
+                            entry.vx, entry.vy = (p.x - row.x) / dt, (p.y - row.y) / dt
+                        end
+                        entry.seenAt, entry.ms = now, entry.ms or call(NPC.GetMoveSpeed, unit)
                         row.x, row.y, row.visible, row.data_stale, row.position_observed_at = p.x, p.y, true, false, now
                         packet.units_patch[#packet.units_patch + 1] = {id = row.id, _merge = true,
                             x = p.x, y = p.y, visible = true, data_stale = false, source = "visible", position_observed_at = now}
@@ -2405,6 +2411,12 @@ function script.OnEntityKilled(data)
     if state.active and type(data) == "table" and isRoshan(data.target) then
         state.roshanAttackers, state.roshanDamageUntil, state.nextRoshan = {}, 0, 0
     end
+    if state.active and type(data) == "table" and data.target and (call(NPC.IsTower, data.target) == true
+        or call(NPC.IsBarracks, data.target) == true) and #state.kills < 32 then
+        local p = pos(call(Entity.GetAbsOrigin, data.target))
+        state.kills[#state.kills + 1] = {name = call(NPC.GetUnitName, data.target), team = call(Entity.GetTeamNum, data.target),
+            barracks = call(NPC.IsBarracks, data.target) == true, x = p and p.x, y = p and p.y}
+    end
     if type(data) == "table" and data.target and (call(NPC.IsWard, data.target) == true
         or call(NPC.IsNeutral, data.target) == true or call(NPC.IsTower, data.target) == true) then script.OnEntityDestroy(data.target, true) end
     if type(data) == "table" and isTormentor(data.target) then
@@ -2503,7 +2515,7 @@ end
 
 local relay = {}
 do
-    local PARTS = {"clock", "pos", "info", "units", "wards", "runes", "events", "objectives"}
+    local PARTS = {"clock", "pos", "info", "units", "wards", "runes", "camps", "events", "objectives"}
     local RUNE_MODS = {modifier_rune_doubledamage = 0, modifier_rune_haste = 1, modifier_rune_invis = 3,
         modifier_rune_regen = 4, modifier_rune_arcane = 6}
 
@@ -2516,7 +2528,7 @@ do
     end
 
     local function strip(list)
-        for _, row in ipairs(list) do row.id = nil end
+        for _, row in ipairs(list or {}) do row.id = nil end
         return list
     end
 
@@ -2557,40 +2569,196 @@ do
         if type(packet.runes) == "table" then r.runes = packet.runes end
     end
 
+    local function buildPath(points)
+        local path, total = {}, 0
+        for index, p in ipairs(points) do
+            if index > 1 then total = total + math.sqrt((p.x - points[index - 1].x) ^ 2 + (p.y - points[index - 1].y) ^ 2) end
+            path[index] = {x = p.x, y = p.y, s = total}
+        end
+        return path
+    end
+
+    local function lanePaths()
+        local m = state.mem
+        m.paths = m.paths or {}
+        local t = {}
+        for _, tower in pairs(m.towers or {}) do t[tower.team .. tower.lane .. tower.tier] = tower end
+        for _, lane in ipairs({"top", "mid", "bot"}) do
+            local g1, g2, g3 = t["2" .. lane .. "1"], t["2" .. lane .. "2"], t["2" .. lane .. "3"]
+            local b1, b2, b3 = t["3" .. lane .. "1"], t["3" .. lane .. "2"], t["3" .. lane .. "3"]
+            if not m.paths[lane] and g1 and g2 and g3 and b1 and b2 and b3 then
+                local points = {g3, g2, g1}
+                if lane == "top" then points[#points + 1] = {x = g1.x, y = b1.y}
+                elseif lane == "bot" then points[#points + 1] = {x = b1.x, y = g1.y} end
+                for _, p in ipairs({b1, b2, b3}) do points[#points + 1] = p end
+                m.paths[lane] = buildPath(points)
+            end
+        end
+        return m.paths
+    end
+
+    local function project(path, x, y)
+        local bestS, bestD
+        for index = 2, #path do
+            local a, b = path[index - 1], path[index]
+            local dx, dy = b.x - a.x, b.y - a.y
+            local len2 = dx * dx + dy * dy
+            local k = len2 > 0 and math.max(0, math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / len2)) or 0
+            local d = (x - a.x - dx * k) ^ 2 + (y - a.y - dy * k) ^ 2
+            if not bestD or d < bestD then bestD, bestS = d, a.s + (b.s - a.s) * k end
+        end
+        return bestS, bestD and math.sqrt(bestD)
+    end
+
+    local function along(path, s)
+        s = math.max(0, math.min(path[#path].s, s))
+        for index = 2, #path do
+            local a, b = path[index - 1], path[index]
+            if s <= b.s then
+                local k = b.s > a.s and (s - a.s) / (b.s - a.s) or 0
+                return a.x + (b.x - a.x) * k, a.y + (b.y - a.y) * k
+            end
+        end
+        return path[#path].x, path[#path].y
+    end
+
+    local function laneOf(paths, x, y)
+        local best, bestS, bestD
+        for lane, path in pairs(paths) do
+            local s, d = project(path, x, y)
+            if s and d < 1500 and (not bestD or d < bestD) then best, bestS, bestD = lane, s, d end
+        end
+        return best, bestS
+    end
+
+    -- Creeps in fog: the last seen creep keeps walking its lane at its own
+    -- move speed. It stops at the first enemy tower or where it meets the
+    -- opposing wave, and is dropped once its predicted spot is visible.
+    local function predictCreeps(hidden, visible, alive, now)
+        local paths = lanePaths()
+        local fronts, out = {}, {}
+        local function front(lane, team, s, seen)
+            local f = fronts[lane] or {}
+            fronts[lane] = f
+            local key = team == 2 and "r" or "d"
+            local cur = f[key]
+            if not cur or (team == 2 and s > cur.s) or (team ~= 2 and s < cur.s) then f[key] = {s = s, seen = seen} end
+        end
+        for _, u in ipairs(visible) do
+            local lane, s = laneOf(paths, u.x, u.y)
+            if lane then front(lane, u.team, s, true) end
+        end
+        local towerLimit = {}
+        for _, tower in pairs(alive) do
+            local path = paths[tower.lane]
+            if path then
+                local s = project(path, tower.x, tower.y)
+                local limit = towerLimit[tower.lane] or {}
+                towerLimit[tower.lane] = limit
+                if tower.team == 3 then limit.r = math.min(limit.r or math.huge, s - 400)
+                else limit.d = math.max(limit.d or -math.huge, s + 400) end
+            end
+        end
+        local moving = {}
+        for _, c in ipairs(hidden) do
+            local entry = state.laneMovers[c.u.id]
+            local lost = entry and entry.seenAt
+            local elapsed = lost and now - lost
+            if entry and not entry.gone and elapsed and elapsed >= 0 and elapsed <= 45 then
+                local speed = finite(entry.ms) and entry.ms > 0 and entry.ms
+                    or finite(entry.vx) and finite(entry.vy) and math.sqrt(entry.vx ^ 2 + entry.vy ^ 2) or 0
+                local lane, s = laneOf(paths, c.u.x, c.u.y)
+                if lane then
+                    local dir = c.u.team == 2 and 1 or -1
+                    c.lane, c.entry = lane, entry
+                    c.s = s + dir * speed * elapsed
+                    local limit = towerLimit[lane]
+                    if limit and dir == 1 and limit.r then c.s = math.min(c.s, math.max(s, limit.r)) end
+                    if limit and dir == -1 and limit.d then c.s = math.max(c.s, math.min(s, limit.d)) end
+                    front(lane, c.u.team, c.s, false)
+                    moving[#moving + 1] = c
+                elseif finite(entry.vx) and finite(entry.vy) then
+                    local t = math.min(elapsed, 6)
+                    c.x, c.y, c.entry = c.u.x + entry.vx * t, c.u.y + entry.vy * t, entry
+                    moving[#moving + 1] = c
+                end
+            end
+        end
+        for _, c in ipairs(moving) do
+            local x, y = c.x, c.y
+            if c.lane then
+                local f = fronts[c.lane]
+                if f and f.r and f.d and f.r.s > f.d.s then
+                    local meet = f.d.seen and not f.r.seen and f.d.s or f.r.seen and not f.d.seen and f.r.s or (f.r.s + f.d.s) / 2
+                    if c.u.team == 2 then c.s = math.min(c.s, meet - 100) else c.s = math.max(c.s, meet + 100) end
+                end
+                x, y = along(paths[c.lane], c.s)
+            end
+            local point = call(Vector, x, y, 0)
+            if point and call(FogOfWar.IsPointVisible, point) == true then
+                c.entry.gone = true
+            else
+                c.row.x, c.row.y, c.row.f = round(x), round(y), 2
+                out[#out + 1] = c.row
+            end
+        end
+        return out
+    end
+
     function relay.view(packet)
         local gt = packet.game_time or 0
-        local offset = gt - (packet.game_clock or gt)
+        local now = packet.game_clock or gt
+        local offset = gt - now
         local v = {clock = {t = round(gt) or 0, in_game = packet.in_game == true, team = packet.local_team, paused = packet.paused == true}}
         if not packet.in_game then return v end
+        local m = state.mem
+        m.towers = m.towers or {}
+        local function at(t)
+            return finite(t) and round(t + offset) or nil
+        end
         local function readyAt(observed, remaining)
             return finite(remaining) and remaining > 0.5 and round(observed + remaining + offset) or nil
         end
         v.pos, v.info = {}, {}
         for _, h in ipairs(packet.heroes or {}) do
-            if h.visible == true and finite(h.x) and finite(h.y) then
-                v.pos[#v.pos + 1] = {id = h.id, name = h.name, team = h.team, x = round(h.x), y = round(h.y),
+            if finite(h.x) and finite(h.y) then
+                local fog = h.visible == true and 0 or (h.source == "maphack_last" or h.source == "innate_trace") and 1 or 2
+                v.pos[#v.pos + 1] = {id = h.id, name = h.name, team = h.team, x = round(h.x), y = round(h.y), f = fog,
+                    seen = fog > 0 and at(h.position_observed_at) or nil,
                     hp = round(h.hp), max_hp = round(h.max_hp), mana = round(h.mana), max_mana = round(h.max_mana),
-                    alive = h.alive, level = h.level,
+                    alive = h.alive, level = h.level, me = h["local"] == true or nil,
+                    tp = type(h.teleport) == "table" and at(h.teleport.ends_at) or nil,
                     respawn_at = h.alive == false and finite(h.respawn) and h.respawn > 0 and round(gt + h.respawn) or nil}
                 local d = state.details[h.id]
                 if d and finite(d.game) then
-                    local info = {items = {}}
+                    local info = {items = {}, abilities = {}}
                     for _, item in ipairs(d.items or {}) do
-                        if finite(item.slot) and item.slot < 6 and item.stale ~= true and item.name then
+                        if finite(item.slot) and item.name and (item.slot < 9 or item.slot == 15 or item.slot == 16) then
                             info.items[#info.items + 1] = {slot = item.slot, name = item.name, ready_at = readyAt(d.game, item.cooldown),
-                                charges = finite(item.charges) and item.charges > 0 and item.charges or nil}
+                                charges = finite(item.charges) and item.charges > 0 and item.charges or nil,
+                                o = item.stale == true and 1 or nil}
                         end
                     end
                     table.sort(info.items, function(a, b) return a.slot < b.slot end)
                     for _, ability in ipairs(d.abilities or {}) do
-                        if ability.ultimate == true and finite(ability.level) and ability.level > 0 then
-                            info.ult = {name = ability.name, level = ability.level, ready_at = readyAt(d.game, ability.cooldown)}
-                            break
+                        local name = ability.name
+                        if type(name) == "string" and ability.hidden ~= true and not name:find("special_bonus", 1, true) and name ~= "generic_hidden" and #info.abilities < 8 then
+                            info.abilities[#info.abilities + 1] = {name = name, level = ability.level or 0,
+                                ready_at = readyAt(d.game, ability.cooldown), ult = ability.ultimate == true or nil,
+                                charges = finite(ability.charges) and ability.charges > 0 and ability.charges or nil}
+                        end
+                        if ability.ultimate == true and finite(ability.level) and ability.level > 0 and not info.ult then
+                            info.ult = {name = name, level = ability.level, ready_at = readyAt(d.game, ability.cooldown)}
                         end
                     end
                     if type(d.stats) == "table" then
                         info.stats = {k = d.stats.kills, d = d.stats.deaths, a = d.stats.assists,
-                            nw = round(d.stats.networth), partial = d.stats.networth_partial == true or nil}
+                            nw = round(d.stats.networth), partial = d.stats.networth_partial == true or nil,
+                            lh = d.stats.lasthits, dn = d.stats.denies}
+                        local pd = d.playerData
+                        if h.team == state.localTeam and type(pd) == "table" and (finite(pd.reliable_gold) or finite(pd.unreliable_gold)) then
+                            info.stats.g = round((finite(pd.reliable_gold) and pd.reliable_gold or 0) + (finite(pd.unreliable_gold) and pd.unreliable_gold or 0))
+                        end
                     end
                     if type(d.buyback) == "table" and finite(d.buyback.cooldown) then
                         info.buyback = {ready_at = readyAt(d.game, d.buyback.cooldown) or 0}
@@ -2599,38 +2767,71 @@ do
                 end
             end
         end
+        table.sort(v.pos, byId)
         local r = state.relay
         v.units = {}
+        local hidden, visible, alive = {}, {}, {}
         for _, u in pairs(r.units) do
-            if u.visible == true and u.alive ~= false and finite(u.x) and finite(u.y) then
-                v.units[#v.units + 1] = {id = u.id, kind = u.kind, team = u.team, x = round(u.x), y = round(u.y)}
+            if u.alive ~= false and finite(u.x) and finite(u.y) then
+                local row = {id = u.id, kind = u.kind, team = u.team, x = round(u.x), y = round(u.y), f = u.visible == true and 0 or 1}
+                if u.kind == "building" then
+                    local tier, lane = tostring(u.name or ""):match("tower(%d)_(%a+)$")
+                    if tier then
+                        local tower = {x = u.x, y = u.y, team = u.team, tier = tonumber(tier), lane = lane}
+                        m.towers[u.id], alive[u.id] = tower, tower
+                    end
+                    if finite(u.hp) and finite(u.max_hp) and u.max_hp > 0 then row.hp = round(u.hp / u.max_hp * 100) end
+                end
+                if u.kind == "creep" then
+                    row.s = tostring(u.name or ""):find("siege", 1, true) and 1 or nil
+                    local entry = state.laneMovers[u.id]
+                    if u.visible == true then
+                        if entry then entry.gone = nil end
+                        visible[#visible + 1] = u
+                        v.units[#v.units + 1] = row
+                    else hidden[#hidden + 1] = {u = u, row = row} end
+                elseif u.kind ~= "illusion" or u.visible == true then
+                    v.units[#v.units + 1] = row
+                end
             end
         end
+        for _, row in ipairs(predictCreeps(hidden, visible, alive, now)) do v.units[#v.units + 1] = row end
         table.sort(v.units, byId)
-        strip(v.units)
         v.wards = {}
         for _, w in ipairs(r.wards or {}) do
-            if w.visible == true and finite(w.x) and finite(w.y) then
-                v.wards[#v.wards + 1] = {id = w.id, kind = w.kind, x = round(w.x), y = round(w.y)}
+            if finite(w.x) and finite(w.y) then
+                v.wards[#v.wards + 1] = {id = w.id, kind = w.kind, team = w.team, x = round(w.x), y = round(w.y),
+                    f = w.visible == true and 0 or 1, r = round(w.radius), e = at(w.expires_at)}
             end
         end
         table.sort(v.wards, byId)
-        strip(v.wards)
         v.runes = {}
         for _, rune in ipairs(r.runes or {}) do
-            if rune.visible == true and finite(rune.x) and finite(rune.y) then
-                v.runes[#v.runes + 1] = {id = rune.id, x = round(rune.x), y = round(rune.y), rune_type = rune.rune_type}
+            if finite(rune.x) and finite(rune.y) then
+                v.runes[#v.runes + 1] = {id = rune.id, x = round(rune.x), y = round(rune.y), rune_type = rune.rune_type,
+                    f = rune.visible == true and 0 or 1}
             end
         end
         table.sort(v.runes, byId)
+        v.camps = {}
+        for _, c in ipairs(state.camps or {}) do
+            if finite(c.x) and finite(c.y) then
+                v.camps[#v.camps + 1] = {x = round(c.x), y = round(c.y), t = c.camp_type,
+                    s = c.state == "occupied" and 1 or c.state == "empty" and 0 or nil,
+                    n = c.count, st = finite(c.stack_count) and c.stack_count > 1 and c.stack_count or nil}
+            end
+        end
         v.events = {}
         for _, e in ipairs(packet.events or {}) do
-            if e.stale ~= true and finite(e.x) and finite(e.y) then
-                v.events[#v.events + 1] = {id = e.id, kind = e.kind, x = round(e.x), y = round(e.y), a = e.ability_name}
+            if finite(e.x) and finite(e.y) then
+                local destination = e.kind == "teleport" and e.phase == "destination"
+                v.events[#v.events + 1] = {id = e.id, kind = e.kind, x = round(e.x), y = round(e.y), a = e.ability_name,
+                    h = e.owner_name, team = e.team, f = e.stale == true and 1 or nil, ph = e.phase,
+                    ox = destination and round(e.origin_x) or nil, oy = destination and round(e.origin_y) or nil,
+                    t0 = at(e.started), te = at(e.channel_end_at)}
             end
         end
         table.sort(v.events, byId)
-        strip(v.events)
         local o = packet.objectives or {}
         v.objectives = {tormentors = {}}
         for _, key in ipairs({"glyph_radiant", "glyph_dire", "scan_radiant", "scan_dire"}) do
@@ -2656,6 +2857,12 @@ do
         for _, t in ipairs(m.torm or {}) do
             if (x - t.x) ^ 2 + (y - t.y) ^ 2 < 1500 ^ 2 then return "torm" end
         end
+        local tower, best = nil, 1100 ^ 2
+        for _, t in pairs(m.towers or {}) do
+            local d = (x - t.x) ^ 2 + (y - t.y) ^ 2
+            if d < best then tower, best = t, d end
+        end
+        if tower then return "t" .. (tower.team == 2 and "r" or "d") .. tower.tier .. "_" .. tower.lane end
         local s, d = x + y, y - x
         if s < -9800 then return "base_r" end
         if s > 9800 then return "base_d" end
@@ -2714,6 +2921,12 @@ do
         end
     end
 
+    local function campAt(x, y)
+        for _, camp in ipairs(state.campDefs or {}) do
+            if x >= camp.min_x - 220 and x <= camp.max_x + 220 and y >= camp.min_y - 220 and y <= camp.max_y + 220 then return camp.id end
+        end
+    end
+
     function relay.derive(packet, v)
         if not packet.in_game then state.mem = {}; return end
         local m = state.mem
@@ -2729,17 +2942,35 @@ do
         end
 
         m.h, m.runeLog, m.runes, m.ev, m.cd = m.h or {}, m.runeLog or {}, m.runes or {}, m.ev or {}, m.cd or {}
-        local visible = {}
+        local heroes, seenNow = {}, {}
         for _, h in ipairs(v.pos) do
-            visible[h.id] = h
+            heroes[h.id] = h
+            if h.f == 0 then seenNow[#seenNow + 1] = h end
             local hm = m.h[h.id] or {}
             m.h[h.id] = hm
             if h.alive == false and hm.alive == true then
                 log({k = "death", s = sideOf(h.team), h = h.name, r = h.respawn_at and math.max(0, h.respawn_at - m.gt) or nil})
             end
             if h.alive ~= nil then hm.alive = h.alive end
+            local enemy = sideOf(h.team) == "e" and h.alive ~= false
+            if enemy and h.f == 1 and h.seen and m.gt - h.seen <= 3 and h.seen ~= hm.spotSeen then
+                hm.spotSeen = h.seen
+                local far = not hm.spotX or (h.x - hm.spotX) ^ 2 + (h.y - hm.spotY) ^ 2 >= 800 ^ 2
+                if far and m.gt - (hm.spotAt or -99) >= 15 then
+                    log({k = "spot", s = "e", h = h.name, p = place(h.x, h.y)})
+                    hm.spotAt, hm.spotX, hm.spotY = m.gt, h.x, h.y
+                end
+            end
+            local camp = enemy and h.f == 1 and campAt(h.x, h.y)
+            if camp then
+                if hm.camp ~= camp then hm.camp, hm.campAt, hm.campLogged = camp, m.gt, false
+                elseif not hm.campLogged and m.gt - hm.campAt >= 2 then
+                    hm.campLogged = true
+                    log({k = "farm", s = "e", h = h.name, p = place(h.x, h.y)})
+                end
+            elseif h.f ~= 1 or not enemy then hm.camp = nil end
             local d = state.details[h.id]
-            if d and type(d.modifiers) == "table" and d.game ~= hm.modsAt then
+            if h.f == 0 and d and type(d.modifiers) == "table" and d.game ~= hm.modsAt then
                 hm.modsAt = d.game
                 local mods = {}
                 for _, mod in ipairs(d.modifiers) do if mod.name then mods[mod.name] = true end end
@@ -2757,13 +2988,15 @@ do
 
         local current = {}
         for _, rune in ipairs(v.runes) do
-            current[rune.id] = true
-            m.runes[rune.id] = {x = rune.x, y = rune.y, kind = rune.rune_type}
+            if rune.f == 0 then
+                current[rune.id] = true
+                m.runes[rune.id] = {x = rune.x, y = rune.y, kind = rune.rune_type}
+            end
         end
         for id, prev in pairs(m.runes) do
             if not current[id] then
                 local near, best = nil, 450 ^ 2
-                for _, h in ipairs(v.pos) do
+                for _, h in ipairs(seenNow) do
                     if h.alive ~= false then
                         local dist = (h.x - prev.x) ^ 2 + (h.y - prev.y) ^ 2
                         if dist < best then near, best = h, dist end
@@ -2776,22 +3009,43 @@ do
                 m.runes[id] = nil
             end
         end
-        strip(v.runes)
+
+        m.wardSeen = m.wardSeen or {}
+        local firstWards = not m.wardInit
+        m.wardInit = true
+        for _, w in ipairs(v.wards) do
+            if not m.wardSeen[w.id] then
+                m.wardSeen[w.id] = true
+                if not firstWards and w.f == 0 and sideOf(w.team) == "e" then
+                    log({k = "ward", s = "e", w = w.kind == "sentry" and "s" or "o", p = place(w.x, w.y)})
+                end
+            end
+        end
+
+        for _, kill in ipairs(state.kills) do
+            log({k = kill.barracks and "rax" or "tower", team = kill.team == 2 and "r" or kill.team == 3 and "d" or nil,
+                s = sideOf(kill.team), p = place(kill.x, kill.y)})
+        end
+        state.kills = {}
 
         for _, e in ipairs(packet.events or {}) do
-            if e.stale ~= true and e.id and finite(e.x) and finite(e.y) and not m.ev[e.id] then
+            if e.id and finite(e.x) and finite(e.y) and not m.ev[e.id] then
                 m.ev[e.id] = m.gt
-                local owner = e.owner_id and visible[e.owner_id]
-                local entry = {s = owner and sideOf(owner.team) or "n", h = owner and owner.name or nil, p = place(e.x, e.y)}
+                local owner = e.owner_id and heroes[e.owner_id]
+                local name = owner and owner.name or (tostring(e.owner_name or ""):find("npc_dota_hero_", 1, true) == 1 and e.owner_name) or nil
+                local entry = {s = sideOf(owner and owner.team or e.team), h = name, p = place(e.x, e.y)}
                 if e.kind == "teleport" then
                     entry.k = e.phase == "destination" and "tp_to" or "tp_from"
                     log(entry)
                 elseif e.kind == "scan" then
                     if m.scan and m.gt - m.scan.at <= 4 then addScanPlace(entry.p)
                     else m.scan = {entry = log({k = "scan", p = entry.p}), at = m.gt, places = {[entry.p or ""] = true}} end
+                elseif e.kind == "smoke" then
+                    entry.k = "smoke"
+                    log(entry)
                 elseif e.kind == "blink" then
                     if e.phase ~= "origin" then entry.k = "blink"; log(entry) end
-                else
+                elseif e.kind ~= "innate" then
                     entry.k, entry.a = e.ultimate == true and "ult" or "ability", e.ability_name or e.name
                     log(entry)
                 end
@@ -2827,6 +3081,7 @@ do
         relay.merge(packet)
         local v = relay.view(packet)
         relay.derive(packet, v)
+        for _, key in ipairs({"units", "wards", "runes", "events"}) do strip(v[key]) end
         return v
     end
 
