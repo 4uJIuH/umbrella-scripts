@@ -3,18 +3,23 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Последняя версия: [`v2.0.0` — `web_radar.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/web_radar/web_radar.lua)
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.1.0/web_radar.lua) — `web-radar-v2.1.0`, 2026-10-19
 
-[Релизы на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=web-radar&expanded=true)
+| версия | дата | файл | загрузок |
+| --- | --- | --- | --- |
+| [`web-radar-v2.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.1.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.1.0/web_radar.lua) | 0 |
+
+[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=web-radar&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
 
-Показывает друзьям карту вашего матча в браузере: героев, варды, руны, вышки, Рошана и ленту событий. Сервер не нужен: нажмите Start и отправьте ссылку. Передается только то, что видит ваша команда.
+Показывает друзьям карту вашего матча в браузере: героев, в том числе в тумане войны, крипов, варды, кемпы, руны, вышки, Рошана и ленту событий. Сервер не нужен: нажмите Start и отправьте ссылку.
 
 - Карта с иконками героев, вардов, рун и вышек
-- Предметы, ульт, KDA и байбек у видимых героев
-- Лента событий: смерти, руны, телепорты, сканы, Рошан и Торментор
+- Герои в тумане по мапхаку и прогноз волн крипов в тумане
+- Предметы, способности с перезарядками, KDA, NW и байбек
+- Лента событий: смерти, руны, телепорты, Smoke, фарм леса, варды, башни, Рошан и Торментор
 - Карта и консоль поверх игры (картинка в картинке)
 
 ## Установка
@@ -24,17 +29,34 @@
 3. Откройте `Scripts → Main → Cloud Radar`, включите радар и нажмите Start.
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
+## Что нового
+
+# Обновление v2.1.0
+
+- Герои в тумане войны: последняя позиция с мапхака и сколько секунд назад их видели.
+- Линейные крипы в тумане: прогноз движения волны по линии до вражеской башни или встречной волны.
+- Союзные и вражеские варды с радиусом обзора и временем жизни, руны и вышки в тумане.
+- Лесные кемпы (есть крипы, пусто, стаки), нейтралы и курьеры включены по умолчанию у всех.
+- Карточки героев: иконки предметов, нейтралки, рюкзака и способностей с перезарядками, LH/DN, золото союзников.
+- Лента событий: Smoke, фарм леса и появление врага в тумане, новые вражеские варды, уничтоженные башни и казармы, места по ближайшей башне.
+- На карте: линия телепорта с отсчетом, зона скана, иконки примененных способностей, переключатели слоев.
+
+# Релиз v2.0.0
+
+- Релизная версия: первая публикация скрипта.
+
 ---
 
 # Cloud Radar (English)
 
 ## What it does
 
-Shows your match map to friends in a browser: heroes, wards, runes, towers, Roshan and an event feed. No server needed: press Start and send the link. Only what your team can see is shared.
+Shows your match map to friends in a browser: heroes, including those in the fog of war, creeps, wards, camps, runes, towers, Roshan and an event feed. No server needed: press Start and send the link.
 
 - Map with hero, ward, rune and tower icons
-- Items, ultimate, KDA and buyback for visible heroes
-- Event feed: deaths, runes, teleports, scans, Roshan and Tormentor
+- Heroes in the fog from maphack and predicted creep waves in the fog
+- Items, abilities with cooldowns, KDA, net worth and buyback
+- Event feed: deaths, runes, teleports, Smoke, jungle farming, wards, towers, Roshan and Tormentor
 - Map and console on top of the game (picture in picture)
 
 ## Install
@@ -43,3 +65,19 @@ Shows your match map to friends in a browser: heroes, wards, runes, towers, Rosh
 2. Reload the Lua scripts.
 3. Open `Scripts → Main → Cloud Radar`, enable the radar and press Start.
 4. Copy the link from the Link field and send it to friends.
+
+## Changelog
+
+# Update v2.1.0
+
+- Heroes in the fog of war: last maphack position and how many seconds ago they were seen.
+- Lane creeps in the fog: the wave is predicted along its lane up to the enemy tower or the opposing wave.
+- Allied and enemy wards with vision radius and time left, runes and towers in the fog.
+- Neutral camps (occupied, empty, stacks), neutrals and couriers are now on by default for everyone.
+- Hero cards: item, neutral item, backpack and ability icons with cooldowns, LH/DN, allied gold.
+- Event feed: Smoke, enemy farming the jungle or spotted in the fog, new enemy wards, destroyed towers and barracks, places named by the nearest tower.
+- On the map: teleport line with a countdown, scan area, icons of used abilities, layer toggles.
+
+# Release v2.0.0
+
+- Release version: the first publication of the script.

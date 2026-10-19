@@ -714,7 +714,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [MMR Tracker Ultimate](scripts/mmr_tracker_ultimate) | 12 | `mmr-tracker-ultimate-v1.0.0` |
 | [Glyph Timer](scripts/glyph_timer) | 35 | `glyph-timer-v1.0.0` |
 | [Rampage Timer](scripts/rampage_timer_h) | 0 | `rampage-timer-h-v1.0.0` |
-| [PT Mana Abuse](scripts/pt_mana_abuse) | 0 | `pt-mana-abuse-ctx-v1.0.0` |
+| [PT Mana Abuse](scripts/pt_mana_abuse) | 1 | `pt-mana-abuse-ctx-v1.0.0` |
 | [Lone Druid Bear AI Deluxe](scripts/lone_druid_bear_ai_deluxe) | 16 | `lone-druid-bear-ai-deluxe-v1.0.0` |
 | [PudgeHook AI](scripts/pudge_hook_ai) | 16 | `pudge-hook-ai-v1.0.0` |
 | [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) | 36 | `arc-warden-wave-pusher-v1.1.0` |
@@ -725,11 +725,12 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
 | [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 2 | `terrorblade-sunder-dagon-v1.0.0` |
 | [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 2 | `venomancer-ward-controller-v1.0.0` |
-| [Murzik Kitty Widget](scripts/murzik) | 0 | `murzik-v1.0.0` |
-| [Трекер привычек](scripts/habits) | 0 | `habits-v1.0.0` |
-| [Калории](scripts/calories) | 0 | `calories-v1.0.0` |
-| [Календарь](scripts/calendar) | 0 | `calendar-v1.0.0` |
-| [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) | 0 | `arc-warden-clone-pike-v1.0.0` |
+| [Cloud Radar](scripts/web_radar) | 0 | `web-radar-v2.1.0` |
+| [Murzik Kitty Widget](scripts/murzik) | 1 | `murzik-v1.0.0` |
+| [Трекер привычек](scripts/habits) | 1 | `habits-v1.0.0` |
+| [Калории](scripts/calories) | 1 | `calories-v1.0.0` |
+| [Календарь](scripts/calendar) | 1 | `calendar-v1.0.0` |
+| [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) | 1 | `arc-warden-clone-pike-v1.0.0` |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/stats/stats-dark.svg">

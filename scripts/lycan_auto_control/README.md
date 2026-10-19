@@ -3,13 +3,9 @@
 отправляет волков пушить, а подконтрольных юнитов — фармить лес / sends wolves to push and dominated units to farm the jungle
 
 <!-- releases:start -->
-Скачать: [lycan_auto_control.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/lycan-auto-control-v1.0.0/lycan_auto_control.lua) — `lycan-auto-control-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `lycan_auto_control.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/lycan-auto-control-v1.0.0/lycan_auto_control.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`lycan-auto-control-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/lycan-auto-control-v1.0.0) | 2026-10-13 | [lycan_auto_control.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/lycan-auto-control-v1.0.0/lycan_auto_control.lua) | 10 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=lycan-auto-control&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=lycan-auto-control&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -23,12 +19,6 @@
 
 1. Поместите `lycan_auto_control.lua` в `Umbrella\scripts`.
 2. Перезагрузите скрипты и настройте поведение подконтрольных юнитов.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -45,9 +35,3 @@ Automatically assigns Lycan's wolves to push a lane and units controlled with Do
 
 1. Place `lycan_auto_control.lua` in `Umbrella\scripts`.
 2. Reload scripts and configure controlled-unit behavior.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.
