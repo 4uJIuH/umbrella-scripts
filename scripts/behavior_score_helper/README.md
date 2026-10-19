@@ -3,10 +3,11 @@
 повышает порядочность: авто GG, авто репорты, анти-тильт и авто лайк / raises your behavior score: auto GG, auto reports, anti-tilt and auto commend
 
 <!-- releases:start -->
-Скачать: [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.0.0/BehaviorScoreHelper.lua) — `behavior-score-helper-v2.0.0`, 2026-10-19
+Скачать: [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.0.1/BehaviorScoreHelper.lua) — `behavior-score-helper-v2.0.1`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`behavior-score-helper-v2.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.0.1) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.0.1/BehaviorScoreHelper.lua) | 0 |
 | [`behavior-score-helper-v2.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.0.0) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.0.0/BehaviorScoreHelper.lua) | 0 |
 | [`behavior-score-helper-v1.1.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v1.1.1) | 2026-10-15 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v1.1.1/BehaviorScoreHelper.lua) | 8 |
 | [`behavior-score-helper-v1.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v1.1.0) | 2026-10-15 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v1.1.0/BehaviorScoreHelper.lua) | 4 |
@@ -39,6 +40,10 @@ BehaviorScoreHelper берет на себя рутину порядочност
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
 
 ## Что нового
+
+# Исправление v2.0.1
+
+- Выпадающие списки больше не сбрасываются после смены языка чита. Выбор хранится номером в `configs/behavior_score_helper.txt` и восстанавливается при загрузке.
 
 # Обновление v2.0.0
 
@@ -99,6 +104,10 @@ BehaviorScoreHelper takes care of the behavior score routine in Dota 2: it write
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
 
 ## Changelog
+
+# Fix v2.0.1
+
+- Dropdowns no longer reset after the cheat language changes. The choice is stored as a number in `configs/behavior_score_helper.txt` and restored on load.
 
 # Update v2.0.0
 

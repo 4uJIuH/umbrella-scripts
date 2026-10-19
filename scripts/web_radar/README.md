@@ -3,10 +3,11 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.2/web_radar.lua) — `web-radar-v2.3.2`, 2026-10-19
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua) — `web-radar-v2.3.3`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`web-radar-v2.3.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.3) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua) | 0 |
 | [`web-radar-v2.3.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.2) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.2/web_radar.lua) | 3 |
 | [`web-radar-v2.3.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.1/web_radar.lua) | 0 |
 | [`web-radar-v2.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.0/web_radar.lua) | 0 |
@@ -35,6 +36,14 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Исправление v2.3.3
+
+- Игра больше не начинает тормозить к середине и концу матча. Радар заново проходил весь список замеченных способностей и отправлял полный пакет каждый раз, когда игра переиспользовала номер сущности (новый крип вместо умершего). Теперь это занимает одно действие, а полный пакет уходит только при смене героя.
+- Удаление сущностей, которые радар не отслеживает (снаряды, крипы вне радара, служебные объекты), больше не запускает лишнюю очистку и внеочередной обход карты.
+- Варды без известного таймера забываются через 6 минут для обсервера и 7 минут для сентри, а не висят в памяти до конца матча.
+- Кэш звуков ограничен по размеру.
+- С включенной отладкой радар раз в 30 секунд пишет в лог память Lua, время сбора и размер своих таблиц.
 
 # Исправление v2.3.2
 
@@ -112,6 +121,14 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Fix v2.3.3
+
+- The game no longer starts lagging in the middle and late match. Each time the game reused an entity number (a new creep in place of a dead one), the radar walked its whole list of seen abilities and sent a full packet. Now this is a single step, and a full packet goes out only when a hero changes.
+- Removing entities the radar does not track (projectiles, creeps outside the radar, helper objects) no longer runs extra cleanup and an early map scan.
+- Wards with no known timer are forgotten after 6 minutes for an observer and 7 minutes for a sentry instead of staying in memory until the match ends.
+- The sound cache has a size limit.
+- With debug on, the radar logs Lua memory, collect time and the size of its tables every 30 seconds.
 
 # Fix v2.3.2
 

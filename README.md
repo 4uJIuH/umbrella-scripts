@@ -601,7 +601,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Rem Assistant](scripts/rem_assistant) | 2 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
 | [qLocalization](scripts/q_localizer) | 103 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 388 | `script-manager-v2.14.2` |
+| [Script Manager](scripts/script_manager) | 389 | `script-manager-v2.14.2` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 634 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 11 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 270 | `lane-pull-v1.0.4` |
@@ -626,7 +626,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 10 | `visage-familiar-tp-v1.0.0` |
 | [Grimstroke Helper](scripts/grimstroke_helper) | 13 | `grimstroke-helper-v1.2.0` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 9 | `phoenix-smartnova-v1.0.0` |
-| [BehaviorScoreHelper](scripts/behavior_score_helper) | 16 | `behavior-score-helper-v2.0.0` |
+| [BehaviorScoreHelper](scripts/behavior_score_helper) | 16 | `behavior-score-helper-v2.0.1` |
 | [Disable Tracker](scripts/disable_tracker) | 5 | `disable-tracker-v1.0.0` |
 | [Russian Roulette](scripts/russian_roulette) | 2 | `russian-roulette-v1.0.0` |
 | [MoM Swapper](scripts/mom_swapper) | 9 | `mom-swapper-v1.0.0` |
@@ -725,7 +725,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
 | [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 2 | `terrorblade-sunder-dagon-v1.0.0` |
 | [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 2 | `venomancer-ward-controller-v1.0.0` |
-| [Cloud Radar](scripts/web_radar) | 5 | `web-radar-v2.3.2` |
+| [Cloud Radar](scripts/web_radar) | 5 | `web-radar-v2.3.3` |
 | [Murzik Kitty Widget](scripts/murzik) | 1 | `murzik-v1.0.0` |
 | [Трекер привычек](scripts/habits) | 2 | `habits-v1.0.0` |
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |

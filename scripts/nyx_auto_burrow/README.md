@@ -3,13 +3,9 @@
 автоматически закапывает Nyx Assassin в подходящий момент / automatically burrows Nyx Assassin at suitable times
 
 <!-- releases:start -->
-Скачать: [nyx_auto_burrow.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/nyx-auto-burrow-v1.0.0/nyx_auto_burrow.lua) — `nyx-auto-burrow-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `nyx_auto_burrow.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/nyx_auto_burrow/nyx_auto_burrow.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`nyx-auto-burrow-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/nyx-auto-burrow-v1.0.0) | 2026-10-13 | [nyx_auto_burrow.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/nyx-auto-burrow-v1.0.0/nyx_auto_burrow.lua) | 4 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=nyx-auto-burrow&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=nyx-auto-burrow&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -25,12 +21,6 @@
 
 1. Поместите `nyx_auto_burrow.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и найдите настройки в разделе Nyx Assassin.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -49,9 +39,3 @@ Automatically uses Burrow while idle, at low health or mana, and in suitable fig
 
 1. Place `nyx_auto_burrow.lua` in `umbrella\scripts`.
 2. Reload Lua scripts and find the settings under Nyx Assassin.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.
