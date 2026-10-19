@@ -397,7 +397,7 @@ local localization = qLocalization.new({
         cr_st_link_ready = "the link is in the Link field",
         cr_st_send_fail = "upload failed: HTTP %d, retrying",
         cr_link_hint = "Press Start, then send the link to friends",
-        cr_version = "Version 2.1.0, radar for friends",
+        cr_version = "Version 2.2.0, radar for friends",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -479,7 +479,7 @@ local localization = qLocalization.new({
         cr_st_link_ready = "ссылка в поле «Ссылка»",
         cr_st_send_fail = "ошибка передачи: HTTP %d, повтор",
         cr_link_hint = "Нажмите Start и отправьте ссылку друзьям",
-        cr_version = "Версия 2.1.0, радар для друзей",
+        cr_version = "Версия 2.2.0, радар для друзей",
     },
 })
 
@@ -487,7 +487,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.1.0"
+script.VERSION = "2.2.0"
 local ui = {}
 local JSON
 local state = {
@@ -508,7 +508,7 @@ local state = {
     courierCosts = {}, nextCouriers = 0, inventoryDirty = {}, courierMotion = {}, courierCursor = 0, courierSamples = {},
     itemKeys = setmetatable({}, {__mode = "k"}), loggedParticles = {},
     fb = {waiters = {}}, sentParts = {}, feedQueue = {}, feedSeq = 0, feedKeys = {}, feedPrune = {}, mem = {}, resendAll = true,
-    relay = {units = {}, wards = {}, runes = {}}, kills = {},
+    relay = {units = {}, wards = {}, runes = {}}, kills = {}, kills_by = {},
 }
 local start, stop, copyLink
 local observeCast
@@ -580,7 +580,7 @@ local function resetMatch()
     state.innatePositions = {}
     state.orbParticles = {}
     state.teleports, state.tormentor_units, state.tormentorAttackers, state.objectiveMotion = {}, {}, {}, {}
-    state.farming, state.kills = {}, {}
+    state.farming, state.kills, state.kills_by = {}, {}, {}
     state.unitMemory, state.runeMemory, state.laneMovers, state.laneCursor = {}, {}, {}, 0
     state.laneList = {}
     state.courierCosts, state.nextCouriers, state.inventoryDirty = {}, 0, {}
@@ -1237,7 +1237,18 @@ local function heroDetails(unit, row, now, refresh)
             row.stats.inventory_value, row.stats.courier_value = inventoryWorth, courierWorth
         end
     end
-    state.details[row.id] = {wall = clock(), game = now, signature = signature,
+    local attr = cached and cached.attr
+    if not row.data_stale then
+        local magic = call(NPC.GetMagicalArmorValue, unit)
+        attr = {str = call(Hero.GetStrengthTotal, unit), agi = call(Hero.GetAgilityTotal, unit), int = call(Hero.GetIntellectTotal, unit),
+            primary = call(Hero.GetPrimaryAttribute, unit), dmg = call(NPC.GetTrueDamage, unit), dmg_max = call(NPC.GetTrueMaximumDamage, unit),
+            aps = call(NPC.GetAttacksPerSecond, unit), range = (call(NPC.GetAttackRange, unit) or 0) + (call(NPC.GetAttackRangeBonus, unit) or 0),
+            armor = call(NPC.GetPhysicalArmorValue, unit), mres = finite(magic) and magic * 100 or nil, ms = call(NPC.GetMoveSpeed, unit),
+            hpr = call(NPC.GetHealthRegen, unit), mpr = call(NPC.GetManaRegen, unit), xp = call(Hero.GetCurrentXP, unit)}
+    end
+    local playerName = cached and cached.playerName
+    if not playerName and state.players[row.player_id] then playerName = call(Player.GetName, state.players[row.player_id]) end
+    state.details[row.id] = {wall = clock(), game = now, signature = signature, attr = attr, playerName = playerName,
         abilities = row.abilities, items = row.items, modifiers = row.modifiers, stats = row.stats,
         buyback = row.buyback, playerData = playerData, orbs = row.orbs,
         inventory_state = row.inventory_state, items_observed_at = row.items_observed_at,
@@ -2408,6 +2419,25 @@ function script.OnEntityHurt(data)
 end
 
 function script.OnEntityKilled(data)
+    local victim = type(data) == "table" and data.target
+    if state.active and victim and call(Entity.IsHero, victim) == true and call(NPC.IsIllusion, victim) ~= true
+        and call(NPC.IsMeepoClone, victim) ~= true then
+        local id = call(Entity.GetIndex, victim)
+        if id then
+            local entry = state.kills_by[tostring(id)] or {k = 0, d = 0}
+            entry.d = entry.d + 1
+            state.kills_by[tostring(id)] = entry
+        end
+        local source = data.source
+        local killer = source and (call(Entity.IsHero, source) == true and source or call(NPC.GetOwnerNPC, source) or call(Entity.GetOwner, source))
+        local killerId = killer and call(Entity.IsHero, killer) == true and call(Entity.GetTeamNum, killer) ~= call(Entity.GetTeamNum, victim)
+            and call(Entity.GetIndex, killer)
+        if killerId then
+            local entry = state.kills_by[tostring(killerId)] or {k = 0, d = 0}
+            entry.k = entry.k + 1
+            state.kills_by[tostring(killerId)] = entry
+        end
+    end
     if state.active and type(data) == "table" and isRoshan(data.target) then
         state.roshanAttackers, state.roshanDamageUntil, state.nextRoshan = {}, 0, 0
     end
@@ -2578,23 +2608,37 @@ do
         return path
     end
 
+    local function towerPositions()
+        if not state.towerPos then
+            state.towerPos = {}
+            local saved = call(JSON.decode, JSON, savedGet("towers"))
+            if type(saved) == "table" then
+                for name, t in pairs(saved) do
+                    if type(t) == "table" and finite(t.x) and finite(t.y) then state.towerPos[name] = t end
+                end
+            end
+        end
+        return state.towerPos
+    end
+
     local function lanePaths()
-        local m = state.mem
-        m.paths = m.paths or {}
-        local t = {}
-        for _, tower in pairs(m.towers or {}) do t[tower.team .. tower.lane .. tower.tier] = tower end
+        local t, count = {}, 0
+        for _, tower in pairs(towerPositions()) do t[tower.team .. tower.lane .. tower.tier] = tower; count = count + 1 end
+        if state.lanePaths and state.lanePathsFrom == count then return state.lanePaths end
+        local paths = {}
         for _, lane in ipairs({"top", "mid", "bot"}) do
             local g1, g2, g3 = t["2" .. lane .. "1"], t["2" .. lane .. "2"], t["2" .. lane .. "3"]
             local b1, b2, b3 = t["3" .. lane .. "1"], t["3" .. lane .. "2"], t["3" .. lane .. "3"]
-            if not m.paths[lane] and g1 and g2 and g3 and b1 and b2 and b3 then
+            if g1 and g2 and g3 and b1 and b2 and b3 then
                 local points = {g3, g2, g1}
                 if lane == "top" then points[#points + 1] = {x = g1.x, y = b1.y}
                 elseif lane == "bot" then points[#points + 1] = {x = b1.x, y = g1.y} end
                 for _, p in ipairs({b1, b2, b3}) do points[#points + 1] = p end
-                m.paths[lane] = buildPath(points)
+                paths[lane] = buildPath(points)
             end
         end
-        return m.paths
+        state.lanePaths, state.lanePathsFrom = paths, count
+        return paths
     end
 
     local function project(path, x, y)
@@ -2631,78 +2675,82 @@ do
         return best, bestS
     end
 
-    -- Creeps in fog: the last seen creep keeps walking its lane at its own
-    -- move speed. It stops at the first enemy tower or where it meets the
-    -- opposing wave, and is dropped once its predicted spot is visible.
-    local function predictCreeps(hidden, visible, alive, now)
+    local WAVE_SPEED, WAVE_PERIOD = 325, 30
+
+    local function hiddenPoint(x, y)
+        local okz, z = pcall(World.GetGroundZ, x, y)
+        local okv, point = pcall(Vector, x, y, okz and finite(z) and z or 128)
+        if not okv or not point then return true end
+        local okf, seen = pcall(FogOfWar.IsPointVisible, point)
+        return not (okf and seen == true)
+    end
+
+    -- Creep waves in fog: every 30 s each barracks sends a wave that walks
+    -- its lane at 325 until it meets the opposing wave. The meeting point
+    -- comes from visible creeps when there are any, else the lane middle,
+    -- and never passes the first alive enemy tower.
+    local function simulateWaves(visible, alive, gt, out)
         local paths = lanePaths()
-        local fronts, out = {}, {}
-        local function front(lane, team, s, seen)
-            local f = fronts[lane] or {}
-            fronts[lane] = f
-            local key = team == 2 and "r" or "d"
-            local cur = f[key]
-            if not cur or (team == 2 and s > cur.s) or (team ~= 2 and s < cur.s) then f[key] = {s = s, seen = seen} end
-        end
+        if gt < 0 or not next(paths) then return end
+        local m = state.mem
+        m.front = m.front or {}
+        local seen, limits = {}, {}
         for _, u in ipairs(visible) do
             local lane, s = laneOf(paths, u.x, u.y)
-            if lane then front(lane, u.team, s, true) end
+            if lane then
+                local f = seen[lane] or {}
+                seen[lane] = f
+                if u.team == 2 then f.r = math.max(f.r or -math.huge, s) else f.d = math.min(f.d or math.huge, s) end
+            end
         end
-        local towerLimit = {}
-        for _, tower in pairs(alive) do
-            local path = paths[tower.lane]
+        for name, tower in pairs(towerPositions()) do
+            local path = alive[name] and paths[tower.lane]
             if path then
                 local s = project(path, tower.x, tower.y)
-                local limit = towerLimit[tower.lane] or {}
-                towerLimit[tower.lane] = limit
-                if tower.team == 3 then limit.r = math.min(limit.r or math.huge, s - 400)
-                else limit.d = math.max(limit.d or -math.huge, s + 400) end
+                local limit = limits[tower.lane] or {}
+                limits[tower.lane] = limit
+                if tower.team == 3 then limit.r = math.min(limit.r or math.huge, s - 500)
+                else limit.d = math.max(limit.d or -math.huge, s + 500) end
             end
         end
-        local moving = {}
-        for _, c in ipairs(hidden) do
-            local entry = state.laneMovers[c.u.id]
-            local lost = entry and entry.seenAt
-            local elapsed = lost and now - lost
-            if entry and not entry.gone and elapsed and elapsed >= 0 and elapsed <= 45 then
-                local speed = finite(entry.ms) and entry.ms > 0 and entry.ms
-                    or finite(entry.vx) and finite(entry.vy) and math.sqrt(entry.vx ^ 2 + entry.vy ^ 2) or 0
-                local lane, s = laneOf(paths, c.u.x, c.u.y)
-                if lane then
-                    local dir = c.u.team == 2 and 1 or -1
-                    c.lane, c.entry = lane, entry
-                    c.s = s + dir * speed * elapsed
-                    local limit = towerLimit[lane]
-                    if limit and dir == 1 and limit.r then c.s = math.min(c.s, math.max(s, limit.r)) end
-                    if limit and dir == -1 and limit.d then c.s = math.max(c.s, math.min(s, limit.d)) end
-                    front(lane, c.u.team, c.s, false)
-                    moving[#moving + 1] = c
-                elseif finite(entry.vx) and finite(entry.vy) then
-                    local t = math.min(elapsed, 6)
-                    c.x, c.y, c.entry = c.u.x + entry.vx * t, c.u.y + entry.vy * t, entry
-                    moving[#moving + 1] = c
+        for lane, path in pairs(paths) do
+            local length = path[#path].s
+            local front = m.front[lane]
+            local current = front and gt - front.at < 90 and front.s or length / 2
+            local f = seen[lane]
+            if f and f.r and f.d and f.d - f.r < 1500 then front = {s = (f.r + f.d) / 2, at = gt}
+            elseif f and f.r and f.r > current then front = {s = f.r + 150, at = gt}
+            elseif f and f.d and f.d < current then front = {s = f.d - 150, at = gt} end
+            m.front[lane] = front
+            local meet = front and gt - front.at < 90 and front.s or length / 2
+            local limit = limits[lane]
+            if limit and limit.r then meet = math.min(meet, limit.r) end
+            if limit and limit.d then meet = math.max(meet, limit.d) end
+            for team = 2, 3 do
+                local dir = team == 2 and 1 or -1
+                local start = team == 2 and -400 or length + 400
+                local stop = meet - dir * 150
+                local arrived, newest = false, math.floor(gt / WAVE_PERIOD)
+                local function emit(s, key)
+                    local x, y = along(path, s)
+                    local nx, ny = along(path, s + dir * 60)
+                    local dx, dy = nx - x, ny - y
+                    local len = math.sqrt(dx * dx + dy * dy)
+                    for _, u in ipairs(visible) do
+                        if u.team == team and (u.x - x) ^ 2 + (u.y - y) ^ 2 < 900 ^ 2 then return end
+                    end
+                    if not hiddenPoint(x, y) then return end
+                    out[#out + 1] = {id = "w" .. lane .. team .. key, kind = "wave", team = team, x = round(x), y = round(y),
+                        dx = len > 0 and round(dx / len * 100) or 0, dy = len > 0 and round(dy / len * 100) or 0, f = 2}
                 end
-            end
-        end
-        for _, c in ipairs(moving) do
-            local x, y = c.x, c.y
-            if c.lane then
-                local f = fronts[c.lane]
-                if f and f.r and f.d and f.r.s > f.d.s then
-                    local meet = f.d.seen and not f.r.seen and f.d.s or f.r.seen and not f.d.seen and f.r.s or (f.r.s + f.d.s) / 2
-                    if c.u.team == 2 then c.s = math.min(c.s, meet - 100) else c.s = math.max(c.s, meet + 100) end
+                for k = math.max(0, newest - 6), newest do
+                    local s = start + dir * WAVE_SPEED * (gt - k * WAVE_PERIOD)
+                    if (s - stop) * dir >= 0 then arrived = true
+                    elseif s > 0 and s < length then emit(s, k) end
                 end
-                x, y = along(paths[c.lane], c.s)
-            end
-            local point = call(Vector, x, y, 0)
-            if point and call(FogOfWar.IsPointVisible, point) == true then
-                c.entry.gone = true
-            else
-                c.row.x, c.row.y, c.row.f = round(x), round(y), 2
-                out[#out + 1] = c.row
+                if arrived then emit(stop, "f") end
             end
         end
-        return out
     end
 
     function relay.view(packet)
@@ -2711,8 +2759,12 @@ do
         local offset = gt - now
         local v = {clock = {t = round(gt) or 0, in_game = packet.in_game == true, team = packet.local_team, paused = packet.paused == true}}
         if not packet.in_game then return v end
+        local tod = call(GameRules.GetTimeOfDay)
+        if finite(tod) then v.clock.day = tod >= 0.25 and tod < 0.75 end
+        local cycle = call(GameRules.GetNextCycleTime)
+        if finite(cycle) and cycle >= 0 then v.clock.cyc = round(gt + cycle) end
+        if call(GameRules.IsNightstalkerNight) == true then v.clock.ns = true end
         local m = state.mem
-        m.towers = m.towers or {}
         local function at(t)
             return finite(t) and round(t + offset) or nil
         end
@@ -2751,11 +2803,29 @@ do
                             info.ult = {name = name, level = ability.level, ready_at = readyAt(d.game, ability.cooldown)}
                         end
                     end
+                    if type(d.attr) == "table" then
+                        local a = d.attr
+                        info.attr = {s = round(a.str), g = round(a.agi), i = round(a.int), p = a.primary, dmg = round(a.dmg), dmx = round(a.dmg_max),
+                            aps = finite(a.aps) and math.floor(a.aps * 100 + 0.5) / 100 or nil, rng = round(a.range),
+                            arm = finite(a.armor) and math.floor(a.armor * 10 + 0.5) / 10 or nil, mr = round(a.mres), ms = round(a.ms),
+                            hpr = finite(a.hpr) and math.floor(a.hpr * 10 + 0.5) / 10 or nil, mpr = finite(a.mpr) and math.floor(a.mpr * 10 + 0.5) / 10 or nil,
+                            xp = round(a.xp)}
+                    end
+                    if type(d.playerName) == "string" and d.playerName ~= "" then info.pn = d.playerName end
+                    local tracked = state.kills_by[h.id]
                     if type(d.stats) == "table" then
                         info.stats = {k = d.stats.kills, d = d.stats.deaths, a = d.stats.assists,
                             nw = round(d.stats.networth), partial = d.stats.networth_partial == true or nil,
                             lh = d.stats.lasthits, dn = d.stats.denies}
+                        if info.stats.k == nil and tracked then info.stats.k, info.stats.d, info.stats.est = tracked.k, tracked.d, 1 end
                         local pd = d.playerData
+                        if type(pd) == "table" then
+                            info.stats.dmg = finite(pd.hero_damage) and pd.hero_damage > 0 and pd.hero_damage or nil
+                            info.stats.heal = finite(pd.healing) and pd.healing > 0 and round(pd.healing) or nil
+                            info.stats.obs = finite(pd.observer_wards_placed) and pd.observer_wards_placed > 0 and pd.observer_wards_placed or nil
+                            info.stats.sen = finite(pd.sentry_wards_placed) and pd.sentry_wards_placed > 0 and pd.sentry_wards_placed or nil
+                            info.stats.stk = finite(pd.camps_stacked) and pd.camps_stacked > 0 and pd.camps_stacked or nil
+                        end
                         if h.team == state.localTeam and type(pd) == "table" and (finite(pd.reliable_gold) or finite(pd.unreliable_gold)) then
                             info.stats.g = round((finite(pd.reliable_gold) and pd.reliable_gold or 0) + (finite(pd.unreliable_gold) and pd.unreliable_gold or 0))
                         end
@@ -2770,32 +2840,37 @@ do
         table.sort(v.pos, byId)
         local r = state.relay
         v.units = {}
-        local hidden, visible, alive = {}, {}, {}
+        local visible, alive = {}, {}
         for _, u in pairs(r.units) do
             if u.alive ~= false and finite(u.x) and finite(u.y) then
                 local row = {id = u.id, kind = u.kind, team = u.team, x = round(u.x), y = round(u.y), f = u.visible == true and 0 or 1}
                 if u.kind == "building" then
-                    local tier, lane = tostring(u.name or ""):match("tower(%d)_(%a+)$")
+                    local key = tostring(u.name or ""):gsub("^npc_dota_", "")
+                    local tier, lane = key:match("tower(%d)_(%a+)$")
                     if tier then
-                        local tower = {x = u.x, y = u.y, team = u.team, tier = tonumber(tier), lane = lane}
-                        m.towers[u.id], alive[u.id] = tower, tower
+                        local towers = towerPositions()
+                        if not towers[key] then
+                            towers[key] = {x = round(u.x), y = round(u.y), team = u.team, tier = tonumber(tier), lane = lane}
+                            local count = 0
+                            for _ in pairs(towers) do count = count + 1 end
+                            if count >= 18 then savedSet("towers", call(JSON.encode, JSON, towers) or "") end
+                        end
+                        alive[key] = true
                     end
                     if finite(u.hp) and finite(u.max_hp) and u.max_hp > 0 then row.hp = round(u.hp / u.max_hp * 100) end
                 end
                 if u.kind == "creep" then
                     row.s = tostring(u.name or ""):find("siege", 1, true) and 1 or nil
-                    local entry = state.laneMovers[u.id]
                     if u.visible == true then
-                        if entry then entry.gone = nil end
                         visible[#visible + 1] = u
                         v.units[#v.units + 1] = row
-                    else hidden[#hidden + 1] = {u = u, row = row} end
+                    end
                 elseif u.kind ~= "illusion" or u.visible == true then
                     v.units[#v.units + 1] = row
                 end
             end
         end
-        for _, row in ipairs(predictCreeps(hidden, visible, alive, now)) do v.units[#v.units + 1] = row end
+        simulateWaves(visible, alive, gt, v.units)
         table.sort(v.units, byId)
         v.wards = {}
         for _, w in ipairs(r.wards or {}) do
@@ -2838,6 +2913,9 @@ do
             if finite(o[key]) then v.objectives[key] = o[key] > 0.5 and round(gt + o[key]) or 0 end
         end
         if type(o.roshan) == "table" and o.roshan.stale ~= true and o.roshan.source == "entity" then v.objectives.roshan = boss(o.roshan) end
+        v.objectives.scan_charges = {r = call(GameRules.GetGoodScanCharges), d = call(GameRules.GetBadScanCharges)}
+        v.objectives.stock = {smoke = call(GameRules.GetStockCount, 188, state.localTeam), obs = call(GameRules.GetStockCount, 42, state.localTeam),
+            sen = call(GameRules.GetStockCount, 43, state.localTeam)}
         for _, t in ipairs(o.tormentors or {}) do
             if t.stale ~= true then v.objectives.tormentors[#v.objectives.tormentors + 1] = boss(t) end
         end
@@ -2858,7 +2936,7 @@ do
             if (x - t.x) ^ 2 + (y - t.y) ^ 2 < 1500 ^ 2 then return "torm" end
         end
         local tower, best = nil, 1100 ^ 2
-        for _, t in pairs(m.towers or {}) do
+        for _, t in pairs(towerPositions()) do
             local d = (x - t.x) ^ 2 + (y - t.y) ^ 2
             if d < best then tower, best = t, d end
         end

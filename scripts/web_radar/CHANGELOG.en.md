@@ -1,3 +1,13 @@
+# Update v2.2.0
+
+- Creep waves in the fog: every 30 seconds the script sends a wave down each lane and walks it until it meets the enemy wave or the first alive enemy tower. Visible creeps refine the meeting point.
+- Tower positions are remembered, so waves keep working after towers fall.
+- In-game style top bar above the map: portraits, KDA, HP and mana, ultimate and TP, score, team net worth, clock, day and night.
+- Map layer settings moved to a gear menu in the map corner.
+- Fixed scrolling in the Radiant and Dire lists.
+- New data: player names, attributes, damage, armor, move speed, attack speed, XP, hero damage, healing, wards placed and stacks, scan charges, wards and Smoke in the shop.
+- Enemy K/D is counted from kills since the radar started.
+
 # Update v2.1.0
 
 - Heroes in the fog of war: last maphack position and how many seconds ago they were seen.

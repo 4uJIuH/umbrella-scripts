@@ -37,7 +37,8 @@ header{border-bottom:1px solid var(--soft);background:color-mix(in srgb,var(--bg
 .seg{display:flex;border:1px solid var(--border);border-radius:8px;padding:2px}
 .seg button{height:26px;padding:0 8px;border-radius:6px;color:var(--faint);font-size:12px;font-weight:600;transition:color .2s,background .2s}
 .seg button.on{color:var(--fg);background:var(--sec)}
-main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-template-columns:320px minmax(0,1fr) 380px;grid-template-areas:"feed map teams"}
+main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-template-columns:320px minmax(0,1fr) 380px;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"score score score" "feed map teams"}
+#scoreCard{grid-area:score;overflow:visible}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .card-h{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--soft);flex:none}
 .card-h h2{font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:8px}
@@ -47,7 +48,8 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
 .icon-btn:hover{color:var(--fg);background:var(--sec)}
 #feedCol{grid-area:feed;display:flex;flex-direction:column;gap:12px;min-height:0}
 #mapCard{grid-area:map}
-#teams{grid-area:teams;overflow:auto;display:flex;flex-direction:column;gap:12px;min-height:0;scrollbar-width:thin}
+#teams{grid-area:teams;overflow-y:auto;display:flex;flex-direction:column;gap:12px;min-height:0;scrollbar-width:thin;overscroll-behavior:contain}
+#teams > .card{flex:none;overflow:visible}
 .objs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--soft)}
 .obj{background:var(--card);padding:10px 14px;display:flex;align-items:center;gap:10px;min-width:0}
 .obj img,.obj > i{width:30px;height:30px;flex:none;object-fit:contain;border-radius:8px;display:grid;place-items:center;font-size:13px}
@@ -67,11 +69,58 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
 .ev .x{color:var(--muted)}
 .ev .x b{color:var(--fg);font-weight:600}
 .ev.a{border-left-color:var(--rad)} .ev.e{border-left-color:var(--dire)} .ev.boss{border-left-color:var(--gold)} .ev.rune{border-left-color:var(--violet)} .ev.scan{border-left-color:var(--blue)} .ev.smoke{border-left-color:var(--faint)}
-.layers{display:flex;gap:4px;flex-wrap:wrap}
-.layers button{height:28px;padding:0 10px;border-radius:8px;color:var(--faint);font-weight:500;font-size:12.5px;display:inline-flex;align-items:center;gap:7px;transition:.15s}
-.layers button i{font-size:11px}
-.layers button:hover{color:var(--fg)}
-.layers button.on{background:var(--sec);color:var(--fg)}
+.sb{display:flex;align-items:center;gap:12px;padding:8px 12px;max-width:1240px;width:100%;margin:0 auto}
+.sb-team{flex:1;display:flex;align-items:center;gap:6px;min-width:0}
+.sb-team.d{flex-direction:row-reverse}
+.tiles{display:flex;gap:3px;flex:1;min-width:0}
+.sb-team.d .tiles{flex-direction:row-reverse}
+.nw{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:44px;padding:4px 6px;border-radius:8px;background:var(--sec);font-size:12px;font-weight:700}
+.nw img{width:16px;height:16px}
+.nw.r{color:var(--rad)} .nw.d{color:var(--dire)}
+.tile{flex:1;min-width:0;max-width:96px;display:flex;flex-direction:column;gap:2px;cursor:pointer;border-radius:6px;padding:2px;transition:background .15s}
+.tile:hover{background:var(--sec)}
+.tile.empty{visibility:hidden}
+.pt{position:relative;aspect-ratio:16/9;border-radius:4px;overflow:hidden;background:#1a1a1d;border-top:2px solid var(--tc)}
+.pt img{width:100%;height:100%;object-fit:cover;display:block}
+.pt .k{position:absolute;right:2px;top:1px;font-size:9.5px;font-weight:700;color:#fff;text-shadow:0 0 3px #000,0 0 2px #000}
+.pt .lv{position:absolute;left:2px;bottom:1px;font-size:9px;font-weight:700;color:#fff;background:rgba(0,0,0,.6);border-radius:3px;padding:0 3px}
+.pt .dt{position:absolute;inset:0;display:none;place-items:center;background:rgba(0,0,0,.6);color:#fff;font-weight:700;font-size:13px}
+.tile.dead .pt img{filter:grayscale(1) brightness(.6)} .tile.dead .dt{display:grid}
+.tile.fog .pt img{filter:saturate(.35) brightness(.75)}
+.tile.fog .pt::after{content:'';position:absolute;inset:0;border:1px dashed #e0b44a;border-radius:4px}
+.hb,.mb{position:relative;height:11px;border-radius:2px;background:var(--sec);overflow:hidden}
+.hb i,.mb i{position:absolute;inset:0 auto 0 0}
+.hb i{background:var(--hp)} .mb i{background:var(--mp)}
+.hb b,.mb b{position:absolute;inset:0;font-size:8.5px;font-weight:700;line-height:11px;text-align:center;color:#fff;text-shadow:0 0 2px rgba(0,0,0,.8)}
+.ic{display:flex;gap:2px}
+.ic .slot{flex:1;width:auto;height:18px;border-radius:3px}
+.ic .slot .cd{font-size:9px}
+.sb-mid{display:flex;align-items:center;gap:10px;padding:0 6px;flex:none}
+.sb-mid .sc{font-size:22px;font-weight:700;min-width:26px;text-align:center}
+.sb-mid .sc.r{color:var(--rad)} .sb-mid .sc.d{color:var(--dire)}
+.daybox{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:54px}
+.daybox i{font-size:14px}
+.daybox i.day{color:#f5c542} .daybox i.night{color:#8fa8ff}
+.daybox b{font-size:13px;font-weight:700}
+.daybox span{font-size:10px;color:var(--faint)}
+.gear{position:absolute;right:20px;top:20px;z-index:3;width:28px;height:28px;border-radius:8px;color:var(--faint);display:grid;place-items:center;transition:.15s;background:var(--card);border:1px solid var(--border)}
+.gear:hover,.gear.on{color:var(--fg)}
+.opts{position:absolute;right:20px;top:54px;z-index:20;width:260px;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.35);padding:8px;display:none}
+.opts.on{display:block;animation:pop .14s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(-4px)}}
+.opts h3{font-size:11.5px;font-weight:600;color:var(--faint);padding:6px 8px 4px}
+.opt{display:flex;align-items:center;gap:10px;width:100%;padding:7px 8px;border-radius:8px;font-size:13px;font-weight:500;color:var(--muted);text-align:left}
+.opt:hover{background:var(--sec);color:var(--fg)}
+.opt i{width:16px;text-align:center;color:var(--faint);font-size:12px}
+.opt span{flex:1}
+.sw{width:30px;height:18px;border-radius:9px;background:var(--border);position:relative;transition:.15s;flex:none}
+.sw::after{content:'';position:absolute;left:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:.15s}
+.opt.on .sw{background:var(--ok)} .opt.on .sw::after{left:14px}
+.opt.on{color:var(--fg)}
+.opts .sep{height:1px;background:var(--soft);margin:6px 4px}
+.mapbtns{display:flex;gap:4px;padding:2px 4px}
+.mapbtns button{flex:1;height:30px;border-radius:8px;background:var(--sec);color:var(--muted);font-size:12px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.mapbtns button:hover{color:var(--fg)}
 #stage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:12px;background:var(--mapbg)}
 #map{border-radius:10px;display:block}
 #marks{position:absolute;pointer-events:none;overflow:hidden;border-radius:10px}
@@ -89,13 +138,23 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
 .team-h .role{font-size:12px;color:var(--faint);font-weight:500}
 .team-h .sum{margin-left:auto;display:flex;gap:12px;font-size:12px;color:var(--faint)}
 .team-h .sum b{color:var(--fg);font-weight:600}
-.hero{padding:12px 14px;border-top:1px solid var(--soft)}
+.hero{padding:12px 14px;border-top:1px solid var(--soft);transition:background .4s}
+.hero.flash{background:color-mix(in srgb,var(--fg) 7%,transparent)}
+.hero .who{display:flex;flex-direction:column;flex:1;min-width:0;line-height:1.25}
+.hero .pn{font-size:11.5px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.attrs{display:grid;grid-template-columns:repeat(3,1fr) repeat(4,1fr);gap:1px;margin-top:6px;background:var(--soft);border-radius:8px;overflow:hidden;font-size:11.5px}
+.attrs div{background:var(--card);padding:3px 0;text-align:center;font-weight:600;white-space:nowrap}
+.attrs div i{font-size:9.5px;margin-right:3px;color:var(--faint)}
+.attrs .pri{background:var(--sec)}
+.attrs .s i{color:#e0574f} .attrs .g i{color:#4cb879} .attrs .n i{color:#4f8fe8}
+.extra{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:11.5px;color:var(--faint)}
+.extra b{color:var(--muted);font-weight:600}
 .team-h + .hero{border-top:0}
 .hero .top{display:flex;align-items:center;gap:10px}
 .portrait{position:relative;width:32px;height:32px;flex:none;border-radius:8px;background:#1a1a1d}
 .portrait img{width:100%;height:100%;border-radius:8px;object-fit:contain;display:block;padding:2px}
 .portrait .lv{position:absolute;right:-5px;bottom:-5px;min-width:18px;height:16px;padding:0 4px;border-radius:5px;background:var(--fg);color:var(--bg);font-size:10px;font-weight:700;display:grid;place-items:center}
-.hero .name{font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hero .name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .state{font-size:11.5px;font-weight:500;padding:2px 7px;border-radius:6px;background:var(--sec);color:var(--muted);white-space:nowrap}
 .state.fog{color:var(--warn)} .state.dead{color:var(--bad)} .state.tp{color:var(--blue)} .state.vis{color:var(--ok)}
 .bars{display:grid;gap:3px;margin-top:9px}
@@ -126,8 +185,8 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
 .hero.fogrow .portrait img{filter:saturate(.5)}
 .hero.deadrow{opacity:.55}
 .hero.deadrow .portrait img{filter:grayscale(1)}
-@media (max-width:1320px){main{grid-template-columns:minmax(0,1fr) 380px;grid-template-areas:"map teams" "feed teams";grid-template-rows:minmax(0,1fr) 300px}#feedCol{flex-direction:row}#feedCol > *{flex:1}}
-@media (max-width:900px){html,body{height:auto}main{display:flex;flex-direction:column}#mapCard{height:min(100vw,640px)}#feedCol{flex-direction:column}#console{height:320px;flex:none}.crumb,.gh{display:none}.bar{gap:8px;padding:0 12px}}
+@media (max-width:1320px){main{grid-template-columns:minmax(0,1fr) 380px;grid-template-areas:"score score" "map teams" "feed teams";grid-template-rows:auto minmax(0,1fr) 300px}#feedCol{flex-direction:row}#feedCol > *{flex:1}}
+@media (max-width:900px){html,body{height:auto}main{display:flex;flex-direction:column}#mapCard{height:min(100vw,640px)}#feedCol{flex-direction:column}#console{height:320px;flex:none}.sb{flex-wrap:wrap;justify-content:center}.sb-team{flex:1 1 100%}.sb-mid{order:-1}.crumb,.gh{display:none}.bar{gap:8px;padding:0 12px}}
 </style>
 </head>
 <body>
@@ -142,13 +201,13 @@ main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-templ
   <a class="ghost" href="https://github.com/4uJIuH/umbrella-scripts" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i><span class="gh">GitHub</span></a>
 </div></header>
 <main>
+  <section class="card" id="scoreCard"><div class="sb" id="score"></div></section>
   <section id="feedCol">
     <div class="card"><div class="card-h"><h2><i class="fa-solid fa-crosshairs"></i><span id="hObj"></span></h2></div><div class="objs" id="objs"></div></div>
     <div class="card" id="console"><div class="card-h"><h2><i class="fa-solid fa-list-ul"></i><span id="hLog"></span></h2><div class="sp"></div><button class="icon-btn" id="popcon" type="button"><i class="fa-solid fa-up-right-from-square"></i></button></div><div id="log"></div></div>
   </section>
   <section class="card" id="mapCard">
-    <div class="card-h"><div class="layers" id="layers"></div><div class="sp"></div><button class="icon-btn" id="pip" type="button"><i class="fa-solid fa-clone"></i></button></div>
-    <div id="stage"><canvas id="map"></canvas><div id="marks"></div><div id="empty"><div><i class="fa-solid fa-satellite-dish"></i><span id="emptyText"></span></div></div></div>
+    <div id="stage"><button class="gear" id="gear" type="button"><i class="fa-solid fa-gear"></i></button><div class="opts" id="opts"></div><canvas id="map"></canvas><div id="marks"></div><div id="empty"><div><i class="fa-solid fa-satellite-dish"></i><span id="emptyText"></span></div></div></div>
     <div class="legend" id="legend"></div>
   </section>
   <section id="teams"></section>
@@ -174,8 +233,11 @@ const ALL = {
     tp: 'teleport · {n} s', buyback: 'Buyback', ready: 'ready', sec: '{n} s', gold: 'Gold', nw: 'NW', kda: 'KDA', lhdn: 'LH/DN',
     roshan: 'Roshan', tormentor: 'Tormentor', noData: 'no data', bossDead: 'dead', bossSeen: 'alive', bossHit: 'under attack',
     glyph: 'Glyph R / D', scan: 'Scan R / D', camps: 'Camps with creeps',
-    layers: { heroes: 'Heroes', fog: 'Fog', creeps: 'Creeps', jungle: 'Jungle', wards: 'Wards', buildings: 'Buildings', events: 'Events' },
-    legend: ['visible', 'in fog (maphack)', 'last seen', 'creeps in fog (predicted)'],
+    layers: { heroes: 'Heroes', fog: 'Heroes in fog', creeps: 'Lane creeps', waves: 'Creep waves in fog', jungle: 'Jungle and camps', wards: 'Wards and vision', buildings: 'Buildings', events: 'Map events', couriers: 'Couriers', runes: 'Runes', labels: 'Fog age labels' },
+    show: 'Show on the map', windows: 'On top of the game', day: 'Day', night: 'Night', nsNight: 'Night Stalker', est: 'counted since the radar started',
+    stock: 'Shop stock', scanCharges: 'Scan charges R / D', dmg: 'Hero damage', heal: 'Healing', wardsPlaced: 'Wards', stacks: 'Stacks', xp: 'XP',
+    attrDmg: 'Damage', attrArm: 'Armor', attrMs: 'Move speed', attrAs: 'Attacks per second', ult: 'Ultimate',
+    legend: ['visible', 'in fog (maphack)', 'last seen', 'creep wave in fog (predicted)'],
     zone: { mid: 'mid', top: 'top', bot: 'bot' }, side: { r: 'Radiant side', d: 'Dire side', c: 'middle' },
     place: { rosh: 'near Roshan', torm: 'near Tormentor', base_r: 'Radiant base', base_d: 'Dire base' },
     tower: '{team} T{tier} {lane}',
@@ -203,8 +265,11 @@ const ALL = {
     tp: 'телепорт · {n} с', buyback: 'Байбек', ready: 'готов', sec: '{n} с', gold: 'Золото', nw: 'NW', kda: 'KDA', lhdn: 'LH/DN',
     roshan: 'Рошан', tormentor: 'Торментор', noData: 'нет данных', bossDead: 'мертв', bossSeen: 'жив', bossHit: 'бьют',
     glyph: 'Глиф R / D', scan: 'Скан R / D', camps: 'Кемпы с крипами',
-    layers: { heroes: 'Герои', fog: 'Туман', creeps: 'Крипы', jungle: 'Лес', wards: 'Варды', buildings: 'Здания', events: 'События' },
-    legend: ['виден', 'в тумане (мапхак)', 'последнее место', 'крипы в тумане (прогноз)'],
+    layers: { heroes: 'Герои', fog: 'Герои в тумане', creeps: 'Линейные крипы', waves: 'Волны крипов в тумане', jungle: 'Лес и кемпы', wards: 'Варды и обзор', buildings: 'Здания', events: 'События на карте', couriers: 'Курьеры', runes: 'Руны', labels: 'Подписи времени в тумане' },
+    show: 'Показывать на карте', windows: 'Поверх игры', day: 'День', night: 'Ночь', nsNight: 'Night Stalker', est: 'посчитано с запуска радара',
+    stock: 'В лавке', scanCharges: 'Заряды скана R / D', dmg: 'Урон по героям', heal: 'Лечение', wardsPlaced: 'Варды', stacks: 'Стаки', xp: 'Опыт',
+    attrDmg: 'Урон', attrArm: 'Броня', attrMs: 'Скорость', attrAs: 'Атак в секунду', ult: 'Ультимейт',
+    legend: ['виден', 'в тумане (мапхак)', 'последнее место', 'волна крипов в тумане (прогноз)'],
     zone: { mid: 'мид', top: 'верх', bot: 'низ' }, side: { r: 'сторона Radiant', d: 'сторона Dire', c: 'середина' },
     place: { rosh: 'у Рошана', torm: 'у Торментора', base_r: 'база Radiant', base_d: 'база Dire' },
     tower: 'T{tier} {lane} {team}',
@@ -276,7 +341,9 @@ const $ = id => document.getElementById(id);
 const canvas = $('map'), ctx = canvas.getContext('2d'), stage = $('stage');
 const consoleEl = $('console'), objsEl = $('objs'), logEl = $('log'), teamsEl = $('teams'), statusEl = $('status'), clockEl = $('clock');
 
-const LAYER_KEYS = [['heroes', 'fa-user'], ['fog', 'fa-eye-slash'], ['creeps', 'fa-people-group'], ['jungle', 'fa-tree'], ['wards', 'fa-eye'], ['buildings', 'fa-chess-rook'], ['events', 'fa-bolt']];
+let openPip = () => {};
+const LAYER_KEYS = [['heroes', 'fa-user'], ['fog', 'fa-eye-slash'], ['labels', 'fa-clock'], ['creeps', 'fa-people-group'], ['waves', 'fa-route'], ['jungle', 'fa-tree'],
+  ['wards', 'fa-eye'], ['runes', 'fa-gem'], ['couriers', 'fa-horse'], ['buildings', 'fa-chess-rook'], ['events', 'fa-bolt']];
 const layers = Object.assign(Object.fromEntries(LAYER_KEYS.map(k => [k[0], true])), JSON.parse(localStorage.getItem('cr_layers') || '{}'));
 
 let size = 600;
@@ -293,13 +360,15 @@ const feedLines = new Map();
 function applyText() {
   document.documentElement.lang = LANG;
   for (const b of document.querySelectorAll('#lang button')) b.classList.toggle('on', b.dataset.l === LANG);
-  $('pip').title = TEXT.pip;
   $('popcon').title = TEXT.popcon;
   $('theme').title = TEXT.theme;
   $('hObj').textContent = TEXT.objectives;
   $('hLog').textContent = TEXT.events;
   logEl.dataset.empty = TEXT.noEvents;
-  $('layers').innerHTML = LAYER_KEYS.map(([key, ic]) => '<button type="button" data-k="' + key + '" class="' + (layers[key] ? 'on' : '') + '"><i class="fa-solid ' + ic + '"></i>' + esc(TEXT.layers[key]) + '</button>').join('');
+  $('opts').innerHTML = '<h3>' + esc(TEXT.show) + '</h3>' + LAYER_KEYS.map(([key, ic]) => '<button type="button" class="opt' + (layers[key] ? ' on' : '') + '" data-k="' + key + '"><i class="fa-solid ' + ic + '"></i><span>' + esc(TEXT.layers[key]) + '</span><em class="sw"></em></button>').join('') +
+    '<div class="sep"></div><h3>' + esc(TEXT.windows) + '</h3><div class="mapbtns"><button type="button" id="pip"><i class="fa-solid fa-map"></i>' + esc(TEXT.pip) + '</button></div>';
+  $('pip').onclick = () => openPip();
+  if (!document.pictureInPictureEnabled || !canvas.captureStream) $('pip').style.display = 'none';
   $('legend').innerHTML = '<span><i style="background:var(--rad)"></i>' + esc(TEXT.legend[0]) + '</span>' +
     '<span><i style="border:2px dashed #e0b44a"></i>' + esc(TEXT.legend[1]) + '</span>' +
     '<span><i style="border:2px dashed #94a3b8"></i>' + esc(TEXT.legend[2]) + '</span>' +
@@ -310,14 +379,23 @@ function applyText() {
   renderObjs();
   renderSide();
 }
-$('layers').onclick = ev => {
-  const b = ev.target.closest('button');
+$('opts').onclick = ev => {
+  const b = ev.target.closest('.opt');
   if (!b) return;
   const key = b.dataset.k;
   layers[key] = !layers[key];
   b.classList.toggle('on', layers[key]);
   localStorage.setItem('cr_layers', JSON.stringify(layers));
 };
+$('gear').onclick = ev => {
+  ev.stopPropagation();
+  const on = $('opts').classList.toggle('on');
+  $('gear').classList.toggle('on', on);
+};
+document.addEventListener('click', ev => {
+  if (!ev.target.closest('#opts') && !ev.target.closest('#gear')) { $('opts').classList.remove('on'); $('gear').classList.remove('on'); }
+});
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape') { $('opts').classList.remove('on'); $('gear').classList.remove('on'); } });
 $('lang').onclick = ev => {
   const b = ev.target.closest('button');
   if (!b || b.dataset.l === LANG) return;
@@ -524,6 +602,17 @@ function drawUnits() {
         ctx.lineWidth = 2;
         ctx.stroke();
       }
+    } else if (kind === 'wave') {
+      if (!layers.waves) continue;
+      const dx = (row.dx || 0) / 100, dy = (row.dy || 0) / 100;
+      ctx.globalAlpha = 0.9;
+      ctx.strokeStyle = teamColor(row.team);
+      ctx.lineWidth = 1.6;
+      for (let i = 0; i < 4; i++) {
+        const along = (i - 1.5) * world(110), side = (i % 2 ? 1 : -1) * world(60);
+        circle(x + dx * along - dy * side, y - dy * along - dx * side, 3.2 * u);
+        ctx.stroke();
+      }
     } else if (kind === 'creep') {
       if (!layers.creeps) continue;
       const r = (row.s ? 3.6 : 2.6) * u;
@@ -549,7 +638,7 @@ function drawUnits() {
       ctx.fillStyle = '#d9a84e';
       ctx.fill();
     } else if (kind === 'courier') {
-      if (!layers.heroes) continue;
+      if (!layers.couriers) continue;
       ctx.globalAlpha = row.f ? 0.45 : 1;
       ctx.beginPath();
       ctx.moveTo(x, y - 5 * u); ctx.lineTo(x + 4 * u, y); ctx.lineTo(x, y + 5 * u); ctx.lineTo(x - 4 * u, y); ctx.closePath();
@@ -596,6 +685,7 @@ function drawWards() {
 }
 
 function drawRunes() {
+  if (!layers.runes) return;
   const u = unit();
   for (const r of list(live.runes)) {
     const [x, y] = toScreen(r.x, r.y);
@@ -710,7 +800,7 @@ function drawHero(h, t) {
     }
   }
   ctx.globalAlpha = 1;
-  if (r.f) label(Math.round(age) + 's', x + s / 2 + 8, y - s / 2, r.f === 1 ? '#f3d48c' : '#cbd5e1', 9);
+  if (r.f && layers.labels) label(Math.round(age) + 's', x + s / 2 + 8, y - s / 2, r.f === 1 ? '#f3d48c' : '#cbd5e1', 9);
   if (typeof r.tp === 'number' && remaining(r.tp) > 0) {
     ctx.beginPath();
     ctx.arc(x, y, s / 2 + 5, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * ((performance.now() / 700) % 1));
@@ -791,7 +881,7 @@ function heroCard(entry) {
   else { note = TEXT.visible; noteCls = 'vis'; }
   const s = info.stats || {};
   const kpis = [];
-  if (typeof s.k === 'number') kpis.push([TEXT.kda, s.k + '/' + s.d + '/' + s.a]);
+  if (typeof s.k === 'number') kpis.push([TEXT.kda, s.k + '/' + s.d + (typeof s.a === 'number' ? '/' + s.a : '') + (s.est ? '*' : '')]);
   if (typeof s.nw === 'number') kpis.push([TEXT.nw, (s.partial ? '≥' : '') + kilo(s.nw)]);
   if (typeof s.lh === 'number') kpis.push([TEXT.lhdn, s.lh + '/' + (s.dn || 0)]);
   if (typeof s.g === 'number') kpis.push([TEXT.gold, String(s.g)]);
@@ -810,18 +900,94 @@ function heroCard(entry) {
   if (bySlot[15]) back += '<span class="gap"></span>' + slot(itemImg(bySlot[15].name), itemName(bySlot[15].name), { cd: remaining(bySlot[15].ready_at), cls: 'sm' });
   const abilities = list(info.abilities).map(a => slot(abilityImg(a.name), abilityName(a.name, r.name) + (a.level ? ' (' + a.level + ')' : ''),
     { cd: remaining(a.ready_at), level: a.level, charges: a.charges, cls: 'ab' + (a.level ? '' : ' l0') })).join('');
-  return '<div class="hero' + (r.f ? ' fogrow' : '') + (r.alive === false ? ' deadrow' : '') + '">' +
+  const a = info.attr;
+  let attrs = '';
+  if (a) {
+    const cell = (cls, ic, val, title, pri) => '<div class="' + cls + (pri ? ' pri' : '') + '" title="' + esc(title) + '"><i class="fa-solid ' + ic + '"></i>' + esc(val == null ? '—' : val) + '</div>';
+    attrs = '<div class="attrs">' + cell('s', 'fa-hand-fist', a.s, 'STR', a.p === 0) + cell('g', 'fa-person-running', a.g, 'AGI', a.p === 1) + cell('n', 'fa-brain', a.i, 'INT', a.p === 2) +
+      cell('', 'fa-khanda', a.dmg != null ? a.dmg + (a.dmx > a.dmg ? '+' : '') : null, TEXT.attrDmg) + cell('', 'fa-shield', a.arm, TEXT.attrArm) +
+      cell('', 'fa-shoe-prints', a.ms, TEXT.attrMs) + cell('', 'fa-gauge-high', a.aps, TEXT.attrAs) + '</div>';
+  }
+  const extra = [];
+  if (s.dmg) extra.push(TEXT.dmg + ' <b>' + kilo(s.dmg) + '</b>');
+  if (s.heal) extra.push(TEXT.heal + ' <b>' + kilo(s.heal) + '</b>');
+  if (s.obs || s.sen) extra.push(TEXT.wardsPlaced + ' <b>' + (s.obs || 0) + '/' + (s.sen || 0) + '</b>');
+  if (s.stk) extra.push(TEXT.stacks + ' <b>' + s.stk + '</b>');
+  if (a && a.xp) extra.push(TEXT.xp + ' <b>' + kilo(a.xp) + '</b>');
+  return '<div class="hero' + (r.f ? ' fogrow' : '') + (r.alive === false ? ' deadrow' : '') + '" data-id="' + esc(r.id) + '">' +
     '<div class="top"><span class="portrait"><img src="' + esc(heroImg(r.name)) + '" alt="" onerror="this.style.visibility=\'hidden\'"><span class="lv">' + esc(r.level || '?') + '</span></span>' +
-    '<span class="name">' + esc(heroName(r.name)) + '</span><span class="state ' + noteCls + '">' + esc(note) + '</span></div>' +
+    '<span class="who"><span class="name">' + esc(heroName(r.name)) + '</span>' + (info.pn ? '<span class="pn">' + esc(info.pn) + '</span>' : '') + '</span><span class="state ' + noteCls + '">' + esc(note) + '</span></div>' +
     '<div class="bars"><div class="meter hp"><i style="width:' + pct(r.hp, r.max_hp) + '%"></i><b>' + (r.max_hp ? esc(r.hp + ' / ' + r.max_hp) : '') + '</b></div>' +
     (r.max_mana ? '<div class="meter mp thin"><i style="width:' + pct(r.mana, r.max_mana) + '%"></i></div>' : '') + '</div>' +
-    (kpis.length ? '<div class="kpis" style="grid-template-columns:repeat(' + kpis.length + ',1fr)">' + kpis.map(k => '<div><span>' + esc(k[0]) + '</span><b>' + esc(k[1]) + '</b></div>').join('') + '</div>' : '') +
+    (kpis.length ? '<div class="kpis" style="grid-template-columns:repeat(' + kpis.length + ',1fr)"' + (s.est ? ' title="* ' + esc(TEXT.est) + '"' : '') + '>' + kpis.map(k => '<div><span>' + esc(k[0]) + '</span><b>' + esc(k[1]) + '</b></div>').join('') + '</div>' : '') +
+    attrs + (extra.length ? '<div class="extra">' + extra.map(x => '<span>' + x + '</span>').join('') + '</div>' : '') +
     (items.length ? '<div class="slots">' + inv + '</div>' : '') +
     (back ? '<div class="slots">' + back + '</div>' : '') +
     (abilities ? '<div class="slots">' + abilities + '</div>' : '') + '</div>';
 }
 
+function portraitImg(name) {
+  return CDN + 'heroes/' + heroKey(name) + '.png';
+}
+let scoreHtml = '';
+function tile(entry) {
+  if (!entry) return '<div class="tile empty"></div>';
+  const r = entry.row, info = entry.info || {}, s = info.stats || {};
+  const dead = r.alive === false;
+  const kda = typeof s.k === 'number' ? s.k + '/' + s.d + (typeof s.a === 'number' ? '/' + s.a : '') : '';
+  let icons = '';
+  if (info.ult) icons += slot(abilityImg(info.ult.name), TEXT.ult + ': ' + abilityName(info.ult.name, r.name), { cd: remaining(info.ult.ready_at) });
+  const tp = list(info.items).find(it => it.slot === 15);
+  if (tp) icons += slot(itemImg(tp.name), itemName(tp.name), { cd: remaining(tp.ready_at) });
+  return '<div class="tile' + (dead ? ' dead' : '') + (r.f && !dead ? ' fog' : '') + '" data-id="' + esc(r.id) + '" style="--tc:var(--' + (r.team === 2 ? 'rad' : 'dire') + ')" title="' + esc(heroName(r.name) + (info.pn ? ' · ' + info.pn : '')) + '">' +
+    '<div class="pt"><img src="' + esc(portraitImg(r.name)) + '" alt="" onerror="this.src=\'' + esc(heroImg(r.name)) + '\';this.onerror=null">' + (kda ? '<span class="k">' + esc(kda) + '</span>' : '') +
+    '<span class="lv">' + esc(r.level || '') + '</span><span class="dt">' + (dead && r.respawn_at ? Math.ceil(remaining(r.respawn_at)) : '') + '</span></div>' +
+    '<div class="hb"><i style="width:' + pct(r.hp, r.max_hp) + '%"></i><b>' + (dead ? '' : esc(r.hp)) + '</b></div>' +
+    '<div class="mb"><i style="width:' + pct(r.mana, r.max_mana) + '%"></i><b>' + (dead || !r.max_mana ? '' : esc(r.mana)) + '</b></div>' +
+    (icons ? '<div class="ic">' + icons + '</div>' : '') + '</div>';
+}
+function teamTotals(members) {
+  let kills = 0, deaths = 0, nw = 0, partial = false, hasNw = false, exact = true;
+  for (const e of members) {
+    const s = (e.info || {}).stats || {};
+    if (typeof s.k === 'number') kills += s.k;
+    if (typeof s.d === 'number') deaths += s.d;
+    if (s.est || typeof s.k !== 'number') exact = false;
+    if (typeof s.nw === 'number') { nw += s.nw; hasNw = true; partial = partial || !!s.partial; }
+  }
+  return { kills, deaths, nw, partial, hasNw, exact };
+}
+function renderScore() {
+  const clock = live.clock || {};
+  const rows = Object.values(roster).sort((a, b) => String(a.row.id).localeCompare(String(b.row.id)));
+  const rad = rows.filter(e => e.row.team === 2), dire = rows.filter(e => e.row.team === 3);
+  const tr = teamTotals(rad), td = teamTotals(dire);
+  const mine = clock.team;
+  let scoreR = tr.kills, scoreD = td.kills;
+  if (mine === 2 && tr.exact) { scoreR = tr.kills; scoreD = tr.deaths; }
+  if (mine === 3 && td.exact) { scoreD = td.kills; scoreR = td.deaths; }
+  const nw = (t, cls) => '<div class="nw ' + cls + '"><img src="' + CDN + 'icons/gold.png" alt="">' + (t.hasNw ? (t.partial ? '≥' : '') + kilo(t.nw) : '—') + '</div>';
+  const fill = list => { const out = list.slice(0, 5); while (out.length < 5) out.push(null); return out.map(tile).join(''); };
+  const day = clock.day !== false;
+  const icon = clock.ns ? 'fa-moon night' : (day ? 'fa-sun day' : 'fa-moon night');
+  const next = typeof clock.cyc === 'number' ? clockText(remaining(clock.cyc)) : '';
+  const html = '<div class="sb-team r">' + nw(tr, 'r') + '<div class="tiles">' + fill(rad) + '</div></div>' +
+    '<div class="sb-mid"><b class="sc r">' + scoreR + '</b><div class="daybox" title="' + esc(clock.ns ? TEXT.nsNight : (day ? TEXT.day : TEXT.night)) + '"><i class="fa-solid ' + icon + '"></i><b>' + (clock.in_game ? clockText(gameTime()) : '—') + '</b><span>' + esc(next) + '</span></div><b class="sc d">' + scoreD + '</b></div>' +
+    '<div class="sb-team d">' + nw(td, 'd') + '<div class="tiles">' + fill(dire) + '</div></div>';
+  if (html !== scoreHtml) { scoreHtml = html; $('score').innerHTML = html; }
+}
+$('score').onclick = ev => {
+  const t = ev.target.closest('.tile[data-id]');
+  if (!t) return;
+  const card = teamsEl.querySelector('.hero[data-id="' + t.dataset.id + '"]');
+  if (!card) return;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.classList.add('flash');
+  setTimeout(() => card.classList.remove('flash'), 900);
+};
+
 function renderSide() {
+  renderScore();
   const mine = (live.clock || {}).team;
   const rows = Object.values(roster).sort((a, b) => a.row.team - b.row.team || String(a.row.id).localeCompare(String(b.row.id)));
   const groups = [];
@@ -865,8 +1031,12 @@ function renderObjs() {
   });
   cells.push(['fa-shield-halved', TEXT.glyph, cdText(obj.glyph_radiant) + ' / ' + cdText(obj.glyph_dire), '']);
   cells.push(['fa-satellite-dish', TEXT.scan, cdText(obj.scan_radiant) + ' / ' + cdText(obj.scan_dire), '']);
+  const sc = obj.scan_charges || {};
+  if (typeof sc.r === 'number' || typeof sc.d === 'number') cells.push(['fa-bolt', TEXT.scanCharges, (sc.r ?? '—') + ' / ' + (sc.d ?? '—'), '']);
   const camps = list(live.camps);
   if (camps.length) cells.push(['radar/icons/' + CAMP_ICON, TEXT.camps, camps.filter(c => c.s === 1).length + ' / ' + camps.length, '']);
+  const st = obj.stock || {};
+  if (typeof st.smoke === 'number') cells.push([itemImg('item_smoke_of_deceit'), TEXT.stock, 'Smoke ' + st.smoke + ' · Obs ' + (st.obs ?? '—') + ' · Sen ' + (st.sen ?? '—'), '']);
   if (cells.length % 2) cells.push(null);
   objsEl.innerHTML = cells.map(c => c ? '<div class="obj">' + (c[0].indexOf('fa-') === 0 ? '<i class="fa-solid ' + c[0] + '"></i>' : '<img src="' + esc(c[0]) + '" alt="">') +
     '<div style="min-width:0"><div class="k">' + esc(c[1]) + '</div><div class="v ' + c[3] + '">' + esc(c[2]) + '</div></div></div>' : '<div class="obj"></div>').join('');
@@ -945,7 +1115,7 @@ function feedLine(key, e) {
 function applyLive() {
   liveAt = performance.now();
   const clock = live.clock || {};
-  clockEl.textContent = clock.in_game ? clockText(clock.t) + (clock.paused ? ' · ' + TEXT.paused : '') : '';
+  clockEl.innerHTML = clock.in_game ? '<i class="fa-solid ' + (clock.day === false || clock.ns ? 'fa-moon' : 'fa-sun') + '" style="color:' + (clock.day === false || clock.ns ? '#8fa8ff' : '#f5c542') + '"></i>' + esc(clockText(clock.t) + (clock.paused ? ' · ' + TEXT.paused : '')) : '';
   if (!clock.in_game) { roster = {}; heroes = {}; }
   const info = live.info || {};
   const next = {};
@@ -1042,10 +1212,8 @@ popBtn.onclick = async function () {
   }
 };
 
-const pipBtn = $('pip');
 let pipVideo = null;
-if (!document.pictureInPictureEnabled || !canvas.captureStream) pipBtn.style.display = 'none';
-pipBtn.onclick = async function () {
+openPip = async function () {
   try {
     if (document.pictureInPictureElement) {
       await document.exitPictureInPicture();
