@@ -6157,6 +6157,129 @@
         ]
       },
       "date": "2026-10-18"
+    },
+    {
+      "id": "murzik",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/murzik/murzik.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/murzik/murzik.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "mamin_paren (Discord: hakerskiyfrancuskiy)",
+      "menu": {
+        "ru": [
+          "General \u2192 Main \u2192 Kitty Widget \u2192 Kitty \u2192 Main",
+          "General \u2192 Main \u2192 Kitty Widget \u2192 Look \u2192 Widget"
+        ],
+        "en": [
+          "General \u2192 Main \u2192 Kitty Widget \u2192 Kitty \u2192 Main",
+          "General \u2192 Main \u2192 Kitty Widget \u2192 Look \u2192 Widget"
+        ]
+      },
+      "date": "2026-10-19",
+      "version_marker": "NONE"
+    },
+    {
+      "id": "habits",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/habits/habits.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/habits/habits.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "\u043b\u0435\u0445\u0430 \u0432\u0430\u043d\u044f \u0438 \u0432\u0438\u0442\u0430\u043b\u0438\u043a (Discord: mikropabalo)",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Utility \u2192 \u0422\u0440\u0435\u043a\u0435\u0440 \u043f\u0440\u0438\u0432\u044b\u0447\u0435\u043a \u2192 Main \u2192 \u041f\u0440\u0438\u0432\u044b\u0447\u043a\u0438"
+        ],
+        "en": [
+          "Scripts \u2192 Utility \u2192 \u0422\u0440\u0435\u043a\u0435\u0440 \u043f\u0440\u0438\u0432\u044b\u0447\u0435\u043a \u2192 Main \u2192 \u041f\u0440\u0438\u0432\u044b\u0447\u043a\u0438"
+        ]
+      },
+      "date": "2026-10-19",
+      "version_marker": "NONE"
+    },
+    {
+      "id": "calories",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calories/calories.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calories/calories.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "\u043b\u0435\u0445\u0430 \u0432\u0430\u043d\u044f \u0438 \u0432\u0438\u0442\u0430\u043b\u0438\u043a (Discord: mikropabalo)",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Utility \u2192 \u041a\u0430\u043b\u043e\u0440\u0438\u0438 \u2192 Main \u2192 \u0414\u043d\u0435\u0432\u043d\u0438\u043a \u043f\u0438\u0442\u0430\u043d\u0438\u044f"
+        ],
+        "en": [
+          "Scripts \u2192 Utility \u2192 \u041a\u0430\u043b\u043e\u0440\u0438\u0438 \u2192 Main \u2192 \u0414\u043d\u0435\u0432\u043d\u0438\u043a \u043f\u0438\u0442\u0430\u043d\u0438\u044f"
+        ]
+      },
+      "date": "2026-10-19",
+      "version_marker": "NONE"
+    },
+    {
+      "id": "calendar",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calendar/calendar.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calendar/calendar.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "\u043b\u0435\u0445\u0430 \u0432\u0430\u043d\u044f \u0438 \u0432\u0438\u0442\u0430\u043b\u0438\u043a (Discord: mikropabalo)",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Utility \u2192 \u041a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u044c \u2192 Main \u2192 \u041a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u044c",
+          "Scripts \u2192 Utility \u2192 \u041a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u044c \u2192 Main \u2192 \u041d\u043e\u0432\u043e\u0435 \u0441\u043e\u0431\u044b\u0442\u0438\u0435"
+        ],
+        "en": [
+          "Scripts \u2192 Utility \u2192 \u041a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u044c \u2192 Main \u2192 \u041a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u044c",
+          "Scripts \u2192 Utility \u2192 \u041a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u044c \u2192 Main \u2192 \u041d\u043e\u0432\u043e\u0435 \u0441\u043e\u0431\u044b\u0442\u0438\u0435"
+        ]
+      },
+      "date": "2026-10-19",
+      "version_marker": "NONE"
+    },
+    {
+      "id": "arc_warden_clone_pike",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_clone_pike/pika_arc_clone_pike.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_clone_pike/pika_arc_clone_pike.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "kael'thas' (Discord: feit._.)",
+      "menu": {
+        "ru": [
+          "Heroes \u2192 Hero List \u2192 Arc Warden \u2192 Main Settings \u2192 Utility \u2192 Save by clone",
+          "Heroes \u2192 Hero List \u2192 Arc Warden \u2192 Main Settings \u2192 Utility \u2192 Save by clone \u2192 Settings \u2192 Spawn clone and save"
+        ],
+        "en": [
+          "Heroes \u2192 Hero List \u2192 Arc Warden \u2192 Main Settings \u2192 Utility \u2192 Save by clone",
+          "Heroes \u2192 Hero List \u2192 Arc Warden \u2192 Main Settings \u2192 Utility \u2192 Save by clone \u2192 Settings \u2192 Spawn clone and save"
+        ]
+      },
+      "date": "2026-10-19",
+      "heroes": [
+        "arc_warden"
+      ],
+      "version_marker": "NONE"
+    },
+    {
+      "id": "pt_mana_abuse_ctx",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_mana_abuse_ctx/pt_mana_abuse_ctx.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_mana_abuse_ctx/pt_mana_abuse_ctx.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "ctx (Discord: papagdetto)",
+      "menu": {
+        "ru": [
+          "General \u2192 Main \u2192 PT Abuse \u2192 Settings \u2192 \u041e\u0441\u043d\u043e\u0432\u043d\u043e\u0435"
+        ],
+        "en": [
+          "General \u2192 Main \u2192 PT Abuse \u2192 Settings \u2192 Main"
+        ]
+      },
+      "date": "2026-10-19",
+      "version_marker": "NONE"
     }
   ]
 }

@@ -436,6 +436,36 @@ class MenuLocationsTests(unittest.TestCase):
             with self.subTest(script=script_id):
                 self.assertEqual(paths_for(self.by_id[script_id])["en"], paths)
 
+    def test_october_19_script_menu_paths(self):
+        expected = {
+            "murzik": [
+                "General → Main → Kitty Widget → Kitty → Main",
+                "General → Main → Kitty Widget → Look → Widget",
+            ],
+            "habits": ["Scripts → Utility → Трекер привычек → Main → Привычки"],
+            "calories": ["Scripts → Utility → Калории → Main → Дневник питания"],
+            "calendar": [
+                "Scripts → Utility → Календарь → Main → Календарь",
+                "Scripts → Utility → Календарь → Main → Новое событие",
+            ],
+            "arc_warden_clone_pike": [
+                "Heroes → Hero List → Arc Warden → Main Settings → Utility → Save by clone",
+                "Heroes → Hero List → Arc Warden → Main Settings → Utility → Save by clone → Settings → Spawn clone and save",
+            ],
+        }
+        for script_id, paths in expected.items():
+            with self.subTest(script=script_id):
+                self.assertEqual(paths_for(self.by_id[script_id])["en"], paths)
+
+    def test_ctx_pt_mana_abuse_is_listed_separately(self):
+        self.assertEqual(
+            paths_for(self.by_id["pt_mana_abuse_ctx"]),
+            {
+                "ru": ["General → Main → PT Abuse → Settings → Основное"],
+                "en": ["General → Main → PT Abuse → Settings → Main"],
+            },
+        )
+
     def test_catalog_paths_have_localized_list_shapes(self):
         for script in self.scripts:
             with self.subTest(script=script["id"]):

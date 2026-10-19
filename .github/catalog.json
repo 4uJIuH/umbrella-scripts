@@ -11479,6 +11479,269 @@
           "Copy the link from the Link field and send it to friends."
         ]
       }
+    },
+    {
+      "id": "murzik",
+      "tag": "murzik",
+      "title": "Murzik Kitty Widget",
+      "kind": "lua",
+      "category": "dota",
+      "file": "murzik.lua",
+      "author": "mamin_paren (Discord: hakerskiyfrancuskiy)",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-19",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/murzik/murzik.lua"
+      },
+      "ru": {
+        "tagline": "котик-компаньон в углу экрана",
+        "about": "Интерактивный котик поверх Dota 2: можно менять имя и внешний вид, нажимать на него и выбирать действия. В текущей версии реакции на убийства и смерти могут работать некорректно; кнопки Test позволяют посмотреть задуманные реакции.",
+        "features": [
+          "Настройка имени, размера, прозрачности, положения и оформления котика",
+          "Язык, разговорчивость и интерактивное меню действий",
+          "Кнопки Test: kill и Test: death для проверки соответствующих реакций",
+          "Известная проблема: автоматическая реакция на убийства и смерти пока может не срабатывать"
+        ],
+        "install": [
+          "Поместите `murzik.lua` в папку `umbrella\\scripts` и перезагрузите Lua-скрипты.",
+          "Откройте `General → Main → Kitty Widget → Kitty → Main` или `General → Main → Kitty Widget → Look → Widget`."
+        ]
+      },
+      "en": {
+        "tagline": "a little cat companion in the corner of the screen",
+        "about": "An interactive cat overlay for Dota 2. You can rename it, change its appearance, click it, and use its action menu. In the current version, kill and death reactions may not work correctly; the Test buttons preview the intended reactions.",
+        "features": [
+          "Customize the cat's name, size, opacity, position, and appearance",
+          "Choose its language and chattiness, and interact through its action menu",
+          "Test: kill and Test: death buttons preview the corresponding reactions",
+          "Known issue: automatic reactions to kills and deaths may not trigger yet"
+        ],
+        "install": [
+          "Place `murzik.lua` in `umbrella\\scripts` and reload the Lua scripts.",
+          "Open `General → Main → Kitty Widget → Kitty → Main` or `General → Main → Kitty Widget → Look → Widget`."
+        ]
+      }
+    },
+    {
+      "id": "habits",
+      "tag": "habits",
+      "title": "Трекер привычек",
+      "kind": "lua",
+      "category": "dota",
+      "file": "habits.lua",
+      "author": "леха ваня и виталик (Discord: mikropabalo)",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-19",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/habits/habits.lua"
+      },
+      "ru": {
+        "tagline": "ежедневные и игровые привычки прямо в Dota 2",
+        "about": "Трекер личных привычек с отметками и сериями дней, а также игровых целей, которые скрипт отслеживает автоматически. Данные сохраняются между запусками игры.",
+        "features": [
+          "Список до 8 собственных привычек с ежедневными отметками и сериями",
+          "Напоминания во время игры о неотмеченных привычках",
+          "Игровые цели: покупка вардов, 5 денаев, не умереть до 10:00 и не простаивать дольше 2 минут",
+          "Итоги игровых целей после матча; окно можно открыть в игре и главном меню"
+        ],
+        "install": [
+          "Поместите `habits.lua` в папку `umbrella\\scripts` и перезагрузите Lua-скрипты.",
+          "Откройте `Scripts → Utility → Трекер привычек → Main → Привычки`."
+        ]
+      },
+      "en": {
+        "tagline": "daily and in-game habit tracking in Dota 2",
+        "about": "Tracks personal habits with daily check-offs and streaks, along with in-game goals monitored automatically. Data is saved between game sessions.",
+        "features": [
+          "Track up to 8 custom habits with daily check-offs and streaks",
+          "Get in-game reminders for habits that are not checked off",
+          "Optional game goals: buy wards, deny 5 creeps, avoid dying before 10:00, and avoid standing idle for over 2 minutes",
+          "Review game-goal results after the match; open the tracker in a match or the Dota 2 main menu"
+        ],
+        "install": [
+          "Place `habits.lua` in `umbrella\\scripts` and reload the Lua scripts.",
+          "Open `Scripts → Utility → Трекер привычек → Main → Привычки`."
+        ]
+      }
+    },
+    {
+      "id": "calories",
+      "tag": "calories",
+      "title": "Калории",
+      "kind": "lua",
+      "category": "dota",
+      "file": "calories.lua",
+      "author": "леха ваня и виталик (Discord: mikropabalo)",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-19",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calories/calories.lua"
+      },
+      "ru": {
+        "tagline": "шуточный дневник питания героя",
+        "about": "Подсчитывает калории игровых расходников и сжигание энергии при движении, показывает баланс и ведёт дневник за матч.",
+        "features": [
+          "Отслеживает съеденные расходники, включая Tango, фласку, манго и сыр Рошана",
+          "Показывает съеденные и сожжённые калории, баланс и всплывающие уведомления",
+          "Отличает использование предмета от пополнения бутылки и перемещения предметов",
+          "Настраиваемая норма калорий и публикация игрового итога союзникам"
+        ],
+        "install": [
+          "Поместите `calories.lua` в папку `umbrella\\scripts` и перезагрузите Lua-скрипты.",
+          "Откройте `Scripts → Utility → Калории → Main → Дневник питания`."
+        ]
+      },
+      "en": {
+        "tagline": "a tongue-in-cheek food diary for your hero",
+        "about": "Counts calories from in-game consumables and energy burned while moving, shows the balance, and keeps a match-by-match food diary.",
+        "features": [
+          "Tracks consumables such as Tango, healing salves, Mangos, and Roshan's Cheese",
+          "Shows calories eaten and burned, the balance, and optional floating notifications",
+          "Distinguishes item use from bottle refills and item transfers",
+          "Set a calorie target and optionally share the match summary with allies"
+        ],
+        "install": [
+          "Place `calories.lua` in `umbrella\\scripts` and reload the Lua scripts.",
+          "Open `Scripts → Utility → Калории → Main → Дневник питания`."
+        ]
+      }
+    },
+    {
+      "id": "calendar",
+      "tag": "calendar",
+      "title": "Календарь",
+      "kind": "lua",
+      "category": "dota",
+      "file": "calendar.lua",
+      "author": "леха ваня и виталик (Discord: mikropabalo)",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-19",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calendar/calendar.lua"
+      },
+      "ru": {
+        "tagline": "календарь событий с напоминаниями поверх Dota 2",
+        "about": "Добавляйте события и повторяющиеся планы в календарь, открываемый как в матче, так и в главном меню. Напоминания сопровождаются звуком.",
+        "features": [
+          "Месячная сетка с переходом между месяцами и отметками дней с событиями",
+          "Создание событий с датой, временем и повторами каждый день, неделю или месяц",
+          "Напоминания заранее и в момент события; можно настроить время и звук",
+          "События сохраняются в конфиге; поддерживается до 120 событий"
+        ],
+        "install": [
+          "Поместите `calendar.lua` в папку `umbrella\\scripts` и перезагрузите Lua-скрипты.",
+          "Откройте `Scripts → Utility → Календарь → Main → Календарь` для просмотра или `Scripts → Utility → Календарь → Main → Новое событие` для добавления."
+        ]
+      },
+      "en": {
+        "tagline": "an event calendar with reminders over Dota 2",
+        "about": "Add events and recurring plans to a calendar that can be opened in a match or from the main menu. Reminders can play a sound.",
+        "features": [
+          "Monthly grid with month navigation and markers on days that have events",
+          "Create events with a date, time, and daily, weekly, or monthly recurrence",
+          "Get reminders in advance or at event time, with configurable lead time and sound",
+          "Events are saved in the config; up to 120 events are supported"
+        ],
+        "install": [
+          "Place `calendar.lua` in `umbrella\\scripts` and reload the Lua scripts.",
+          "Open `Scripts → Utility → Календарь → Main → Календарь` to view events or `Scripts → Utility → Календарь → Main → Новое событие` to add one."
+        ]
+      }
+    },
+    {
+      "id": "arc_warden_clone_pike",
+      "tag": "arc-warden-clone-pike",
+      "title": "Arc Warden Clone Pike",
+      "kind": "lua",
+      "category": "dota",
+      "file": "pika_arc_clone_pike.lua",
+      "author": "kael'thas' (Discord: feit._.)",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-19",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_clone_pike/pika_arc_clone_pike.lua"
+      },
+      "heroes": [
+        "arc_warden"
+      ],
+      "ru": {
+        "tagline": "пика от клона для спасения Арк Вардена",
+        "about": "По бинду Темпест Дабл использует Hurricane Pike на оригинальном Арк Вардене. Второй бинд призывает клона, ждёт его появления и затем отправляет применение пики.",
+        "features": [
+          "Отдельный бинд использует готовую Hurricane Pike существующего клона на владельце",
+          "Дополнительный бинд вызывает Tempest Double и применяет пику после появления клона",
+          "Скрипт проверяет героя, состояние клона, доступность пики и сообщает о проблемах в логе"
+        ],
+        "install": [
+          "Поместите `pika_arc_clone_pike.lua` в папку `umbrella\\scripts` и перезагрузите Lua-скрипты.",
+          "Откройте `Heroes → Hero List → Arc Warden → Main Settings → Utility → Save by clone` или `Heroes → Hero List → Arc Warden → Main Settings → Utility → Save by clone → Settings → Spawn clone and save`."
+        ]
+      },
+      "en": {
+        "tagline": "use the clone's Pike to save Arc Warden",
+        "about": "A bind orders Tempest Double to cast Hurricane Pike on the original Arc Warden. A second bind summons the clone, waits for it to appear, and then issues the Pike cast.",
+        "features": [
+          "One bind uses a ready Hurricane Pike from an existing clone on its owner",
+          "A second bind casts Tempest Double and uses Pike after the clone appears",
+          "Checks the hero, clone, and Pike availability, and reports problems in the log"
+        ],
+        "install": [
+          "Place `pika_arc_clone_pike.lua` in `umbrella\\scripts` and reload the Lua scripts.",
+          "Open `Heroes → Hero List → Arc Warden → Main Settings → Utility → Save by clone` or `Heroes → Hero List → Arc Warden → Main Settings → Utility → Save by clone → Settings → Spawn clone and save`."
+        ]
+      }
+    },
+    {
+      "id": "pt_mana_abuse_ctx",
+      "tag": "pt-mana-abuse-ctx",
+      "title": "PT Mana Abuse (ctx)",
+      "kind": "lua",
+      "category": "dota",
+      "file": "pt_mana_abuse_ctx.lua",
+      "author": "ctx (Discord: papagdetto)",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-19",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_mana_abuse_ctx/pt_mana_abuse_ctx.lua"
+      },
+      "ru": {
+        "tagline": "автоматически переключает Power Treads на интеллект для каста",
+        "about": "Если для способности не хватает маны, скрипт проверяет, хватит ли её с Power Treads на интеллекте, и при необходимости переключает тапок для применения. В интерфейсе также учитывается дополнительная мана от PT.",
+        "features": [
+          "Автоматически переключает Power Treads на интеллект, если это позволяет применить способность",
+          "Учитывает ману с интеллекта при отображении иконок способностей",
+          "Локализация интерфейса встроена в файл; отдельный `_qLocalizer.lua` не требуется"
+        ],
+        "install": [
+          "Поместите `pt_mana_abuse_ctx.lua` в папку `umbrella\\scripts` и перезагрузите Lua-скрипты.",
+          "Откройте `General → Main → PT Abuse → Settings → Основное`."
+        ]
+      },
+      "en": {
+        "tagline": "switches Power Treads to Intelligence when needed to cast",
+        "about": "When a spell lacks mana, the script checks whether Intelligence Power Treads provide enough and switches Treads to allow the cast. Ability icons also account for the extra mana from PT.",
+        "features": [
+          "Automatically switches Power Treads to Intelligence when that makes a spell castable",
+          "Accounts for Intelligence Treads mana when displaying ability icons",
+          "Localization is included in the file; no separate `_qLocalizer.lua` is required"
+        ],
+        "install": [
+          "Place `pt_mana_abuse_ctx.lua` in `umbrella\\scripts` and reload the Lua scripts.",
+          "Open `General → Main → PT Abuse → Settings → Main`."
+        ]
+      }
     }
   ]
 }
