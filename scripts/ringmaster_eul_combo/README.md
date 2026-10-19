@@ -3,13 +3,9 @@
 комбо Ринмастера через Eul, кнут и колесо / Ringmaster combo with Eul, the whip, and the wheel
 
 <!-- releases:start -->
-Скачать: [ringmaster_eul_combo.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/ringmaster-eul-combo-v1.0.0/ringmaster_eul_combo.lua) — `ringmaster-eul-combo-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `ringmaster_eul_combo.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/ringmaster-eul-combo-v1.0.0/ringmaster_eul_combo.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`ringmaster-eul-combo-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/ringmaster-eul-combo-v1.0.0) | 2026-10-13 | [ringmaster_eul_combo.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/ringmaster-eul-combo-v1.0.0/ringmaster_eul_combo.lua) | 7 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=ringmaster-eul-combo&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=ringmaster-eul-combo&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 2. Перезагрузите скрипты и откройте настройки Ringmaster → Eul Combo.
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ Runs a combo on the enemy near the cursor: blinks in when needed, lifts the targ
 2. Reload scripts and open Ringmaster → Eul Combo settings.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

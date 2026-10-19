@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`web-radar-v2.3.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.3) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua) | 0 |
+| [`web-radar-v2.3.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.3) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua) | 3 |
 | [`web-radar-v2.3.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.2) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.2/web_radar.lua) | 3 |
 | [`web-radar-v2.3.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.1/web_radar.lua) | 0 |
 | [`web-radar-v2.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.0/web_radar.lua) | 0 |

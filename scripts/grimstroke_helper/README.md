@@ -3,11 +3,12 @@
 подбирает цели для Ink Swell и управляет Dark Portrait / selects Ink Swell targets and controls Dark Portrait
 
 <!-- releases:start -->
-Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.2.0/grimstroke_helper.lua) — `grimstroke-helper-v1.2.0`, 2026-10-19
+Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.3.0/grimstroke_helper.lua) — `grimstroke-helper-v1.3.0`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`grimstroke-helper-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.2.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.2.0/grimstroke_helper.lua) | 2 |
+| [`grimstroke-helper-v1.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.3.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.3.0/grimstroke_helper.lua) | 0 |
+| [`grimstroke-helper-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.2.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.2.0/grimstroke_helper.lua) | 3 |
 | [`grimstroke-helper-v1.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.1.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.1.0/grimstroke_helper.lua) | 0 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=grimstroke-helper&expanded=true)
@@ -28,6 +29,17 @@ Grimstroke Helper помогает автоматически выбирать �
 3. Откройте Heroes → Hero List → Grimstroke → Helper.
 
 ## Что нового
+
+# Обновление 1.3.0
+
+- Новая панель на экране: союзники для Ink Swell показаны иконками, клик по иконке разрешает или запрещает Ink Swell. Зеленая точка значит, что рядом с союзником есть враг.
+- В заголовке панели переключатель паузы, кнопка сворачивания и кнопка закрытия.
+- Окно «Фильтры комбо» с обоими списками (Dark Portrait и соло Soulbind): иконки врагов и свой переключатель у каждого списка. Изменения в окне и в меню синхронизируются.
+- Новые клавиши: показать или скрыть панель и открыть или закрыть окно фильтров.
+- Все надписи панели на русском и английском, имена героев берутся из игры.
+- Списки в меню компактные и не наезжают друг на друга, пока врагов нет.
+- Отладка в лог (шестеренка у «Включить»): пишет клики по панели и нажатия клавиш.
+- Оптимизация: Dark Portrait и Ink Swell проверяются реже, отрисовка не создает лишних объектов каждый кадр.
 
 # Обновление 1.2.0
 
@@ -64,6 +76,17 @@ Grimstroke Helper automatically selects an ally for Ink Swell and controls the D
 3. Open Heroes → Hero List → Grimstroke → Helper.
 
 ## Changelog
+
+# Update 1.3.0
+
+- New on-screen panel: Ink Swell allies are shown as icons, click an icon to allow or forbid Ink Swell. A green dot means an enemy is near that ally.
+- The panel header has a pause switch, a fold button and a close button.
+- "Combo Filters" window with both lists (Dark Portrait and solo Soulbind): enemy icons and a switch for each list. Changes sync with the menu.
+- New keys: show or hide the panel and open or close the filters window.
+- All panel text is in English and Russian, hero names come from the game.
+- Menu lists are compact and no longer overlap while there are no enemies.
+- Debug log (gear next to Enable): logs panel clicks and key presses.
+- Optimization: Dark Portrait and Ink Swell are checked less often, drawing no longer creates extra objects every frame.
 
 # Update 1.2.0
 

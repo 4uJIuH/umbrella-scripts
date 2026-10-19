@@ -3,11 +3,12 @@
 покупает смоки и варды при полном запасе в лавке / buys smokes and wards when the shop stock is full
 
 <!-- releases:start -->
-Скачать: [auto_support_buy.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.0/auto_support_buy.lua) — `auto-support-buy-v1.0.0`, 2026-10-19
+Скачать: [auto_support_buy.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.1/auto_support_buy.lua) — `auto-support-buy-v1.0.1`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`auto-support-buy-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/auto-support-buy-v1.0.0) | 2026-10-19 | [auto_support_buy.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.0/auto_support_buy.lua) | 0 |
+| [`auto-support-buy-v1.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/auto-support-buy-v1.0.1) | 2026-10-19 | [auto_support_buy.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.1/auto_support_buy.lua) | 0 |
+| [`auto-support-buy-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/auto-support-buy-v1.0.0) | 2026-10-19 | [auto_support_buy.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.0/auto_support_buy.lua) | 1 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=auto-support-buy&expanded=true)
 <!-- releases:end -->
@@ -27,6 +28,10 @@ Auto Support Buy покупает Smoke of Deceit, Observer Ward и Sentry Ward,
 3. Откройте Scripts → Scripts → Auto Support Buy.
 
 ## Что нового
+
+# Обновление 1.0.1
+
+- Исправлен приказ покупки: предмет передается и как цель, как в других скриптах с покупкой.
 
 # Релиз v1.0.0
 
@@ -51,6 +56,10 @@ Auto Support Buy purchases Smoke of Deceit, Observer Ward and Sentry Ward when t
 3. Open Scripts → Scripts → Auto Support Buy.
 
 ## Changelog
+
+# Update 1.0.1
+
+- Fixed the purchase order: the item is also passed as the order target, like in other buying scripts.
 
 # Release v1.0.0
 
