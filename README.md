@@ -624,7 +624,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Hero Grid](scripts/hero_grid) | 1 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 12 | `weather-v1.0.0` |
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 10 | `visage-familiar-tp-v1.0.0` |
-| [Grimstroke Helper](scripts/grimstroke_helper) | 11 | `grimstroke-helper-v1.1.0` |
+| [Grimstroke Helper](scripts/grimstroke_helper) | 11 | `grimstroke-helper-v1.2.0` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 9 | `phoenix-smartnova-v1.0.0` |
 | [BehaviorScoreHelper](scripts/behavior_score_helper) | 16 | `behavior-score-helper-v1.1.1` |
 | [Disable Tracker](scripts/disable_tracker) | 5 | `disable-tracker-v1.0.0` |
@@ -659,7 +659,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Creep Aggro](scripts/creep_aggro) | 16 | `creep-aggro-v1.0.0` |
 | [Nyx Assassin Auto Burrow](scripts/nyx_auto_burrow) | 4 | `nyx-auto-burrow-v1.0.0` |
 | [Dawnbreaker Solar Guardian Auto-Save Helper](scripts/dawnbreaker_solar_guardian) | 11 | `dawnbreaker-solar-guardian-v1.0.0` |
-| [Dota 1x6 Pack](scripts/dota1x6_pack) | 30 | `dota-1x6-pack-v1.0.0` |
+| [Dota 1x6 Pack](scripts/dota1x6_pack) | 31 | `dota-1x6-pack-v1.0.0` |
 | [Kez Raptor Dance Dispel](scripts/kez_raptor_dispel) | 8 | `kez-raptor-dispel-v1.0.0` |
 | [Huskar Life Break](scripts/huskar_life_break) | 6 | `huskar-life-break-v1.0.0` |
 | [Dragon Camp Pull](scripts/dragon_camp_pull) | 0 | `dragon-camp-pull-v1.0` |

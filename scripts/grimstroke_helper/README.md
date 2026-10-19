@@ -3,10 +3,11 @@
 подбирает цели для Ink Swell и управляет Dark Portrait / selects Ink Swell targets and controls Dark Portrait
 
 <!-- releases:start -->
-Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.1.0/grimstroke_helper.lua) — `grimstroke-helper-v1.1.0`, 2026-10-19
+Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.2.0/grimstroke_helper.lua) — `grimstroke-helper-v1.2.0`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`grimstroke-helper-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.2.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.2.0/grimstroke_helper.lua) | 0 |
 | [`grimstroke-helper-v1.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.1.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.1.0/grimstroke_helper.lua) | 0 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=grimstroke-helper&expanded=true)
@@ -27,6 +28,12 @@ Grimstroke Helper помогает автоматически выбирать �
 3. Откройте Heroes → Hero List → Grimstroke → Helper.
 
 ## Что нового
+
+# Обновление 1.2.0
+
+- Меню переделано: четыре группы в две колонки (помощник, Ink Swell, иллюзия Dark Portrait, встроенное комбо), у каждого пункта иконка и подсказка. Пункты гаснут, когда выключен их переключатель.
+- Меню переведено на русский и английский и следует языку чита. Библиотека перевода встроена в файл, ставить ее отдельно не нужно.
+- Настройки помощника один раз сбросятся на значения по умолчанию, потому что пункты меню переименованы. Отмеченные герои в белых списках сохраняются.
 
 # Обновление 1.1.0
 
@@ -57,6 +64,12 @@ Grimstroke Helper automatically selects an ally for Ink Swell and controls the D
 3. Open Heroes → Hero List → Grimstroke → Helper.
 
 ## Changelog
+
+# Update 1.2.0
+
+- Reworked menu: four groups in two columns (helper, Ink Swell, Dark Portrait illusion, built-in combo), with an icon and a tooltip on every item. Items grey out when their switch is off.
+- The menu is translated into English and Russian and follows the cheat language. The translation library is embedded in the file, nothing else to install.
+- Helper settings reset to defaults once because the menu items were renamed. Heroes checked in the whitelists are kept.
 
 # Update 1.1.0
 

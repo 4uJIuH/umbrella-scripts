@@ -3,13 +3,9 @@
 приглушает выбранные фразы из колеса чата / mutes selected chat-wheel voice lines
 
 <!-- releases:start -->
-Скачать: [mute_voice_lines.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/mute-voice-lines-v1.0.0/mute_voice_lines.lua) — `mute-voice-lines-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `mute_voice_lines.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/mute-voice-lines-v1.0.0/mute_voice_lines.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`mute-voice-lines-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/mute-voice-lines-v1.0.0) | 2026-10-13 | [mute_voice_lines.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/mute-voice-lines-v1.0.0/mute_voice_lines.lua) | 2 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=mute-voice-lines&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=mute-voice-lines&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -23,12 +19,6 @@
 
 1. Поместите `mute_voice_lines.lua` в `Umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и добавьте ID нужных фраз в список скрипта.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -45,9 +35,3 @@ Suppresses playback of selected voice lines sent through the chat wheel. The blo
 
 1. Place `mute_voice_lines.lua` in `Umbrella\scripts`.
 2. Reload Lua scripts and add the desired voice-line IDs to the script's list.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.
