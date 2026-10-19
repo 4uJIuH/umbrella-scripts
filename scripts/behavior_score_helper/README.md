@@ -3,10 +3,11 @@
 повышает порядочность: авто GG, авто репорты, анти-тильт и авто лайк / raises your behavior score: auto GG, auto reports, anti-tilt and auto commend
 
 <!-- releases:start -->
-Скачать: [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.0/BehaviorScoreHelper.lua) — `behavior-score-helper-v2.1.0`, 2026-10-19
+Скачать: [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.1/BehaviorScoreHelper.lua) — `behavior-score-helper-v2.1.1`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`behavior-score-helper-v2.1.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.1) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.1/BehaviorScoreHelper.lua) | 0 |
 | [`behavior-score-helper-v2.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.0) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.0/BehaviorScoreHelper.lua) | 0 |
 | [`behavior-score-helper-v2.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.0.1) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.0.1/BehaviorScoreHelper.lua) | 1 |
 | [`behavior-score-helper-v2.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.0.0) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.0.0/BehaviorScoreHelper.lua) | 0 |
@@ -41,6 +42,14 @@ BehaviorScoreHelper берет на себя рутину порядочност
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
 
 ## Что нового
+
+# Исправление v2.1.1
+
+- «Не пускать маты и оски»: заблокированное сообщение не уходит в чат, а у тебя в чате появляется уведомление со словом, из-за которого оно задержано. Обычные сообщения отправляются как раньше.
+- Фильтры теперь понимают шаблоны из файлов в `scripts/filters` (раньше многие строки не срабатывали) и всегда дополняются встроенным списком. Раньше пропускались слова вроде «гандон», «даун», «пидорас».
+- Фильтры английского и русского мата и оскорблений сильно расширены.
+- Ловятся латинские буквы и цифры внутри русских слов (`xуй`, `6лять`), цифры в английских (`sh1t`) и растянутые буквы (`суууука`). Обычные слова вроде «команда», «мандарин», «ссылка» не блокируются.
+- Репорт за токсичность использует те же фильтры.
 
 # Обновление v2.1.0
 
@@ -109,6 +118,14 @@ BehaviorScoreHelper takes care of the behavior score routine in Dota 2: it write
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
 
 ## Changelog
+
+# Fix v2.1.1
+
+- Block profanity and insults: a blocked message is not sent, and you get a notice in your chat with the word that stopped it. Normal messages are sent as before.
+- The filters now understand the patterns in the `scripts/filters` files (many lines used to never match) and always include the built-in list. Words like "gandon", "daun" and "pidoras" used to get through.
+- The English and Russian profanity and insult filters are much larger.
+- Latin letters and digits inside Russian words (`xуй`, `6лять`), digits in English words (`sh1t`) and stretched letters (`fuuuck`) are caught. Normal words like "class", "assassin", "команда" are not blocked.
+- The toxic report uses the same filters.
 
 # Update v2.1.0
 

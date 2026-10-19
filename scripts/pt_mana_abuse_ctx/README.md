@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`pt-mana-abuse-ctx-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/pt-mana-abuse-ctx-v1.0.0) | 2026-10-19 | [pt_mana_abuse_ctx.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/pt-mana-abuse-ctx-v1.0.0/pt_mana_abuse_ctx.lua) | 2 |
+| [`pt-mana-abuse-ctx-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/pt-mana-abuse-ctx-v1.0.0) | 2026-10-19 | [pt_mana_abuse_ctx.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/pt-mana-abuse-ctx-v1.0.0/pt_mana_abuse_ctx.lua) | 3 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=pt-mana-abuse-ctx&expanded=true)
 <!-- releases:end -->
