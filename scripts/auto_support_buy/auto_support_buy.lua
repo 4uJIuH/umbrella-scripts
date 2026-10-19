@@ -357,7 +357,7 @@ local localization = qLocalization.new({
 	},
 })
 
-local VERSION = "1.0.0"
+local VERSION = "1.0.1"
 
 local UI = localization.WrapLibrary(Menu)
 
@@ -425,8 +425,8 @@ local function log(text, data)
 	end
 end
 
-local function order(player, hero, kind, item)
-	Player.PrepareUnitOrders(player, kind, nil, Vector(0, 0, 0), item,
+local function order(player, hero, kind, item, target)
+	Player.PrepareUnitOrders(player, kind, target, Vector(0, 0, 0), item,
 		Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY, hero, false, false, false, true, "auto_support_buy", false)
 end
 
@@ -481,7 +481,7 @@ function script.OnUpdate()
 			state.buying[it.name] = nil
 		end
 		if state.buying[it.name] then
-			order(player, hero, Enum.UnitOrder.DOTA_UNIT_ORDER_PURCHASE_ITEM, it.item_id)
+			order(player, hero, Enum.UnitOrder.DOTA_UNIT_ORDER_PURCHASE_ITEM, it.item_id, it.item_id)
 			state.drop_until = now + 15
 			log("buy", { item = it.name, stock = stock, gold = gold })
 			return

@@ -1,3 +1,14 @@
+# Update 1.3.0
+
+- New on-screen panel: Ink Swell allies are shown as icons, click an icon to allow or forbid Ink Swell. A green dot means an enemy is near that ally.
+- The panel header has a pause switch, a fold button and a close button.
+- "Combo Filters" window with both lists (Dark Portrait and solo Soulbind): enemy icons and a switch for each list. Changes sync with the menu.
+- New keys: show or hide the panel and open or close the filters window.
+- All panel text is in English and Russian, hero names come from the game.
+- Menu lists are compact and no longer overlap while there are no enemies.
+- Debug log (gear next to Enable): logs panel clicks and key presses.
+- Optimization: Dark Portrait and Ink Swell are checked less often, drawing no longer creates extra objects every frame.
+
 # Update 1.2.0
 
 - Reworked menu: four groups in two columns (helper, Ink Swell, Dark Portrait illusion, built-in combo), with an icon and a tooltip on every item. Items grey out when their switch is off.
