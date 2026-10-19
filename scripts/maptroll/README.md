@@ -3,13 +3,9 @@
 рисует текст на миникарте вручную или по таймеру / draws text on the minimap manually or on a timer
 
 <!-- releases:start -->
-Скачать: [maptroll.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/maptroll-v1.0.0/maptroll.lua) — `maptroll-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `maptroll.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/maptroll/maptroll.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`maptroll-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/maptroll-v1.0.0) | 2026-10-13 | [maptroll.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/maptroll-v1.0.0/maptroll.lua) | 10 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=maptroll&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=maptroll&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -23,12 +19,6 @@
 
 1. Поместите `maptroll.lua` в `umbrella\scripts` и перезагрузите Lua-скрипты.
 2. Откройте Scripts → Other → Map Chat Troll.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -45,9 +35,3 @@ A utility for displaying text on the minimap with configurable position, size, a
 
 1. Place `maptroll.lua` in `umbrella\scripts` and reload the Lua scripts.
 2. Open Scripts → Other → Map Chat Troll.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

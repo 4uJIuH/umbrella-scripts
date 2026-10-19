@@ -3,10 +3,11 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.0/web_radar.lua) — `web-radar-v2.2.0`, 2026-10-19
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.1/web_radar.lua) — `web-radar-v2.2.1`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`web-radar-v2.2.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.2.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.1/web_radar.lua) | 0 |
 | [`web-radar-v2.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.2.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.0/web_radar.lua) | 0 |
 | [`web-radar-v2.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.1.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.1.0/web_radar.lua) | 0 |
 
@@ -31,6 +32,12 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Исправление v2.2.1
+
+- В списке способностей остались только способности героя: ивентовые вроде Season Dark Carnival больше не показываются.
+- Верхняя панель переделана: названия команд и NW над героями, крупный счет, время и день или ночь в центре, индикатор готовности ульта на портрете.
+- Справа одна карточка «Герои» с прокруткой и разделами Radiant и Dire. Шестеренка в ее углу выбирает, кого показывать: обе команды, только союзников или только врагов.
 
 # Обновление v2.2.0
 
@@ -78,6 +85,12 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Fix v2.2.1
+
+- The ability list shows only the hero's own abilities: event ones like Season Dark Carnival are gone.
+- Reworked top bar: team names and net worth above the heroes, a large score, clock and day or night in the middle, an ultimate ready indicator on the portrait.
+- One scrolling "Heroes" card on the right with Radiant and Dire sections. The gear in its corner picks whom to show: both teams, allies only or enemies only.
 
 # Update v2.2.0
 
