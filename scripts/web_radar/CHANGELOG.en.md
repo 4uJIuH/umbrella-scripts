@@ -1,3 +1,9 @@
+# Fix v2.2.1
+
+- The ability list shows only the hero's own abilities: event ones like Season Dark Carnival are gone.
+- Reworked top bar: team names and net worth above the heroes, a large score, clock and day or night in the middle, an ultimate ready indicator on the portrait.
+- One scrolling "Heroes" card on the right with Radiant and Dire sections. The gear in its corner picks whom to show: both teams, allies only or enemies only.
+
 # Update v2.2.0
 
 - Creep waves in the fog: every 30 seconds the script sends a wave down each lane and walks it until it meets the enemy wave or the first alive enemy tower. Visible creeps refine the meeting point.

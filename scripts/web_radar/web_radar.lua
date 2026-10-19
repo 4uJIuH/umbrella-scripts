@@ -397,7 +397,7 @@ local localization = qLocalization.new({
         cr_st_link_ready = "the link is in the Link field",
         cr_st_send_fail = "upload failed: HTTP %d, retrying",
         cr_link_hint = "Press Start, then send the link to friends",
-        cr_version = "Version 2.2.0, radar for friends",
+        cr_version = "Version 2.2.1, radar for friends",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -479,7 +479,7 @@ local localization = qLocalization.new({
         cr_st_link_ready = "ссылка в поле «Ссылка»",
         cr_st_send_fail = "ошибка передачи: HTTP %d, повтор",
         cr_link_hint = "Нажмите Start и отправьте ссылку друзьям",
-        cr_version = "Версия 2.2.0, радар для друзей",
+        cr_version = "Версия 2.2.1, радар для друзей",
     },
 })
 
@@ -487,7 +487,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.2.0"
+script.VERSION = "2.2.1"
 local ui = {}
 local JSON
 local state = {
@@ -2792,9 +2792,10 @@ do
                         end
                     end
                     table.sort(info.items, function(a, b) return a.slot < b.slot end)
+                    local own = tostring(h.name or ""):gsub("^npc_dota_hero_", "") .. "_"
                     for _, ability in ipairs(d.abilities or {}) do
                         local name = ability.name
-                        if type(name) == "string" and ability.hidden ~= true and not name:find("special_bonus", 1, true) and name ~= "generic_hidden" and #info.abilities < 8 then
+                        if type(name) == "string" and ability.hidden ~= true and name:find(own, 1, true) == 1 and #info.abilities < 8 then
                             info.abilities[#info.abilities + 1] = {name = name, level = ability.level or 0,
                                 ready_at = readyAt(d.game, ability.cooldown), ult = ability.ultimate == true or nil,
                                 charges = finite(ability.charges) and ability.charges > 0 and ability.charges or nil}
