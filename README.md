@@ -604,20 +604,20 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Rem Assistant](scripts/rem_assistant) | 2 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
 | [qLocalization](scripts/q_localizer) | 103 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 399 | `script-manager-v2.14.2` |
+| [Script Manager](scripts/script_manager) | 401 | `script-manager-v2.14.2` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 634 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 11 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 270 | `lane-pull-v1.0.4` |
 | [DS Spot Block](scripts/ds_spot_block) | 57 | `ds-spot-block-v1.0.1` |
 | [Custom Background](scripts/custom_background) | 51 | `custom-background-v1.0.0` |
 | [Auto Stack](scripts/auto_stack) | 158 | `auto-stack-v1.1.0` |
-| [Draft Helper](scripts/draft_helper) | 1470 | `draft-helper-v2.0.0-beta.20` |
-| [MusicUI](scripts/musicui) | 730 | `musicui-v1.0.8` |
+| [Draft Helper](scripts/draft_helper) | 1471 | `draft-helper-v2.0.0-beta.20` |
+| [MusicUI](scripts/musicui) | 732 | `musicui-v1.0.8` |
 | [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 204 | `umbrella-lua-v1.0.4` |
 | [Custom Stats](scripts/custom_stats) | 15 | `custom-stats-v1.0.0` |
 | [Bloodrage AutoCast](scripts/bloodrage_autocast) | 8 | `bloodrage-autocast-v1.0.0` |
-| [Naga PT Abuse](scripts/naga_pt_abuse) | 13 | `naga-pt-abuse-v1.0.0` |
-| [Auto Aegis Mover](scripts/auto_aegis_mover) | 21 | `auto-aegis-mover-v1.0.0` |
+| [Naga PT Abuse](scripts/naga_pt_abuse) | 14 | `naga-pt-abuse-v1.0.0` |
+| [Auto Aegis Mover](scripts/auto_aegis_mover) | 22 | `auto-aegis-mover-v1.0.0` |
 | [Anti-Rubick](scripts/anti_rubick) | 18 | `anti-rubick-v1.0.0` |
 | [Arc Warden Blocker](scripts/arc_warden_blocker) | 11 | `arc-warden-blocker-v1.0.0` |
 | [Invoker Combo Switcher](scripts/invoker_combo_switcher) | 12 | `invoker-combo-switcher-v1.0.0` |
@@ -627,9 +627,9 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Hero Grid](scripts/hero_grid) | 1 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 12 | `weather-v1.0.0` |
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 10 | `visage-familiar-tp-v1.0.0` |
-| [Grimstroke Helper](scripts/grimstroke_helper) | 17 | `grimstroke-helper-v1.4.0` |
+| [Grimstroke Helper](scripts/grimstroke_helper) | 18 | `grimstroke-helper-v1.4.0` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 9 | `phoenix-smartnova-v1.0.0` |
-| [BehaviorScoreHelper](scripts/behavior_score_helper) | 17 | `behavior-score-helper-v2.0.1` |
+| [BehaviorScoreHelper](scripts/behavior_score_helper) | 17 | `behavior-score-helper-v2.1.0` |
 | [Disable Tracker](scripts/disable_tracker) | 6 | `disable-tracker-v1.0.0` |
 | [Russian Roulette](scripts/russian_roulette) | 2 | `russian-roulette-v1.0.0` |
 | [MoM Swapper](scripts/mom_swapper) | 9 | `mom-swapper-v1.0.0` |
@@ -643,7 +643,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Spirit Breaker Combo & Ghoul 1000-7](scripts/spirit_breaker_bara) | 5 | `spirit-breaker-bara-v1.0.0` |
 | [1000-7 Counter](scripts/ghoul_counter) | 9 | `ghoul-counter-v1.0.0` |
 | [Invoker Jarvis](scripts/invoker_jarvis) | 43 | `v1.3.1` |
-| [TikTok](scripts/umbrella_tiktok) | 307 | `v1.3.2` |
+| [TikTok](scripts/umbrella_tiktok) | 308 | `v1.3.2` |
 | [Invoker AutoStack](scripts/invoker_autostack) | 79 | `v1.4.2` |
 | [Old Last Match](scripts/old_last_match) | 14 | `old-last-match-v1.0.0` |
 | [Unusual Secret](scripts/unusual_secret) | 13 | `unusual-secret-v2.1.0` |
@@ -687,7 +687,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Techies Tazer Dispel](scripts/techies_tazer_dispel) | 6 | `techies-tazer-dispel-v1.0.0` |
 | [SteamSync](scripts/steam_sync) | 203 | `v1.0.1` |
 | [Techies Brain Combo](scripts/techies_brain) | 4 | `techies-brain-v0.2.6` |
-| [Creep Control](scripts/creep_control) | 15 | `creep-control-v1.0.1` |
+| [Creep Control](scripts/creep_control) | 16 | `creep-control-v1.0.1` |
 | [KOTL Illuminate Pro](scripts/kotl_illuminate_pro) | 26 | `kotl-illuminate-pro-v1.0.0` |
 | [Lycan Auto Control](scripts/lycan_auto_control) | 10 | `lycan-auto-control-v1.0.0` |
 | [Mute Voice Lines](scripts/mute_voice_lines) | 2 | `mute-voice-lines-v1.0.0` |
@@ -715,7 +715,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Broodmother Helper](scripts/broodmother_helper) | 0 | `broodmother-helper-v2.1` |
 | [Script Market](scripts/market) | 22 | `market-v1.0.0` |
 | [MMR Tracker Ultimate](scripts/mmr_tracker_ultimate) | 12 | `mmr-tracker-ultimate-v1.0.0` |
-| [Glyph Timer](scripts/glyph_timer) | 37 | `glyph-timer-v1.0.0` |
+| [Glyph Timer](scripts/glyph_timer) | 38 | `glyph-timer-v1.0.0` |
 | [Rampage Timer](scripts/rampage_timer_h) | 0 | `rampage-timer-h-v1.0.0` |
 | [PT Mana Abuse](scripts/pt_mana_abuse) | 2 | `pt-mana-abuse-ctx-v1.0.0` |
 | [Lone Druid Bear AI Deluxe](scripts/lone_druid_bear_ai_deluxe) | 16 | `lone-druid-bear-ai-deluxe-v1.0.0` |

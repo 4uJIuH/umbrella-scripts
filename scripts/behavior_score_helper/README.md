@@ -3,10 +3,11 @@
 повышает порядочность: авто GG, авто репорты, анти-тильт и авто лайк / raises your behavior score: auto GG, auto reports, anti-tilt and auto commend
 
 <!-- releases:start -->
-Скачать: [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.0.1/BehaviorScoreHelper.lua) — `behavior-score-helper-v2.0.1`, 2026-10-19
+Скачать: [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.0/BehaviorScoreHelper.lua) — `behavior-score-helper-v2.1.0`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`behavior-score-helper-v2.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.0) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.0/BehaviorScoreHelper.lua) | 0 |
 | [`behavior-score-helper-v2.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.0.1) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.0.1/BehaviorScoreHelper.lua) | 1 |
 | [`behavior-score-helper-v2.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.0.0) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.0.0/BehaviorScoreHelper.lua) | 0 |
 | [`behavior-score-helper-v1.1.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v1.1.1) | 2026-10-15 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v1.1.1/BehaviorScoreHelper.lua) | 8 |
@@ -40,6 +41,10 @@ BehaviorScoreHelper берет на себя рутину порядочност
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
 
 ## Что нового
+
+# Обновление v2.1.0
+
+- Фильтр спама пингами: новый пункт «Репорт при муте». Когда игрок получает мут за спам пингами, скрипт также отправляет на него репорт за препятствование игре и за токсичность в чате. По умолчанию выключен.
 
 # Исправление v2.0.1
 
@@ -104,6 +109,10 @@ BehaviorScoreHelper takes care of the behavior score routine in Dota 2: it write
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
 
 ## Changelog
+
+# Update v2.1.0
+
+- Ping Spam Filter: new Report on Mute option. When a player is muted for ping spam, the script also reports them for griefing and for chat toxicity. Off by default.
 
 # Fix v2.0.1
 
