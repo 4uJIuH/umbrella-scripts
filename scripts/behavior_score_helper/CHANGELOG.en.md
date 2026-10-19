@@ -1,3 +1,14 @@
+# Update v2.0.0
+
+- The script is reworked on the base of version 2.5: new tabs Chat, Reports, Anti-Tilt and Utilities.
+- New: control of your own chat, mute your own mic, voice report, ward griefing report, mute at match start, hiding tips and pings, mute for ping spam and for pinging your death, XP or hero.
+- Toxic report: pick the reason (profanity, insults, spam, any message); words still come from the files in `scripts/filters`.
+- Auto commend likes every player, with a delay and a Commend Now button.
+- Party members can be left out of reports and mutes; notifications on screen, in chat or in the console.
+- Sent reports and the greeting are remembered for the match and are not repeated after a script reload.
+- Removed: the report banner, writing reports to a file, quiet mode, hero choice for commends and preset GG phrases.
+- The script settings reset to defaults once.
+
 # Fix v1.1.1
 
 - Fixed the section and tab names that were displayed as localization keys.

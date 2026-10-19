@@ -1983,43 +1983,47 @@
         "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v1.0.0/BehaviorScoreHelper.lua"
       },
       "ru": {
-        "tagline": "повышает порядочность: авто GG, авто репорт и авто лайк",
-        "about": "BehaviorScoreHelper — утилита автоматизации повышения порядочности в Dota 2. Берёт на себя рутину: лайки после матча, жалобы на токсичность и сообщения в чат, не отвлекая от игры.",
+        "tagline": "повышает порядочность: авто GG, авто репорты, анти-тильт и авто лайк",
+        "about": "BehaviorScoreHelper берет на себя рутину порядочности в Dota 2: пишет приветствие и GG, репортит за токсичность, войс и препятствование игре, мутит спамеров пингами и лайкает всех после матча.",
         "features": [
-          "Авто GG: пишет выбранную фразу или ваш текст в общий или командный чат сразу после падения трона, задержку отправки можно настроить",
-          "Авто приветствие: здоровается с союзниками в начале матча",
-          "Авто репорт: сканирует входящие пакеты чата в реальном времени и фильтрует мат и запрещённые слова, поддерживает файлы фильтров из Steam",
-          "Режимы поиска: точное совпадение, поиск по корню (подстроке) или оба сразу; встроенный белый список длинных слов против ложных срабатываний («ребята», «хлеб», «тебя»)",
-          "Жалоба уходит тем же пакетом, что и при ручном репорте; после неё автоматически ставится размут",
-          "Авто репорт за фид: отслеживает ранние выкупы через игровые события и жалуется на союзника или врага, который потратил байбек на ранней минуте (время настраивается)",
-          "Авто лайк: ставит лайки на экране итогов матча через Panorama UI; можно лайкать только союзников или выбранных героев (иконки героев подгружаются из текущей сессии)",
-          "Интерфейс локализуется на русский и английский с помощью qLocalization"
+          "Авто-приветствие в начале матча и авто GG после падения трона, в общий или командный чат",
+          "Контроль своего чата: сдерживание всех сообщений, шанс отправки или запрет матов и осков; мут своего микрофона",
+          "Репорт за токсичность: маты, оскорбления, спам сообщениями или любое сообщение; слова из файлов фильтров с белым списком",
+          "Репорт за войс: союзник говорит дольше N секунд или просто включил микрофон",
+          "Репорт за препятствование игре: ранний байбек, варды под своей базой, куча вардов в одной точке, вард под вражеской вышкой, денай своих вардов",
+          "Анти-тильт: мут на старте матча, скрытие типов и пингов, мут за спам пингами и за пинги твоей смерти, опыта или героя",
+          "Авто-комменд всех игроков на экране итогов, с паузой и кнопкой «Лайкнуть сейчас»",
+          "Игроков из твоей пати можно не репортить и не мутить",
+          "Уведомления на экране, в чате или в консоли",
+          "Интерфейс на русском и английском через qLocalization"
         ],
         "install": [
           "Нажмите «Установить» в Script Manager: он загрузит `BehaviorScoreHelper.lua`, qLocalization и четыре файла фильтров в `umbrella\\scripts` и `umbrella\\scripts\\filters`.",
           "При ручной установке скачайте `BehaviorScoreHelper.lua`, четыре файла из папки `filters` и `!_qLocalizer.lua`; разместите их в соответствующих папках `umbrella\\scripts` и `umbrella\\scripts\\filters`.",
           "Перезагрузите Lua-скрипты.",
-          "Откройте `Scripts → Utility → Порядочность` и включите нужные вкладки: Авто GG, Авто Репорт, Авто Репорт (Фид) и Авто Лайк."
+          "Откройте `Scripts → Utility → Behavior Score`: вкладки Chat, Reports, Anti-Tilt и Utilities."
         ]
       },
       "en": {
-        "tagline": "raises your behavior score: auto GG, auto report, and auto like",
-        "about": "BehaviorScoreHelper is a Dota 2 utility that automates raising your behavior score. It handles the routine: post-match likes, reports for toxic chat, and chat messages, without distracting you from the game.",
+        "tagline": "raises your behavior score: auto GG, auto reports, anti-tilt and auto commend",
+        "about": "BehaviorScoreHelper takes care of the behavior score routine in Dota 2: it writes a greeting and GG, reports toxicity, voice spam and griefing, mutes ping spammers and commends everyone after the match.",
         "features": [
-          "Auto GG: sends a chosen phrase or your own text to all chat or team chat right after the throne falls, with a configurable delay",
-          "Auto greeting: greets your allies at the start of the match",
-          "Auto report: scans incoming chat packets in real time and filters profanity and banned words; supports Steam filter files",
-          "Search modes: exact match, root (substring) match, or both; a built-in whitelist of long words prevents false positives (for example Russian «ребята», «хлеб», «тебя»)",
-          "The report is sent with the same packet as a manual report, and the player is unmuted automatically afterwards",
-          "Auto feed report: tracks early buybacks through game events and reports an ally or enemy who spends a buyback early in the match (time is configurable)",
-          "Auto like: presses likes on the post-match screen through Panorama UI; like only allies or selected heroes (hero icons are loaded from the current session)",
-          "The interface is localized in Russian and English with qLocalization"
+          "Auto greeting at match start and auto GG after the throne falls, to all chat or team chat",
+          "Control of your own chat: block all messages, send by chance, or block profanity and insults; mute your own mic",
+          "Toxic report: profanity, insults, message spam or any message; words come from the filter files, with a whitelist",
+          "Voice report: an ally talks longer than N seconds or just turns on the mic",
+          "Griefing report: early buyback, wards in own base, a pile of wards in one spot, a ward under an enemy tower, denying own wards",
+          "Anti-tilt: mute at match start, hide tips and pings, mute for ping spam and for pinging your death, XP or hero",
+          "Auto commend for every player on the end screen, with a delay and a Commend Now button",
+          "Party members can be left out of reports and mutes",
+          "Notifications on screen, in chat or in the console",
+          "The interface is in Russian and English through qLocalization"
         ],
         "install": [
           "Click Install in Script Manager to download `BehaviorScoreHelper.lua`, qLocalization, and the four filter files into `umbrella\\scripts` and `umbrella\\scripts\\filters`.",
           "For manual installation, download `BehaviorScoreHelper.lua`, the four files from the `filters` folder, and `!_qLocalizer.lua`; place them in the corresponding `umbrella\\scripts` and `umbrella\\scripts\\filters` folders.",
           "Reload the Lua scripts.",
-          "Open `Scripts → Utility → Behavior Score` and enable the tabs you need: Auto GG, Auto Report, Auto Report (Feed), and Auto Like."
+          "Open `Scripts → Utility → Behavior Score`: tabs Chat, Reports, Anti-Tilt and Utilities."
         ]
       },
       "author": "4uJIuH",

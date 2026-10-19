@@ -1,1126 +1,1864 @@
-local SCRIPT_VERSION = "1.1.1"
-local test = {}
+local SCRIPT_VERSION = "2.0.0"
+local bh = {}
 
 local protobuf = require('protobuf')
 local JSON = require('assets.JSON')
 
-local qLoc = qLocalization
-if type(qLoc) ~= "table" or type(qLoc.new) ~= "function" then
+local qLocalization = qLocalization
+if type(qLocalization) ~= "table" or type(qLocalization.new) ~= "function" then
     local ok, lib = pcall(require, "!_qLocalizer")
-    if ok and type(lib) == "table" and type(lib.new) == "function" then
-        qLoc = lib
-    else
-        qLoc = nil
-        print("[bh_helper] qLocalization not found; using Russian menu labels")
-    end
+    qLocalization = (ok and type(lib) == "table" and type(lib.new) == "function") and lib or nil
+end
+if not qLocalization then
+    print("[BH] qLocalization not found, install !_qLocalizer.lua")
+    return bh
 end
 
-local translations = {
+local localization = qLocalization.new({
     en = {
-        behavior_score = {
-            tab = "Behavior Score",
-            tabs = {
-                gg = "Auto GG",
-                report = "Auto Report",
-                feed = "Auto Report (Feed)",
-                like = "Auto Like",
-            },
-            settings = "Settings",
-            enabled = "Enabled",
-            gg_message = "Message after win/loss",
-            gg_custom = "Custom message",
-            gg_delay = "Delay after throne destruction (sec)",
-            gg_all_chat = "All chat",
-            greet_enabled = "Greet at game start",
-            greet_all_chat = "Send greeting to all chat",
-            greet_message = "Greeting text",
-            report_target = "Target",
-            target_enemies = "Enemies only",
-            target_allies = "Allies only",
-            target_all = "Everyone",
-            report_unmute = "Auto-unmute after report",
-            report_console = "Log to console",
-            report_search = "Search mode",
-            search_exact = "Exact word",
-            search_contains = "Contains substring",
-            search_both = "Both",
-            report_file = "Write reports to file",
-            report_quiet = "Quiet mode (hide banner)",
-            feed_minute = "Buyback minute (before)",
-            like_refresh = "Refresh likes",
-            like_allies = "Allies only",
-            heroes = "Hero selection",
-            like = "Like",
-            gg_options = {
-                message_1 = "Thanks for the game",
-                message_2 = "Thanks for the game, likes for everyone",
-                message_3 = "gg, please give likes",
-                message_4 = "Please give likes",
-                message_5 = "Thanks for the game, likes for everyone",
-                message_6 = "gl next, don't forget to like",
-                custom = "Custom message (from the field below)",
-            },
-        },
+        bs_group_greet = "Auto Greeting",
+        bs_group_gg = "Auto GG",
+        bs_group_ctrl = "Chat Control",
+        bs_group_tox = "Toxic Report",
+        bs_group_voice = "Voice Report",
+        bs_group_feed = "Griefing Report",
+        bs_group_mute = "Start Mute and Hide",
+        bs_group_ping = "Ping Spam Filter",
+        bs_group_pingme = "Death and XP Ping Mute",
+        bs_group_like = "Auto Commend",
+        bs_group_party = "Party",
+        bs_group_notif = "Notifications",
+        bs_gear_wards = "Ward Triggers",
+
+        bs_fmt_sec = "%d s",
+        bs_fmt_min = "%d min",
+        bs_fmt_pcs = "%d",
+
+        bs_enable = "Enable",
+        bs_chat_to = "Channel",
+        bs_chs_team = "Allies only",
+        bs_chs_all = "All chat",
+        bs_text = "Message text",
+        bs_greet_enable_tip = "Writes a message to chat when the match starts.",
+        bs_gg_enable_tip = "Writes a message to chat after the throne falls.",
+        bs_gg_delay = "Delay after throne falls",
+        bs_gg_default = "gg wp, commend pls",
+
+        bs_ctrl_enable = "Text Chat Control",
+        bs_ctrl_enable_tip = "Holds back your own chat messages.\nMessages starting with - are always sent.",
+        bs_ctrl_mode = "Mode",
+        bs_ctrl_modes_block = "Block all",
+        bs_ctrl_modes_chance = "Send chance",
+        bs_ctrl_modes_censor = "Block profanity and insults",
+        bs_ctrl_chance = "Send chance",
+        bs_ctrl_echo = "Show Blocked to Me",
+        bs_ctrl_echo_tip = "A blocked message is shown only to you.",
+        bs_mute_mic = "Mute My Mic",
+        bs_mute_mic_tip = "Your voice is not sent to anyone.",
+
+        bs_tox_enable_tip = "Reports players for chat messages.\nWords come from the files in scripts/filters.",
+        bs_tox_reason = "Reason",
+        bs_tox_reasons_all = "Profanity and insults",
+        bs_tox_reasons_mat = "Profanity only",
+        bs_tox_reasons_osk = "Insults only",
+        bs_tox_reasons_spam = "Message spam",
+        bs_tox_reasons_any = "Any message",
+        bs_tox_match = "Match Mode",
+        bs_tox_matches_exact = "Exact word",
+        bs_tox_matches_sub = "Part of a word",
+        bs_tox_matches_both = "Both",
+        bs_tox_count = "Message Threshold",
+        bs_tox_unmute = "Unmute After Report",
+        bs_tox_unmute_tip = "A report mutes the player.\nOn: the mute is lifted after 3 s.",
+        bs_target = "Target",
+        bs_targets_enemies = "Enemies",
+        bs_targets_allies = "Allies",
+        bs_targets_all = "Everyone",
+
+        bs_voice_enable_tip = "Reports allies for voice chat.",
+        bs_voice_reason = "Reason",
+        bs_voice_reasons_long = "Talks more than N s",
+        bs_voice_reasons_any = "Turned on the mic",
+        bs_voice_sec = "Talks More Than",
+
+        bs_feed_enable_tip = "Reports for early buyback and ward griefing.",
+        bs_feed_buyback = "Early Buyback",
+        bs_feed_buyback_min = "Buyback Before Minute",
+        bs_feed_wards = "Ward Griefing",
+        bs_ward_base = "Ward in own base",
+        bs_ward_pile = "Pile in one spot",
+        bs_ward_tower = "Under enemy tower",
+        bs_ward_deny_obs = "Deny own observer",
+        bs_ward_deny_sen = "Deny own sentry",
+        bs_ward_count = "Wards in One Spot",
+
+        bs_mute_start = "Mute at Match Start",
+        bs_mute_start_tip = "Mutes players in the first seconds of the match.",
+        bs_mute_who = "Who to Mute",
+        bs_hide_tilt = "Hide Tips and Pings",
+        bs_hide_tilt_tip = "Hides tips and death or XP pings on your hero.",
+
+        bs_ping_enable_tip = "Mutes a player who spams pings.",
+        bs_ping_count = "More Than N Pings",
+        bs_ping_window = "Within M Seconds",
+        bs_action = "Action",
+        bs_actions_forever = "Mute until game end",
+        bs_actions_timed = "Mute for N min",
+        bs_mute_min = "Mute Duration",
+        bs_ping_ability = "Count Ability Pings",
+
+        bs_pingme_enable_tip = "Mutes players who ping your death timer,\nyour XP or your hero.",
+        bs_pingme_dead = "Death Timer Ping",
+        bs_pingme_xp = "XP Ping",
+        bs_pingme_hero = "Ping on My Hero",
+
+        bs_like_enable_tip = "Commends every player on the end screen.",
+        bs_like_delay_on = "Delay Before Commend",
+        bs_like_delay = "Delay",
+        bs_like_now = "Commend Now",
+        bs_party_report = "Report Party Members",
+        bs_party_mute = "Mute Party Members",
+        bs_notif_screen = "On Screen",
+        bs_notif_chat = "Print to Chat",
+        bs_notif_chat_tip = "Only you see these lines.",
+        bs_notif_log = "Print to Console",
+        bs_notif_dur = "Duration on Screen",
+
+        bs_msg_sent = "Report sent: %s, %s (%s)",
+        bs_msg_party = "Not reporting %s, they are in your party",
+        bs_msg_mute = "%s: %s, muted %s",
+        bs_msg_forever = "until game end",
+        bs_msg_accepted = "GC accepted the report",
+        bs_msg_in_party = "Player is in a party, reports are off",
+        bs_lbl_toxic = "toxicity",
+        bs_lbl_spam = "chat spam",
+        bs_lbl_voice = "voice chat",
+        bs_lbl_feed = "griefing",
+        bs_lbl_wards = "ward griefing",
+        bs_lbl_ping_spam = "ping spam",
+        bs_lbl_ping_dead = "death ping",
+        bs_lbl_ping_xp = "XP ping",
+        bs_lbl_ping_hero = "ping on my hero",
+        bs_tr_msgs = "%d messages",
+        bs_tr_mic_sec = "mic %d s",
+        bs_tr_mic = "turned on the mic",
+        bs_tr_buyback = "buyback at %d min",
+        bs_tr_ward_base = "ward in own base (%d)",
+        bs_tr_ward_tower = "ward under enemy tower (%d)",
+        bs_tr_ward_pile = "%d wards in one spot",
+        bs_tr_deny_obs = "denied own observer",
+        bs_tr_deny_sen = "denied own sentry",
     },
     ru = {
-        behavior_score = {
-            tab = "Порядочность",
-            tabs = {
-                gg = "Авто GG",
-                report = "Авто Репорт",
-                feed = "Авто Репорт (Фид)",
-                like = "Авто Лайк",
-            },
-            settings = "Настройки",
-            enabled = "Включено",
-            gg_message = "Сообщение при победе/лузе",
-            gg_custom = "Своё сообщение",
-            gg_delay = "Задержка после разрушения трона (сек)",
-            gg_all_chat = "Общий чат",
-            greet_enabled = "Приветствие в начале игры",
-            greet_all_chat = "Приветствие в общий чат",
-            greet_message = "Текст приветствия",
-            report_target = "Цель",
-            target_enemies = "Только враги",
-            target_allies = "Только союзники",
-            target_all = "Все",
-            report_unmute = "Авто-размут после репорта",
-            report_console = "Логировать в консоль",
-            report_search = "Режим поиска",
-            search_exact = "Точное слово",
-            search_contains = "Содержит подстроку",
-            search_both = "Оба",
-            report_file = "Писать репорты в файл",
-            report_quiet = "Тихий режим (скрыть баннер)",
-            feed_minute = "Минута байбека (до)",
-            like_refresh = "Обновить лайк",
-            like_allies = "Только союзники",
-            heroes = "Выбор героев",
-            like = "Лайк",
-            gg_options = {
-                message_1 = "спс за игру",
-                message_2 = "спасибо за игру, лайк всем",
-                message_3 = "gg киньте лайк пж",
-                message_4 = "киньте лайк пж",
-                message_5 = "спасибо за игру, лайкосик всем",
-                message_6 = "gl next лайк не забудьте",
-                custom = "Своё сообщение (из поля ниже)",
-            },
-        },
+        bs_group_greet = "Авто-приветствие",
+        bs_group_gg = "Авто-GG",
+        bs_group_ctrl = "Контроль общения",
+        bs_group_tox = "Репорт за токсичность",
+        bs_group_voice = "Репорт за войс",
+        bs_group_feed = "Репорт за препятствование игре",
+        bs_group_mute = "Мут на старте и скрытие",
+        bs_group_ping = "Фильтр спама пингами",
+        bs_group_pingme = "Мут за пинги смерти и опыта",
+        bs_group_like = "Авто-комменд",
+        bs_group_party = "Пати",
+        bs_group_notif = "Уведомления",
+        bs_gear_wards = "За что репортить",
+
+        bs_fmt_sec = "%d сек",
+        bs_fmt_min = "%d мин",
+        bs_fmt_pcs = "%d шт",
+
+        bs_enable = "Включить",
+        bs_chat_to = "Куда писать",
+        bs_chs_team = "Только союзникам",
+        bs_chs_all = "Всем в игру",
+        bs_text = "Текст сообщения",
+        bs_greet_enable_tip = "Пишет сообщение в чат в начале матча.",
+        bs_gg_enable_tip = "Пишет сообщение в чат после падения трона.",
+        bs_gg_delay = "Пауза после падения трона",
+        bs_gg_default = "спс за игру, киньте лайк пж",
+
+        bs_ctrl_enable = "Контроль текстового чата",
+        bs_ctrl_enable_tip = "Сдерживает твои сообщения в чат.\nСообщения с - в начале уходят всегда.",
+        bs_ctrl_mode = "Режим",
+        bs_ctrl_modes_block = "Сдерживание",
+        bs_ctrl_modes_chance = "Шанс отправки",
+        bs_ctrl_modes_censor = "Не пускать маты и оски",
+        bs_ctrl_chance = "Шанс отправки",
+        bs_ctrl_echo = "Показывать сдержанное у себя",
+        bs_ctrl_echo_tip = "Сдержанное сообщение видишь только ты.",
+        bs_mute_mic = "Мут своего микрофона",
+        bs_mute_mic_tip = "Твой голос никому не отправляется.",
+
+        bs_tox_enable_tip = "Репортит игроков за сообщения в чате.\nСлова берутся из файлов в scripts/filters.",
+        bs_tox_reason = "Причина",
+        bs_tox_reasons_all = "Маты и оскорбления",
+        bs_tox_reasons_mat = "Только маты",
+        bs_tox_reasons_osk = "Только оскорбления",
+        bs_tox_reasons_spam = "Спам сообщениями",
+        bs_tox_reasons_any = "Любое сообщение",
+        bs_tox_match = "Как искать",
+        bs_tox_matches_exact = "Точное слово",
+        bs_tox_matches_sub = "Часть слова",
+        bs_tox_matches_both = "Оба",
+        bs_tox_count = "Порог сообщений",
+        bs_tox_unmute = "Снять мут после репорта",
+        bs_tox_unmute_tip = "Репорт мутит игрока.\nВкл: мут снимается через 3 сек.",
+        bs_target = "Кого репортить",
+        bs_targets_enemies = "Врагов",
+        bs_targets_allies = "Союзников",
+        bs_targets_all = "Всех",
+
+        bs_voice_enable_tip = "Репортит союзников за голосовой чат.",
+        bs_voice_reason = "Причина",
+        bs_voice_reasons_long = "Говорит больше N секунд",
+        bs_voice_reasons_any = "Включил микрофон",
+        bs_voice_sec = "Говорит больше",
+
+        bs_feed_enable_tip = "Репортит за ранний байбек и слив вардов.",
+        bs_feed_buyback = "Ранний байбек",
+        bs_feed_buyback_min = "Байбек до минуты",
+        bs_feed_wards = "Слив вардов",
+        bs_ward_base = "Вард под свою базу",
+        bs_ward_pile = "Куча в одной точке",
+        bs_ward_tower = "Под вражескую вышку",
+        bs_ward_deny_obs = "Денай своего обсервера",
+        bs_ward_deny_sen = "Денай своего сентри",
+        bs_ward_count = "Вардов в одной точке",
+
+        bs_mute_start = "Мут на старте матча",
+        bs_mute_start_tip = "Мутит игроков в первые секунды матча.",
+        bs_mute_who = "Кого мутить",
+        bs_hide_tilt = "Скрывать типы и пинги",
+        bs_hide_tilt_tip = "Скрывает типы и пинги смерти или опыта\nпо твоему герою.",
+
+        bs_ping_enable_tip = "Мутит игрока, который спамит пингами.",
+        bs_ping_count = "Больше N пингов",
+        bs_ping_window = "За M секунд",
+        bs_action = "Действие",
+        bs_actions_forever = "Замутить до конца игры",
+        bs_actions_timed = "Замутить на N минут",
+        bs_mute_min = "На сколько минут",
+        bs_ping_ability = "Считать пинги способностей",
+
+        bs_pingme_enable_tip = "Мутит игроков за пинг твоего таймера смерти,\nопыта или героя.",
+        bs_pingme_dead = "Пинг что я умер",
+        bs_pingme_xp = "Пинг моего опыта",
+        bs_pingme_hero = "Пинг по моему герою",
+
+        bs_like_enable_tip = "Лайкает всех игроков на экране итогов.",
+        bs_like_delay_on = "Пауза перед лайком",
+        bs_like_delay = "Пауза",
+        bs_like_now = "Лайкнуть сейчас",
+        bs_party_report = "Репортить игроков из пати",
+        bs_party_mute = "Мутить игроков из пати",
+        bs_notif_screen = "На экране",
+        bs_notif_chat = "Писать в чат",
+        bs_notif_chat_tip = "Эти строки видишь только ты.",
+        bs_notif_log = "Писать в консоль",
+        bs_notif_dur = "Длительность на экране",
+
+        bs_msg_sent = "Репорт отправлен: %s, %s (%s)",
+        bs_msg_party = "Не репортим %s, он в пати",
+        bs_msg_mute = "%s: %s, мут %s",
+        bs_msg_forever = "до конца игры",
+        bs_msg_accepted = "GC принял репорт",
+        bs_msg_in_party = "Игрок в пати, репорты отключены",
+        bs_lbl_toxic = "токсичность",
+        bs_lbl_spam = "спам в чат",
+        bs_lbl_voice = "голосовой чат",
+        bs_lbl_feed = "препятствование игре",
+        bs_lbl_wards = "слив вардов",
+        bs_lbl_ping_spam = "спам пингами",
+        bs_lbl_ping_dead = "пинг смерти",
+        bs_lbl_ping_xp = "пинг опыта",
+        bs_lbl_ping_hero = "пинг по моему герою",
+        bs_tr_msgs = "%d сообщ.",
+        bs_tr_mic_sec = "микрофон %d сек",
+        bs_tr_mic = "включил микрофон",
+        bs_tr_buyback = "байбек на %d мин",
+        bs_tr_ward_base = "вард под своей базой (%d)",
+        bs_tr_ward_tower = "вард под вражеской вышкой (%d)",
+        bs_tr_ward_pile = "%d вардов в одной точке",
+        bs_tr_deny_obs = "разбил свой обсервер",
+        bs_tr_deny_sen = "разбил свой сентри",
     },
-}
+})
 
-local localization = qLoc and qLoc.new(translations) or nil
-local MenuLib = localization and localization.WrapLibrary and localization.WrapLibrary(Menu) or Menu
+local UI = localization.WrapLibrary(Menu)
+local L = localization.Get
 
-local function menuLabel(key, fallback)
-    return localization and key or fallback
-end
-
-local function menuSection(key, fallback)
-    if localization and type(localization.Localize) == "function" then
-        return localization.Localize(key) or fallback
-    end
-    return fallback
-end
-
-local function menuOptions(keys, fallback)
-    return localization and keys or fallback
-end
-
-local cyrillic_lower_map = {
-    ["А"]="а", ["Б"]="б", ["В"]="в", ["Г"]="г", ["Д"]="д", ["Е"]="е", ["Ё"]="ё", ["Ж"]="ж",
+local ru_lower = {
+    ["А"]="а", ["Б"]="б", ["В"]="в", ["Г"]="г", ["Д"]="д", ["Е"]="е", ["Ё"]="е", ["ё"]="е", ["Ж"]="ж",
     ["З"]="з", ["И"]="и", ["Й"]="й", ["К"]="к", ["Л"]="л", ["М"]="м", ["Н"]="н", ["О"]="о",
     ["П"]="п", ["Р"]="р", ["С"]="с", ["Т"]="т", ["У"]="у", ["Ф"]="ф", ["Х"]="х", ["Ц"]="ц",
     ["Ч"]="ч", ["Ш"]="ш", ["Щ"]="щ", ["Ъ"]="ъ", ["Ы"]="ы", ["Ь"]="ь", ["Э"]="э", ["Ю"]="ю", ["Я"]="я"
 }
 
-local function utf8_lower(str)
-    if not str then return str end
-    local res = string.lower(str)
-    for upper, lower in pairs(cyrillic_lower_map) do
-        res = string.gsub(res, upper, lower)
-    end
-    return res
+local function low(s)
+    if not s then return "" end
+    local r = s:lower()
+    for k, v in pairs(ru_lower) do r = r:gsub(k, v) end
+    return r
 end
 
-local mainMenu = MenuLib.Create("Scripts", "Utility")
-local mainTab = mainMenu:Create(menuSection("behavior_score.tab", "Порядочность"))
-mainTab:Icon("\u{f164}")
-
-local tabGG = mainTab:Create(menuSection("behavior_score.tabs.gg", "Авто GG"))
-local tabReport = mainTab:Create(menuSection("behavior_score.tabs.report", "Авто Репорт"))
-local tabFeed = mainTab:Create(menuSection("behavior_score.tabs.feed", "Авто Репорт (Фид)"))
-local tabLike = mainTab:Create(menuSection("behavior_score.tabs.like", "Авто Лайк"))
-
-local ggSection = tabGG:Create(menuSection("behavior_score.settings", "Настройки"))
-local ggEnabled = ggSection:Switch(menuLabel("behavior_score.enabled", "Включено"), false, "\u{f00c}")
-local ggMessages = {
-    "спс за игру",
-    "спасибо за игру, лайк всем",
-    "gg киньте лайк пж",
-    "киньте лайк пж",
-    "спасибо за игру, лайкосик всем",
-    "gl next лайк не забудьте",
-    "Своё сообщение (из поля ниже)"
-}
-local ggMessageOptions = {
-    "behavior_score.gg_options.message_1",
-    "behavior_score.gg_options.message_2",
-    "behavior_score.gg_options.message_3",
-    "behavior_score.gg_options.message_4",
-    "behavior_score.gg_options.message_5",
-    "behavior_score.gg_options.message_6",
-    "behavior_score.gg_options.custom",
-}
-local ggMessageSelect = ggSection:Combo(menuLabel("behavior_score.gg_message", "Сообщение при победе/лузе"), menuOptions(ggMessageOptions, ggMessages))
-local ggCustomMessage = ggSection:Input(menuLabel("behavior_score.gg_custom", "Своё сообщение"), "gg wp")
-local ggDelay = ggSection:Slider(menuLabel("behavior_score.gg_delay", "Задержка после разрушения трона (сек)"), 0, 5, 0)
-local ggAllChat = ggSection:Switch(menuLabel("behavior_score.gg_all_chat", "Общий чат"), true)
-
-local greetEnabled = ggSection:Switch(menuLabel("behavior_score.greet_enabled", "Приветствие в начале игры"), false, "\u{f0a1}")
-local greetAllChat = ggSection:Switch(menuLabel("behavior_score.greet_all_chat", "Приветствие в общий чат"), false)
-local greetMessage = ggSection:Input(menuLabel("behavior_score.greet_message", "Текст приветствия"), "gl hf!")
-
-local reportSection = tabReport:Create(menuSection("behavior_score.settings", "Настройки"))
-local reportEnabled = reportSection:Switch(menuLabel("behavior_score.enabled", "Включено"), false, "\u{f00c}")
-local reportTargetMode = reportSection:Combo(menuLabel("behavior_score.report_target", "Цель"), menuOptions({
-    "behavior_score.target_enemies",
-    "behavior_score.target_allies",
-    "behavior_score.target_all",
-}, {"Только враги", "Только союзники", "Все"}))
-local reportAutoUnmute = reportSection:Switch(menuLabel("behavior_score.report_unmute", "Авто-размут после репорта"), true, "\u{f028}")
-local reportNotify = reportSection:Switch(menuLabel("behavior_score.report_console", "Логировать в консоль"), true)
-local reportMatchMode = reportSection:Combo(menuLabel("behavior_score.report_search", "Режим поиска"), menuOptions({
-    "behavior_score.search_exact",
-    "behavior_score.search_contains",
-    "behavior_score.search_both",
-}, {"Точное слово", "Содержит подстроку", "Оба"}))
-reportMatchMode:Icon("\u{f002}")
-local reportLogToFile = reportSection:Switch(menuLabel("behavior_score.report_file", "Писать репорты в файл"), true, "\u{f15c}")
-local reportStreamMode = reportSection:Switch(menuLabel("behavior_score.report_quiet", "Тихий режим (скрыть баннер)"), false, "\u{f070}")
-
-local feedSection = tabFeed:Create(menuSection("behavior_score.settings", "Настройки"))
-local feedEnabled = feedSection:Switch(menuLabel("behavior_score.enabled", "Включено"), false, "\u{f00c}")
-local feedMinutes = feedSection:Slider(menuLabel("behavior_score.feed_minute", "Минута байбека (до)"), 1, 20, 10)
-
-local likeSettings = tabLike:Create(menuSection("behavior_score.settings", "Настройки"))
-local likes_enabled = likeSettings:Switch(menuLabel("behavior_score.enabled", "Включено"), true, "\u{f00c}")
-local switcherLikeRefresh = likeSettings:Switch(menuLabel("behavior_score.like_refresh", "Обновить лайк"), false)
-switcherLikeRefresh:Icon("\u{f2f9}")
-local alliesOnlySwitch = likeSettings:Switch(menuLabel("behavior_score.like_allies", "Только союзники"), false)
-alliesOnlySwitch:Icon("\u{f2b5}")
-
-local likeTeams = tabLike:Create(menuSection("behavior_score.heroes", "Выбор героев"))
-local likeRad = likeTeams:MultiSelect(menuLabel("behavior_score.like", "Лайк"), {}, true)
-likeRad:Icon("\u{e5d2}")
-local likeDir = likeTeams:MultiSelect(menuLabel("behavior_score.like", "Лайк"), {}, true)
-likeDir:Icon("\u{e037}")
-
-local whitelistSubstrings = {
-    "ребят", "хлеб", "себя", "тебя", "небе", "небо", "небу", "неба", "мебел", "дебат", 
-    "стебел", "гребен", "гребн", "грест", "греб", "требова", "требу", "колеб", "лебед", 
-    "серебр", "жереб", "амеб", "плацеб", "небылиц", "требует", "плацебо",
+local wordsWhite = {
+    "ребят", "хлеб", "себя", "тебя", "небе", "небо", "небу", "неба", "мебел", "дебат",
+    "стеб", "гребен", "гребн", "грест", "греб", "требова", "требу", "колеб", "лебед",
+    "серебр", "жереб", "амеб", "плацеб", "небылиц", "употреб", "истреб", "потреб", "разгреб",
+    "оскорб", "барсук", "сукно", "скипидар",
     "наход", "монас", "монах", "альманах", "внахлест", "нахлыну", "нахрап"
 }
 
+local fallbackMat = {
+    "хуй", "хуя", "хуе", "хуи", "хули", "пизд", "ебать", "ебал", "ебан", "заеб", "уеб", "охуе", "ахуе",
+    "бля", "бляд", "блять", "сука", "суки", "мудак", "шлюх", "fuck", "shit", "bitch", "cunt"
+}
+
+local fallbackOsk = {
+    "пидор", "пидар", "пидр", "гандон", "гондон", "долбоеб", "долбаеб", "еблан", "уебан", "хуесос",
+    "даун", "дегенерат", "сдохни", "kys", "retard", "nigger", "faggot"
+}
+
 local function resolveScriptDir()
-    if GetScriptDir then
-        local ok, dir = pcall(GetScriptDir)
-        if ok and type(dir) == "string" and dir ~= "" then return (dir:gsub("[/\\]+$", "")) end
-    end
-    local ok, base = pcall(function() return Engine and Engine.GetCheatDirectory and Engine.GetCheatDirectory() end)
+    local ok, base = pcall(Engine.GetCheatDirectory)
     if ok and type(base) == "string" and base ~= "" then return (base:gsub("[/\\]+$", "")) .. "/scripts" end
     return "scripts"
 end
 
 local SCRIPT_DIR = resolveScriptDir()
-local REPORT_LOG_PATH = SCRIPT_DIR .. "/bh_helper_reports_log.txt"
 
-local function logReportToFile(line)
-    if not reportLogToFile:Get() then return end
-    local file = io.open(REPORT_LOG_PATH, "a")
-    if not file then return end
-    file:write(line .. "\n")
-    file:close()
-end
-
-local function loadWordsFromFile(filename)
+local function loadWords(filename)
     local words = {}
-    local file = io.open(SCRIPT_DIR .. "/filters/" .. filename, "r")
-    if not file then file = io.open("scripts/filters/" .. filename, "r") end
+    local file = io.open(SCRIPT_DIR .. "/filters/" .. filename, "r") or io.open("scripts/filters/" .. filename, "r")
     if not file then return words end
     for rawLine in file:lines() do
         local trimmed = rawLine:match("^%s*(.-)%s*$")
         if trimmed and #trimmed > 0 and not trimmed:match("^#") then
-            table.insert(words, utf8_lower(trimmed))
+            words[#words + 1] = low(trimmed)
         end
     end
     file:close()
-    print("[bh_helper] загружено слов: " .. #words .. " из " .. filename)
     return words
 end
 
-local filterBannedRussian = loadWordsFromFile("filter_banned_russian_cached.txt")
-local filterProfanityRussian = loadWordsFromFile("filter_profanity_russian_cached.txt")
-local filterProfanityEnglish = loadWordsFromFile("filter_profanity_english_cached.txt")
-local filterBannedEnglish = loadWordsFromFile("filter_banned_english_cached.txt")
+local function joinLists(...)
+    local res = {}
+    for _, list in ipairs({ ... }) do
+        for _, w in ipairs(list) do res[#res + 1] = w end
+    end
+    return res
+end
 
-local fallbackProfanity = {
-    "пидор", "пидр", "хуй", "хуя", "хуе", "пизд", "еблан", "ебл", "еба", "сука", 
-    "гондон", "гандон", "мудак", "шлюх", "бля", "уеб", "заеб", "охуе", "ахуе", "cunt", "fuck", "kys"
+local wordsMat = joinLists(loadWords("filter_profanity_russian_cached.txt"), loadWords("filter_profanity_english_cached.txt"))
+local wordsOsk = joinLists(loadWords("filter_banned_russian_cached.txt"), loadWords("filter_banned_english_cached.txt"))
+if #wordsMat == 0 then wordsMat = fallbackMat end
+if #wordsOsk == 0 then wordsOsk = fallbackOsk end
+
+local matSet, oskSet = {}, {}
+for _, w in ipairs(wordsMat) do matSet[w] = true end
+for _, w in ipairs(wordsOsk) do oskSet[w] = true end
+
+local setsMat = { { hash = matSet, list = wordsMat } }
+local setsOsk = { { hash = oskSet, list = wordsOsk } }
+local setsAll = { setsMat[1], setsOsk[1] }
+
+local STEAM_TAIL = 97960265728
+
+local function storePath()
+    local ok, base = pcall(Engine.GetCheatDirectory)
+    base = (ok and type(base) == "string") and base:gsub("[/\\]+$", "") or "."
+    return base .. "/configs/behavior_score_helper.txt"
+end
+
+local function readStore()
+    local res = {}
+    local f = io.open(storePath(), "r")
+    if not f then return res end
+    for line in f:lines() do
+        local k, v = line:match("^(%S+)%s?(.*)$")
+        if k then res[k] = v end
+    end
+    f:close()
+    return res
+end
+
+local store = readStore()
+
+local function storeSet(key, value)
+    if store[key] == value then return end
+    store[key] = value
+    local f = io.open(storePath(), "w")
+    if not f then return end
+    for k, v in pairs(store) do f:write(k, " ", v, "\n") end
+    f:close()
+end
+
+local tryProcessLikes
+local ui = {}
+
+do
+    local root = UI.Create("Scripts", "Utility", "Behavior Score")
+    root:Icon("\u{f164}")
+
+    local tabChat = root:Create("Chat")
+    local tabRep = root:Create("Reports")
+    local tabTilt = root:Create("Anti-Tilt")
+    local tabUtil = root:Create("Utilities")
+    tabChat:Icon("\u{f086}")
+    tabRep:Icon("\u{f024}")
+    tabTilt:Icon("\u{f132}")
+    tabUtil:Icon("\u{f0ad}")
+
+    local fmtSec, fmtMin, fmtPcs = L("bs_fmt_sec"), L("bs_fmt_min"), L("bs_fmt_pcs")
+    local chats = { "bs_chs_team", "bs_chs_all" }
+    local targets = { "bs_targets_enemies", "bs_targets_allies", "bs_targets_all" }
+    local actions = { "bs_actions_forever", "bs_actions_timed" }
+
+    local gGreet = tabChat:Create("bs_group_greet", Enum.GroupSide.Left)
+    local gGG = tabChat:Create("bs_group_gg", Enum.GroupSide.Left)
+    local gCtrl = tabChat:Create("bs_group_ctrl", Enum.GroupSide.Right)
+
+    ui.greetEnabled = gGreet:Switch("bs_enable", false, "\u{f2b5}")
+    ui.greetEnabled:ToolTip("bs_greet_enable_tip")
+    ui.greetChat = gGreet:Combo("bs_chat_to", chats, 0)
+    ui.greetChat:Icon("\u{f075}")
+    ui.greetText = gGreet:Input("bs_text", "gl hf!", "\u{f040}")
+
+    ui.ggEnabled = gGG:Switch("bs_enable", true, "\u{f11e}")
+    ui.ggEnabled:ToolTip("bs_gg_enable_tip")
+    ui.ggChat = gGG:Combo("bs_chat_to", chats, 0)
+    ui.ggChat:Icon("\u{f075}")
+    ui.ggDelay = gGG:Slider("bs_gg_delay", 0, 5, 1, fmtSec)
+    ui.ggDelay:Icon("\u{f017}")
+    ui.ggText = gGG:Input("bs_text", L("bs_gg_default"), "\u{f040}")
+
+    ui.msgCtrlEnabled = gCtrl:Switch("bs_ctrl_enable", false, "\u{f05e}")
+    ui.msgCtrlEnabled:ToolTip("bs_ctrl_enable_tip")
+    ui.msgCtrlMode = gCtrl:Combo("bs_ctrl_mode", { "bs_ctrl_modes_block", "bs_ctrl_modes_chance", "bs_ctrl_modes_censor" }, 0)
+    ui.msgCtrlMode:Icon("\u{f12a}")
+    ui.msgCtrlChance = gCtrl:Slider("bs_ctrl_chance", 0, 100, 50, "%d%%")
+    ui.msgCtrlChance:Icon("\u{f1d8}")
+    ui.msgCtrlEcho = gCtrl:Switch("bs_ctrl_echo", true, "\u{f075}")
+    ui.msgCtrlEcho:ToolTip("bs_ctrl_echo_tip")
+    ui.muteMyVoice = gCtrl:Switch("bs_mute_mic", false, "\u{f130}")
+    ui.muteMyVoice:ToolTip("bs_mute_mic_tip")
+
+    local gTox = tabRep:Create("bs_group_tox", Enum.GroupSide.Left)
+    local gVoice = tabRep:Create("bs_group_voice", Enum.GroupSide.Left)
+    local gFeed = tabRep:Create("bs_group_feed", Enum.GroupSide.Right)
+
+    ui.toxicEnabled = gTox:Switch("bs_enable", false, "\u{f071}")
+    ui.toxicEnabled:ToolTip("bs_tox_enable_tip")
+    ui.toxicReason = gTox:Combo("bs_tox_reason", {
+        "bs_tox_reasons_all", "bs_tox_reasons_mat", "bs_tox_reasons_osk", "bs_tox_reasons_spam", "bs_tox_reasons_any"
+    }, 0)
+    ui.toxicReason:Icon("\u{f12a}")
+    ui.toxicMatch = gTox:Combo("bs_tox_match", { "bs_tox_matches_exact", "bs_tox_matches_sub", "bs_tox_matches_both" }, 2)
+    ui.toxicMatch:Icon("\u{f002}")
+    ui.toxicMsgCount = gTox:Slider("bs_tox_count", 1, 50, 5, fmtPcs)
+    ui.toxicMsgCount:Icon("\u{f075}")
+    ui.toxicTarget = gTox:Combo("bs_target", targets, 2)
+    ui.toxicTarget:Icon("\u{f05b}")
+    ui.toxicUnmute = gTox:Switch("bs_tox_unmute", true, "\u{f028}")
+    ui.toxicUnmute:ToolTip("bs_tox_unmute_tip")
+
+    ui.voiceEnabled = gVoice:Switch("bs_enable", false, "\u{f130}")
+    ui.voiceEnabled:ToolTip("bs_voice_enable_tip")
+    ui.voiceReason = gVoice:Combo("bs_voice_reason", { "bs_voice_reasons_long", "bs_voice_reasons_any" }, 0)
+    ui.voiceReason:Icon("\u{f12a}")
+    ui.voiceSec = gVoice:Slider("bs_voice_sec", 1, 60, 15, fmtSec)
+    ui.voiceSec:Icon("\u{f252}")
+
+    ui.feedEnabled = gFeed:Switch("bs_enable", false, "\u{f06d}")
+    ui.feedEnabled:ToolTip("bs_feed_enable_tip")
+    ui.feedBuyback = gFeed:Switch("bs_feed_buyback", true, "\u{f021}")
+    ui.feedBuybackMin = gFeed:Slider("bs_feed_buyback_min", 0, 20, 10, fmtMin)
+    ui.feedBuybackMin:Icon("\u{f017}")
+    ui.feedWards = gFeed:Switch("bs_feed_wards", true, "\u{f06e}")
+    local gWards = ui.feedWards:Gear("bs_gear_wards")
+    ui.wardBase = gWards:Switch("bs_ward_base", true, "\u{f015}")
+    ui.wardPile = gWards:Switch("bs_ward_pile", true, "\u{f5fd}")
+    ui.wardClusterCount = gWards:Slider("bs_ward_count", 3, 10, 3, fmtPcs)
+    ui.wardClusterCount:Icon("\u{f1ce}")
+    ui.wardTower = gWards:Switch("bs_ward_tower", true, "\u{f447}")
+    ui.wardDenyObs = gWards:Switch("bs_ward_deny_obs", true, "\u{f06e}")
+    ui.wardDenySen = gWards:Switch("bs_ward_deny_sen", false, "\u{f070}")
+    ui.feedTarget = gFeed:Combo("bs_target", targets, 1)
+    ui.feedTarget:Icon("\u{f05b}")
+
+    local gMute = tabTilt:Create("bs_group_mute", Enum.GroupSide.Left)
+    local gPing = tabTilt:Create("bs_group_ping", Enum.GroupSide.Left)
+    local gPingMe = tabTilt:Create("bs_group_pingme", Enum.GroupSide.Right)
+
+    ui.muteStartEnabled = gMute:Switch("bs_mute_start", false, "\u{f026}")
+    ui.muteStartEnabled:ToolTip("bs_mute_start_tip")
+    ui.muteWho = gMute:Combo("bs_mute_who", targets, 2)
+    ui.muteWho:Icon("\u{f0c0}")
+    ui.hideTiltAlerts = gMute:Switch("bs_hide_tilt", false, "\u{f070}")
+    ui.hideTiltAlerts:ToolTip("bs_hide_tilt_tip")
+
+    ui.pingEnabled = gPing:Switch("bs_enable", false, "\u{f124}")
+    ui.pingEnabled:ToolTip("bs_ping_enable_tip")
+    ui.pingCount = gPing:Slider("bs_ping_count", 1, 10, 3, fmtPcs)
+    ui.pingCount:Icon("\u{f124}")
+    ui.pingWindow = gPing:Slider("bs_ping_window", 1, 10, 5, fmtSec)
+    ui.pingWindow:Icon("\u{f017}")
+    ui.pingAction = gPing:Combo("bs_action", actions, 0)
+    ui.pingAction:Icon("\u{f05e}")
+    ui.pingMuteMin = gPing:Slider("bs_mute_min", 1, 15, 5, fmtMin)
+    ui.pingMuteMin:Icon("\u{f017}")
+    ui.pingAbility = gPing:Switch("bs_ping_ability", true, "\u{f002}")
+
+    ui.pingAtMeEnabled = gPingMe:Switch("bs_enable", false, "\u{f05e}")
+    ui.pingAtMeEnabled:ToolTip("bs_pingme_enable_tip")
+    ui.pingMeDead = gPingMe:Switch("bs_pingme_dead", true, "\u{f54c}")
+    ui.pingMeXp = gPingMe:Switch("bs_pingme_xp", true, "\u{f201}")
+    ui.pingMeHero = gPingMe:Switch("bs_pingme_hero", false, "\u{f05b}")
+    ui.pingAtMeAction = gPingMe:Combo("bs_action", actions, 0)
+    ui.pingAtMeAction:Icon("\u{f05e}")
+    ui.pingAtMeMin = gPingMe:Slider("bs_mute_min", 1, 15, 5, fmtMin)
+    ui.pingAtMeMin:Icon("\u{f017}")
+
+    local gLike = tabUtil:Create("bs_group_like", Enum.GroupSide.Left)
+    local gParty = tabUtil:Create("bs_group_party", Enum.GroupSide.Left)
+    local gNotif = tabUtil:Create("bs_group_notif", Enum.GroupSide.Right)
+
+    ui.likeEnabled = gLike:Switch("bs_enable", true, "\u{f164}")
+    ui.likeEnabled:ToolTip("bs_like_enable_tip")
+    ui.likeDelayOn = gLike:Switch("bs_like_delay_on", true, "\u{f017}")
+    ui.likeDelay = gLike:Slider("bs_like_delay", 1, 5, 2, fmtSec)
+    ui.likeDelay:Icon("\u{f017}")
+    ui.likeNow = gLike:Button("bs_like_now", function() if tryProcessLikes then tryProcessLikes(true) end end)
+    ui.likeNow:Icon("\u{f164}")
+
+    ui.reportParty = gParty:Switch("bs_party_report", false, "\u{f0c0}")
+    ui.muteParty = gParty:Switch("bs_party_mute", false, "\u{f0c0}")
+
+    ui.notifyScreen = gNotif:Switch("bs_notif_screen", true, "\u{f0f3}")
+    ui.notifyChat = gNotif:Switch("bs_notif_chat", false, "\u{f075}")
+    ui.notifyChat:ToolTip("bs_notif_chat_tip")
+    ui.notifyLog = gNotif:Switch("bs_notif_log", true, "\u{f15c}")
+    ui.notifyDur = gNotif:Slider("bs_notif_dur", 1, 15, 4, fmtSec)
+    ui.notifyDur:Icon("\u{f017}")
+end
+
+local function refreshUi()
+    local greetOn = ui.greetEnabled:Get()
+    ui.greetChat:Disabled(not greetOn)
+    ui.greetText:Disabled(not greetOn)
+
+    local ggOn = ui.ggEnabled:Get()
+    ui.ggChat:Disabled(not ggOn)
+    ui.ggDelay:Disabled(not ggOn)
+    ui.ggText:Disabled(not ggOn)
+
+    local ctrlOn = ui.msgCtrlEnabled:Get()
+    ui.msgCtrlMode:Disabled(not ctrlOn)
+    ui.msgCtrlEcho:Disabled(not ctrlOn)
+    ui.msgCtrlChance:Disabled(not ctrlOn)
+    ui.msgCtrlChance:Visible(ui.msgCtrlMode:Get() == 1)
+
+    local toxOn, toxMode = ui.toxicEnabled:Get(), ui.toxicReason:Get()
+    ui.toxicReason:Disabled(not toxOn)
+    ui.toxicTarget:Disabled(not toxOn)
+    ui.toxicUnmute:Disabled(not toxOn)
+    ui.toxicMatch:Disabled(not toxOn)
+    ui.toxicMatch:Visible(toxMode <= 2)
+    ui.toxicMsgCount:Disabled(not toxOn)
+    ui.toxicMsgCount:Visible(toxMode == 3)
+
+    local voiceOn = ui.voiceEnabled:Get()
+    ui.voiceReason:Disabled(not voiceOn)
+    ui.voiceSec:Disabled(not voiceOn)
+    ui.voiceSec:Visible(ui.voiceReason:Get() == 0)
+
+    local feedOn = ui.feedEnabled:Get()
+    local wardsOn = feedOn and ui.feedWards:Get()
+    ui.feedBuyback:Disabled(not feedOn)
+    ui.feedBuybackMin:Disabled(not feedOn or not ui.feedBuyback:Get())
+    ui.feedWards:Disabled(not feedOn)
+    ui.feedTarget:Disabled(not feedOn)
+    ui.wardBase:Disabled(not wardsOn)
+    ui.wardPile:Disabled(not wardsOn)
+    ui.wardClusterCount:Disabled(not wardsOn or not ui.wardPile:Get())
+    ui.wardTower:Disabled(not wardsOn)
+    ui.wardDenyObs:Disabled(not wardsOn)
+    ui.wardDenySen:Disabled(not wardsOn)
+
+    ui.muteWho:Disabled(not ui.muteStartEnabled:Get())
+
+    local pingOn = ui.pingEnabled:Get()
+    ui.pingCount:Disabled(not pingOn)
+    ui.pingWindow:Disabled(not pingOn)
+    ui.pingAction:Disabled(not pingOn)
+    ui.pingAbility:Disabled(not pingOn)
+    ui.pingMuteMin:Disabled(not pingOn)
+    ui.pingMuteMin:Visible(ui.pingAction:Get() == 1)
+
+    local pingMeOn = ui.pingAtMeEnabled:Get()
+    ui.pingMeDead:Disabled(not pingMeOn)
+    ui.pingMeXp:Disabled(not pingMeOn)
+    ui.pingMeHero:Disabled(not pingMeOn)
+    ui.pingAtMeAction:Disabled(not pingMeOn)
+    ui.pingAtMeMin:Disabled(not pingMeOn)
+    ui.pingAtMeMin:Visible(ui.pingAtMeAction:Get() == 1)
+
+    local likeOn = ui.likeEnabled:Get()
+    ui.likeDelayOn:Disabled(not likeOn)
+    ui.likeNow:Disabled(not likeOn)
+    ui.likeDelay:Disabled(not likeOn or not ui.likeDelayOn:Get())
+
+    ui.notifyDur:Disabled(not ui.notifyScreen:Get())
+end
+
+for _, item in ipairs({
+    ui.greetEnabled, ui.ggEnabled, ui.msgCtrlEnabled, ui.msgCtrlMode,
+    ui.toxicEnabled, ui.toxicReason, ui.voiceEnabled, ui.voiceReason,
+    ui.feedEnabled, ui.feedBuyback, ui.feedWards, ui.wardPile,
+    ui.muteStartEnabled, ui.pingEnabled, ui.pingAction,
+    ui.pingAtMeEnabled, ui.pingAtMeAction, ui.likeEnabled, ui.likeDelayOn, ui.notifyScreen
+}) do
+    item:SetCallback(refreshUi)
+end
+refreshUi()
+
+math.randomseed(os.time())
+
+local heroNames = {
+    windrunner = "windranger", nevermore = "shadow fiend", zuus = "zeus", wisp = "io",
+    rattletrap = "clockwerk", furion = "nature's prophet", shredder = "timbersaw",
+    obsidian_destroyer = "outworld destroyer", abyssal_underlord = "underlord",
+    skeleton_king = "wraith king", doom_bringer = "doom", magnataur = "magnus",
+    necrolyte = "necrophos", queenofpain = "queen of pain", antimage = "anti-mage",
+    life_stealer = "lifestealer", nyx_assassin = "nyx assassin",
+    templar_assassin = "templar assassin", vengefulspirit = "vengeful spirit"
 }
 
-if #filterProfanityRussian == 0 then
-    filterProfanityRussian = fallbackProfanity
-    print("[bh_helper] файлы фильтров пустые или не найдены, взял дефолт список")
-end
+local baseFallback = {
+    [2] = { fort = Vector(-6100, -6200, 384), fountain = Vector(-6895, -6307, 384) },
+    [3] = { fort = Vector(6100, 6200, 384), fountain = Vector(6845, 6318, 384) },
+}
 
-local function wordsToHashSet(wordList)
-    local set = {}
-    for _, word in ipairs(wordList) do
-        set[word] = true
-    end
-    return set
-end
-
-local bannedRussianSet = wordsToHashSet(filterBannedRussian)
-local profanityRussianSet = wordsToHashSet(filterProfanityRussian)
-local profanityEnglishSet = wordsToHashSet(filterProfanityEnglish)
-local bannedEnglishSet = wordsToHashSet(filterBannedEnglish)
+local wardClasses = {
+    ["C_DOTA_NPC_Observer_Ward"] = true,
+    ["C_DOTA_NPC_Sentry_Ward"] = true,
+}
 
 local init = false
-local localPlayerTeam = nil
-local lastProcessTime = 0
-local PROCESS_INTERVAL = 0.5
-local ggSent = false
-local throneBroken = false
-local ggScheduledTime = nil
-local ancientRad = nil
-local ancientDir = nil
-local gameend = false
-local radiant, dire = {}, {}
+local myTeam = nil
+local myPid = -1
+local myAcc = 0
+local myHeroName = ""
+local myHeroClean = ""
 
 local m_players = {}
-local accountIdCache = {}
-local reportedPlayers = {}
-local reportQueue = {}
-local lastReportSendTime = 0
-local lastPlayersSyncTime = 0
+local slotToPid = {}
+local accToPid = {}
+local allyBuybackTime = {}
+local lastSync = 0
 
-local function getLobbyIdString()
-    if not GameRules or not GameRules.GetLobbyObjectJson then return nil end
-    local ok, jsonStr = pcall(GameRules.GetLobbyObjectJson)
-    if ok and jsonStr and jsonStr ~= "" then
-        local lobbyId = string.match(jsonStr, '"lobby_id"%s*:%s*"(%d+)"')
-            or string.match(jsonStr, '"lobby_id"%s*:%s*(%d+)')
-            or string.match(jsonStr, '"lobbyid"%s*:%s*"(%d+)"')
-            or string.match(jsonStr, '"lobbyid"%s*:%s*(%d+)')
-        if lobbyId then return lobbyId end
+local partyAccs = {}
+local partyParsed = false
+local lastPartyTry = 0
+local lastLobbyCheck = 0
+local cachedLobbyId = nil
+
+local reportQueue = {}
+local repKeys = {}
+local regReports = {}
+local lastRepTime = 0
+
+local msgCount = {}
+local pingTimes = {}
+local pingCd = {}
+local voiceData = {}
+local lastSenderPid = -1
+
+local hudRoot = nil
+local lastHudCheck = 0
+
+local knownWards = {}
+local handledWards = {}
+local pendingWards = {}
+local bases = { forts = {}, fountains = {}, towers = {}, last = 0 }
+local fortsCache = {}
+local fortsLastScan = 0
+
+local startDone = false
+local greetSent = false
+local muteStartDone = false
+local throneBroken = false
+local ggSent = false
+local ggTime = nil
+
+local stateInited = false
+local lastGameState = -1
+local gameEndTime = nil
+local likePending = false
+local likeAttempts = 0
+
+local function getHud()
+    if not hudRoot then
+        hudRoot = Panorama.GetPanelByName("DotaHud", false)
     end
-    if GameRules.GetLobbyID then
-        local ok2, val = pcall(GameRules.GetLobbyID)
-        if ok2 and val then return string.format("%.0f", val) end
+    return hudRoot
+end
+
+local function logLine(text)
+    if ui.notifyLog:Get() then print("[BH] " .. text) end
+end
+
+local function notify(text)
+    logLine(text)
+    if ui.notifyChat:Get() then Chat.Print("ConsoleChat", "[BH] " .. text) end
+    if ui.notifyScreen:Get() then Render.CenteredNotification(text, ui.notifyDur:Get()) end
+end
+
+local function muteText(forever, mins)
+    return forever and L("bs_msg_forever") or string.format(L("bs_fmt_min"), mins)
+end
+
+local function toAccId(val)
+    if not val then return nil end
+    local s = tostring(val):gsub("[^%d]", "")
+    if #s == 17 and s:sub(1, 4) == "7656" then
+        local acc = tonumber(s:sub(-11)) - STEAM_TAIL
+        if acc and acc > 0 and acc < 4294967295 then
+            return math.floor(acc)
+        end
+        return nil
+    end
+    local n = tonumber(s)
+    if n and n > 0 and n < 4294967295 then
+        return math.floor(n)
     end
     return nil
 end
 
-local function resolveAccountId(playerEnt)
-    if not playerEnt then return 0 end
-    local ok_pd, pd = pcall(Player.GetPlayerData, playerEnt)
-    if ok_pd and pd then
-        local acc = pd.account_id or pd.accountid or pd.AccountID
-        if acc and acc > 0 then return math.floor(acc) end
-        local steam = pd.steamid or pd.steam_id or pd.SteamID
-        if steam then
-            local steamNum = tonumber(steam)
-            if steamNum and steamNum > 76561197960265728 then
-                return math.floor(steamNum - 76561197960265728)
-            end
-        end
-    end
-    local ok_td, td = pcall(Player.GetTeamData, playerEnt)
-    if ok_td and td then
-        local acc = td.account_id or td.accountid or td.AccountID or td.m_iAccountID or td.m_unAccountID
-        if acc and acc > 0 then return math.floor(acc) end
+local function getAcc(p)
+    if not p then return 0 end
+    local pd = Player.GetPlayerData(p)
+    if pd and pd.steamid then
+        return toAccId(pd.steamid) or 0
     end
     return 0
 end
 
+local function getLobbyId()
+    local id = GameRules.GetLobbyID()
+    if id and id ~= 0 then
+        return string.format("%.0f", id)
+    end
+    local raw = GameRules.GetLobbyObjectJson()
+    if raw and raw ~= "" then
+        local lid = raw:match('"lobby_id"%s*:%s*"?(%d+)"?')
+        if lid and lid ~= "0" then return lid end
+    end
+    return "0"
+end
+
+local function saveHeroName(hero)
+    if not hero or myHeroClean ~= "" then return end
+    local raw = NPC.GetUnitName(hero) or ""
+    if raw ~= "" then
+        myHeroName = raw
+        local short = raw:gsub("^npc_dota_hero_", ""):lower()
+        myHeroClean = heroNames[short] or short:gsub("_", " ")
+    end
+end
+
+local handleBuyback
+
 local function syncPlayers(force)
-    local curTime = os.clock()
-    if not force and (curTime - lastPlayersSyncTime < 2.0) then return end
-    lastPlayersSyncTime = curTime
-    if not Players or not Players.Count or not Players.Get then return end
-    local count = Players.Count()
-    for i = 0, count do
+    local t = os.clock()
+    if not force and (t - lastSync < 2.0) then return end
+    lastSync = t
+
+    for i = 0, Players.Count() - 1 do
         local p = Players.Get(i)
-        if p and Entity.IsPlayer(p) then
+        if p then
             local pid = Player.GetPlayerID(p)
             if pid and pid >= 0 then
-                local name = Player.GetName(p) or "Player"
-                local accId = resolveAccountId(p)
-                local slot = Player.GetPlayerSlot(p) or i
+                local acc = getAcc(p)
+                local slot = Player.GetPlayerSlot(p) or pid
+                local team = Entity.GetTeamNum(p)
+                if pid == myPid and acc > 0 then myAcc = acc end
+
+                local rawName = Player.GetName(p)
                 m_players[pid] = {
-                    entity = p,
-                    name = name,
-                    accountId = accId,
-                    slot = slot,
-                    team = Entity.GetTeamNum(p)
+                    ent = p,
+                    hero = m_players[pid] and m_players[pid].hero or nil,
+                    name = (rawName and rawName ~= "") and rawName or ("Player " .. pid),
+                    acc = acc,
+                    team = team,
+                    slot = slot
                 }
-                if accId > 0 then accountIdCache[pid] = accId end
-            end
-        end
-    end
-end
+                if slot >= 0 then slotToPid[slot] = pid end
+                if acc > 0 then accToPid[acc] = pid end
 
-local function getActiveWordSets()
-    return {
-        { hash = profanityEnglishSet, list = filterProfanityEnglish, name = "en_mat" },
-        { hash = bannedEnglishSet,    list = filterBannedEnglish,    name = "en_ban" },
-        { hash = profanityRussianSet, list = filterProfanityRussian, name = "ru_mat" },
-        { hash = bannedRussianSet,    list = filterBannedRussian,    name = "ru_ban" }
-    }
-end
-
-local function splitWords(str)
-    local words = {}
-    for word in str:gmatch("[%w%a\128-\255]+") do
-        table.insert(words, utf8_lower(word))
-    end
-    return words
-end
-
-local function checkToxic(message)
-    if not message or #message == 0 then return false, nil end
-    local lowerMsg = utf8_lower(message)
-    local msgWords = splitWords(lowerMsg)
-    local matchMode = reportMatchMode:Get() or 0
-    local activeSets = getActiveWordSets()
-    for _, word in ipairs(msgWords) do
-        local isWhitelisted = false
-        for _, wl in ipairs(whitelistSubstrings) do
-            if string.find(word, wl, 1, true) then
-                isWhitelisted = true
-                break
-            end
-        end
-        if not isWhitelisted then
-            if matchMode == 0 or matchMode == 2 then
-                for _, setData in ipairs(activeSets) do
-                    if setData.hash[word] then
-                        return true, word .. " (" .. setData.name .. ")"
+                if myTeam and team == myTeam and pid ~= myPid then
+                    local td = Player.GetTeamData(p)
+                    local bbTime = td and td.last_buyback_time or 0
+                    if bbTime > 0 then
+                        local prev = allyBuybackTime[pid]
+                        allyBuybackTime[pid] = bbTime
+                        if prev and bbTime > prev and handleBuyback then
+                            handleBuyback(pid)
+                        end
+                    elseif not allyBuybackTime[pid] then
+                        allyBuybackTime[pid] = 0
                     end
                 end
             end
-            if matchMode == 1 or matchMode == 2 then
-                for _, setData in ipairs(activeSets) do
-                    for _, filterWord in ipairs(setData.list) do
-                        if #filterWord <= 3 then
-                            if word == filterWord then
-                                return true, filterWord .. " (короткое в " .. setData.name .. ")"
-                            end
-                        else
-                            if string.find(word, filterWord, 1, true) then
-                                return true, filterWord .. " (подстрока в " .. word .. ")"
-                            end
+        end
+    end
+
+    for _, h in pairs(Heroes.GetAll()) do
+        if h and Entity.IsHero(h) then
+            local hpid = Hero.GetPlayerID(h)
+            if hpid and m_players[hpid] then
+                m_players[hpid].hero = h
+                if hpid == myPid then saveHeroName(h) end
+            end
+        end
+    end
+end
+
+local function checkParty(force)
+    if partyParsed and not force then return end
+    local raw = GameRules.GetLobbyObjectJson()
+    if not raw or raw == "" then return end
+
+    local ok, data = pcall(JSON.decode, JSON, raw)
+    if not ok or type(data) ~= "table" or type(data.all_members) ~= "table" then return end
+
+    if myAcc == 0 then
+        local me = Players.GetLocal()
+        if me then myAcc = getAcc(me) end
+    end
+
+    syncPlayers(false)
+    local inMatch = 0
+    for _ in pairs(m_players) do inMatch = inMatch + 1 end
+    if inMatch == 0 then return end
+
+    local members = data.all_members
+    if #members >= 1 and #members < 5 and #members < inMatch then
+        for _, m in ipairs(members) do
+            local acc = toAccId(m.id)
+            if acc and acc ~= myAcc then
+                partyAccs[acc] = true
+            end
+        end
+    end
+    partyParsed = true
+end
+
+local function inMyParty(pid)
+    checkParty(false)
+    local p = m_players[pid]
+    return (p and p.acc > 0 and partyAccs[p.acc]) or false
+end
+
+local function checkText(msg, sets, exact, substr)
+    if not msg or msg == "" then return false end
+    local lower = low(msg)
+
+    for w in lower:gmatch("[%w%a\128-\255]+") do
+        local isWhite = false
+        for _, wl in ipairs(wordsWhite) do
+            if w:find(wl, 1, true) then
+                isWhite = true
+                break
+            end
+        end
+
+        if not isWhite then
+            for _, s in ipairs(sets) do
+                if (exact or substr) and s.hash[w] then return true, w end
+                if substr then
+                    for _, fw in ipairs(s.list) do
+                        local minBytes = fw:byte(1) >= 192 and 9 or 5
+                        if #fw >= minBytes and w:find(fw, 1, true) then
+                            return true, fw
                         end
                     end
                 end
             end
         end
     end
-    if matchMode == 1 or matchMode == 2 then
-        for _, setData in ipairs(activeSets) do
-            for _, filterWord in ipairs(setData.list) do
-                if #filterWord >= 5 then
-                    if string.find(lowerMsg, filterWord, 1, true) then
-                        return true, filterWord .. " (фраза)"
-                    end
+
+    if substr then
+        for _, s in ipairs(sets) do
+            for _, fw in ipairs(s.list) do
+                local minBytes = fw:byte(1) >= 192 and 9 or 5
+                if #fw >= minBytes and lower:find(fw, 1, true) then
+                    return true, fw
                 end
             end
         end
     end
-    return false, nil
+    return false
 end
 
-local function resolvePlayerHeroName(playerInfo)
-    if not playerInfo or not playerInfo.entity then return nil end
-    local ok, td = pcall(Player.GetTeamData, playerInfo.entity)
-    if ok and td and td.selected_hero_id and td.selected_hero_id > 0 then
-        local okName, heroName = pcall(Engine.GetHeroNameByID, td.selected_hero_id)
-        if okName and heroName and heroName ~= "" then return heroName end
+local function getMatchDuration()
+    local t = GameRules.GetGameTime() or 0
+    local start = GameRules.GetGameStartTime() or 0
+    local finish = GameRules.GetGameEndTime() or 0
+
+    local played = 0
+    if finish > 0 and start > 0 then
+        played = finish - start
+    elseif start > 0 and t > start then
+        played = t - start
+    else
+        played = GameRules.GetDOTATime(false, false) or 0
     end
-    return nil
+    return math.max(0, math.floor(played))
 end
 
-local function showReportNotification(title, subtitle, heroName, duration)
-    local shown = false
-    if Notification then
-        shown = pcall(Notification, {
-            duration = duration,
-            timer = duration,
-            hero = heroName,
-            primary_text = title,
-            secondary_text = subtitle
-        })
-    end
-    if not shown and Render and Render.CenteredNotification then
-        pcall(Render.CenteredNotification, title .. ": " .. subtitle, duration)
-    end
-end
-
-
-local heroIconCache = {}
-local bannerTitleFont = nil
-local bannerSubFont = nil
-local reportBannerQueue = {}
-local activeReportBanner = nil
-
-local function getHeroIconHandle(heroName)
-    if not heroName or not Render or not Render.LoadImage then return nil end
-    local cached = heroIconCache[heroName]
-    if cached ~= nil then
-        if cached == false then return nil end
-        return cached
-    end
-    local path = "panorama/images/heroes/icons/" .. heroName .. "_png.vtex_c"
-    local ok, handle = pcall(Render.LoadImage, path)
-    if ok and handle then
-        heroIconCache[heroName] = handle
-        return handle
-    end
-    heroIconCache[heroName] = false
-    return nil
-end
-
-local function queueReportBanner(title, subtitle, heroName, duration)
-    if reportStreamMode:Get() then return end
-    table.insert(reportBannerQueue, {
-        title = title,
-        subtitle = subtitle,
-        heroName = heroName,
-        duration = duration or 4.0
-    })
-end
-
-local function drawReportBanner()
-    if reportStreamMode:Get() then
-        reportBannerQueue = {}
-        activeReportBanner = nil
-        return
-    end
-    if not Render or not Render.FilledRect or not Render.ScreenSize then return end
-    local curTime = os.clock()
-
-    if not activeReportBanner then
-        if #reportBannerQueue == 0 then return end
-        local nextBanner = table.remove(reportBannerQueue, 1)
-        nextBanner.startTime = curTime
-        activeReportBanner = nextBanner
-    end
-
-    local b = activeReportBanner
-    local elapsed = curTime - b.startTime
-    if elapsed >= b.duration then
-        activeReportBanner = nil
-        return
-    end
-
-    if not bannerTitleFont then
-        local okT, fT = pcall(Render.LoadFont, "Arial", 0, 800)
-        local okS, fS = pcall(Render.LoadFont, "Arial", 0, 500)
-        bannerTitleFont = okT and fT or nil
-        bannerSubFont = okS and fS or nil
-    end
-    if not bannerTitleFont then return end
-
-    local fadeIn, fadeOut = 0.25, 0.45
-    local alpha = 255
-    if elapsed < fadeIn then
-        alpha = math.floor(255 * (elapsed / fadeIn))
-    elseif elapsed > b.duration - fadeOut then
-        alpha = math.floor(255 * ((b.duration - elapsed) / fadeOut))
-    end
-    if alpha < 0 then alpha = 0 elseif alpha > 255 then alpha = 255 end
-
-    local slideOffset = 0
-    if elapsed < fadeIn then
-        slideOffset = (1 - (elapsed / fadeIn)) * -25
-    end
-
-    local screenSize = Render.ScreenSize()
-    local boxW, boxH = 440, 68
-    local iconSize = 48
-    local padding = 14
-    local x = (screenSize.x - boxW) / 2
-    local y = 90 + slideOffset
-
-    local startPos = Vec2(x, y)
-    local endPos = Vec2(x + boxW, y + boxH)
-
-    pcall(Render.Shadow, startPos, endPos, Color(255, 40, 40, math.floor(alpha * 0.55)), 20, 10)
-    pcall(Render.Gradient, startPos, endPos,
-        Color(45, 12, 12, math.floor(alpha * 0.93)),
-        Color(45, 12, 12, math.floor(alpha * 0.93)),
-        Color(18, 18, 18, math.floor(alpha * 0.93)),
-        Color(18, 18, 18, math.floor(alpha * 0.93)),
-        10)
-    pcall(Render.FilledRect, Vec2(x, y), Vec2(x + 5, y + boxH), Color(235, 55, 55, alpha), 2)
-    pcall(Render.Rect, startPos, endPos, Color(235, 55, 55, alpha), 10, nil, 1.5)
-
-    local textX = x + padding + 4
-    local iconHandle = getHeroIconHandle(b.heroName)
-    if iconHandle then
-        pcall(Render.Image, iconHandle, Vec2(x + padding, y + (boxH - iconSize) / 2), Vec2(iconSize, iconSize), Color(255, 255, 255, alpha))
-        textX = x + padding + iconSize + 12
-    end
-
-    pcall(Render.Text, bannerTitleFont, 17, b.title, Vec2(textX, y + 12), Color(255, 95, 95, alpha))
-    pcall(Render.Text, bannerSubFont, 14, b.subtitle, Vec2(textX, y + 37), Color(235, 235, 235, alpha))
-end
-
-local function sendReport(playerID, accountID, triggerWord, messageText)
-    if not accountID or accountID == 0 then
-        print("[bh_helper] ошибка: нет accountid для pid " .. tostring(playerID))
-        return false
-    end
-    local localPlayer = Players.GetLocal()
-    local mySlot = localPlayer and Player.GetPlayerSlot(localPlayer) or 0
-    local lobbyIdStr = getLobbyIdString() or "0"
-    local gameTime = GameRules and GameRules.GetGameTime() or 0.0
-    local hud = Panorama.GetPanelByName("DotaHud", false)
-             or Panorama.GetPanelByName("Hud", false)
-             or Panorama.GetPanelByName("HUDElements", false)
-             or Panorama.GetPanelByName("scoreboard", false)
-                  
-    if hud then
-        local autoUnmuteVal = reportAutoUnmute:Get() and "true" or "false"
-        local jsCode = [[
-            (function() {
-                var targetPid = %d;
-                var autoUnmute = %s;
-                function findAndClickMute(root, targetPid) {
-                    if (!root) return false;
-                    var id = root.id || "";
-                    var isTargetRow = false;
-                    if (targetPid >= 0 && targetPid <= 4 && id === "RadiantPlayer" + targetPid) {
-                        isTargetRow = true;
-                    } else if (targetPid >= 5 && targetPid <= 9 && id === "DirePlayer" + (targetPid - 5)) {
-                        isTargetRow = true;
-                    }
-                    if (isTargetRow) {
-                        var btn = root.FindChildTraverse("PlayerMuteButton");
-                        if (btn) {
-                            if (btn.Click) { btn.Click(); } else { $.DispatchEvent('Activated', btn, 'mouse'); }
-                            if (autoUnmute) {
-                                $.Schedule(0.1, function() {
-                                    if (Game && Game.SetPlayerMuted) { Game.SetPlayerMuted(targetPid, false); }
-                                    if (Game && Game.SetPlayerMutedVoice) { Game.SetPlayerMutedVoice(targetPid, false); }
-                                });
-                            }
-                            return true;
-                        }
-                    }
-                    var count = root.GetChildCount();
-                    for (var i = 0; i < count; i++) {
-                        if (findAndClickMute(root.GetChild(i), targetPid)) return true;
-                    }
-                    return false;
-                }
-                var rootPanel = $.GetContextPanel();
-                while (rootPanel.GetParent()) { rootPanel = rootPanel.GetParent(); }
-                findAndClickMute(rootPanel, targetPid);
-            })();
-        ]]
-        
-        local formattedJs = string.format(jsCode, playerID, autoUnmuteVal)
-        pcall(Engine.RunScript, formattedJs, hud)
-    end
-    local reportTable = {
-        target_account_id = accountID,
-        report_reason = { 2 },
-        lobby_id = lobbyIdStr,
-        game_time = gameTime,
-        debug_slot = mySlot,
-        debug_match_id = "0"
-    }
-    local successJson, jsonStr = pcall(JSON.encode, JSON, reportTable)
-    if successJson and jsonStr then
-        local successProto, protoData = pcall(protobuf.encodeFromJSON, "CMsgDOTASubmitPlayerReportV2", jsonStr)
-        if successProto and protoData and protoData.binary and protoData.size then
-            GC.SendMessage(protoData.binary, 7082, protoData.size)
-            if protobuf.free then pcall(protobuf.free, protoData.binary) end
+local function saveReportState()
+    local lobby = getLobbyId()
+    if lobby == "0" then return end
+    local list = {}
+    for acc, reg in pairs(regReports) do
+        for r in pairs(reg) do
+            list[#list + 1] = acc .. ":" .. r
+            if #list >= 120 then break end
         end
+        if #list >= 120 then break end
     end
-    local playerInfo = m_players[playerID] or {}
-    local pName = playerInfo.name or ("Игрок #" .. tostring(playerID))
-    if reportNotify:Get() then
-        print("[bh_helper] кинул репорт на " .. tostring(pName))
-    end
-    local heroName = resolvePlayerHeroName(playerInfo)
-    showReportNotification("АВТО-РЕПОРТ ОТПРАВЛЕН", pName .. " — за '" .. tostring(triggerWord) .. "'", heroName, 4.0)
-    queueReportBanner("АВТО-РЕПОРТ ОТПРАВЛЕН", pName .. " — за '" .. tostring(triggerWord) .. "'", heroName, 4.0)
-    logReportToFile(string.format(
-        "[%s] TOXIC | %s (accid %s) | триггер: '%s' | сообщение: \"%s\" | lobby=%s | game_time=%.0f",
-        os.date("%Y-%m-%d %H:%M:%S"), pName, tostring(accountID), tostring(triggerWord), tostring(messageText), tostring(lobbyIdStr), gameTime
-    ))
-    return true
+    storeSet("lobby", lobby)
+    storeSet("reports", table.concat(list, ";"))
 end
 
-local function sendFeedReport(playerID, accountID, minutes)
-    if not accountID or accountID == 0 then return false end
-    local localPlayer = Players.GetLocal()
-    local mySlot = localPlayer and Player.GetPlayerSlot(localPlayer) or 0
-    local lobbyIdStr = getLobbyIdString() or "0"
-    local gameTime = GameRules and GameRules.GetGameTime() or 0.0
-
-    local reportTable = {
-        target_account_id = accountID,
-        report_reason = { 5 },
-        lobby_id = lobbyIdStr,
-        game_time = gameTime,
-        debug_slot = mySlot,
-        debug_match_id = "0"
-    }
-    local successJson, jsonStr = pcall(JSON.encode, JSON, reportTable)
-    if successJson and jsonStr then
-        local successProto, protoData = pcall(protobuf.encodeFromJSON, "CMsgDOTASubmitPlayerReportV2", jsonStr)
-        if successProto and protoData and protoData.binary and protoData.size then
-            GC.SendMessage(protoData.binary, 7082, protoData.size)
-            if protobuf.free then pcall(protobuf.free, protoData.binary) end
-        end
+local function loadSavedState()
+    local lobby = getLobbyId()
+    if lobby == "0" then return end
+    if store.greet == lobby then
+        greetSent = true
     end
-
-    local playerInfo = m_players[playerID] or {}
-    local pName = playerInfo.name or ("Игрок #" .. tostring(playerID))
-    if reportNotify:Get() then
-        print("[bh_helper] кинул репорт за фид: " .. tostring(pName))
-    end
-    local heroName = resolvePlayerHeroName(playerInfo)
-    showReportNotification("РЕПОРТ ЗА ФИД", pName .. " (байбек на " .. tostring(minutes) .. " мин)", heroName, 4.0)
-    queueReportBanner("РЕПОРТ ЗА ФИД", pName .. " (байбек на " .. tostring(minutes) .. " мин)", heroName, 4.0)
-    logReportToFile(string.format(
-        "[%s] FEED | %s (accid %s) | байбек на %s мин | lobby=%s | game_time=%.0f",
-        os.date("%Y-%m-%d %H:%M:%S"), pName, tostring(accountID), tostring(minutes), tostring(lobbyIdStr), gameTime
-    ))
-    return true
-end
-
-local function recursiveFindString(tbl, keys, maxDepth)
-    if type(tbl) ~= "table" or maxDepth <= 0 then return nil end
-    for _, key in ipairs(keys) do
-        local val = tbl[key]
-        if type(val) == "string" and val ~= "" then return val end
-    end
-    for _, sub in pairs(tbl) do
-        if type(sub) == "table" then
-            local res = recursiveFindString(sub, keys, maxDepth - 1)
-            if res then return res end
-        end
-    end
-    return nil
-end
-
-local function recursiveFindNumber(tbl, keys, maxDepth)
-    if type(tbl) ~= "table" or maxDepth <= 0 then return nil end
-    for _, key in ipairs(keys) do
-        local val = tbl[key]
-        if val then
-            local num = tonumber(val)
-            if num and num >= 0 then return math.floor(num) end
-        end
-    end
-    for _, sub in pairs(tbl) do
-        if type(sub) == "table" then
-            local res = recursiveFindNumber(sub, keys, maxDepth - 1)
-            if res then return res end
-        end
-    end
-    return nil
-end
-
-local function handleChatMessage(pid, message)
-    if not reportEnabled:Get() then return end
-    if not message or message == "" then return end
-    local localPlayer = Players.GetLocal()
-    local myPid = localPlayer and Player.GetPlayerID(localPlayer) or -1
-    if pid == myPid then return end
-    
-    local playerInfo = m_players[pid] or {}
-    local name = playerInfo.name or ("Игрок #" .. tostring(pid))
-    local accountID = playerInfo.accountId or resolveAccountId(playerInfo.entity)
-    
-    if accountID == 0 and playerInfo.entity then
-        accountID = resolveAccountId(playerInfo.entity)
-        playerInfo.accountId = accountID
-    end
-    
-    local targetMode = reportTargetMode:Get() or 0
-    local localPlayerTeam = localPlayer and Entity.GetTeamNum(localPlayer) or nil
-    if localPlayerTeam and playerInfo.team then
-        if targetMode == 0 and playerInfo.team == localPlayerTeam then return end
-        if targetMode == 1 and playerInfo.team ~= localPlayerTeam then return end
-    end
-    
-    local isToxic, triggerWord = checkToxic(message)
-    if isToxic then
-        if reportNotify:Get() then
-            print("[bh_helper] токсик: " .. name .. " | триггер: '" .. tostring(triggerWord) .. "'")
-        end
-        if not reportedPlayers[pid] then
-            table.insert(reportQueue, {
-                playerID = pid,
-                accountID = accountID,
-                trigger = triggerWord,
-                message = message,
-                isFeed = false
-            })
-            reportedPlayers[pid] = true
-        end
-    end
-end
-
-local function handlePlayerBuyback(pid)
-    if not feedEnabled:Get() then return end
-    local gameTime = GameRules and GameRules.GetGameTime() or 0
-    local gameTimeMinutes = gameTime / 60
-    local maxMinutes = feedMinutes:Get() or 10
-    if gameTimeMinutes <= maxMinutes then
-        syncPlayers(false)
-        local playerInfo = m_players[pid]
-        if playerInfo then
-            local localPlayer = Players.GetLocal()
-            local myPid = localPlayer and Player.GetPlayerID(localPlayer) or -1
-            if pid == myPid then return end
-            local targetMode = reportTargetMode:Get() or 0
-            local localPlayerTeam = localPlayer and Entity.GetTeamNum(localPlayer) or nil
-            if localPlayerTeam and playerInfo.team then
-                if targetMode == 0 and playerInfo.team == localPlayerTeam then return end
-                if targetMode == 1 and playerInfo.team ~= localPlayerTeam then return end
-            end
-            local accountID = playerInfo.accountId or resolveAccountId(playerInfo.entity)
-            if accountID and accountID > 0 then
-                if not reportedPlayers[pid] then
-                    table.insert(reportQueue, {
-                        playerID = pid,
-                        accountID = accountID,
-                        trigger = string.format("байбек на %d мин", math.floor(gameTimeMinutes)),
-                        message = "ранний байбек",
-                        isFeed = true
-                    })
-                    reportedPlayers[pid] = true
-                end
+    if store.lobby == lobby then
+        for entry in (store.reports or ""):gmatch("[^;]+") do
+            local acc, r = entry:match("^(%d+):(%d+)$")
+            local nAcc, nR = tonumber(acc), tonumber(r)
+            if nAcc and nR then
+                regReports[nAcc] = regReports[nAcc] or {}
+                regReports[nAcc][nR] = true
             end
         end
     end
+end
+
+local function mutePlayer(pid, dur)
+    local hud = getHud()
+    if not hud then return end
+
+    local js = string.format("Game.SetPlayerMuted(%d, true);", pid)
+    if dur and dur > 0 then
+        js = js .. string.format(" $.Schedule(%.1f, function() { Game.SetPlayerMuted(%d, false); });", dur, pid)
+    end
+    Engine.RunScript(js, hud)
+end
+
+local function targetAllowed(team, widget)
+    local mode = widget:Get()
+    if mode == 2 then return true end
+    if team == myTeam then return mode == 1 end
+    return mode == 0
+end
+
+local function addReportQueue(pid, reason, label, trigger, needMute)
+    syncPlayers(false)
+    local p = m_players[pid]
+    local acc = p and p.acc or 0
+    if acc == 0 and p and p.ent then
+        acc = getAcc(p.ent)
+        p.acc = acc
+    end
+    local name = (p and p.name) or ("Player " .. pid)
+
+    local key = acc .. ":" .. reason
+    local dup = repKeys[key] or (regReports[acc] and regReports[acc][reason])
+    if pid == myPid or dup or acc == 0 then return end
+
+    checkParty(false)
+    if not ui.reportParty:Get() and partyAccs[acc] then
+        notify(string.format(L("bs_msg_party"), name))
+        return
+    end
+
+    repKeys[key] = true
+    reportQueue[#reportQueue + 1] = {
+        pid = pid, acc = acc, reason = reason,
+        label = label, trigger = trigger, mute = needMute, name = name
+    }
 end
 
 local function processReportQueue()
     if #reportQueue == 0 then return end
-    local curTime = os.clock()
-    if curTime - lastReportSendTime < 2.0 then return end
+    local t = os.clock()
+    if t - lastRepTime < 2.0 then return end
 
-    local report = reportQueue[1]
-    if report.accountID == 0 then
-        report.accountID = resolveAccountId(m_players[report.playerID] and m_players[report.playerID].entity)
+    local entry = table.remove(reportQueue, 1)
+    if entry.acc == 0 and m_players[entry.pid] then
+        entry.acc = getAcc(m_players[entry.pid].ent)
+    end
+    if entry.acc == 0 then return end
+    if not ui.reportParty:Get() and partyAccs[entry.acc] then return end
+
+    if entry.mute then
+        mutePlayer(entry.pid, ui.toxicUnmute:Get() and 3.0 or 0)
     end
 
-    if report.accountID == 0 then
-        table.remove(reportQueue, 1)
+    local me = Players.GetLocal()
+    local mySlot = me and Player.GetPlayerSlot(me) or 0
+
+    local okJson, jsonStr = pcall(JSON.encode, JSON, {
+        target_account_id = entry.acc,
+        report_reason = { entry.reason },
+        lobby_id = getLobbyId(),
+        game_time = GameRules.GetGameTime() or 0.0,
+        debug_slot = mySlot,
+        debug_match_id = "0"
+    })
+    if not okJson or not jsonStr then return end
+
+    local okProto, protoData = pcall(protobuf.encodeFromJSON, "CMsgDOTASubmitPlayerReportV2", jsonStr)
+    if not okProto or not protoData or not protoData.binary then return end
+
+    GC.SendMessage(protoData.binary, 7082, protoData.size)
+    if protobuf.free then pcall(protobuf.free, protoData.binary) end
+
+    regReports[entry.acc] = regReports[entry.acc] or {}
+    regReports[entry.acc][entry.reason] = true
+    saveReportState()
+
+    lastRepTime = t
+    notify(string.format(L("bs_msg_sent"), entry.name, L(entry.label), entry.trigger or "?"))
+end
+
+local function handleChatMessage(pid, message)
+    if not ui.toxicEnabled:Get() or not message or message == "" or pid == myPid then return end
+    syncPlayers(false)
+
+    local p = m_players[pid]
+    if not p or not targetAllowed(p.team, ui.toxicTarget) then return end
+
+    local rIdx = ui.toxicReason:Get()
+    if rIdx == 4 then
+        addReportQueue(pid, 2, "bs_lbl_toxic", "'" .. message:sub(1, 40) .. "'", true)
         return
     end
 
-    local success = false
-    if report.isFeed then
-        success = sendFeedReport(report.playerID, report.accountID, report.trigger)
+    if rIdx == 3 then
+        msgCount[pid] = (msgCount[pid] or 0) + 1
+        local limit = ui.toxicMsgCount:Get()
+        if msgCount[pid] == limit then
+            addReportQueue(pid, 2, "bs_lbl_spam", string.format(L("bs_tr_msgs"), limit), true)
+        end
+        return
+    end
+
+    local sets = setsAll
+    if rIdx == 1 then sets = setsMat
+    elseif rIdx == 2 then sets = setsOsk end
+
+    local mode = ui.toxicMatch:Get()
+    local isBad, trig = checkText(message, sets, mode ~= 1, mode ~= 0)
+    if isBad then
+        addReportQueue(pid, 2, "bs_lbl_toxic", trig, true)
+    end
+end
+
+local function handleVoice(data)
+    if not ui.voiceEnabled:Get() then return end
+    syncPlayers(false)
+
+    local acc = toAccId(data.xuid)
+    local slot = tonumber(data.client_deprecated)
+    local pid = (acc and accToPid[acc]) or (slot and slotToPid[slot]) or slot
+    if not pid or pid < 0 or pid == myPid then return end
+
+    local p = m_players[pid]
+    if not p or (myTeam and p.team and p.team ~= myTeam) then return end
+
+    local t = os.clock()
+    local st = voiceData[pid]
+    if not st then
+        st = { last = t, active = 0.03, packets = 1, reported = false }
+        voiceData[pid] = st
     else
-        success = sendReport(report.playerID, report.accountID, report.trigger, report.message)
+        local dt = t - st.last
+        if dt > 0.005 then
+            st.active = st.active + (dt <= 0.25 and dt or 0.03)
+            st.last = t
+        end
+        st.packets = st.packets + 1
     end
 
-    table.remove(reportQueue, 1)
-    if success then lastReportSendTime = curTime end
-end
+    if st.reported then return end
 
-local function extractHeroName(src)
-    if not src then return nil end
-    local heroName = string.match(src, "npc_dota_hero_([^%.]+)")
-        or string.match(src, "heroes/([^%._]+)arcana")
-        or string.match(src, "heroes/([^%.]+)_persona")
-        or string.match(src, "heroes/icons/([^%.]+)")
-        or string.match(src, "/([^/]+)_png%.vtex")
-    if heroName and not string.match(heroName, "^npc_dota_hero_") then
-        heroName = "npc_dota_hero_" .. heroName
+    local rMode = ui.voiceReason:Get()
+    if rMode == 0 and st.active >= ui.voiceSec:Get() then
+        st.reported = true
+        addReportQueue(pid, 3, "bs_lbl_voice", string.format(L("bs_tr_mic_sec"), math.floor(st.active)), false)
+    elseif rMode == 1 and st.packets >= 2 then
+        st.reported = true
+        addReportQueue(pid, 3, "bs_lbl_voice", L("bs_tr_mic"), false)
     end
-    return heroName
 end
 
-local function processChildren(container, likeEnabled)
-    if not container then return false end
-    local commended = false
-    for i = 0, container:GetChildCount() - 1 do
-        local child = container:GetChild(i)
-        if child then
-            local HeroBackground = child:GetChild(1)
-            if not HeroBackground then goto continue end
-            local hero = HeroBackground:FindChildTraverse("MainHeroImage")
-            if not hero then goto continue end
-            local heroName = extractHeroName(hero:GetImageSrc())
-            if not heroName then goto continue end
-            local baseHeroName = heroName
-            baseHeroName = string.gsub(baseHeroName, "_alt%d+$", "")
-            baseHeroName = string.gsub(baseHeroName, "_persona%d*$", "")
-            baseHeroName = string.gsub(baseHeroName, "_arcana%d*$", "")
-            local isLike = likeEnabled[heroName] or likeEnabled[baseHeroName]
-            if isLike then
-                local button = child:FindChildTraverse("ButtonDrawer")
-                if button then
-                    Engine.RunScript("$.DispatchEvent('OverviewHeroCommendPlayer')", button)
-                    commended = true
+local function muteForPing(pid, label)
+    if not pid or pid < 0 or pid == myPid then return end
+    local t = os.clock()
+    if pingCd[pid] and t < pingCd[pid] then return end
+    if not ui.muteParty:Get() and inMyParty(pid) then return end
+
+    syncPlayers(false)
+    local forever = (ui.pingAtMeAction:Get() == 0)
+    local mins = ui.pingAtMeMin:Get()
+    pingCd[pid] = t + 3.0
+    mutePlayer(pid, forever and 0 or (mins * 60))
+    local p = m_players[pid]
+    local pName = (p and p.name) or ("Player " .. pid)
+    notify(string.format(L("bs_msg_mute"), L(label), pName, muteText(forever, mins)))
+end
+
+local pingExtra = { [523] = true, [609] = true, [624] = true, [625] = true }
+
+local function handlePing(msgId, data)
+    local pid = tonumber(msgId == 609 and data.player_id_of_original_pinger or data.player_id)
+    if not pid or pid < 0 or pid == myPid then return end
+
+    lastSenderPid = pid
+    if msgId ~= 477 and not (pingExtra[msgId] and ui.pingAbility:Get()) then return end
+
+    local t = os.clock()
+    if pingCd[pid] and t < pingCd[pid] then return end
+    if not ui.muteParty:Get() and inMyParty(pid) then return end
+
+    if ui.pingAtMeEnabled:Get() and ui.pingMeHero:Get() and msgId == 477 and type(data.location_ping) == "table" then
+        local lp = data.location_ping
+        local myHero = Heroes.GetLocal()
+        if myHero and Entity.IsAlive(myHero) then
+            local target = tonumber(lp.target)
+            local hit = (target and target > 0 and target == Entity.GetIndex(myHero))
+            if not hit then
+                local px, py = tonumber(lp.x), tonumber(lp.y)
+                local myPos = Entity.GetAbsOrigin(myHero)
+                if px and py and myPos and Vector(px, py, 0):Distance2D(myPos) <= 150 then
+                    hit = true
                 end
             end
-        end
-        ::continue::
-    end
-    return commended
-end
-
-local function processLikeDislike()
-    if not (gameend or switcherLikeRefresh:Get()) then return end
-    if not likes_enabled:Get() then return end
-    local parent = Panorama.GetPanelByName("OverviewHeroes", false)
-    if not parent then
-        gameend = false
-        switcherLikeRefresh:Set(false)
-        return
-    end
-    local leftHeroes = parent:FindChildTraverse("LeftHeroes")
-    local rightHeroes = parent:FindChildTraverse("RightHeroes")
-    if not (leftHeroes and rightHeroes) then return end
-    local likeEnabled = {}
-    if likeRad and likeDir then
-        local radList, dirList = likeRad:ListEnabled(), likeDir:ListEnabled()
-        if alliesOnlySwitch:Get() then
-            if localPlayerTeam == 2 then
-                for _, h in pairs(radList) do likeEnabled[h] = true end
-            else
-                for _, h in pairs(dirList) do likeEnabled[h] = true end
+            if hit then
+                muteForPing(pid, "bs_lbl_ping_hero")
+                return
             end
-        else
-            for _, h in pairs(radList) do likeEnabled[h] = true end
-            for _, h in pairs(dirList) do likeEnabled[h] = true end
         end
     end
-    local leftCommended = processChildren(leftHeroes, likeEnabled)
-    local rightCommended = processChildren(rightHeroes, likeEnabled)
-    if leftCommended or rightCommended then switcherLikeRefresh:Set(false) end
-    if leftCommended or rightCommended then gameend = false end
-end
 
-function test.updateTeamSettings()
-    if not init or not localPlayerTeam then return end
-    local function createTeamOptions(teamHeroes, isAllyTeam, isLikeMode)
-        local options = {}
-        for _, heroId in ipairs(teamHeroes) do
-            local name = Engine.GetHeroNameByID(heroId)
-            local heroIcon = "panorama/images/heroes/icons/" .. name .. "_png.vtex_c"
-            local defaultValue = isLikeMode and (not alliesOnlySwitch:Get() or isAllyTeam) or false
-            table.insert(options, { name, heroIcon, defaultValue })
+    if ui.pingEnabled:Get() then
+        local times = pingTimes[pid] or {}
+        pingTimes[pid] = times
+        times[#times + 1] = t
+
+        local cutoff = t - ui.pingWindow:Get()
+        local j = 1
+        while j <= #times do
+            if times[j] < cutoff then table.remove(times, j) else j = j + 1 end
         end
-        return options
-    end
-    if localPlayerTeam == 2 then
-        likeRad:Update(createTeamOptions(radiant, true, true), true)
-        likeDir:Update(createTeamOptions(dire, false, true), true)
-    else
-        likeRad:Update(createTeamOptions(radiant, false, true), true)
-        likeDir:Update(createTeamOptions(dire, true, true), true)
-    end
-end
 
-alliesOnlySwitch:SetCallback(function() test.updateTeamSettings() end)
-likes_enabled:SetCallback(function()
-    local disabled = not likes_enabled:Get()
-    switcherLikeRefresh:Disabled(disabled)
-    likeRad:Disabled(disabled)
-    alliesOnlySwitch:Disabled(disabled)
-    likeDir:Disabled(disabled)
-end, true)
-
-ggMessageSelect:SetCallback(function()
-    local isCustom = (ggMessageSelect:Get() == #ggMessages - 1)
-    ggCustomMessage:Disabled(not isCustom)
-end, true)
-
-function test.OnPostReceivedNetMessage(msg)
-    if not msg or not msg.msg_object then return end
-    if not reportEnabled:Get() then return end
-    local chatMsgIds = { [612] = true, [615] = true, [118] = true, [119] = true, [120] = true }
-    if not chatMsgIds[msg.message_id] then return end
-    local successProto, jsonStr = pcall(protobuf.decodeToJSONfromObject, msg.msg_object)
-    if not successProto or not jsonStr or jsonStr == "" then return end
-    local successJson, data = pcall(JSON.decode, JSON, jsonStr)
-    if not successJson or type(data) ~= "table" then return end
-    local message = recursiveFindString(data, {"message_text", "text", "message", "chat_text", "raw_text"}, 5)
-    local pid = recursiveFindNumber(data, {"player_id", "playerid", "playerid_1", "player_id_1", "playerid_2", "player_id_2", "value", "source_player_id", "ent_idx"}, 5)
-    if message and message ~= "" and pid then
-        syncPlayers(false)
-        handleChatMessage(pid, message)
+        if #times > ui.pingCount:Get() then
+            pingTimes[pid] = {}
+            pingCd[pid] = t + 3.0
+            syncPlayers(false)
+            local forever = (ui.pingAction:Get() == 0)
+            local mins = ui.pingMuteMin:Get()
+            mutePlayer(pid, forever and 0 or (mins * 60))
+            local p = m_players[pid]
+            local pName = (p and p.name) or ("Player " .. pid)
+            notify(string.format(L("bs_msg_mute"), L("bs_lbl_ping_spam"), pName, muteText(forever, mins)))
+        end
     end
 end
 
-function test.OnFireEventClient(data)
-    if not data or not data.event then return end
-    if data.name == "dota_buyback" then
-        local pid = Event.GetInt(data.event, "player_id")
-        if pid and pid >= 0 then handlePlayerBuyback(pid) end
-    end
+local function jsQuote(s)
+    return (s:gsub("\\", "\\\\"):gsub("'", "\\'"))
 end
 
-function test.OnDraw()
-    drawReportBanner()
+local function checkHud(localHero)
+    local hide = ui.hideTiltAlerts:Get()
+    local muteOn = ui.pingAtMeEnabled:Get()
+    if not hide and not muteOn then return end
+
+    local now = os.clock()
+    if now - lastHudCheck < 0.1 then return end
+    lastHudCheck = now
+
+    local hud = getHud()
+    if not hud then return end
+
+    saveHeroName(localHero)
+    local mDead = (muteOn and ui.pingMeDead:Get()) and 1 or 0
+    local mXp = (muteOn and ui.pingMeXp:Get()) and 1 or 0
+    local isDead = (localHero and not Entity.IsAlive(localHero)) and 1 or 0
+    local dur = (ui.pingAtMeAction:Get() == 1) and (ui.pingAtMeMin:Get() * 60) or 0
+    local fb = (lastSenderPid >= 0 and (ui.muteParty:Get() or not inMyParty(lastSenderPid))) and lastSenderPid or -1
+
+    local pMap = "{"
+    for pid, info in pairs(m_players) do
+        if pid ~= myPid and info.name ~= "" and (ui.muteParty:Get() or not inMyParty(pid)) then
+            local k = low(info.name):gsub('\\', ''):gsub('"', '')
+            pMap = pMap .. '"' .. k .. '":' .. pid .. ','
+        end
+    end
+    pMap = pMap .. "}"
+
+    local js = "var hud = $.GetContextPanel();"
+        .. "function grab(p){ if(!p) return ''; var s = p.text || ''; for(var i=0; i < (p.GetChildCount ? p.GetChildCount() : 0); i++) s += ' ' + grab(p.GetChild(i)); return s.toLowerCase(); }"
+        .. "function has(s, arr){ for(var i=0; i<arr.length; i++) if(s.includes(arr[i])) return true; return false; }"
+        .. "var tips = ['хвалит','благодарит','типает','tipped'];"
+
+    if hide then
+        js = js .. "var tms = [hud.FindChildTraverse('ToastManager'), hud.FindChildTraverse('SpectatorToastManager')];"
+            .. "for(var m=0; m<2; m++){ var tm = tms[m]; if(!tm) continue;"
+            .. "for(var i=0; i<tm.GetChildCount(); i++){ var c = tm.GetChild(i);"
+            .. "if(c && c.style.visibility !== 'collapse' && (c.BHasClass('TipToast') || c.FindChildTraverse('SourceHeroImage') || has(grab(c), tips))) c.style.visibility = 'collapse'; } }"
+    end
+
+    js = js .. "var box = hud.FindChildTraverse('ChatLinesPanel');"
+        .. "if(box){ var n = box.GetChildCount(), pls = " .. pMap .. ";"
+        .. "var h1 = '" .. jsQuote(myHeroClean) .. "', h2 = '" .. jsQuote(myHeroName) .. "';"
+        .. "var hLoc = h2 ? $.Localize('#' + h2).toLowerCase() : '';"
+        .. "for(var i = Math.max(0, n - 12); i < n; i++){"
+        .. "var row = box.GetChild(i); if(!row || row.style.visibility === 'collapse') continue;"
+        .. "var s = grab(row); if(!s) continue;"
+        .. (hide and "if(row.BHasClass('TipChat') || has(s, tips)){ row.style.visibility = 'collapse'; continue; }" or "")
+        .. "if(s.includes('я возрожусь')) continue;"
+        .. "var r = has(s, ['возродится','будет жив','respawn']), x = has(s, ['опыта до','ед. опыта','experience']);"
+        .. "if(!r && !x) continue;"
+        .. "if(!((h1 && s.includes(h1)) || (hLoc && hLoc[0] !== '#' && s.includes(hLoc)) || (r && " .. isDead .. " && s.includes('союзника возродится')))) continue;"
+        .. "var who = " .. fb .. ", pref = s.split(':')[0];"
+        .. "for(var name in pls){ if(name && pref.includes(name)){ who = pls[name]; break; } }"
+        .. "if(who >= 0 && who !== " .. myPid .. " && !row.bhMuted && ((r && " .. mDead .. ") || (x && " .. mXp .. "))){"
+        .. "row.bhMuted = true; Game.SetPlayerMuted(who, true);"
+        .. (dur > 0 and ("let p = who; $.Schedule(" .. dur .. ", function(){ Game.SetPlayerMuted(p, false); });") or "")
+        .. "}"
+        .. (hide and "row.style.visibility = 'collapse';" or "")
+        .. "} }"
+
+    Engine.RunScript(js, hud)
 end
 
-function test.OnUpdateEx()
-    processReportQueue()
-    
-    if os.clock() - lastProcessTime >= PROCESS_INTERVAL then
-        lastProcessTime = os.clock()
-        processLikeDislike()
+local function isWardEnt(ent)
+    if not ent or not Entity.IsEntity(ent) then return nil end
+    local cls = Entity.GetClassName(ent)
+    if cls and wardClasses[cls] then return cls end
+    if Entity.IsNPC(ent) and NPC.IsWard(ent) then
+        return NPC.GetUnitName(ent) or cls
     end
-    
-    if ggEnabled:Get() and not ggSent then
-        if not ancientRad or not ancientDir then
-            local localHero = Heroes.GetLocal()
-            if localHero then
-                local ok_units, units = pcall(Entity.GetUnitsInRadius, localHero, 99999, Enum.TeamType.TEAM_BOTH)
-                if ok_units and units then
-                    for _, ent in pairs(units) do
-                        local ok_class, class_name = pcall(Entity.GetClassName, ent)
-                        if ok_class and class_name == "C_DOTA_BaseNPC_Fort" then
-                            local ok_team, team_num = pcall(Entity.GetTeamNum, ent)
-                            if ok_team then
-                                if team_num == 2 then ancientRad = ent
-                                elseif team_num == 3 then ancientDir = ent end
-                            end
+    return nil
+end
+
+local function getWardOwnerPid(ent)
+    local o = Entity.GetOwner(ent)
+    if o and Entity.IsEntity(o) then
+        if Entity.IsHero(o) then return Hero.GetPlayerID(o) end
+        if Entity.IsPlayer(o) then return Player.GetPlayerID(o) end
+    end
+    local ro = Entity.RecursiveGetOwner(ent)
+    if ro and Entity.IsEntity(ro) then
+        if Entity.IsPlayer(ro) then return Player.GetPlayerID(ro) end
+        if Entity.IsHero(ro) then return Hero.GetPlayerID(ro) end
+    end
+    return nil
+end
+
+local function updateBases()
+    local t = os.clock()
+    if (t - bases.last) < 15.0 and next(bases.forts) ~= nil then return end
+    bases.last = t
+
+    local forts, fountains, towers = {}, {}, {}
+    for _, npc in pairs(NPCs.GetAll()) do
+        if npc and Entity.IsEntity(npc) then
+            local cls = Entity.GetClassName(npc) or ""
+            local name = Entity.IsNPC(npc) and (NPC.GetUnitName(npc) or "") or ""
+            local full = (name .. " " .. cls):lower()
+            local team = Entity.GetTeamNum(npc)
+            if team == 2 or team == 3 then
+                if NPC.IsFort(npc) or full:find("fort", 1, true) then
+                    forts[team] = Entity.GetAbsOrigin(npc)
+                elseif full:find("fountain", 1, true) then
+                    fountains[team] = Entity.GetAbsOrigin(npc)
+                else
+                    local isTower = (cls == "C_DOTA_BaseNPC_Tower" or full:find("guys_tower", 1, true))
+                        and not full:find("watch_tower", 1, true)
+                        and not full:find("outpost", 1, true)
+                        and not full:find("lantern", 1, true)
+                    if isTower and Entity.IsAlive(npc) then
+                        local pos = Entity.GetAbsOrigin(npc)
+                        if pos then
+                            towers[team] = towers[team] or {}
+                            towers[team][#towers[team] + 1] = pos
                         end
                     end
                 end
             end
         end
-        
-        local radDead = false
-        if ancientRad then
-            local ok_ent, is_ent = pcall(Entity.IsEntity, ancientRad)
-            if ok_ent and is_ent then
-                local ok_alive, alive = pcall(Entity.IsAlive, ancientRad)
-                if ok_alive and alive then
-                    local ok_hp, hp = pcall(Entity.GetHealth, ancientRad)
-                    if ok_hp and hp then radDead = (hp <= 0) end
-                else
-                    radDead = true
+    end
+    for team, coords in pairs(baseFallback) do
+        if not forts[team] then forts[team] = coords.fort end
+        if not fountains[team] then fountains[team] = coords.fountain end
+    end
+    bases.forts = forts
+    bases.fountains = fountains
+    bases.towers = towers
+end
+
+local function handleWard(wardEnt)
+    if not wardEnt or not ui.feedEnabled:Get() or not ui.feedWards:Get() or not isWardEnt(wardEnt) then return end
+
+    local eidx = Entity.GetIndex(wardEnt)
+    if eidx then
+        local old = handledWards[eidx]
+        if old and (old == wardEnt or Entity.IsEntity(old)) then return end
+        handledWards[eidx] = wardEnt
+    end
+
+    local pos = Entity.GetAbsOrigin(wardEnt)
+    if not pos then return end
+
+    local ownerPid = getWardOwnerPid(wardEnt)
+    local wardTeam = Entity.GetTeamNum(wardEnt)
+    if not ownerPid or ownerPid < 0 then
+        syncPlayers(false)
+        local bestDist = 1500
+        for pid, info in pairs(m_players) do
+            local unit = info.hero or info.ent
+            if pid ~= myPid and info.team == wardTeam and unit and Entity.IsEntity(unit) then
+                local uPos = Entity.GetAbsOrigin(unit)
+                if uPos then
+                    local d = uPos:Distance2D(pos)
+                    if d <= bestDist then ownerPid, bestDist = pid, d end
                 end
-            else
-                ancientRad = nil
             end
         end
-        
-        local dirDead = false
-        if ancientDir then
-            local ok_ent, is_ent = pcall(Entity.IsEntity, ancientDir)
-            if ok_ent and is_ent then
-                local ok_alive, alive = pcall(Entity.IsAlive, ancientDir)
-                if ok_alive and alive then
-                    local ok_hp, hp = pcall(Entity.GetHealth, ancientDir)
-                    if ok_hp and hp then dirDead = (hp <= 0) end
-                else
-                    dirDead = true
+    end
+
+    local ownerTeam = (ownerPid and m_players[ownerPid] and m_players[ownerPid].team) or wardTeam
+    local t = os.clock()
+    knownWards[#knownWards + 1] = { ent = wardEnt, pos = pos, pid = ownerPid, t = t }
+    local k = 1
+    while k <= #knownWards do
+        local kw = knownWards[k]
+        local alive = kw.ent and Entity.IsEntity(kw.ent) and Entity.IsAlive(kw.ent)
+        if not alive or kw.t < (t - 90) then
+            table.remove(knownWards, k)
+        else
+            k = k + 1
+        end
+    end
+
+    if not ownerPid or ownerPid < 0 or ownerPid == myPid then return end
+    local p = m_players[ownerPid]
+    if not p or not targetAllowed(p.team, ui.feedTarget) then return end
+
+    updateBases()
+    local trigger = nil
+
+    if ui.wardBase:Get() then
+        local fPos = bases.forts[ownerTeam]
+        local fnPos = bases.fountains[ownerTeam]
+        local dFort = fPos and pos:Distance2D(fPos) or 99999
+        local dFount = fnPos and pos:Distance2D(fnPos) or 99999
+        local minD = math.min(dFort, dFount)
+        if minD <= 1200 then
+            trigger = string.format(L("bs_tr_ward_base"), math.floor(minD))
+        end
+    end
+
+    if not trigger and ui.wardTower:Get() then
+        local enemyTeam = (ownerTeam == 2) and 3 or 2
+        for _, tPos in ipairs(bases.towers[enemyTeam] or {}) do
+            local dTow = pos:Distance2D(tPos)
+            if dTow <= 700 then
+                trigger = string.format(L("bs_tr_ward_tower"), math.floor(dTow))
+                break
+            end
+        end
+    end
+
+    if not trigger and ui.wardPile:Get() then
+        local count = 0
+        for _, w in ipairs(knownWards) do
+            if w.pid == ownerPid and w.pos:Distance2D(pos) <= 250 then
+                count = count + 1
+            end
+        end
+        if count >= ui.wardClusterCount:Get() then
+            trigger = string.format(L("bs_tr_ward_pile"), count)
+        end
+    end
+
+    if trigger then
+        addReportQueue(ownerPid, 5, "bs_lbl_wards", trigger, false)
+    end
+end
+
+handleBuyback = function(pid)
+    if not (ui.feedEnabled:Get() and ui.feedBuyback:Get()) then return end
+    local clock = getMatchDuration()
+    if pid and pid >= 0 and pid ~= myPid and (clock / 60) <= ui.feedBuybackMin:Get() then
+        syncPlayers(false)
+        local p = m_players[pid]
+        if p and targetAllowed(p.team, ui.feedTarget) then
+            addReportQueue(pid, 5, "bs_lbl_feed", string.format(L("bs_tr_buyback"), math.floor(clock / 60)), false)
+        end
+    end
+end
+
+tryProcessLikes = function(manual)
+    if not (ui.likeEnabled:Get() or manual) then return end
+    if not manual and not likePending then return end
+
+    local panel = Panorama.GetPanelByName("OverviewHeroes", false)
+    if not panel then return end
+
+    local total = 0
+    for _, side in ipairs({ "LeftHeroes", "RightHeroes" }) do
+        local cont = panel:FindChildTraverse(side)
+        if cont then
+            for i = 0, cont:GetChildCount() - 1 do
+                local card = cont:GetChild(i)
+                local btn = card and card:FindChildTraverse("ButtonDrawer")
+                if btn then
+                    Engine.RunScript("$.DispatchEvent('OverviewHeroCommendPlayer')", btn)
+                    total = total + 1
                 end
-            else
-                ancientDir = nil
-            end
-        end
-        
-        if (radDead or dirDead) and not throneBroken then
-            throneBroken = true
-            ggScheduledTime = os.clock() + (ggDelay:Get() or 0)
-        end
-        if throneBroken and ggScheduledTime and os.clock() >= ggScheduledTime then
-            local selectedIndex = ggMessageSelect:Get() or 0
-            local ggMsg = ""
-            if selectedIndex == #ggMessages - 1 then
-                ggMsg = ggCustomMessage:Get() or "gg wp"
-            else
-                ggMsg = ggMessages[selectedIndex + 1]
-            end
-            
-            local cmd = ggAllChat:Get() and "say " or "say_team "
-            Engine.ExecuteCommand(cmd .. ggMsg)
-            ggSent = true
-        end
-    end
-end
-
-function test.OnUpdate()
-    local hero = Heroes.GetLocal()
-    if not hero or init then return end
-    init = true
-    
-    local localPlayer = Players.GetLocal()
-    if localPlayer then
-        localPlayerTeam = Entity.GetTeamNum(localPlayer)
-    end
-    
-    print("[bh_helper] запуск инициализации")
-    syncPlayers(true)
-    
-    pcall(Event.AddListener, "dota_buyback")
-
-    if greetEnabled:Get() then
-        local msg = greetMessage:Get() or "gl hf!"
-        local cmd = greetAllChat:Get() and "say " or "say_team "
-        Engine.ExecuteCommand(cmd .. msg)
-    end
-    
-    for pid, pInfo in pairs(m_players) do
-        local data = Player.GetTeamData(pInfo.entity)
-        if data and data.selected_hero_id then
-            if pInfo.team == 2 then 
-                table.insert(radiant, data.selected_hero_id)
-            elseif pInfo.team == 3 then 
-                table.insert(dire, data.selected_hero_id) 
             end
         end
     end
-    
-    test.updateTeamSettings()
-    print("[bh_helper] скрипт готов")
-    
-    local isCustom = (ggMessageSelect:Get() == #ggMessages - 1)
-    ggCustomMessage:Disabled(not isCustom)
+
+    if total > 0 then likePending = false end
+    likeAttempts = likeAttempts + 1
+    if likeAttempts > 240 then likePending = false end
 end
 
-function test.OnGameEnd()
-    gameend = true
-    ancientRad = nil
-    ancientDir = nil
-    throneBroken = false
-    ggSent = false
-end
-
-function test.OnScriptUnload()
-    init = false
-    ancientRad, ancientDir = nil, nil
+local function resetMatchState()
     ggSent = false
     throneBroken = false
-    gameend = false
-    reportBannerQueue = {}
-    activeReportBanner = nil
-    radiant, dire = {}, {}
-    reportedPlayers = {}
+    ggTime = nil
+    startDone = false
+    greetSent = false
+    muteStartDone = false
+    msgCount = {}
+    pingTimes = {}
+    pingCd = {}
+    voiceData = {}
+    allyBuybackTime = {}
+    pendingWards = {}
+    knownWards = {}
+    handledWards = {}
+    fortsCache = {}
+    fortsLastScan = 0
+    likePending = false
+    likeAttempts = 0
+    gameEndTime = nil
+    repKeys = {}
     reportQueue = {}
-    accountIdCache = {}
-    m_players = {}
+    myHeroName = ""
+    myHeroClean = ""
+    hudRoot = nil
 end
 
-return test
+local function sendChat(widget, text)
+    local msg = (text or ""):gsub('"', '')
+    if msg == "" then return end
+    local cmd = (widget:Get() == 1) and "say " or "say_team "
+    Engine.ExecuteCommand(cmd .. '"' .. msg .. '"')
+end
+
+function bh.OnUpdate()
+    if init then return end
+
+    local hero = Heroes.GetLocal()
+    local me = Players.GetLocal()
+    if not hero or not me then return end
+
+    init = true
+    myTeam = Entity.GetTeamNum(me)
+    myPid = Player.GetPlayerID(me)
+    local acc = getAcc(me)
+    if acc > 0 then myAcc = acc end
+    if myAcc == 0 then myAcc = toAccId(GC.GetSteamID()) or 0 end
+    saveHeroName(hero)
+
+    syncPlayers(true)
+    checkParty(true)
+    loadSavedState()
+end
+
+function bh.OnUpdateEx()
+    local t = os.clock()
+    if likePending and ui.likeEnabled:Get() then
+        local delay = ui.likeDelayOn:Get() and ui.likeDelay:Get() or 0
+        if gameEndTime and (t - gameEndTime) >= delay then
+            tryProcessLikes(false)
+        elseif not gameEndTime then
+            gameEndTime = t - delay
+        end
+    end
+
+    local localHero = Heroes.GetLocal()
+    if not localHero or not Entity.IsEntity(localHero) then
+        if init then
+            init = false
+            hudRoot = nil
+        end
+        return
+    end
+
+    saveHeroName(localHero)
+
+    if not partyParsed and (t - lastPartyTry >= 4.0) then
+        lastPartyTry = t
+        checkParty(true)
+    end
+
+    if t - lastLobbyCheck >= 15.0 then
+        lastLobbyCheck = t
+        local lid = getLobbyId()
+        if lid ~= "0" and lid ~= cachedLobbyId then
+            if cachedLobbyId ~= nil then
+                resetMatchState()
+                partyAccs = {}
+                partyParsed = false
+            end
+            cachedLobbyId = lid
+            loadSavedState()
+            checkParty(true)
+        end
+    end
+
+    local gs = GameRules.GetGameState()
+    if gs then
+        if not stateInited then
+            stateInited = true
+            lastGameState = gs
+        elseif gs ~= lastGameState then
+            local prev = lastGameState
+            lastGameState = gs
+            if gs == 2 and prev <= 1 then
+                resetMatchState()
+            elseif gs == 5 then
+                partyParsed = false
+                checkParty(true)
+            elseif gs == 6 then
+                gameEndTime = t
+                if ui.likeEnabled:Get() then
+                    likePending = true
+                    likeAttempts = 0
+                end
+            end
+        end
+    end
+
+    if #pendingWards > 0 then
+        local i = 1
+        while i <= #pendingWards do
+            local pw = pendingWards[i]
+            if t - pw.t < 0.3 then
+                i = i + 1
+            else
+                table.remove(pendingWards, i)
+                if pw.ent and Entity.IsEntity(pw.ent) then handleWard(pw.ent) end
+            end
+        end
+        for eidx, ent in pairs(handledWards) do
+            if not Entity.IsEntity(ent) then handledWards[eidx] = nil end
+        end
+    end
+
+    processReportQueue()
+    updateBases()
+    if gs and gs >= 4 then
+        checkHud(localHero)
+    end
+
+    if not startDone then
+        local wantGreet = ui.greetEnabled:Get()
+        local wantMute = ui.muteStartEnabled:Get()
+        local clock = GameRules.GetDOTATime(false, true)
+        if not clock then
+            local st = GameRules.GetGameStartTime() or 0
+            if st > 0 then clock = GameRules.GetGameTime() - st end
+        end
+
+        if not muteStartDone and wantMute then
+            if gs and gs >= 4 and clock and clock <= 30 and (gs < 5 or clock < 0) then
+                muteStartDone = true
+                syncPlayers(true)
+                for pid, info in pairs(m_players) do
+                    if pid ~= myPid and info.team and (ui.muteParty:Get() or not inMyParty(pid)) then
+                        if targetAllowed(info.team, ui.muteWho) then
+                            mutePlayer(pid, 0)
+                        end
+                    end
+                end
+            end
+        end
+
+        if not greetSent and wantGreet then
+            local inGame = (gs ~= nil and gs >= 4) or (clock ~= nil and clock >= -60 and clock ~= 0)
+            local tooLate = (clock ~= nil and clock > 180)
+
+            if inGame and not tooLate then
+                greetSent = true
+                local lobby = getLobbyId()
+                if lobby ~= "0" then storeSet("greet", lobby) end
+                sendChat(ui.greetChat, ui.greetText:Get())
+            elseif inGame and tooLate then
+                greetSent = true
+            end
+        end
+
+        if clock and clock > 180 and not muteStartDone then muteStartDone = true end
+        startDone = (muteStartDone or not wantMute) and (greetSent or not wantGreet)
+    end
+
+    if not throneBroken then
+        if t - fortsLastScan > 5.0 and #fortsCache < 2 then
+            fortsLastScan = t
+            fortsCache = {}
+            for _, npc in pairs(NPCs.GetAll()) do
+                if npc and Entity.IsNPC(npc) and NPC.IsFort(npc) then
+                    fortsCache[#fortsCache + 1] = npc
+                end
+            end
+        end
+        for _, fort in ipairs(fortsCache) do
+            local valid = Entity.IsEntity(fort)
+            if not valid or not Entity.IsAlive(fort) or (Entity.GetHealth(fort) or 1) <= 0 then
+                throneBroken = true
+                ggTime = t + ui.ggDelay:Get()
+                break
+            end
+        end
+    elseif ui.ggEnabled:Get() and not ggSent and ggTime and t >= ggTime then
+        ggSent = true
+        sendChat(ui.ggChat, ui.ggText:Get())
+    end
+
+    syncPlayers(false)
+end
+
+local function decodeNet(msg)
+    local ok, jsonStr = pcall(protobuf.decodeToJSONfromObject, msg.msg_object or msg)
+    if not ok or not jsonStr or jsonStr == "" then return nil end
+    local okJson, data = pcall(JSON.decode, JSON, jsonStr)
+    return okJson and type(data) == "table" and data or nil
+end
+
+function bh.OnPostReceivedNetMessage(msg)
+    if not msg or not msg.message_id then return true end
+    local id = msg.message_id
+
+    if id == 553 and ui.hideTiltAlerts:Get() then
+        return false
+    end
+
+    if id == 47 then
+        if ui.voiceEnabled:Get() then
+            local data = decodeNet(msg)
+            if data then handleVoice(data) end
+        end
+        return true
+    end
+
+    if id == 477 or pingExtra[id] then
+        local data = decodeNet(msg)
+        if data then handlePing(id, data) end
+        return true
+    end
+
+    if id == 612 then
+        local data = decodeNet(msg)
+        if data then
+            local pid = tonumber(data.source_player_id)
+            local text = data.message_text
+            if pid and pid >= 0 and pid <= 9 then
+                lastSenderPid = pid
+                if type(text) == "string" and text ~= "" then
+                    handleChatMessage(pid, text)
+                end
+            end
+        end
+        return true
+    end
+
+    if id == 466 and ui.hideTiltAlerts:Get() then
+        local data = decodeNet(msg)
+        if data and data.type == 71 then
+            return false
+        end
+        return true
+    end
+
+    if (ui.pingAtMeEnabled:Get() or ui.hideTiltAlerts:Get()) and id >= 530 and id <= 660 then
+        local gs = GameRules.GetGameState()
+        if not gs or gs < 4 then return true end
+
+        local data = decodeNet(msg)
+        if data then
+            local senderPid = tonumber(data.player_id)
+            if senderPid and senderPid >= 0 and senderPid <= 9 and senderPid ~= myPid then
+                lastSenderPid = senderPid
+                local myHero = Heroes.GetLocal()
+                local myHeroIdx = (myHero and Entity.GetIndex(myHero)) or -999
+                local tEnt = tonumber(data.target_entindex)
+
+                if myHeroIdx > 0 and tEnt and tEnt == myHeroIdx then
+                    local meDead = not Entity.IsAlive(myHero)
+                    if ui.pingAtMeEnabled:Get() then
+                        if meDead and ui.pingMeDead:Get() then
+                            muteForPing(senderPid, "bs_lbl_ping_dead")
+                        elseif id == 555 and not meDead and ui.pingMeXp:Get() then
+                            muteForPing(senderPid, "bs_lbl_ping_xp")
+                        end
+                    end
+                    if ui.hideTiltAlerts:Get() then
+                        return false
+                    end
+                end
+            end
+        end
+    end
+
+    return true
+end
+
+function bh.OnSendNetMessage(msg)
+    if not msg then return true end
+
+    if msg.message_id == 22 and ui.muteMyVoice:Get() then
+        return false
+    end
+
+    if msg.message_id ~= 394 or not ui.msgCtrlEnabled:Get() then return true end
+
+    local data = decodeNet(msg)
+    if not data or type(data.message_text) ~= "string" then return true end
+
+    local text = data.message_text
+    if text:sub(1, 1) == "-" then return true end
+
+    local mode = ui.msgCtrlMode:Get()
+    local drop = false
+
+    if mode == 0 then
+        drop = true
+    elseif mode == 1 then
+        drop = (math.random(100) > ui.msgCtrlChance:Get())
+    elseif mode == 2 then
+        drop = checkText(text, setsAll, true, true)
+    end
+
+    if drop then
+        if ui.msgCtrlEcho:Get() then
+            Chat.Print("ConsoleChat", text)
+        end
+        return false
+    end
+
+    return true
+end
+
+function bh.OnGCMessage(msg)
+    if not msg then return true end
+    local mType = msg.msg_type and (msg.msg_type % 0x80000000) or 0
+    if mType ~= 7083 then return true end
+
+    local ok, jsonStr = pcall(protobuf.decodeToJSON, "CMsgDOTASubmitPlayerReportResponseV2", msg.binary_buffer_recv, msg.size)
+    if ok and jsonStr and jsonStr ~= "" then
+        local okJson, data = pcall(JSON.decode, JSON, jsonStr)
+        if okJson and type(data) == "table" then
+            local res = tonumber(data.enum_result) or -1
+            local targetAcc = tonumber(data.target_account_id) or 0
+            if res == 1 then
+                logLine(L("bs_msg_accepted"))
+            elseif res == 14 and targetAcc > 0 then
+                partyAccs[targetAcc] = true
+                logLine(L("bs_msg_in_party"))
+            end
+        end
+    end
+    return true
+end
+
+function bh.OnNpcSpawned(npc)
+    if npc then handleWard(npc) end
+end
+
+function bh.OnEntityCreate(ent)
+    if not ent or not (ui.feedEnabled:Get() and ui.feedWards:Get()) then return end
+    local cls = Entity.GetClassName(ent)
+    if cls and wardClasses[cls] then
+        pendingWards[#pendingWards + 1] = { ent = ent, t = os.clock() }
+        if #pendingWards > 64 then table.remove(pendingWards, 1) end
+    end
+end
+
+function bh.OnEntityKilled(data)
+    if not data or not data.target or not Entity.IsEntity(data.target) then return end
+    local target = data.target
+
+    if Entity.IsNPC(target) and NPC.IsFort(target) then
+        throneBroken = true
+        if not ggTime then
+            ggTime = os.clock() + ui.ggDelay:Get()
+        end
+        return
+    end
+
+    if not (ui.feedEnabled:Get() and ui.feedWards:Get()) then return end
+    local wName = isWardEnt(target)
+    local source = data.source
+    if not wName or not source or not Entity.IsHero(source) then return end
+
+    local isSentry = wName:lower():find("sentry", 1, true) ~= nil
+    if isSentry and not ui.wardDenySen:Get() then return end
+    if not isSentry and not ui.wardDenyObs:Get() then return end
+
+    local owner = Entity.RecursiveGetOwner(target) or Entity.GetOwner(target)
+    if owner and Entity.IsEntity(owner) and Entity.IsSameTeam(source, owner) then
+        local killerPid = Hero.GetPlayerID(source)
+        if killerPid and killerPid ~= myPid then
+            syncPlayers(false)
+            local p = m_players[killerPid]
+            if p and targetAllowed(p.team, ui.feedTarget) then
+                addReportQueue(killerPid, 5, "bs_lbl_wards", L(isSentry and "bs_tr_deny_sen" or "bs_tr_deny_obs"), false)
+            end
+        end
+    end
+end
+
+function bh.OnChatEvent(data)
+    if data and data.type == 7 and data.playerid_1 then
+        handleBuyback(data.playerid_1)
+    end
+end
+
+function bh.OnGameEnd()
+    gameEndTime = os.clock()
+    if ui.likeEnabled:Get() then
+        likePending = true
+        likeAttempts = 0
+    end
+    throneBroken = false
+    ggSent = false
+end
+
+return bh

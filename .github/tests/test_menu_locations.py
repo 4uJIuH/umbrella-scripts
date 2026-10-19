@@ -33,9 +33,10 @@ class MenuLocationsTests(unittest.TestCase):
             BASE / "scripts" / "behavior_score_helper" / "BehaviorScoreHelper.lua"
         )
         source = source_path.read_text(encoding="utf-8")
-        self.assertIn("local function menuSection(key, fallback)", source)
-        self.assertIn("return localization.Localize(key) or fallback", source)
-        self.assertNotIn(":Create(menuLabel(", source)
+        self.assertIn('UI.Create("Scripts", "Utility", "Behavior Score")', source)
+        for tab in ("Chat", "Reports", "Anti-Tilt", "Utilities"):
+            self.assertIn('root:Create("%s")' % tab, source)
+        self.assertNotIn('root:Create("bs_', source)
 
     def test_echo_bkb_dodge_menu_path_matches_install_instructions(self):
         self.assertEqual(
