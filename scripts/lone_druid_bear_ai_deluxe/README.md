@@ -3,13 +3,9 @@
 расширенное управление Spirit Bear для Lone Druid / advanced Spirit Bear control for Lone Druid
 
 <!-- releases:start -->
-Скачать: [lone_druid_bear_ai_deluxe.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/lone-druid-bear-ai-deluxe-v1.0.0/lone_druid_bear_ai_deluxe.lua) — `lone-druid-bear-ai-deluxe-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `LoneDruidBearAIDeluxe.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/lone_druid_bear_ai_deluxe/LoneDruidBearAIDeluxe.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`lone-druid-bear-ai-deluxe-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/lone-druid-bear-ai-deluxe-v1.0.0) | 2026-10-13 | [lone_druid_bear_ai_deluxe.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/lone-druid-bear-ai-deluxe-v1.0.0/lone_druid_bear_ai_deluxe.lua) | 12 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=lone-druid-bear-ai-deluxe&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=lone-druid-bear-ai-deluxe&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 1. Поместите `LoneDruidBearAIDeluxe.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты.
 3. Откройте `Heroes → Hero List → Lone Druid → Bear AI Deluxe`.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ Provides farming, pushing, and stacking modes, bear survival and item management
 1. Place `LoneDruidBearAIDeluxe.lua` in `umbrella\scripts`.
 2. Reload Lua scripts.
 3. Open `Heroes → Hero List → Lone Druid → Bear AI Deluxe`.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

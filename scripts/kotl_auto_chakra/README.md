@@ -3,13 +3,9 @@
 дополнительные автоматизации для Keeper of the Light / additional Keeper of the Light automation
 
 <!-- releases:start -->
-Скачать: [kotl_auto_chakra.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/kotl-auto-chakra-v1.0.0/kotl_auto_chakra.lua) — `kotl-auto-chakra-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `kotl_auto_chakra.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/kotl-auto-chakra-v1.0.0/kotl_auto_chakra.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`kotl-auto-chakra-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/kotl-auto-chakra-v1.0.0) | 2026-10-13 | [kotl_auto_chakra.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/kotl-auto-chakra-v1.0.0/kotl_auto_chakra.lua) | 8 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=kotl-auto-chakra&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=kotl-auto-chakra&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -23,12 +19,6 @@
 
 1. Поместите `kotl_auto_chakra.lua` в `Umbrella\scripts`.
 2. Перезагрузите скрипты и откройте меню Keeper of the Light.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -45,9 +35,3 @@ A re-upload of a Keeper of the Light script with Auto Chakra and additional feat
 
 1. Place `kotl_auto_chakra.lua` in `Umbrella\scripts`.
 2. Reload scripts and open the Keeper of the Light menu.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

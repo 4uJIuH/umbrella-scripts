@@ -3,13 +3,9 @@
 использует Kazurai Katana для частого диспела через Raptor Dance / uses Kazurai Katana for repeated Raptor Dance dispels
 
 <!-- releases:start -->
-Скачать: [kez_raptor_dispel.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/kez-raptor-dispel-v1.0.0/kez_raptor_dispel.lua) — `kez-raptor-dispel-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `kez_raptor_dispel.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/kez_raptor_dispel/kez_raptor_dispel.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`kez-raptor-dispel-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/kez-raptor-dispel-v1.0.0) | 2026-10-13 | [kez_raptor_dispel.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/kez-raptor-dispel-v1.0.0/kez_raptor_dispel.lua) | 6 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=kez-raptor-dispel&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=kez-raptor-dispel&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -24,12 +20,6 @@
 
 1. Поместите `kez_raptor_dispel.lua` в `umbrella\scripts`.
 2. Перезагрузите скрипты и откройте настройки Kez.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -47,9 +37,3 @@ A small Kez helper for a Kazurai Katana interaction: use the item on an enemy wh
 
 1. Place `kez_raptor_dispel.lua` in `umbrella\scripts`.
 2. Reload scripts and open the Kez settings.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

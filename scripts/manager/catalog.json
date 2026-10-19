@@ -6156,7 +6156,11 @@
           "Scripts \u2192 Main \u2192 Cloud Radar"
         ]
       },
-      "date": "2026-10-18"
+      "date": "2026-10-18",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/web_radar/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/web_radar/CHANGELOG.en.md"
+      }
     },
     {
       "id": "murzik",
@@ -6177,6 +6181,10 @@
         ]
       },
       "date": "2026-10-19",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/murzik/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/murzik/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6196,6 +6204,10 @@
         ]
       },
       "date": "2026-10-19",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/habits/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/habits/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6215,6 +6227,10 @@
         ]
       },
       "date": "2026-10-19",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calories/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calories/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6236,6 +6252,10 @@
         ]
       },
       "date": "2026-10-19",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calendar/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/calendar/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6260,6 +6280,10 @@
       "heroes": [
         "arc_warden"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_clone_pike/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/arc_warden_clone_pike/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6279,6 +6303,10 @@
         ]
       },
       "date": "2026-10-19",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_mana_abuse_ctx/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_mana_abuse_ctx/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     }
   ]

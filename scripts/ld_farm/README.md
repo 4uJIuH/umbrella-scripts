@@ -3,13 +3,9 @@
 отправляет Lone Druid безопасно фармить лес, пока вы управляете медведем / farms the jungle with Lone Druid while you control the bear
 
 <!-- releases:start -->
-Скачать: [ld_farm.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/ld-farm-v1.7/ld_farm.lua) — `ld-farm-v1.7`, 2026-10-13
+Последняя версия: [`v1.7` — `ld_farm.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/ld-farm-v1.7/ld_farm.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`ld-farm-v1.7`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/ld-farm-v1.7) | 2026-10-13 | [ld_farm.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/ld-farm-v1.7/ld_farm.lua) | 0 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=ld-farm&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=ld-farm&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 2. Перезагрузите скрипты и откройте `Heroes → Hero List → Lone Druid → ~Auto-LD`.
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
-
-## Что нового
-
-# Релиз v1.7
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ Automatically selects the nearest available camp and farms with the hero without
 2. Reload scripts and open `Heroes → Hero List → Lone Druid → ~Auto-LD`.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
-
-## Changelog
-
-# Release v1.7
-
-- Release version: the first publication of the script.

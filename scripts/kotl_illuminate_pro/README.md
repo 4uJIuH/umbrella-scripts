@@ -3,13 +3,9 @@
 рассчитывает летальный урон Illuminate и отпускает луч вовремя / calculates lethal Illuminate damage and releases the beam at the right time
 
 <!-- releases:start -->
-Скачать: [kotl_illuminate_pro.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/kotl-illuminate-pro-v1.0.0/kotl_illuminate_pro.lua) — `kotl-illuminate-pro-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `kotl_illuminate_pro.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/kotl-illuminate-pro-v1.0.0/kotl_illuminate_pro.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`kotl-illuminate-pro-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/kotl-illuminate-pro-v1.0.0) | 2026-10-13 | [kotl_illuminate_pro.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/kotl-illuminate-pro-v1.0.0/kotl_illuminate_pro.lua) | 23 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=kotl-illuminate-pro&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=kotl-illuminate-pro&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -24,12 +20,6 @@
 
 1. Поместите `kotl_illuminate_pro.lua` в `Umbrella\scripts`.
 2. В меню `General → Utility → KOTL Illuminate` настройте предметы и клавишу Illuminate.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -47,9 +37,3 @@ Estimates Illuminate damage using resistance, barriers, regeneration, spell amp,
 
 1. Place `kotl_illuminate_pro.lua` in `Umbrella\scripts`.
 2. Configure items and the Illuminate key under `General → Utility → KOTL Illuminate`.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.
