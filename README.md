@@ -725,7 +725,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
 | [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 2 | `terrorblade-sunder-dagon-v1.0.0` |
 | [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 2 | `venomancer-ward-controller-v1.0.0` |
-| [Cloud Radar](scripts/web_radar) | 2 | `web-radar-v2.3.0` |
+| [Cloud Radar](scripts/web_radar) | 2 | `web-radar-v2.3.1` |
 | [Murzik Kitty Widget](scripts/murzik) | 1 | `murzik-v1.0.0` |
 | [Трекер привычек](scripts/habits) | 1 | `habits-v1.0.0` |
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |

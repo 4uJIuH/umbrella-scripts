@@ -3,13 +3,9 @@
 панель ранга, прогресса MMR и статистики сессии / rank, MMR progress, and session-statistics panel
 
 <!-- releases:start -->
-Скачать: [mmr_tracker_ultimate.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/mmr-tracker-ultimate-v1.0.0/mmr_tracker_ultimate.lua) — `mmr-tracker-ultimate-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `mmr_tracker_ultimate.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mmr_tracker_ultimate/mmr_tracker_ultimate.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`mmr-tracker-ultimate-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/mmr-tracker-ultimate-v1.0.0) | 2026-10-13 | [mmr_tracker_ultimate.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/mmr-tracker-ultimate-v1.0.0/mmr_tracker_ultimate.lua) | 12 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=mmr-tracker-ultimate&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=mmr-tracker-ultimate&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -25,12 +21,6 @@
 
 1. Поместите `mmr_tracker_ultimate.lua` в `umbrella\scripts`.
 2. Перезагрузите скрипты и откройте `Scripts → Other → MMR Tracker Ultimate`.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -49,9 +39,3 @@ Displays your current rank and progress to the next tier, session statistics, an
 
 1. Place `mmr_tracker_ultimate.lua` in `umbrella\scripts`.
 2. Reload scripts and open `Scripts → Other → MMR Tracker Ultimate`.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

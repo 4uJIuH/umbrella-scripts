@@ -3,10 +3,11 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.0/web_radar.lua) — `web-radar-v2.3.0`, 2026-10-19
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.1/web_radar.lua) — `web-radar-v2.3.1`, 2026-10-19
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`web-radar-v2.3.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.1/web_radar.lua) | 0 |
 | [`web-radar-v2.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.0/web_radar.lua) | 0 |
 | [`web-radar-v2.2.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.2.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.1/web_radar.lua) | 0 |
 | [`web-radar-v2.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.2.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.2.0/web_radar.lua) | 1 |
@@ -33,6 +34,14 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Исправление v2.3.1
+
+- Скрипт переехал: Scripts › Scripts › Cloud Radar. Настройки сбрасываются один раз, включите радар заново.
+- Меню из двух вкладок. Main: включение, Start и Stop, статус, режим нагрузки, нагрузка и ссылка для друзей. Data: что передавать на сайт.
+- Режим нагрузки теперь сам задает частоту передачи (3, 5 или 10 Гц). Отдельная «Частота передачи» и кнопки пресетов, которые спорили с ним, убраны.
+- «Передавать события» стоит во главе типов событий и гасит их, когда выключен. Информация о героях гаснет, когда выключен слой «Герои».
+- Изменения в меню применяются сразу, без задержки.
 
 # Обновление v2.3.0
 
@@ -94,6 +103,14 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Fix v2.3.1
+
+- The script moved to Scripts › Scripts › Cloud Radar. Settings reset once, turn the radar on again.
+- Two menu tabs. Main: enable, Start and Stop, status, load mode, load readout and the link for friends. Data: what is sent to the site.
+- The load mode now sets the send rate itself (3, 5 or 10 Hz). The separate Send rate combo and preset buttons that fought it are gone.
+- "Send events" heads the event types and greys them out when off. Hero info greys out when the Heroes layer is off.
+- Menu changes apply at once.
 
 # Update v2.3.0
 
