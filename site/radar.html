@@ -1,100 +1,158 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Cloud Radar</title>
+<title>Cloud Radar · Umbrella Scripts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-:root { --bg:#0b0e13; --panel:#141921; --panel2:#1b212b; --line:#262e3a; --text:#e6edf3; --dim:#8b949e; --rad:#4ade80; --dire:#f87171; --gold:#fbbf24; --blue:#60a5fa; }
-* { box-sizing:border-box; }
-html, body { margin:0; height:100%; background:var(--bg); color:var(--text); font:13px/1.4 system-ui, "Segoe UI", sans-serif; }
-#app { display:flex; height:100%; }
-#stage { flex:1; min-width:0; display:flex; align-items:center; justify-content:center; position:relative; }
-#side { width:360px; background:var(--panel); border-left:1px solid var(--line); overflow:auto; padding:10px 12px; }
-.pill { position:absolute; padding:4px 10px; border-radius:999px; background:rgba(20,25,33,.92); border:1px solid var(--line); font-size:12px; }
-#status { top:12px; left:12px; color:var(--dim); }
-#status.ok { color:var(--rad); }
-#clock { top:12px; right:12px; font-variant-numeric:tabular-nums; font-weight:600; }
-#clock:empty { display:none; }
-#layers { position:absolute; top:44px; left:12px; display:flex; flex-direction:column; gap:4px; }
-#layers button { text-align:left; padding:3px 9px; border-radius:6px; background:rgba(20,25,33,.92); border:1px solid var(--line); color:var(--dim); font:inherit; font-size:12px; cursor:pointer; }
-#layers button.on { color:var(--text); border-color:#3b4656; }
-#layers button.on::before { content:'●'; color:var(--rad); margin-right:6px; font-size:9px; vertical-align:1px; }
-#layers button:not(.on)::before { content:'○'; margin-right:6px; font-size:9px; vertical-align:1px; }
-#tools { position:absolute; right:12px; bottom:12px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
-#tools button { padding:6px 12px; border-radius:8px; background:var(--panel); border:1px solid var(--line); color:var(--text); font:inherit; cursor:pointer; }
-#tools button:hover { border-color:var(--dim); }
-#marks { position:absolute; pointer-events:none; overflow:hidden; border-radius:10px; }
-#marks img { position:absolute; border-radius:50%; box-shadow:0 0 0 2px var(--c), 0 0 6px rgba(0,0,0,.8); transform:translate(-50%,-50%); }
-#legend { position:absolute; left:12px; bottom:12px; color:var(--dim); font-size:11px; background:rgba(20,25,33,.85); border:1px solid var(--line); border-radius:8px; padding:6px 9px; display:grid; gap:2px; }
-#legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
-h3 { margin:6px 0 6px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--dim); font-weight:600; }
-#console { border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:6px; background:var(--panel); }
-#console.pop { height:100vh; display:flex; flex-direction:column; margin:0; padding:8px; }
-#console.pop #log { flex:1; height:auto; }
-#objs { font-size:12px; padding:2px 0 8px; display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; }
-#objs .o { display:flex; justify-content:space-between; gap:6px; }
-#objs .o span:first-child { color:var(--dim); }
-#log { height:260px; overflow:auto; font:12px/1.55 system-ui, sans-serif; }
-#log > div { display:flex; gap:6px; align-items:flex-start; padding:1px 0; }
-#log .t { color:var(--dim); font:11px/1.7 ui-monospace, Consolas, monospace; flex:none; width:38px; }
-#log img { width:18px; height:18px; border-radius:3px; flex:none; margin-top:1px; }
-#log .a { color:#a7f3c0; } #log .e { color:#fca5a5; } #log .boss { color:var(--gold); } #log .rune { color:#d8b4fe; } #log .scan { color:#93c5fd; } #log .smoke { color:#cbd5e1; }
-.team { margin-top:4px; }
-.row { padding:8px 0; border-bottom:1px solid var(--line); }
-.row .top { display:flex; align-items:center; gap:8px; }
-.row .top > img { width:40px; height:23px; border-radius:3px; flex:none; object-fit:cover; }
-.row .name { font-weight:600; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.row .lvl { font-size:11px; padding:1px 6px; border-radius:4px; background:var(--panel2); color:var(--text); }
-.row .note { font-size:11px; color:var(--dim); margin-top:2px; }
-.row .note.fogged { color:#fcd34d; }
-.row .note.dead { color:var(--dire); }
-.row .note.tp { color:var(--blue); }
-.bars { display:grid; gap:2px; margin-top:4px; }
-.bar { position:relative; height:9px; border-radius:2px; background:#222a35; overflow:hidden; }
-.bar > i { display:block; height:100%; }
-.bar > b { position:absolute; inset:0; font:600 8px/9px system-ui; text-align:center; color:#fff; text-shadow:0 0 2px #000; }
-.hp > i { background:linear-gradient(#4ade80,#22a35a); }
-.mp > i { background:linear-gradient(#60a5fa,#2f6fd0); }
-.stats { font-size:11px; color:var(--dim); margin-top:4px; display:flex; gap:8px; flex-wrap:wrap; }
-.stats b { color:var(--text); font-weight:600; }
-.stats > span { white-space:nowrap; }
-.slots { display:flex; gap:3px; margin-top:5px; flex-wrap:wrap; align-items:center; }
-.slot { position:relative; width:33px; height:24px; border-radius:3px; background:#0f141b; border:1px solid var(--line); overflow:hidden; flex:none; }
-.slot img { width:100%; height:100%; object-fit:cover; display:block; }
-.slot.small { width:25px; height:18px; opacity:.6; }
-.slot.neutral { border-radius:50%; width:24px; height:24px; }
-.slot.old img { filter:grayscale(.7) brightness(.7); }
-.slot em { display:none; position:absolute; inset:0; font:600 7px/1.1 system-ui; color:var(--dim); padding:1px; overflow:hidden; font-style:normal; }
-.slot.noimg em { display:block; }
-.slot .cd { position:absolute; inset:0; background:rgba(0,0,0,.62); color:#fff; font:700 10px/24px system-ui; text-align:center; }
-.slot.small .cd { line-height:18px; font-size:9px; }
-.slot .ch { position:absolute; right:1px; bottom:0; font:700 8px/1 system-ui; color:#fff; text-shadow:0 0 2px #000; }
-.slot.ab { width:26px; height:26px; }
-.slot.ab .cd { line-height:26px; }
-.slot.ab.l0 img { filter:grayscale(1) brightness(.45); }
-.slot .pips { position:absolute; left:1px; right:1px; bottom:1px; display:flex; gap:1px; }
-.slot .pips i { flex:1; height:2px; background:var(--gold); border-radius:1px; }
-.sep { width:6px; }
-.team-2 .name { color:var(--rad); }
-.team-3 .name { color:var(--dire); }
-.row.fog { opacity:.78; }
-.row.deadrow { opacity:.55; }
-@media (max-width:760px) { #app { flex-direction:column; } #side { width:100%; height:42%; border-left:0; border-top:1px solid var(--line); } #legend { display:none; } }
+:root{--bg:#f6f6f4;--card:#fff;--sec:#efefec;--border:#e2e2de;--soft:#ebebe8;--fg:#18181a;--muted:#62626a;--faint:#9a9aa1;--ok:#2f9a5e;--warn:#b07d1c;--bad:#c93c3c;--accent:#18181a;--accent-fg:#fff;
+  --rad:#2f9a5e;--dire:#c93c3c;--gold:#b07d1c;--blue:#2f6fd0;--violet:#7c4dcc;--mapbg:#16181b;--hp:#2f9a5e;--mp:#2f6fd0}
+.dark{--bg:#0c0c0d;--card:#121214;--sec:#19191c;--border:#222225;--soft:#1a1a1d;--fg:#ececee;--muted:#9a9aa1;--faint:#616168;--ok:#57c785;--warn:#d9a84e;--bad:#ef6b6b;--accent:#ececee;--accent-fg:#0c0c0d;
+  --rad:#57c785;--dire:#ef6b6b;--gold:#d9a84e;--blue:#6aa3f0;--violet:#b394f0;--mapbg:#0f1012;--hp:#4cb879;--mp:#4f8fe8}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--fg);font:14px/1.5 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+body{display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+header{border-bottom:1px solid var(--soft);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);z-index:5;flex:none}
+.bar{display:flex;align-items:center;height:56px;gap:16px;padding:0 20px}
+.brand{white-space:nowrap;display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
+.brand i{width:28px;height:28px;border-radius:7px;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-size:13px}
+.crumb{color:var(--faint);display:flex;align-items:center;gap:10px;font-weight:500;white-space:nowrap}
+.crumb b{color:var(--fg);font-weight:600}
+.sp{flex:1}
+.chip{height:28px;padding:0 10px;border-radius:8px;border:1px solid var(--border);display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--muted);white-space:nowrap}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:var(--faint)}
+.chip.ok .dot{background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 22%,transparent)}
+.chip.warn .dot{background:var(--warn)}
+.chip.bad .dot{background:var(--bad)}
+#clock{color:var(--fg);font-weight:600}
+#clock:empty{display:none}
+.ghost{height:32px;padding:0 10px;border-radius:8px;color:var(--muted);display:inline-flex;align-items:center;gap:8px;font-weight:500;transition:.15s;white-space:nowrap}
+.ghost:hover,.ghost.on{color:var(--fg);background:var(--sec)}
+.seg{display:flex;border:1px solid var(--border);border-radius:8px;padding:2px}
+.seg button{height:26px;padding:0 8px;border-radius:6px;color:var(--faint);font-size:12px;font-weight:600;transition:color .2s,background .2s}
+.seg button.on{color:var(--fg);background:var(--sec)}
+main{flex:1;min-height:0;display:grid;gap:12px;padding:12px 20px 16px;grid-template-columns:320px minmax(0,1fr) 380px;grid-template-areas:"feed map teams"}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.card-h{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--soft);flex:none}
+.card-h h2{font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:8px}
+.card-h h2 i{color:var(--faint);font-size:12px}
+.card-h .sp{flex:1}
+.icon-btn{width:30px;height:30px;border-radius:8px;color:var(--faint);display:grid;place-items:center;transition:.15s}
+.icon-btn:hover{color:var(--fg);background:var(--sec)}
+#feedCol{grid-area:feed;display:flex;flex-direction:column;gap:12px;min-height:0}
+#mapCard{grid-area:map}
+#teams{grid-area:teams;overflow:auto;display:flex;flex-direction:column;gap:12px;min-height:0;scrollbar-width:thin}
+.objs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--soft)}
+.obj{background:var(--card);padding:10px 14px;display:flex;align-items:center;gap:10px;min-width:0}
+.obj img,.obj > i{width:30px;height:30px;flex:none;object-fit:contain;border-radius:8px;display:grid;place-items:center;font-size:13px}
+.obj img{background:#1a1a1d;padding:4px}
+.obj > i{background:var(--sec);color:var(--muted)}
+.obj .k{font-size:11.5px;color:var(--faint);line-height:1.2}
+.obj .v{font-size:13px;font-weight:600;line-height:1.3}
+.obj .v.ok{color:var(--ok)} .obj .v.bad{color:var(--bad)} .obj .v.warn{color:var(--warn)}
+#console{flex:1;min-height:200px}
+#console.pop{height:100vh;border-radius:0;border:0}
+#log{flex:1;overflow:auto;padding:6px 0;scrollbar-width:thin}
+#log:empty::after{content:attr(data-empty);display:block;color:var(--faint);font-size:13px;padding:12px 14px}
+.ev{display:grid;grid-template-columns:40px 20px 1fr;gap:8px;align-items:start;padding:5px 14px 5px 11px;border-left:3px solid transparent;font-size:13px;line-height:1.4}
+.ev:hover{background:var(--sec)}
+.ev .t{color:var(--faint);font-size:11.5px;padding-top:1px}
+.ev img{width:20px;height:20px;border-radius:5px;object-fit:contain;background:#1a1a1d;padding:1px}
+.ev .x{color:var(--muted)}
+.ev .x b{color:var(--fg);font-weight:600}
+.ev.a{border-left-color:var(--rad)} .ev.e{border-left-color:var(--dire)} .ev.boss{border-left-color:var(--gold)} .ev.rune{border-left-color:var(--violet)} .ev.scan{border-left-color:var(--blue)} .ev.smoke{border-left-color:var(--faint)}
+.layers{display:flex;gap:4px;flex-wrap:wrap}
+.layers button{height:28px;padding:0 10px;border-radius:8px;color:var(--faint);font-weight:500;font-size:12.5px;display:inline-flex;align-items:center;gap:7px;transition:.15s}
+.layers button i{font-size:11px}
+.layers button:hover{color:var(--fg)}
+.layers button.on{background:var(--sec);color:var(--fg)}
+#stage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:12px;background:var(--mapbg)}
+#map{border-radius:10px;display:block}
+#marks{position:absolute;pointer-events:none;overflow:hidden;border-radius:10px}
+#marks img{position:absolute;border-radius:50%;box-shadow:0 0 0 2px var(--c),0 2px 8px rgba(0,0,0,.7);transform:translate(-50%,-50%)}
+#empty{position:absolute;inset:0;display:none;align-items:center;justify-content:center;pointer-events:none}
+#empty.on{display:flex}
+#empty div{background:rgba(12,12,13,.82);border:1px solid rgba(255,255,255,.08);color:#d4d4d8;border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:center;font-weight:500;backdrop-filter:blur(6px)}
+#empty i{color:#9a9aa1}
+.legend{display:flex;gap:16px;padding:10px 14px;border-top:1px solid var(--soft);font-size:12px;color:var(--faint);flex:none;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.team-h{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--soft)}
+.team-h .flag{width:8px;height:8px;border-radius:2px}
+.team-h h2{font-size:13px;font-weight:600}
+.team-h .role{font-size:12px;color:var(--faint);font-weight:500}
+.team-h .sum{margin-left:auto;display:flex;gap:12px;font-size:12px;color:var(--faint)}
+.team-h .sum b{color:var(--fg);font-weight:600}
+.hero{padding:12px 14px;border-top:1px solid var(--soft)}
+.team-h + .hero{border-top:0}
+.hero .top{display:flex;align-items:center;gap:10px}
+.portrait{position:relative;width:32px;height:32px;flex:none;border-radius:8px;background:#1a1a1d}
+.portrait img{width:100%;height:100%;border-radius:8px;object-fit:contain;display:block;padding:2px}
+.portrait .lv{position:absolute;right:-5px;bottom:-5px;min-width:18px;height:16px;padding:0 4px;border-radius:5px;background:var(--fg);color:var(--bg);font-size:10px;font-weight:700;display:grid;place-items:center}
+.hero .name{font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.state{font-size:11.5px;font-weight:500;padding:2px 7px;border-radius:6px;background:var(--sec);color:var(--muted);white-space:nowrap}
+.state.fog{color:var(--warn)} .state.dead{color:var(--bad)} .state.tp{color:var(--blue)} .state.vis{color:var(--ok)}
+.bars{display:grid;gap:3px;margin-top:9px}
+.meter{position:relative;height:12px;border-radius:4px;background:var(--sec);overflow:hidden}
+.meter.thin{height:6px}
+.meter i{position:absolute;inset:0 auto 0 0;border-radius:4px}
+.meter.hp i{background:var(--hp)} .meter.mp i{background:var(--mp)}
+.meter b{position:absolute;inset:0;font-size:9px;font-weight:600;line-height:12px;text-align:center;color:#fff;text-shadow:0 0 3px rgba(0,0,0,.6)}
+.kpis{display:grid;gap:1px;margin-top:9px;background:var(--soft);border-radius:8px;overflow:hidden}
+.kpis div{background:var(--sec);padding:4px 0;text-align:center}
+.kpis span{display:block;font-size:10px;color:var(--faint);line-height:1.3}
+.kpis b{font-size:12px;font-weight:600}
+.slots{display:flex;gap:3px;margin-top:8px;align-items:center}
+.slot{position:relative;width:36px;height:26px;border-radius:5px;background:var(--sec);overflow:hidden;flex:none}
+.slot img{width:100%;height:100%;object-fit:cover;display:block}
+.slot.sm{width:27px;height:20px;opacity:.7}
+.slot.nt{width:26px;height:26px;border-radius:50%;margin-left:4px}
+.slot.old img{filter:grayscale(.8) brightness(.7)}
+.slot em{display:none;position:absolute;inset:0;font:600 7px/1.1 Inter,sans-serif;color:var(--faint);padding:2px;overflow:hidden;font-style:normal}
+.slot.noimg em{display:block}
+.slot .cd{position:absolute;inset:0;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+.slot .ch{position:absolute;right:2px;bottom:0;font-size:9px;font-weight:700;color:#fff;text-shadow:0 0 3px #000}
+.slot.ab{width:28px;height:28px}
+.slot.ab.l0 img{filter:grayscale(1) brightness(.4)}
+.slot .pips{position:absolute;left:2px;right:2px;bottom:2px;display:flex;gap:1px}
+.slot .pips i{flex:1;height:2px;background:var(--gold);border-radius:1px}
+.slots .gap{width:6px}
+.hero.fogrow .portrait img{filter:saturate(.5)}
+.hero.deadrow{opacity:.55}
+.hero.deadrow .portrait img{filter:grayscale(1)}
+@media (max-width:1320px){main{grid-template-columns:minmax(0,1fr) 380px;grid-template-areas:"map teams" "feed teams";grid-template-rows:minmax(0,1fr) 300px}#feedCol{flex-direction:row}#feedCol > *{flex:1}}
+@media (max-width:900px){html,body{height:auto}main{display:flex;flex-direction:column}#mapCard{height:min(100vw,640px)}#feedCol{flex-direction:column}#console{height:320px;flex:none}.crumb,.gh{display:none}.bar{gap:8px;padding:0 12px}}
 </style>
 </head>
 <body>
-<div id="app">
-  <div id="stage">
-    <canvas id="map"></canvas><div id="marks"></div>
-    <div id="status" class="pill"></div><div id="clock" class="pill"></div>
-    <div id="layers"></div>
-    <div id="legend"></div>
-    <div id="tools"><button id="popcon" type="button"></button><button id="pip" type="button"></button></div>
-  </div>
-  <div id="side"><div id="console"><h3 id="hObj"></h3><div id="objs"></div><h3 id="hLog"></h3><div id="log"></div></div><div id="heroes"></div></div>
-</div>
+<header><div class="bar">
+  <a class="brand" href="./#/"><i class="fa-solid fa-umbrella"></i>Umbrella Scripts</a>
+  <div class="crumb"><i class="fa-solid fa-chevron-right" style="font-size:10px"></i><b>Cloud Radar</b></div>
+  <div class="chip" id="status"><span class="dot"></span><span id="statusText"></span></div>
+  <div class="chip" id="clock"></div>
+  <div class="sp"></div>
+  <div class="seg" id="lang"><button data-l="ru">RU</button><button data-l="en">EN</button></div>
+  <button class="ghost" id="theme"><i class="fa-solid fa-moon"></i></button>
+  <a class="ghost" href="https://github.com/4uJIuH/umbrella-scripts" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i><span class="gh">GitHub</span></a>
+</div></header>
+<main>
+  <section id="feedCol">
+    <div class="card"><div class="card-h"><h2><i class="fa-solid fa-crosshairs"></i><span id="hObj"></span></h2></div><div class="objs" id="objs"></div></div>
+    <div class="card" id="console"><div class="card-h"><h2><i class="fa-solid fa-list-ul"></i><span id="hLog"></span></h2><div class="sp"></div><button class="icon-btn" id="popcon" type="button"><i class="fa-solid fa-up-right-from-square"></i></button></div><div id="log"></div></div>
+  </section>
+  <section class="card" id="mapCard">
+    <div class="card-h"><div class="layers" id="layers"></div><div class="sp"></div><button class="icon-btn" id="pip" type="button"><i class="fa-solid fa-clone"></i></button></div>
+    <div id="stage"><canvas id="map"></canvas><div id="marks"></div><div id="empty"><div><i class="fa-solid fa-satellite-dish"></i><span id="emptyText"></span></div></div></div>
+    <div class="legend" id="legend"></div>
+  </section>
+  <section id="teams"></section>
+</main>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getDatabase, ref, onValue, query, limitToLast, onChildAdded, onChildChanged, onChildRemoved } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
@@ -106,20 +164,18 @@ const firebaseConfig = {
   projectId: "umbrella-scripts",
 };
 
-const LANG = (navigator.language || '').toLowerCase().startsWith('ru') ? 'ru' : 'en';
-document.documentElement.lang = LANG;
-const TEXT = {
+const ALL = {
   en: {
     connecting: 'Connecting', online: 'Online', stale: 'No fresh data', closed: 'Link closed', missing: 'Session not found',
     offline: 'No connection', waiting: 'Waiting for a match', badLink: 'Invalid link', pip: 'Map on top of the game',
-    popcon: 'Console on top of the game', noWindow: 'Window did not open: ', paused: 'paused',
-    objectives: 'Objectives', events: 'Events', allies: 'Allies', enemies: 'Enemies', radiant: 'Radiant', dire: 'Dire',
-    dead: 'dead', deadIn: 'dead, respawn in {n} s', visible: 'visible', maphack: 'in fog, maphack {n} s ago', lastSeen: 'in fog, last seen {n} s ago',
-    tp: 'teleporting, {n} s', buyback: 'buyback', ready: 'ready', sec: '{n} s', gold: 'gold', nw: 'NW', lhdn: 'LH/DN',
+    popcon: 'Events on top of the game', noWindow: 'Window did not open: ', paused: 'paused', theme: 'Theme', noEvents: 'No events yet',
+    objectives: 'Objectives', events: 'Events', allies: 'allies', enemies: 'enemies', radiant: 'Radiant', dire: 'Dire', kills: 'kills', nwTotal: 'NW',
+    dead: 'dead', deadIn: 'dead · {n} s', visible: 'visible', maphack: 'fog · {n} s', lastSeen: 'last seen · {n} s',
+    tp: 'teleport · {n} s', buyback: 'Buyback', ready: 'ready', sec: '{n} s', gold: 'Gold', nw: 'NW', kda: 'KDA', lhdn: 'LH/DN',
     roshan: 'Roshan', tormentor: 'Tormentor', noData: 'no data', bossDead: 'dead', bossSeen: 'alive', bossHit: 'under attack',
-    glyph: 'Glyph R / D', scan: 'Scan R / D', camps: 'Camps seen',
-    layers: { heroes: 'Heroes', fog: 'Heroes in fog', creeps: 'Lane creeps', jungle: 'Jungle', wards: 'Wards and vision', buildings: 'Buildings', events: 'Map events' },
-    legend: ['visible', 'in fog (maphack)', 'creeps in fog (predicted)'],
+    glyph: 'Glyph R / D', scan: 'Scan R / D', camps: 'Camps with creeps',
+    layers: { heroes: 'Heroes', fog: 'Fog', creeps: 'Creeps', jungle: 'Jungle', wards: 'Wards', buildings: 'Buildings', events: 'Events' },
+    legend: ['visible', 'in fog (maphack)', 'last seen', 'creeps in fog (predicted)'],
     zone: { mid: 'mid', top: 'top', bot: 'bot' }, side: { r: 'Radiant side', d: 'Dire side', c: 'middle' },
     place: { rosh: 'near Roshan', torm: 'near Tormentor', base_r: 'Radiant base', base_d: 'Dire base' },
     tower: '{team} T{tier} {lane}',
@@ -127,28 +183,28 @@ const TEXT = {
     boss: { rosh: 'Roshan', torm: 'Tormentor', tormSide: 'Tormentor ({side})', r: 'Radiant', d: 'Dire' },
     ward: { o: 'observer', s: 'sentry' },
     feed: {
-      death: '{h} died', deathRespawn: '{h} died (respawn in {r} s)', rune: '{h} took a rune: {a}', runeAt: '{h} took a rune: {a} ({p})',
-      tp_from: '{h}: teleport from {p}', tp_to: '{h}: teleporting to {p}', scan: 'Scan: {p}',
-      scan_used: '{team}: scan used', scan_usedAt: '{team}: scan used, {p}', glyph: '{team}: glyph used',
-      blink: '{h}: blink ({p})', ult: '{h}: {a} ({p})', ability: '{h}: {a} ({p})',
-      smoke: '{h}: Smoke of Deceit ({p})', smokeAnon: 'Smoke of Deceit ({p})',
-      spot: '{h} spotted in fog: {p}', farm: '{h} is farming the jungle: {p}', ward: 'Enemy {w} ward: {p}',
-      tower: '{team} tower destroyed: {p}', rax: '{team} barracks destroyed: {p}',
-      boss_dead: '{b} killed', boss_up: '{b} respawned', boss_hit: '{b}: under attack, HP {v}{n}', boss_hp: '{b}: HP {v}{n}',
+      death: '{h} died', deathRespawn: '{h} died, respawn in {r} s', rune: '{h} took a rune: {a}', runeAt: '{h} took a rune: {a} · {p}',
+      tp_from: '{h} teleports from {p}', tp_to: '{h} teleports to {p}', scan: 'Scan: {p}',
+      scan_used: '{team} used scan', scan_usedAt: '{team} used scan · {p}', glyph: '{team} used glyph',
+      blink: '{h}: blink · {p}', ult: '{h}: {a} · {p}', ability: '{h}: {a} · {p}',
+      smoke: '{h}: Smoke of Deceit · {p}', smokeAnon: 'Smoke of Deceit · {p}',
+      spot: '{h} spotted in fog · {p}', farm: '{h} is farming the jungle · {p}', ward: 'Enemy {w} ward · {p}',
+      tower: '{team} tower destroyed · {p}', rax: '{team} barracks destroyed · {p}',
+      boss_dead: '{b} killed', boss_up: '{b} respawned', boss_hit: '{b} under attack, HP {v}{n}', boss_hp: '{b}: HP {v}{n}',
       boss_calm: '{b}: attack stopped, HP {v}',
     },
   },
   ru: {
     connecting: 'Подключение', online: 'Онлайн', stale: 'Нет свежих данных', closed: 'Ссылка закрыта', missing: 'Сессия не найдена',
     offline: 'Нет связи', waiting: 'Ожидание матча', badLink: 'Неверная ссылка', pip: 'Карта поверх игры',
-    popcon: 'Консоль поверх игры', noWindow: 'Окно не открылось: ', paused: 'пауза',
-    objectives: 'Цели', events: 'События', allies: 'Союзники', enemies: 'Враги', radiant: 'Radiant', dire: 'Dire',
-    dead: 'мертв', deadIn: 'мертв, возрождение через {n} с', visible: 'виден', maphack: 'в тумане, мапхак {n} с назад', lastSeen: 'в тумане, виден {n} с назад',
-    tp: 'телепорт, {n} с', buyback: 'байбек', ready: 'готов', sec: '{n} с', gold: 'золото', nw: 'NW', lhdn: 'LH/DN',
+    popcon: 'События поверх игры', noWindow: 'Окно не открылось: ', paused: 'пауза', theme: 'Тема', noEvents: 'Событий пока нет',
+    objectives: 'Цели', events: 'События', allies: 'союзники', enemies: 'враги', radiant: 'Radiant', dire: 'Dire', kills: 'убийств', nwTotal: 'NW',
+    dead: 'мертв', deadIn: 'мертв · {n} с', visible: 'виден', maphack: 'туман · {n} с', lastSeen: 'виден {n} с назад',
+    tp: 'телепорт · {n} с', buyback: 'Байбек', ready: 'готов', sec: '{n} с', gold: 'Золото', nw: 'NW', kda: 'KDA', lhdn: 'LH/DN',
     roshan: 'Рошан', tormentor: 'Торментор', noData: 'нет данных', bossDead: 'мертв', bossSeen: 'жив', bossHit: 'бьют',
-    glyph: 'Глиф R / D', scan: 'Скан R / D', camps: 'Кемпы видны',
-    layers: { heroes: 'Герои', fog: 'Герои в тумане', creeps: 'Линейные крипы', jungle: 'Лес', wards: 'Варды и обзор', buildings: 'Здания', events: 'События на карте' },
-    legend: ['виден', 'в тумане (мапхак)', 'крипы в тумане (прогноз)'],
+    glyph: 'Глиф R / D', scan: 'Скан R / D', camps: 'Кемпы с крипами',
+    layers: { heroes: 'Герои', fog: 'Туман', creeps: 'Крипы', jungle: 'Лес', wards: 'Варды', buildings: 'Здания', events: 'События' },
+    legend: ['виден', 'в тумане (мапхак)', 'последнее место', 'крипы в тумане (прогноз)'],
     zone: { mid: 'мид', top: 'верх', bot: 'низ' }, side: { r: 'сторона Radiant', d: 'сторона Dire', c: 'середина' },
     place: { rosh: 'у Рошана', torm: 'у Торментора', base_r: 'база Radiant', base_d: 'база Dire' },
     tower: 'T{tier} {lane} {team}',
@@ -156,18 +212,21 @@ const TEXT = {
     boss: { rosh: 'Рошан', torm: 'Торментор', tormSide: 'Торментор ({side})', r: 'Radiant', d: 'Dire' },
     ward: { o: 'Observer', s: 'Sentry' },
     feed: {
-      death: '{h} погиб', deathRespawn: '{h} погиб (возрождение {r} с)', rune: '{h} взял руну: {a}', runeAt: '{h} взял руну: {a} ({p})',
-      tp_from: '{h}: телепорт из: {p}', tp_to: '{h}: телепорт на: {p}', scan: 'Скан: {p}',
-      scan_used: '{team}: использован скан', scan_usedAt: '{team}: использован скан, {p}', glyph: '{team}: использован глиф',
-      blink: '{h}: блинк ({p})', ult: '{h}: {a} ({p})', ability: '{h}: {a} ({p})',
-      smoke: '{h}: Smoke of Deceit ({p})', smokeAnon: 'Smoke of Deceit ({p})',
-      spot: '{h} замечен в тумане: {p}', farm: '{h} фармит лес: {p}', ward: 'Вражеский {w}: {p}',
-      tower: 'Башня {team} уничтожена: {p}', rax: 'Казармы {team} уничтожены: {p}',
+      death: '{h} погиб', deathRespawn: '{h} погиб, возрождение через {r} с', rune: '{h} взял руну: {a}', runeAt: '{h} взял руну: {a} · {p}',
+      tp_from: '{h} телепортируется из: {p}', tp_to: '{h} телепортируется на: {p}', scan: 'Скан: {p}',
+      scan_used: '{team}: использован скан', scan_usedAt: '{team}: использован скан · {p}', glyph: '{team}: использован глиф',
+      blink: '{h}: блинк · {p}', ult: '{h}: {a} · {p}', ability: '{h}: {a} · {p}',
+      smoke: '{h}: Smoke of Deceit · {p}', smokeAnon: 'Smoke of Deceit · {p}',
+      spot: '{h} замечен в тумане · {p}', farm: '{h} фармит лес · {p}', ward: 'Вражеский {w} · {p}',
+      tower: 'Башня {team} уничтожена · {p}', rax: 'Казармы {team} уничтожены · {p}',
       boss_dead: '{b} убит', boss_up: '{b} возродился', boss_hit: '{b}: начали бить, HP {v}{n}', boss_hp: '{b}: HP {v}{n}',
       boss_calm: '{b}: перестали бить, HP {v}',
     },
   },
-}[LANG];
+};
+let LANG = localStorage.getItem('cr_lang') || ((navigator.language || '').toLowerCase().startsWith('ru') ? 'ru' : 'en');
+let TEXT = ALL[LANG];
+if (localStorage.getItem('cr_theme') === 'light') document.documentElement.classList.remove('dark');
 
 const HERO_NAMES = {
   antimage: 'Anti-Mage', furion: "Nature's Prophet", nevermore: 'Shadow Fiend', doom_bringer: 'Doom', obsidian_destroyer: 'Outworld Destroyer',
@@ -193,7 +252,7 @@ function heroName(name) {
   return HERO_NAMES[key] || words(key);
 }
 function itemName(name) {
-  return words(String(name || '').replace(/^item_/, '').replace(/^recipe_/, 'recipe_'));
+  return words(String(name || '').replace(/^item_/, ''));
 }
 function abilityName(name, hero) {
   let key = String(name || '');
@@ -214,27 +273,11 @@ function heroImg(name) {
 
 const sessionId = location.hash.replace(/^#\/?/, '');
 const $ = id => document.getElementById(id);
-const canvas = $('map'), ctx = canvas.getContext('2d'), stage = $('stage'), side = $('side');
-const consoleEl = $('console'), objsEl = $('objs'), logEl = $('log'), heroesEl = $('heroes'), statusEl = $('status'), clockEl = $('clock');
-$('pip').textContent = TEXT.pip;
-$('popcon').textContent = TEXT.popcon;
-$('hObj').textContent = TEXT.objectives;
-$('hLog').textContent = TEXT.events;
-statusEl.textContent = TEXT.connecting;
+const canvas = $('map'), ctx = canvas.getContext('2d'), stage = $('stage');
+const consoleEl = $('console'), objsEl = $('objs'), logEl = $('log'), teamsEl = $('teams'), statusEl = $('status'), clockEl = $('clock');
 
-const LAYER_KEYS = ['heroes', 'fog', 'creeps', 'jungle', 'wards', 'buildings', 'events'];
-const layers = Object.assign(Object.fromEntries(LAYER_KEYS.map(k => [k, true])), JSON.parse(localStorage.getItem('cr_layers') || '{}'));
-for (const key of LAYER_KEYS) {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.textContent = TEXT.layers[key];
-  b.className = layers[key] ? 'on' : '';
-  b.onclick = () => { layers[key] = !layers[key]; b.className = layers[key] ? 'on' : ''; localStorage.setItem('cr_layers', JSON.stringify(layers)); };
-  $('layers').appendChild(b);
-}
-$('legend').innerHTML = '<div><i style="background:#4ade80"></i>' + esc(TEXT.legend[0]) + '</div>' +
-  '<div><i style="border:2px dashed #fcd34d;background:transparent"></i>' + esc(TEXT.legend[1]) + '</div>' +
-  '<div><i style="border:2px solid #f87171;background:transparent"></i>' + esc(TEXT.legend[2]) + '</div>';
+const LAYER_KEYS = [['heroes', 'fa-user'], ['fog', 'fa-eye-slash'], ['creeps', 'fa-people-group'], ['jungle', 'fa-tree'], ['wards', 'fa-eye'], ['buildings', 'fa-chess-rook'], ['events', 'fa-bolt']];
+const layers = Object.assign(Object.fromEntries(LAYER_KEYS.map(k => [k[0], true])), JSON.parse(localStorage.getItem('cr_layers') || '{}'));
 
 let size = 600;
 let heroes = {};
@@ -243,12 +286,63 @@ let live = {};
 let meta = null, metaSeen = false, connected = false, serverOffset = 0, stale = true;
 let bgCache = null, dotaImg = null;
 let liveAt = performance.now();
+let sideHtml = '';
+const feedData = new Map();
+const feedLines = new Map();
+
+function applyText() {
+  document.documentElement.lang = LANG;
+  for (const b of document.querySelectorAll('#lang button')) b.classList.toggle('on', b.dataset.l === LANG);
+  $('pip').title = TEXT.pip;
+  $('popcon').title = TEXT.popcon;
+  $('theme').title = TEXT.theme;
+  $('hObj').textContent = TEXT.objectives;
+  $('hLog').textContent = TEXT.events;
+  logEl.dataset.empty = TEXT.noEvents;
+  $('layers').innerHTML = LAYER_KEYS.map(([key, ic]) => '<button type="button" data-k="' + key + '" class="' + (layers[key] ? 'on' : '') + '"><i class="fa-solid ' + ic + '"></i>' + esc(TEXT.layers[key]) + '</button>').join('');
+  $('legend').innerHTML = '<span><i style="background:var(--rad)"></i>' + esc(TEXT.legend[0]) + '</span>' +
+    '<span><i style="border:2px dashed #e0b44a"></i>' + esc(TEXT.legend[1]) + '</span>' +
+    '<span><i style="border:2px dashed #94a3b8"></i>' + esc(TEXT.legend[2]) + '</span>' +
+    '<span><i style="border:2px solid var(--dire)"></i>' + esc(TEXT.legend[3]) + '</span>';
+  for (const [key, e] of feedData) feedLine(key, e);
+  sideHtml = '';
+  refreshStatus();
+  renderObjs();
+  renderSide();
+}
+$('layers').onclick = ev => {
+  const b = ev.target.closest('button');
+  if (!b) return;
+  const key = b.dataset.k;
+  layers[key] = !layers[key];
+  b.classList.toggle('on', layers[key]);
+  localStorage.setItem('cr_layers', JSON.stringify(layers));
+};
+$('lang').onclick = ev => {
+  const b = ev.target.closest('button');
+  if (!b || b.dataset.l === LANG) return;
+  LANG = b.dataset.l;
+  TEXT = ALL[LANG];
+  localStorage.setItem('cr_lang', LANG);
+  applyText();
+};
+function themeIcon() {
+  $('theme').innerHTML = '<i class="fa-solid fa-' + (document.documentElement.classList.contains('dark') ? 'moon' : 'sun') + '"></i>';
+}
+$('theme').onclick = () => {
+  const dark = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('cr_theme', dark ? 'dark' : 'light');
+  themeIcon();
+};
+themeIcon();
+
 {
   const im = new Image();
   im.onload = function () { dotaImg = im; bgCache = null; };
   im.src = 'radar/map/dota.jpg';
 }
-const view = { cx: 0, cy: 0, half: 10240 };
+const MAP_IMG_HALF = 10240, MAP_HALF = 9100;
+const view = { cx: 0, cy: 0, half: MAP_HALF };
 
 const ICONS = {};
 function icon(path) {
@@ -264,10 +358,13 @@ const RUNE_ICONS = { 0: 'rune_strong.png', 1: 'rune_speed.png', 2: 'rune_ilusion
   5: 'rune_bounty.png', 6: 'rune_magic.png', 7: 'rune_water.png', 8: 'Wisdom.png', 9: 'rune_shield.png' };
 const TOWER_ICON = 'dota_minimap_assets/towers/minimap_tower90_psd_a98bbc61.png';
 const CAMP_ICON = 'dota_minimap_assets/camps/minimap_creepcamp_psd_72d26740.png';
+const TORM_ICON = side => 'radar/icons/dota_minimap_assets/tormentor/tormentor_timer_icon_' + side + '_png.png';
+const RAD = [87, 199, 133], DIRE = [239, 107, 107], NEUTRAL = [217, 168, 78];
 
 function resize() {
   const s = Math.max(200, Math.min(stage.clientWidth, stage.clientHeight) - 24);
   const dpr = window.devicePixelRatio || 1;
+  if (s === size && canvas.width === Math.round(s * dpr)) return;
   size = s;
   canvas.style.width = s + 'px';
   canvas.style.height = s + 'px';
@@ -276,7 +373,7 @@ function resize() {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   bgCache = null;
 }
-window.addEventListener('resize', resize);
+new ResizeObserver(resize).observe(stage);
 resize();
 
 function toScreen(x, y) {
@@ -291,12 +388,8 @@ function unit() {
 }
 
 function drawMap() {
-  view.half = dotaImg ? 10240 : 8000;
+  view.half = dotaImg ? MAP_HALF : 8000;
   ctx.clearRect(0, 0, size, size);
-  ctx.save();
-  ctx.beginPath();
-  ctx.roundRect(0, 0, size, size, 10);
-  ctx.clip();
   if (!bgCache) {
     const dpr = window.devicePixelRatio || 1;
     bgCache = document.createElement('canvas');
@@ -304,18 +397,28 @@ function drawMap() {
     bgCache.height = Math.round(size * dpr);
     const g = bgCache.getContext('2d');
     g.scale(dpr, dpr);
+    g.beginPath();
+    g.roundRect(0, 0, size, size, 10);
+    g.clip();
     g.fillStyle = '#121a14';
     g.fillRect(0, 0, size, size);
-    if (dotaImg) g.drawImage(dotaImg, 0, 0, size, size);
-    g.fillStyle = 'rgba(5,8,12,.18)';
+    if (dotaImg) {
+      const full = size * MAP_IMG_HALF / MAP_HALF;
+      g.drawImage(dotaImg, (size - full) / 2, (size - full) / 2, full, full);
+    }
+    const v = g.createRadialGradient(size / 2, size / 2, size * 0.35, size / 2, size / 2, size * 0.75);
+    v.addColorStop(0, 'rgba(0,0,0,0)');
+    v.addColorStop(1, 'rgba(0,0,0,.35)');
+    g.fillStyle = v;
+    g.fillRect(0, 0, size, size);
+    g.fillStyle = 'rgba(8,10,14,.16)';
     g.fillRect(0, 0, size, size);
   }
   ctx.drawImage(bgCache, 0, 0, size, size);
-  ctx.restore();
 }
 
 function teamColor(team, alpha) {
-  const c = team === 2 ? [74, 222, 128] : (team === 3 ? [248, 113, 113] : [251, 191, 36]);
+  const c = team === 2 ? RAD : (team === 3 ? DIRE : NEUTRAL);
   return 'rgba(' + c.join(',') + ',' + (alpha == null ? 1 : alpha) + ')';
 }
 function list(value) {
@@ -356,14 +459,17 @@ function drawIcon(path, x, y, s, round) {
   return true;
 }
 function label(text, x, y, color, px) {
-  ctx.font = '600 ' + (px || 10) + 'px system-ui, sans-serif';
+  ctx.font = '600 ' + (px || 10) + 'px Inter, system-ui, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = 'rgba(0,0,0,.75)';
-  ctx.strokeText(text, x, y);
-  ctx.fillStyle = color || '#e6edf3';
-  ctx.fillText(text, x, y);
+  const w = ctx.measureText(text).width + 8;
+  const h = (px || 10) + 6;
+  ctx.fillStyle = 'rgba(12,12,13,.78)';
+  ctx.beginPath();
+  ctx.roundRect(x - w / 2, y - h / 2, w, h, 4);
+  ctx.fill();
+  ctx.fillStyle = color || '#ececee';
+  ctx.fillText(text, x, y + 0.5);
 }
 
 function drawVision() {
@@ -371,13 +477,12 @@ function drawVision() {
   for (const w of list(live.wards)) {
     if (typeof w.r !== 'number' || w.r <= 0) continue;
     const [x, y] = toScreen(w.x, w.y);
-    const r = world(w.r);
     const sentry = w.kind === 'sentry';
-    circle(x, y, r);
-    ctx.fillStyle = sentry ? 'rgba(96,165,250,.07)' : teamColor(w.team, 0.08);
+    circle(x, y, world(w.r));
+    ctx.fillStyle = sentry ? 'rgba(106,163,240,.07)' : teamColor(w.team, 0.07);
     ctx.fill();
     ctx.setLineDash(w.f ? [4, 4] : []);
-    ctx.strokeStyle = sentry ? 'rgba(96,165,250,.45)' : teamColor(w.team, 0.4);
+    ctx.strokeStyle = sentry ? 'rgba(106,163,240,.45)' : teamColor(w.team, 0.4);
     ctx.lineWidth = 1;
     ctx.stroke();
     ctx.setLineDash([]);
@@ -390,17 +495,15 @@ function drawCamps() {
   for (const c of list(live.camps)) {
     const [x, y] = toScreen(c.x, c.y);
     ctx.globalAlpha = c.s === 1 ? 0.95 : (c.s === 0 ? 0.3 : 0.55);
-    if (!drawIcon(CAMP_ICON, x, y, 12 * u)) { ctx.fillStyle = '#e2b84a'; ctx.fillRect(x - 3 * u, y - 3 * u, 6 * u, 6 * u); }
+    if (!drawIcon(CAMP_ICON, x, y, 12 * u)) { ctx.fillStyle = '#d9a84e'; ctx.fillRect(x - 3 * u, y - 3 * u, 6 * u, 6 * u); }
     ctx.globalAlpha = 1;
-    if (c.st) label('x' + c.st, x + 9 * u, y - 7 * u, '#fde68a', 9);
-    else if (c.s === 0) label('×', x + 7 * u, y - 6 * u, '#94a3b8', 10);
+    if (c.st) label('×' + c.st, x + 11 * u, y - 7 * u, '#f3d48c', 9);
   }
 }
 
 function drawUnits() {
   const u = unit();
-  const all = list(live.units);
-  for (const row of all) {
+  for (const row of list(live.units)) {
     if (typeof row.x !== 'number') continue;
     const [x, y] = toScreen(row.x, row.y);
     const kind = row.kind;
@@ -410,6 +513,9 @@ function drawUnits() {
       circle(x, y, 7 * u);
       ctx.fillStyle = teamColor(row.team, 0.9);
       ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,.55)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
       drawIcon(TOWER_ICON, x, y, 11 * u);
       if (typeof row.hp === 'number' && row.hp < 100) {
         ctx.beginPath();
@@ -429,8 +535,9 @@ function drawUnits() {
         ctx.stroke();
       } else {
         ctx.globalAlpha = 1;
-        if (row.s) { ctx.fillStyle = teamColor(row.team); ctx.fillRect(x - r, y - r, r * 2, r * 2); }
-        else { circle(x, y, r); ctx.fillStyle = teamColor(row.team); ctx.fill(); }
+        if (row.s) { ctx.beginPath(); ctx.rect(x - r, y - r, r * 2, r * 2); } else circle(x, y, r);
+        ctx.fillStyle = teamColor(row.team);
+        ctx.fill();
         ctx.strokeStyle = 'rgba(0,0,0,.6)';
         ctx.lineWidth = 0.8;
         ctx.stroke();
@@ -439,7 +546,7 @@ function drawUnits() {
       if (!layers.jungle) continue;
       ctx.globalAlpha = row.f ? 0.35 : 0.95;
       circle(x, y, 2.3 * u);
-      ctx.fillStyle = '#e2b84a';
+      ctx.fillStyle = '#d9a84e';
       ctx.fill();
     } else if (kind === 'courier') {
       if (!layers.heroes) continue;
@@ -456,7 +563,7 @@ function drawUnits() {
       drawIcon('roshan.png', x, y, 22 * u);
     } else if (kind === 'tormentor') {
       ctx.globalAlpha = row.f ? 0.6 : 1;
-      drawIcon('dota_minimap_assets/tormentor/tormentor_timer_icon_' + (row.x + row.y < 0 ? 'radiant' : 'dire') + '_png.png', x, y, 20 * u);
+      drawIcon(TORM_ICON(row.x + row.y < 0 ? 'radiant' : 'dire'), x, y, 20 * u);
     } else if (kind === 'wisdom') {
       ctx.globalAlpha = row.f ? 0.6 : 1;
       drawIcon('Wisdom.png', x, y, 18 * u);
@@ -477,13 +584,13 @@ function drawWards() {
     ctx.fill();
     if (!drawIcon(sentry ? 'centry_ward.png' : 'Observer_ward.png', x, y, 14 * u)) {
       circle(x, y, 4 * u);
-      ctx.fillStyle = sentry ? '#60a5fa' : '#facc15';
+      ctx.fillStyle = sentry ? '#6aa3f0' : '#facc15';
       ctx.fill();
     }
     ctx.globalAlpha = 1;
     if (typeof w.e === 'number' && w.team !== (live.clock || {}).team) {
       const left = remaining(w.e);
-      if (left > 0) label(clockText(left), x, y + 13 * u, '#fde68a', 9);
+      if (left > 0) label(clockText(left), x, y + 15 * u, '#f3d48c', 9);
     }
   }
 }
@@ -494,13 +601,14 @@ function drawRunes() {
     const [x, y] = toScreen(r.x, r.y);
     ctx.globalAlpha = r.f ? 0.45 : 1;
     if (!(RUNE_ICONS[r.rune_type] && drawIcon(RUNE_ICONS[r.rune_type], x, y, 16 * u))) {
-      ctx.fillStyle = '#c084fc';
+      ctx.fillStyle = '#b394f0';
       ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x + 5, y); ctx.lineTo(x, y + 6); ctx.lineTo(x - 5, y); ctx.fill();
     }
   }
   ctx.globalAlpha = 1;
 }
 
+let marks = [];
 function drawEvents() {
   if (!layers.events) return;
   const u = unit();
@@ -509,7 +617,7 @@ function drawEvents() {
   for (const e of list(live.events)) {
     const [x, y] = toScreen(e.x, e.y);
     const age = typeof e.t0 === 'number' ? Math.max(0, t - e.t0) : 0;
-    const color = e.team === 2 || e.team === 3 ? teamColor(e.team) : '#fb923c';
+    const color = e.team === 2 || e.team === 3 ? teamColor(e.team) : '#f0a35e';
     if (e.kind === 'teleport') {
       if (e.ph === 'destination' && typeof e.ox === 'number') {
         const [ox, oy] = toScreen(e.ox, e.oy);
@@ -520,20 +628,20 @@ function drawEvents() {
         ctx.setLineDash([]);
       }
       circle(x, y, (10 + 6 * pulse) * u);
-      ctx.strokeStyle = 'rgba(96,165,250,' + (1 - pulse) + ')';
+      ctx.strokeStyle = 'rgba(106,163,240,' + (1 - pulse) + ')';
       ctx.lineWidth = 2;
       ctx.stroke();
       circle(x, y, 7 * u);
       ctx.strokeStyle = color;
       ctx.stroke();
-      if (e.ph === 'destination' && typeof e.te === 'number') label('TP ' + Math.ceil(remaining(e.te)), x, y - 15 * u, '#bfdbfe', 10);
+      if (e.ph === 'destination' && typeof e.te === 'number') label('TP ' + Math.ceil(remaining(e.te)), x, y - 17 * u, '#bfdbfe', 10);
       continue;
     }
     if (e.kind === 'scan') {
       circle(x, y, world(900));
-      ctx.fillStyle = 'rgba(96,165,250,.10)';
+      ctx.fillStyle = 'rgba(106,163,240,.10)';
       ctx.fill();
-      ctx.strokeStyle = 'rgba(96,165,250,' + (0.9 - pulse * 0.6) + ')';
+      ctx.strokeStyle = 'rgba(106,163,240,' + (0.9 - pulse * 0.6) + ')';
       ctx.lineWidth = 2;
       ctx.stroke();
       continue;
@@ -542,7 +650,7 @@ function drawEvents() {
       circle(x, y, 18 * u);
       ctx.fillStyle = 'rgba(148,163,184,.35)';
       ctx.fill();
-      label('SMOKE', x, y, '#e2e8f0', 9);
+      label('Smoke', x, y, '#e2e8f0', 9);
       continue;
     }
     if (e.kind === 'innate') continue;
@@ -555,9 +663,9 @@ function drawEvents() {
     circle(x, y, 2.5 * u);
     ctx.fillStyle = color;
     ctx.fill();
-    if (e.a && !document.pictureInPictureElement) marks.push({ src: abilityImg(e.a), x: x, y: y - 16 * u, s: 20 * u, c: color, o: alpha, t: abilityName(e.a, e.h) });
-    else if (e.a) label(abilityName(e.a, e.h), x, y - 14 * u, '#fed7aa', 10);
     ctx.globalAlpha = 1;
+    if (e.a && !document.pictureInPictureElement) marks.push({ src: abilityImg(e.a), x: x, y: y - 17 * u, s: 20 * u, c: color, o: alpha, t: abilityName(e.a, e.h) });
+    else if (e.a) label(abilityName(e.a, e.h), x, y - 15 * u, '#fed7aa', 10);
   }
 }
 
@@ -569,12 +677,15 @@ function drawHero(h, t) {
   const u = unit();
   const [x, y] = toScreen(h.cx, h.cy);
   const age = r.f && typeof r.seen === 'number' ? Math.max(0, t - r.seen) : 0;
-  const alpha = r.f === 2 ? 0.4 : (r.f === 1 ? Math.max(0.45, 1 - age / 60) : 1);
-  const s = 22 * u;
+  const alpha = r.f === 2 ? 0.45 : (r.f === 1 ? Math.max(0.5, 1 - age / 60) : 1);
+  const s = 24 * u;
   ctx.globalAlpha = alpha;
+  ctx.shadowColor = 'rgba(0,0,0,.6)';
+  ctx.shadowBlur = 6;
   circle(x, y, s / 2 + 2.5);
-  ctx.fillStyle = 'rgba(0,0,0,.7)';
+  ctx.fillStyle = 'rgba(12,12,13,.9)';
   ctx.fill();
+  ctx.shadowBlur = 0;
   if (!drawIcon(heroImg(r.name), x, y, s, true)) {
     circle(x, y, s / 2);
     ctx.fillStyle = teamColor(r.team);
@@ -583,26 +694,27 @@ function drawHero(h, t) {
   circle(x, y, s / 2 + 1.5);
   ctx.lineWidth = r.me ? 3 : 2;
   ctx.strokeStyle = r.me ? '#ffffff' : teamColor(r.team);
-  if (r.f) { ctx.setLineDash([4, 3]); ctx.strokeStyle = r.f === 1 ? '#fcd34d' : '#94a3b8'; }
+  if (r.f) { ctx.setLineDash([4, 3]); ctx.strokeStyle = r.f === 1 ? '#e0b44a' : '#94a3b8'; }
   ctx.stroke();
   ctx.setLineDash([]);
   if (!r.f && r.max_hp > 0 && r.hp >= 0) {
-    const w = s + 4;
-    ctx.fillStyle = 'rgba(0,0,0,.75)';
-    ctx.fillRect(x - w / 2, y + s / 2 + 3, w, 4);
-    ctx.fillStyle = r.hp / r.max_hp > 0.5 ? '#4ade80' : (r.hp / r.max_hp > 0.25 ? '#facc15' : '#f87171');
-    ctx.fillRect(x - w / 2, y + s / 2 + 3, w * Math.max(0, Math.min(1, r.hp / r.max_hp)), 4);
+    const w = s + 6, top = y + s / 2 + 4;
+    const k = Math.max(0, Math.min(1, r.hp / r.max_hp));
+    ctx.fillStyle = 'rgba(12,12,13,.85)';
+    ctx.beginPath(); ctx.roundRect(x - w / 2 - 1, top - 1, w + 2, r.max_mana > 0 ? 8 : 6, 2); ctx.fill();
+    ctx.fillStyle = k > 0.5 ? '#4cb879' : (k > 0.25 ? '#e0b44a' : '#ef6b6b');
+    ctx.fillRect(x - w / 2, top, w * k, 4);
     if (r.max_mana > 0) {
-      ctx.fillStyle = '#60a5fa';
-      ctx.fillRect(x - w / 2, y + s / 2 + 7, w * Math.max(0, Math.min(1, r.mana / r.max_mana)), 2);
+      ctx.fillStyle = '#4f8fe8';
+      ctx.fillRect(x - w / 2, top + 5, w * Math.max(0, Math.min(1, r.mana / r.max_mana)), 2);
     }
   }
   ctx.globalAlpha = 1;
-  if (r.f) label(Math.round(age) + 's', x + s / 2 + 4, y - s / 2, r.f === 1 ? '#fde68a' : '#cbd5e1', 9);
+  if (r.f) label(Math.round(age) + 's', x + s / 2 + 8, y - s / 2, r.f === 1 ? '#f3d48c' : '#cbd5e1', 9);
   if (typeof r.tp === 'number' && remaining(r.tp) > 0) {
     ctx.beginPath();
     ctx.arc(x, y, s / 2 + 5, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * ((performance.now() / 700) % 1));
-    ctx.strokeStyle = '#60a5fa';
+    ctx.strokeStyle = '#6aa3f0';
     ctx.lineWidth = 2;
     ctx.stroke();
   }
@@ -610,7 +722,6 @@ function drawHero(h, t) {
 
 const marksEl = $('marks');
 const markPool = [];
-let marks = [];
 function syncMarks() {
   marksEl.style.left = canvas.offsetLeft + 'px';
   marksEl.style.top = canvas.offsetTop + 'px';
@@ -658,6 +769,9 @@ function frame() {
 function pct(a, b) {
   return b > 0 ? Math.max(0, Math.min(100, a / b * 100)) : 0;
 }
+function kilo(v) {
+  return v >= 1000 ? (Math.round(v / 100) / 10) + 'k' : String(Math.round(v));
+}
 
 function slot(src, title, opts) {
   opts = opts || {};
@@ -670,18 +784,18 @@ function slot(src, title, opts) {
 function heroCard(entry) {
   const r = entry.row, info = entry.info || {};
   const t = gameTime();
-  let note, noteCls = '';
+  let note, noteCls;
   if (r.alive === false) { note = r.respawn_at ? fmt(TEXT.deadIn, { n: Math.ceil(remaining(r.respawn_at)) }) : TEXT.dead; noteCls = 'dead'; }
   else if (typeof r.tp === 'number' && remaining(r.tp) > 0) { note = fmt(TEXT.tp, { n: Math.ceil(remaining(r.tp)) }); noteCls = 'tp'; }
-  else if (r.f) { note = fmt(r.f === 1 ? TEXT.maphack : TEXT.lastSeen, { n: Math.round(Math.max(0, t - (r.seen || t))) }); noteCls = 'fogged'; }
-  else note = TEXT.visible;
+  else if (r.f) { note = fmt(r.f === 1 ? TEXT.maphack : TEXT.lastSeen, { n: Math.round(Math.max(0, t - (r.seen || t))) }); noteCls = 'fog'; }
+  else { note = TEXT.visible; noteCls = 'vis'; }
   const s = info.stats || {};
-  const stats = [];
-  if (typeof s.k === 'number') stats.push('<b>' + s.k + '/' + s.d + '/' + s.a + '</b>');
-  if (typeof s.nw === 'number') stats.push(TEXT.nw + ' <b>' + (s.partial ? '≥' : '') + (Math.round(s.nw / 100) / 10) + 'k</b>');
-  if (typeof s.lh === 'number') stats.push(TEXT.lhdn + ' <b>' + s.lh + '/' + (s.dn || 0) + '</b>');
-  if (typeof s.g === 'number') stats.push(TEXT.gold + ' <b>' + s.g + '</b>');
-  if (info.buyback) stats.push(TEXT.buyback + ' <b>' + esc(secs(remaining(info.buyback.ready_at))) + '</b>');
+  const kpis = [];
+  if (typeof s.k === 'number') kpis.push([TEXT.kda, s.k + '/' + s.d + '/' + s.a]);
+  if (typeof s.nw === 'number') kpis.push([TEXT.nw, (s.partial ? '≥' : '') + kilo(s.nw)]);
+  if (typeof s.lh === 'number') kpis.push([TEXT.lhdn, s.lh + '/' + (s.dn || 0)]);
+  if (typeof s.g === 'number') kpis.push([TEXT.gold, String(s.g)]);
+  if (info.buyback && kpis.length < 4) kpis.push([TEXT.buyback, secs(remaining(info.buyback.ready_at))]);
   const items = list(info.items);
   const bySlot = {};
   for (const it of items) bySlot[it.slot] = it;
@@ -690,24 +804,23 @@ function heroCard(entry) {
     const it = bySlot[i];
     inv += it ? slot(itemImg(it.name), itemName(it.name), { cd: remaining(it.ready_at), charges: it.charges, cls: it.o ? 'old' : '' }) : '<span class="slot"></span>';
   }
-  if (bySlot[16]) inv += '<span class="sep"></span>' + slot(itemImg(bySlot[16].name), itemName(bySlot[16].name), { cd: remaining(bySlot[16].ready_at), cls: 'neutral' + (bySlot[16].o ? ' old' : '') });
+  if (bySlot[16]) inv += slot(itemImg(bySlot[16].name), itemName(bySlot[16].name), { cd: remaining(bySlot[16].ready_at), cls: 'nt' + (bySlot[16].o ? ' old' : '') });
   let back = '';
-  for (const i of [6, 7, 8]) if (bySlot[i]) back += slot(itemImg(bySlot[i].name), itemName(bySlot[i].name), { cd: remaining(bySlot[i].ready_at), cls: 'small' });
-  if (bySlot[15]) back += '<span class="sep"></span>' + slot(itemImg(bySlot[15].name), itemName(bySlot[15].name), { cd: remaining(bySlot[15].ready_at), cls: 'small' });
+  for (const i of [6, 7, 8]) if (bySlot[i]) back += slot(itemImg(bySlot[i].name), itemName(bySlot[i].name), { cd: remaining(bySlot[i].ready_at), cls: 'sm' });
+  if (bySlot[15]) back += '<span class="gap"></span>' + slot(itemImg(bySlot[15].name), itemName(bySlot[15].name), { cd: remaining(bySlot[15].ready_at), cls: 'sm' });
   const abilities = list(info.abilities).map(a => slot(abilityImg(a.name), abilityName(a.name, r.name) + (a.level ? ' (' + a.level + ')' : ''),
     { cd: remaining(a.ready_at), level: a.level, charges: a.charges, cls: 'ab' + (a.level ? '' : ' l0') })).join('');
-  return '<div class="row team-' + esc(r.team) + (r.f ? ' fog' : '') + (r.alive === false ? ' deadrow' : '') + '">' +
-    '<div class="top"><img src="' + esc(heroImg(r.name)) + '" alt="" onerror="this.style.visibility=\'hidden\'"><span class="name">' + esc(heroName(r.name)) + '</span><span class="lvl">' + esc(r.level || '?') + '</span></div>' +
-    '<div class="note ' + noteCls + '">' + esc(note) + '</div>' +
-    '<div class="bars"><div class="bar hp"><i style="width:' + pct(r.hp, r.max_hp) + '%"></i><b>' + (r.max_hp ? esc(r.hp + ' / ' + r.max_hp) : '') + '</b></div>' +
-    (r.max_mana ? '<div class="bar mp"><i style="width:' + pct(r.mana, r.max_mana) + '%"></i><b>' + esc(r.mana + ' / ' + r.max_mana) + '</b></div>' : '') + '</div>' +
-    (stats.length ? '<div class="stats">' + stats.map(x => '<span>' + x + '</span>').join('') + '</div>' : '') +
+  return '<div class="hero' + (r.f ? ' fogrow' : '') + (r.alive === false ? ' deadrow' : '') + '">' +
+    '<div class="top"><span class="portrait"><img src="' + esc(heroImg(r.name)) + '" alt="" onerror="this.style.visibility=\'hidden\'"><span class="lv">' + esc(r.level || '?') + '</span></span>' +
+    '<span class="name">' + esc(heroName(r.name)) + '</span><span class="state ' + noteCls + '">' + esc(note) + '</span></div>' +
+    '<div class="bars"><div class="meter hp"><i style="width:' + pct(r.hp, r.max_hp) + '%"></i><b>' + (r.max_hp ? esc(r.hp + ' / ' + r.max_hp) : '') + '</b></div>' +
+    (r.max_mana ? '<div class="meter mp thin"><i style="width:' + pct(r.mana, r.max_mana) + '%"></i></div>' : '') + '</div>' +
+    (kpis.length ? '<div class="kpis" style="grid-template-columns:repeat(' + kpis.length + ',1fr)">' + kpis.map(k => '<div><span>' + esc(k[0]) + '</span><b>' + esc(k[1]) + '</b></div>').join('') + '</div>' : '') +
     (items.length ? '<div class="slots">' + inv + '</div>' : '') +
     (back ? '<div class="slots">' + back + '</div>' : '') +
     (abilities ? '<div class="slots">' + abilities + '</div>' : '') + '</div>';
 }
 
-let sideHtml = '';
 function renderSide() {
   const mine = (live.clock || {}).team;
   const rows = Object.values(roster).sort((a, b) => a.row.team - b.row.team || String(a.row.id).localeCompare(String(b.row.id)));
@@ -715,31 +828,48 @@ function renderSide() {
   for (const team of (mine === 3 ? [3, 2] : [2, 3])) {
     const members = rows.filter(e => e.row.team === team);
     if (!members.length) continue;
-    const title = (team === 2 ? TEXT.radiant : TEXT.dire) + (mine === 2 || mine === 3 ? ' · ' + (team === mine ? TEXT.allies : TEXT.enemies) : '');
-    groups.push('<h3 class="team">' + esc(title) + '</h3>' + members.map(heroCard).join(''));
+    let kills = 0, nw = 0, partial = false, hasNw = false;
+    for (const e of members) {
+      const s = (e.info || {}).stats || {};
+      if (typeof s.k === 'number') kills += s.k;
+      if (typeof s.nw === 'number') { nw += s.nw; hasNw = true; partial = partial || !!s.partial; }
+    }
+    const role = mine === 2 || mine === 3 ? (team === mine ? TEXT.allies : TEXT.enemies) : '';
+    groups.push('<div class="card"><div class="team-h"><span class="flag" style="background:var(--' + (team === 2 ? 'rad' : 'dire') + ')"></span><h2>' +
+      esc(team === 2 ? TEXT.radiant : TEXT.dire) + '</h2><span class="role">' + esc(role) + '</span><span class="sum"><span><b>' + kills + '</b> ' + esc(TEXT.kills) + '</span>' +
+      (hasNw ? '<span>' + esc(TEXT.nwTotal) + ' <b>' + (partial ? '≥' : '') + kilo(nw) + '</b></span>' : '') + '</span></div>' + members.map(heroCard).join('') + '</div>');
   }
   const html = groups.join('');
-  if (html !== sideHtml) { sideHtml = html; heroesEl.innerHTML = html; }
+  if (html !== sideHtml) { sideHtml = html; teamsEl.innerHTML = html; }
 }
 
 function cdText(v) {
   return typeof v === 'number' ? secs(remaining(v)) : '—';
 }
-function bossText(o) {
-  if (o.alive === false) return TEXT.bossDead;
+function bossState(o) {
+  if (!o) return [TEXT.noData, ''];
+  if (o.alive === false) return [TEXT.bossDead, 'bad'];
   const hp = typeof o.hp === 'number' ? 'HP ' + o.hp + '%' : TEXT.bossSeen;
-  return hp + (o.under_attack ? ' · ' + TEXT.bossHit : '');
+  return [hp + (o.under_attack ? ' · ' + TEXT.bossHit : ''), o.under_attack ? 'warn' : 'ok'];
 }
 function renderObjs() {
   const obj = live.objectives || {};
-  const rows = [[TEXT.roshan, obj.roshan ? bossText(obj.roshan) : TEXT.noData]];
+  const cells = [];
+  const rosh = bossState(obj.roshan);
+  cells.push(['radar/icons/roshan.png', TEXT.roshan, rosh[0], rosh[1]]);
   const torms = list(obj.tormentors);
-  torms.forEach((t, i) => rows.push([TEXT.tormentor + (torms.length > 1 ? ' ' + (i + 1) : ''), bossText(t)]));
-  rows.push([TEXT.glyph, cdText(obj.glyph_radiant) + ' / ' + cdText(obj.glyph_dire)]);
-  rows.push([TEXT.scan, cdText(obj.scan_radiant) + ' / ' + cdText(obj.scan_dire)]);
+  if (!torms.length) cells.push([TORM_ICON('radiant'), TEXT.tormentor, TEXT.noData, '']);
+  torms.forEach((t, i) => {
+    const st = bossState(t);
+    cells.push([TORM_ICON(i === 1 ? 'dire' : 'radiant'), TEXT.tormentor + (torms.length > 1 ? ' ' + (i + 1) : ''), st[0], st[1]]);
+  });
+  cells.push(['fa-shield-halved', TEXT.glyph, cdText(obj.glyph_radiant) + ' / ' + cdText(obj.glyph_dire), '']);
+  cells.push(['fa-satellite-dish', TEXT.scan, cdText(obj.scan_radiant) + ' / ' + cdText(obj.scan_dire), '']);
   const camps = list(live.camps);
-  if (camps.length) rows.push([TEXT.camps, camps.filter(c => c.s === 1).length + ' / ' + camps.length]);
-  objsEl.innerHTML = rows.map(r => '<div class="o"><span>' + esc(r[0]) + '</span><span>' + esc(r[1]) + '</span></div>').join('');
+  if (camps.length) cells.push(['radar/icons/' + CAMP_ICON, TEXT.camps, camps.filter(c => c.s === 1).length + ' / ' + camps.length, '']);
+  if (cells.length % 2) cells.push(null);
+  objsEl.innerHTML = cells.map(c => c ? '<div class="obj">' + (c[0].indexOf('fa-') === 0 ? '<i class="fa-solid ' + c[0] + '"></i>' : '<img src="' + esc(c[0]) + '" alt="">') +
+    '<div style="min-width:0"><div class="k">' + esc(c[1]) + '</div><div class="v ' + c[3] + '">' + esc(c[2]) + '</div></div></div>' : '<div class="obj"></div>').join('');
 }
 
 function placeText(code) {
@@ -756,20 +886,23 @@ function bossName(e) {
   if (e.b === 'rosh') return TEXT.boss.rosh;
   return e.team ? fmt(TEXT.boss.tormSide, { side: TEXT.boss[e.team] }) : TEXT.boss.torm;
 }
-function feedText(e) {
+function feedHtml(e) {
   const f = TEXT.feed;
+  const b = v => v == null ? null : '<b>' + esc(v) + '</b>';
+  const place = placeText(e.p);
   const values = {
-    h: e.h ? heroName(e.h) : null, p: placeText(e.p), r: typeof e.r === 'number' ? Math.round(e.r) : null,
-    a: typeof e.a === 'number' ? TEXT.runes[e.a] : (e.a ? abilityName(e.a, e.h) : null),
-    team: e.team ? TEXT.boss[e.team] : null, b: e.b ? bossName(e) : null, w: e.w ? TEXT.ward[e.w] : null,
-    v: typeof e.v === 'number' ? e.v + '%' : '?', n: e.n ? ' (' + list(e.n).map(heroName).join(', ') + ')' : '',
+    h: b(e.h ? heroName(e.h) : null), p: place == null ? null : esc(place), r: typeof e.r === 'number' ? Math.round(e.r) : null,
+    a: b(typeof e.a === 'number' ? TEXT.runes[e.a] : (e.a ? abilityName(e.a, e.h) : null)),
+    team: b(e.team ? TEXT.boss[e.team] : null), b: b(e.b ? bossName(e) : null), w: e.w ? esc(TEXT.ward[e.w]) : null,
+    v: typeof e.v === 'number' ? e.v + '%' : '?', n: e.n ? ' (' + list(e.n).map(heroName).map(esc).join(', ') + ')' : '',
   };
   let key = e.k;
   if (key === 'death' && values.r) key = 'deathRespawn';
   if (key === 'rune' && values.p) key = 'runeAt';
   if (key === 'scan_used' && values.p) key = 'scan_usedAt';
   if (key === 'smoke' && !values.h) key = 'smokeAnon';
-  return f[key] ? fmt(f[key], values).replace(/ \(\?\)$/, '') : String(e.k || '');
+  if (!f[key]) return esc(e.k || '');
+  return fmt(esc(f[key]), values).replace(/ · \?$/, '');
 }
 function feedClass(e) {
   const k = String(e.k || '');
@@ -786,13 +919,15 @@ function feedIcon(e) {
   if (e.k === 'rune' && typeof e.a === 'number' && RUNE_ICONS[e.a]) return 'radar/icons/' + RUNE_ICONS[e.a];
   if (e.k === 'tp_from' || e.k === 'tp_to') return itemImg('item_tpscroll');
   if (e.k === 'blink') return itemImg('item_blink');
+  if (e.k === 'tower' || e.k === 'rax') return 'radar/icons/' + TOWER_ICON;
   if (e.b === 'rosh') return 'radar/icons/roshan.png';
+  if (e.b === 'torm') return TORM_ICON(e.team === 'd' ? 'dire' : 'radiant');
   if (e.h) return heroImg(e.h);
   return null;
 }
 
-const feedLines = new Map();
 function feedLine(key, e) {
+  feedData.set(key, e);
   let line = feedLines.get(key);
   if (!line) {
     line = document.createElement('div');
@@ -801,23 +936,10 @@ function feedLine(key, e) {
     for (const [other, el] of feedLines) if (other > key && (!next || other < next.key)) next = { key: other, el };
     logEl.insertBefore(line, next ? next.el : null);
   }
-  line.className = feedClass(e);
-  line.textContent = '';
-  const t = document.createElement('span');
-  t.className = 't';
-  t.textContent = clockText(e.t);
-  line.appendChild(t);
+  line.className = 'ev ' + feedClass(e);
   const src = feedIcon(e);
-  if (src) {
-    const im = document.createElement('img');
-    im.src = src;
-    im.alt = '';
-    im.onerror = () => im.remove();
-    line.appendChild(im);
-  }
-  const text = document.createElement('span');
-  text.textContent = feedText(e);
-  line.appendChild(text);
+  line.innerHTML = '<span class="t">' + clockText(e.t) + '</span>' + (src ? '<img src="' + esc(src) + '" alt="" onerror="this.style.visibility=\'hidden\'">' : '<span></span>') +
+    '<span class="x">' + feedHtml(e) + '</span>';
 }
 
 function applyLive() {
@@ -844,21 +966,28 @@ function applyLive() {
 }
 
 function refreshStatus() {
-  let text;
+  let text, cls = 'bad';
   if (!sessionId) text = TEXT.badLink;
   else if (!connected) text = TEXT.offline;
   else if (!meta) text = metaSeen ? TEXT.closed : TEXT.missing;
   else {
     const age = (Date.now() + serverOffset - (meta.updated || 0)) / 1000;
     stale = age > 3;
-    text = stale ? TEXT.stale : ((live.clock && live.clock.in_game) ? TEXT.online : TEXT.waiting);
+    const inGame = live.clock && live.clock.in_game;
+    text = stale ? TEXT.stale : (inGame ? TEXT.online : TEXT.waiting);
+    cls = stale || !inGame ? 'warn' : 'ok';
   }
   if (!meta) stale = true;
-  statusEl.textContent = text;
-  statusEl.className = 'pill' + (meta && !stale ? ' ok' : '');
+  $('statusText').textContent = text;
+  statusEl.className = 'chip ' + cls;
+  $('empty').classList.toggle('on', !(live.clock && live.clock.in_game));
+  $('emptyText').textContent = cls === 'ok' ? TEXT.waiting : text;
 }
 
+applyText();
+
 if (/^[A-Za-z0-9]{20}$/.test(sessionId)) {
+  $('statusText').textContent = TEXT.connecting;
   const db = getDatabase(initializeApp(firebaseConfig));
   const base = 'sessions/' + sessionId;
   onValue(ref(db, '.info/connected'), snap => { connected = snap.val() === true; refreshStatus(); });
@@ -874,7 +1003,7 @@ if (/^[A-Za-z0-9]{20}$/.test(sessionId)) {
   const atBottom = () => logEl.scrollTop + logEl.clientHeight >= logEl.scrollHeight - 8;
   onChildAdded(feed, snap => { const stick = atBottom(); feedLine(snap.key, snap.val() || {}); if (stick) logEl.scrollTop = logEl.scrollHeight; });
   onChildChanged(feed, snap => feedLine(snap.key, snap.val() || {}));
-  onChildRemoved(feed, snap => { const line = feedLines.get(snap.key); if (line) line.remove(); feedLines.delete(snap.key); });
+  onChildRemoved(feed, snap => { const line = feedLines.get(snap.key); if (line) line.remove(); feedLines.delete(snap.key); feedData.delete(snap.key); });
 } else {
   connected = true;
 }
@@ -897,16 +1026,19 @@ popBtn.onclick = async function () {
       window.documentPictureInPicture.window.close();
       return;
     }
-    const w = await window.documentPictureInPicture.requestWindow({ width: 400, height: 380 });
-    for (const st of document.querySelectorAll('style')) w.document.head.appendChild(st.cloneNode(true));
+    const w = await window.documentPictureInPicture.requestWindow({ width: 420, height: 420 });
+    for (const st of document.querySelectorAll('style, link[rel="stylesheet"]')) w.document.head.appendChild(st.cloneNode(true));
+    w.document.documentElement.className = document.documentElement.className;
+    w.document.body.style.cssText = 'margin:0;height:100vh;background:var(--bg);display:flex';
+    const parent = consoleEl.parentNode, after = consoleEl.nextSibling;
     consoleEl.classList.add('pop');
     w.document.body.appendChild(consoleEl);
     w.addEventListener('pagehide', function () {
       consoleEl.classList.remove('pop');
-      side.insertBefore(consoleEl, side.firstChild);
+      parent.insertBefore(consoleEl, after);
     });
   } catch (e) {
-    statusEl.textContent = TEXT.noWindow + e.message;
+    $('statusText').textContent = TEXT.noWindow + e.message;
   }
 };
 
@@ -930,7 +1062,7 @@ pipBtn.onclick = async function () {
     await pipVideo.play();
     await pipVideo.requestPictureInPicture();
   } catch (e) {
-    statusEl.textContent = TEXT.noWindow + e.message;
+    $('statusText').textContent = TEXT.noWindow + e.message;
   }
 };
 </script>
