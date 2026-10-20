@@ -1,3 +1,10 @@
+# Update 1.4.2
+
+- The helper window uses the new interface version: the font matches the Umbrella menu, buttons light up in the accent colour on hover.
+- The header chevron sits on the side of the screen edge the window is closer to.
+- The dock button works from anywhere on the screen: the window moves to the nearest edge by itself.
+- The docked tab is larger and as tall as the header.
+
 # Update 1.4.1
 
 - Dark Portrait filter: the built-in combo no longer casts Dark Portrait on an unmarked enemy after the combo key is released and pressed again.

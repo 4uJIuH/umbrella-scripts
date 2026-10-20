@@ -446,7 +446,7 @@ local L = localization.Get
 
 --by m0rc1
 
-local VERSION = "1.4.1"
+local VERSION = "1.4.2"
 local GrimHelper = {}
 
 -- ============================================================================
@@ -1406,10 +1406,12 @@ end
 local asset = { fonts = {}, sizes = {}, size_n = 0, images = {}, dims = {}, budget = 3 }
 
 function asset.font(weight)
-    local f = asset.fonts[weight]
+    local name = U.flat and "MuseoSansEx" or "Inter"
+    local key = name .. weight
+    local f = asset.fonts[key]
     if not f then
-        f = Render.LoadFont("Inter", Enum.FontCreate.FONTFLAG_ANTIALIAS, weight)
-        asset.fonts[weight] = f
+        f = Render.LoadFont(name, Enum.FontCreate.FONTFLAG_ANTIALIAS, weight)
+        asset.fonts[key] = f
     end
     return f
 end
@@ -1460,6 +1462,10 @@ end
 
 function asset.hero(npc_name)
     return asset.image("panorama/images/heroes/icons/" .. npc_name .. "_png.vtex_c")
+end
+
+function asset.portrait(npc_name)
+    return asset.image("panorama/images/heroes/" .. npc_name .. "_png.vtex_c")
 end
 
 function asset.item(item_name)
@@ -1551,7 +1557,7 @@ function g.chars(str)
 end
 
 function g.fit(weight, size, str, max_w)
-    local key = weight .. ":" .. size .. ":" .. math.floor(max_w) .. ":" .. g.s .. ":" .. str
+    local key = (U.flat and "m" or "i") .. weight .. ":" .. size .. ":" .. math.floor(max_w) .. ":" .. g.s .. ":" .. str
     local out = g.fits[key]
     if out then return out end
     out = str
@@ -1572,7 +1578,7 @@ function g.fit(weight, size, str, max_w)
 end
 
 function g.wrap(weight, size, str, max_w)
-    local key = weight .. ":" .. size .. ":" .. math.floor(max_w) .. ":" .. g.s .. ":" .. str
+    local key = (U.flat and "m" or "i") .. weight .. ":" .. size .. ":" .. math.floor(max_w) .. ":" .. g.s .. ":" .. str
     local out = g.wraps[key]
     if out then return out end
     out = {}
@@ -1745,10 +1751,10 @@ end
 function view.button(x, y, w, h, label, kind, id, click)
     local hv = anim.hover(id)
     if U.flat then
-        local c = kind == "accent" and A or C.menu
-        g.rect(x, y, w, h, c, 4)
-        if hv > 0.01 then g.rect(x, y, w, h, T.white, 4, 0.05 * hv) end
-        g.text(500, 12.5, label, x + w / 2, y + h / 2, kind == "accent" and T.white or anim.mix(T.t3, T.t1, hv), 1, "c")
+        local k = kind == "accent" and 1 or hv
+        if hv > 0.01 then g.rect(x - 2, y - 2, w + 4, h + 4, A, 6, 0.10 * hv) end
+        g.rect(x, y, w, h, anim.mix(C.menu, A, k), 4)
+        g.text(500, 13, label, x + w / 2, y + h / 2, anim.mix(T.t3, T.white, k), 1, "c")
     elseif kind == "accent" then
         g.rect(x, y, w, h, A, h / 2, 0.88 + 0.12 * hv)
         g.text(600, 12.5, label, x + w / 2, y + h / 2, T.white, 1, "c")
@@ -2487,8 +2493,16 @@ function view.pin()
     return edge
 end
 
+function view.side()
+    return P.wx + K.W * g.s / 2 > Render.ScreenSize().x / 2 and 1 or -1
+end
+
 function view.dock(on)
     if on == nil then on = not P.set.docked end
+    if on and not view.edge() then
+        P.wx = view.side() < 0 and 0 or math.floor(Render.ScreenSize().x - K.W * g.s)
+        save("wx", P.wx)
+    end
     P.set.docked = on and view.edge() ~= nil
     save("docked", P.set.docked)
     if P.set.docked then
@@ -2498,7 +2512,7 @@ function view.dock(on)
 end
 
 function view.dock_tab(o, edge, d)
-    local tw, th = 20 + (o.tab_w or 0), 22
+    local tw, th = 26 + (o.tab_w or 0), U.flat and K.HEAD or 22
     local sw = Render.ScreenSize().x
     g.origin(edge > 0 and sw - tw * g.s or 0, P.wy)
     g.a = P.alpha * d
@@ -2510,10 +2524,10 @@ function view.dock_tab(o, edge, d)
         down = function(mx, my) P.drag, P.moved = { mx = mx, my = my, wx = P.wx, wy = P.wy, lock = true }, false end,
     })
     local cx = edge > 0 and 10 or tw - 10
-    local cc = U.flat and T.t4 or T.t3
-    g.glyph(edge > 0 and K.G.left or K.G.right, 10, cx, th / 2, anim.mix(cc, T.t1, anim.hover("btn_undock")))
-    hit.add(cx - 10, 0, 20, th, "btn_undock", { click = function() view.dock(false) end })
-    if o.tab then o.tab(edge > 0 and (U.flat and 22 or 20) or 6, th / 2) end
+    local cc = U.flat and T.knob or T.t3
+    g.glyph(edge > 0 and K.G.left or K.G.right, 11, cx, th / 2, anim.mix(cc, T.t2, anim.hover("btn_undock")))
+    hit.add(edge > 0 and 0 or tw - 22, 0, 22, th, "btn_undock", { click = function() view.dock(false) end })
+    if o.tab then o.tab(edge > 0 and 22 or 4, th / 2) end
 end
 
 function view.close()
@@ -2530,19 +2544,27 @@ function view.flat_head(o, W, edge)
         down = function(mx, my) P.drag, P.moved = { mx = mx, my = my, wx = P.wx, wy = P.wy }, false end,
         dbl = view.fold,
     })
-    local x = 6
+    local dock = K.SMALL and K.DOCK and edge
+    local side = dock and edge or -1
+    local glyph, click, lit = P.set.collapsed and K.G.down or K.G.left, view.fold, not P.set.collapsed
+    if dock then glyph, click, lit = side > 0 and K.G.right or K.G.left, function() view.dock(true) end, true end
+    local x, right = 6, W - 6
+    if side > 0 then
+        view.icon_button(x, by, bs, glyph, "btn_head", lit, click)
+        x = x + bs + 2
+    else
+        right = right - bs
+        view.icon_button(right, by, bs, glyph, "btn_head", lit, click)
+    end
     if o.switch then
-        view.switch(x, H / 2, o.switch.on, o.switch.id or "head_sw", o.switch.click, true)
+        view.switch(x + 2, H / 2, o.switch.on, o.switch.id or "head_sw", o.switch.click, true)
         x = x + 26
     end
     for _, b in ipairs(o.buttons or {}) do
         view.icon_button(x, by, bs, b.glyph, b.id, b.active, b.click)
         x = x + bs + 2
     end
-    local rx = W - 6 - bs
-    local glyph = edge and (edge > 0 and K.G.right or K.G.left) or (P.set.collapsed and K.G.down or K.G.left)
-    view.icon_button(rx, by, bs, glyph, "btn_head", true, edge and function() view.dock(true) end or view.fold)
-    local room = 2 * math.min(W / 2 - x - 4, rx - W / 2 - 4)
+    local room = 2 * math.min(W / 2 - x - 4, right - W / 2 - 4)
     g.text(500, 13, g.fit(500, 13, o.title, room), W / 2, H / 2, T.t2, nil, "c")
 end
 
