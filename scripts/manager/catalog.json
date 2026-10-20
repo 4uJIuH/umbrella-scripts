@@ -7,9 +7,9 @@
   "scripts": [
     {
       "id": "auto_support_buy",
-      "version": "1.0.1",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/4d42ae3842fbe99ef5a42a08b000eb7cd8179399/scripts/auto_support_buy/auto_support_buy.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.0.1/auto_support_buy.lua",
+      "version": "1.1.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/7101a9743a061ae5f1ff6f6d1c83667dd5433197/scripts/auto_support_buy/auto_support_buy.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/auto-support-buy-v1.1.0/auto_support_buy.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "4uJIuH",
@@ -21,7 +21,7 @@
           "Scripts \u2192 Scripts \u2192 Auto Support Buy"
         ]
       },
-      "date": "2026-10-19",
+      "date": "2026-10-20",
       "history": {
         "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_support_buy/CHANGELOG.md",
         "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/auto_support_buy/CHANGELOG.en.md"
