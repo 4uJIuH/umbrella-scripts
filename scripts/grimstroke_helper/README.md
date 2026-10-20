@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`grimstroke-helper-v1.4.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.1) | 2026-10-20 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.1/grimstroke_helper.lua) | 1 |
+| [`grimstroke-helper-v1.4.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.1) | 2026-10-20 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.1/grimstroke_helper.lua) | 2 |
 | [`grimstroke-helper-v1.4.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.0/grimstroke_helper.lua) | 10 |
 | [`grimstroke-helper-v1.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.3.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.3.0/grimstroke_helper.lua) | 3 |
 | [`grimstroke-helper-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.2.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.2.0/grimstroke_helper.lua) | 3 |

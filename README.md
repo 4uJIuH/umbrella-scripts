@@ -6,7 +6,7 @@
 Репозиторий: https://github.com/4uJIuH/umbrella-scripts
 
 <!-- scripts:ru:start -->
-- [Auto Support Buy](scripts/auto_support_buy) — покупает смоки и варды при полном запасе в лавке
+- [Auto Support Buy](scripts/auto_support_buy) — покупает по 1 смоку и варду при полном запасе в лавке
 - [Tinker Turret Dodge](scripts/tinker_turret_dodge) — автоматический додж опасных способностей турелями Тинкера
 - [Tinker Auto Farm](scripts/tinker_auto_farm) — автоматический фарм на Тинкере
 - [Auto Shackleshot](scripts/auto_shackleshot) — автоматическое применение Shackleshot за Windranger
@@ -302,7 +302,7 @@ Site: https://4ujiuh.github.io/umbrella-scripts/
 Repository: https://github.com/4uJIuH/umbrella-scripts
 
 <!-- scripts:en:start -->
-- [Auto Support Buy](scripts/auto_support_buy) — buys smokes and wards when the shop stock is full
+- [Auto Support Buy](scripts/auto_support_buy) — buys one smoke or ward each time the shop stock is full
 - [Tinker Turret Dodge](scripts/tinker_turret_dodge) — automatically dodges dangerous abilities with Tinker turrets
 - [Tinker Auto Farm](scripts/tinker_auto_farm) — automatic farming on Tinker
 - [Auto Shackleshot](scripts/auto_shackleshot) — automatic Shackleshot on Windranger
@@ -593,7 +593,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 <!-- stats:start -->
 | script | downloads | latest |
 | --- | --- | --- |
-| [Auto Support Buy](scripts/auto_support_buy) | 11 | `auto-support-buy-v1.0.1` |
+| [Auto Support Buy](scripts/auto_support_buy) | 11 | `auto-support-buy-v1.1.0` |
 | [Tinker Turret Dodge](scripts/tinker_turret_dodge) | 37 | `tinker-turret-dodge-v1.1.5` |
 | [Tinker Auto Farm](scripts/tinker_auto_farm) | 14 | `tinker-auto-farm-v1.0.4` |
 | [Auto Shackleshot](scripts/auto_shackleshot) | 20 | `auto-shackleshot-v1.0.0` |
@@ -629,7 +629,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Hero Grid](scripts/hero_grid) | 1 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 15 | `weather-v1.0.0` |
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 12 | `visage-familiar-tp-v1.0.0` |
-| [Grimstroke Helper](scripts/grimstroke_helper) | 28 | `grimstroke-helper-v1.4.1` |
+| [Grimstroke Helper](scripts/grimstroke_helper) | 29 | `grimstroke-helper-v1.4.1` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 10 | `phoenix-smartnova-v1.0.0` |
 | [BehaviorScoreHelper](scripts/behavior_score_helper) | 19 | `behavior-score-helper-v2.1.2` |
 | [Disable Tracker](scripts/disable_tracker) | 6 | `disable-tracker-v1.0.0` |
@@ -736,7 +736,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |
 | [Календарь](scripts/calendar) | 2 | `calendar-v1.0.0` |
 | [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) | 2 | `arc-warden-clone-pike-v1.0.0` |
-| [Dark Seer Illusion Control](scripts/dark_seer_illusions) | 0 | `dark-seer-illusions-v1.0.0` |
+| [Dark Seer Illusion Control](scripts/dark_seer_illusions) | 1 | `dark-seer-illusions-v1.0.1` |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/stats/stats-dark.svg">

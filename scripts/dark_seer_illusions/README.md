@@ -3,11 +3,12 @@
 управляет иллюзиями от Wall of Replica и Normal Punch / controls Wall of Replica and Normal Punch illusions
 
 <!-- releases:start -->
-Скачать: [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.0/dark_seer_illusions.lua) — `dark-seer-illusions-v1.0.0`, 2026-10-20
+Скачать: [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.1/dark_seer_illusions.lua) — `dark-seer-illusions-v1.0.1`, 2026-10-20
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`dark-seer-illusions-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dark-seer-illusions-v1.0.0) | 2026-10-20 | [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.0/dark_seer_illusions.lua) | 0 |
+| [`dark-seer-illusions-v1.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dark-seer-illusions-v1.0.1) | 2026-10-20 | [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.1/dark_seer_illusions.lua) | 0 |
+| [`dark-seer-illusions-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dark-seer-illusions-v1.0.0) | 2026-10-20 | [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.0/dark_seer_illusions.lua) | 1 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=dark-seer-illusions&expanded=true)
 <!-- releases:end -->
@@ -29,6 +30,10 @@
 3. Откройте `Heroes → Hero List → Dark Seer → Main Settings` и включите «Управлять иллюзиями».
 
 ## Что нового
+
+# Обновление 1.0.1
+
+- Кнопка в заголовке окна сворачивает окно, а прячет его в край экрана, только когда окно прижато к краю.
 
 # Релиз v1.0.0
 
@@ -55,6 +60,10 @@ Illusions from Wall of Replica and Normal Punch attack the selected enemies by p
 3. Open `Heroes → Hero List → Dark Seer → Main Settings` and turn on "Control illusions".
 
 ## Changelog
+
+# Update 1.0.1
+
+- The window header button folds the window and only docks it into the screen edge when the window touches that edge.
 
 # Release v1.0.0
 
