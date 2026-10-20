@@ -6334,7 +6334,7 @@
     {
       "id": "dark_seer_illusions",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_seer_illusions/dark_seer_illusions.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/4db60e584572ce3add53b4c90dec51fa9b227880/scripts/dark_seer_illusions/dark_seer_illusions.lua",
       "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.0/dark_seer_illusions.lua",
       "manual": false,
       "needs_q_localizer": false,
