@@ -1428,17 +1428,17 @@ function view.flat_head(o, W, edge)
 		down = function(mx, my) P.drag, P.moved = { mx = mx, my = my, wx = P.wx, wy = P.wy }, false end,
 		dbl = view.fold,
 	})
-	local dock = K.SMALL and K.DOCK
-	local side = dock and (edge or view.side()) or -1
-	local glyph, click = P.set.collapsed and K.G.down or K.G.up, view.fold
-	if dock then glyph, click = side > 0 and K.G.right or K.G.left, function() view.dock(true) end end
+	local dock = K.SMALL and K.DOCK and edge
+	local side = dock and edge or -1
+	local glyph, click, lit = P.set.collapsed and K.G.down or K.G.left, view.fold, not P.set.collapsed
+	if dock then glyph, click, lit = side > 0 and K.G.right or K.G.left, function() view.dock(true) end, true end
 	local x, right = 6, W - 6
 	if side > 0 then
-		view.icon_button(x, by, bs, glyph, "btn_head", true, click)
+		view.icon_button(x, by, bs, glyph, "btn_head", lit, click)
 		x = x + bs + 2
 	else
 		right = right - bs
-		view.icon_button(right, by, bs, glyph, "btn_head", true, click)
+		view.icon_button(right, by, bs, glyph, "btn_head", lit, click)
 	end
 	if o.switch then
 		view.switch(x + 2, H / 2, o.switch.on, o.switch.id or "head_sw", o.switch.click, true)

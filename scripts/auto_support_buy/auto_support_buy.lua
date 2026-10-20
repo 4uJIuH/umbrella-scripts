@@ -321,12 +321,12 @@ local localization = qLocalization.new({
 		asb_group_main = "Main",
 		asb_group_extra = "Behavior",
 		asb_enable = "Enable",
-		asb_enable_tip = "Buys support items when their stock in the shop is full",
+		asb_enable_tip = "Buys one support item each time its stock in the shop is full",
 		asb_gear_extra = "Extra",
 		asb_debug = "Debug log",
 		asb_debug_tip = "Writes what the script is doing\nto the log",
 		asb_items = "Items to buy",
-		asb_items_tip = "Buys only at full stock:\nSmoke 3, Observer 4, Sentry 8",
+		asb_items_tip = "Buys one item each time the stock is full:\nSmoke 3, Observer 4, Sentry 8",
 		asb_minute = "From minute",
 		asb_minute_tip = "The script waits until this game minute",
 		asb_gold = "Min gold",
@@ -340,12 +340,12 @@ local localization = qLocalization.new({
 		asb_group_main = "Основное",
 		asb_group_extra = "Поведение",
 		asb_enable = "Включить",
-		asb_enable_tip = "Покупает саппорт-предметы, когда их запас в лавке полный",
+		asb_enable_tip = "Покупает 1 саппорт-предмет каждый раз, когда его запас в лавке полный",
 		asb_gear_extra = "Дополнительно",
 		asb_debug = "Отладка в лог",
 		asb_debug_tip = "Пишет в лог, что сейчас делает скрипт",
 		asb_items = "Что покупать",
-		asb_items_tip = "Покупает только при полном запасе:\nСмоки 3, Обсы 4, Сентри 8",
+		asb_items_tip = "Покупает 1 штуку, когда запас полный:\nСмоки 3, Обсы 4, Сентри 8",
 		asb_minute = "С минуты",
 		asb_minute_tip = "Скрипт ждет эту минуту игры",
 		asb_gold = "Мин. золото",
@@ -357,7 +357,7 @@ local localization = qLocalization.new({
 	},
 })
 
-local VERSION = "1.0.1"
+local VERSION = "1.1.0"
 
 local UI = localization.WrapLibrary(Menu)
 
@@ -417,7 +417,7 @@ end
 ui.enable:SetCallback(refresh_disabled, true)
 ui.drop:SetCallback(refresh_disabled)
 
-local state = { next = 0, buying = {}, drop_until = 0, dropped = {} }
+local state = { next = 0, wait = {}, drop_until = 0, dropped = {} }
 
 local function log(text, data)
 	if ui.debug:Get() and ai_bridge and ai_bridge.mcp_log then
@@ -471,16 +471,9 @@ function script.OnUpdate()
 	local gold = Player.GetTotalGold(player)
 	for _, it in ipairs(ITEMS) do
 		local stock = Item.GetStockCount(it.item_id, team)
-		local on = ui.items:Get(it.id)
-		if on and stock >= it.max and not state.buying[it.name] then
-			state.buying[it.name] = true
-			log("stock full", { item = it.name, stock = stock, gold = gold })
-		end
-		if not on or stock <= 0 or gold < ui.gold:Get() or gold < it.cost then
-			if state.buying[it.name] then log("stop", { item = it.name, stock = stock, gold = gold }) end
-			state.buying[it.name] = nil
-		end
-		if state.buying[it.name] then
+		if ui.items:Get(it.id) and stock >= it.max and gold >= ui.gold:Get() and gold >= it.cost
+			and (state.wait[it.name] or 0) < now then
+			state.wait[it.name] = now + 2
 			order(player, hero, Enum.UnitOrder.DOTA_UNIT_ORDER_PURCHASE_ITEM, it.item_id, it.item_id)
 			state.drop_until = now + 15
 			log("buy", { item = it.name, stock = stock, gold = gold })
@@ -490,7 +483,7 @@ function script.OnUpdate()
 end
 
 function script.OnGameEnd()
-	state.buying, state.dropped, state.drop_until = {}, {}, 0
+	state.wait, state.dropped, state.drop_until = {}, {}, 0
 end
 
 return script
