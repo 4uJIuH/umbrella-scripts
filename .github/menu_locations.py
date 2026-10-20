@@ -16,6 +16,10 @@ OVERRIDES = {
         "ru": ["Heroes → Hero List → Dark Seer → Spot Block"],
         "en": ["Heroes → Hero List → Dark Seer → Spot Block"],
     },
+    "dark_seer_illusions": {
+        "ru": ["Heroes → Hero List → Dark Seer → Main Settings"],
+        "en": ["Heroes → Hero List → Dark Seer → Main Settings"],
+    },
     "custom_background": {
         "ru": ["Scripts → Scripts → Кастом фон"],
         "en": ["Scripts → Scripts → Кастом фон"],
