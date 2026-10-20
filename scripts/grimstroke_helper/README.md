@@ -3,11 +3,12 @@
 подбирает цели для Ink Swell и управляет Dark Portrait / selects Ink Swell targets and controls Dark Portrait
 
 <!-- releases:start -->
-Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.0/grimstroke_helper.lua) — `grimstroke-helper-v1.4.0`, 2026-10-19
+Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.1/grimstroke_helper.lua) — `grimstroke-helper-v1.4.1`, 2026-10-20
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`grimstroke-helper-v1.4.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.0/grimstroke_helper.lua) | 2 |
+| [`grimstroke-helper-v1.4.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.1) | 2026-10-20 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.1/grimstroke_helper.lua) | 0 |
+| [`grimstroke-helper-v1.4.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.0/grimstroke_helper.lua) | 10 |
 | [`grimstroke-helper-v1.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.3.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.3.0/grimstroke_helper.lua) | 3 |
 | [`grimstroke-helper-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.2.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.2.0/grimstroke_helper.lua) | 3 |
 | [`grimstroke-helper-v1.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.1.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.1.0/grimstroke_helper.lua) | 0 |
@@ -30,6 +31,14 @@ Grimstroke Helper помогает автоматически выбирать �
 3. Откройте Heroes → Hero List → Grimstroke → Helper.
 
 ## Что нового
+
+# Обновление 1.4.1
+
+- Фильтр Dark Portrait: встроенное комбо больше не кастует Dark Portrait на неотмеченного врага после повторного нажатия клавиши комбо.
+- Фильтр Dark Portrait: Dark Portrait разрешен и на врага, связанного Soulbind с отмеченным врагом.
+- Фильтр Dark Portrait: если при зажатой клавише комбо курсор переходит на другого врага, Dark Portrait кастуется, только когда разрешены и первая цель, и новая.
+- Ink Swell: дистанция от союзника до врага теперь работает во всех режимах, включая «Разрешенный, ближайший к врагам».
+- Исправлены ошибки Lua, когда иллюзия или ее цель исчезает.
 
 # Обновление 1.4.0
 
@@ -86,6 +95,14 @@ Grimstroke Helper automatically selects an ally for Ink Swell and controls the D
 3. Open Heroes → Hero List → Grimstroke → Helper.
 
 ## Changelog
+
+# Update 1.4.1
+
+- Dark Portrait filter: the built-in combo no longer casts Dark Portrait on an unmarked enemy after the combo key is released and pressed again.
+- Dark Portrait filter: Dark Portrait is also allowed on an enemy bound by Soulbind to a marked enemy.
+- Dark Portrait filter: if the enemy under the cursor changes while the combo key is held, Dark Portrait is cast only when both the first target and the new one are allowed.
+- Ink Swell: the ally-to-enemy distance now works in every mode, including "Allowed ally closest to enemies".
+- Fixed Lua errors when an illusion or its target disappears.
 
 # Update 1.4.0
 
