@@ -6330,6 +6330,28 @@
         "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/pt_mana_abuse_ctx/CHANGELOG.en.md"
       },
       "version_marker": "NONE"
+    },
+    {
+      "id": "dark_seer_illusions",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_seer_illusions/dark_seer_illusions.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.0/dark_seer_illusions.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "4uJIuH",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Scripts \u2192 Illusion Control"
+        ],
+        "en": [
+          "Scripts \u2192 Scripts \u2192 Illusion Control"
+        ]
+      },
+      "date": "2026-10-20",
+      "heroes": [
+        "dark_seer"
+      ],
+      "version_marker": "NONE"
     }
   ]
 }

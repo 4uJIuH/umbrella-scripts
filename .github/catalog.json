@@ -11796,6 +11796,62 @@
           "Open `General → Main → PT Abuse → Settings → Main`."
         ]
       }
+    },
+    {
+      "id": "dark_seer_illusions",
+      "tag": "dark-seer-illusions",
+      "title": "Dark Seer Illusion Control",
+      "kind": "lua",
+      "category": "dota",
+      "file": "dark_seer_illusions.lua",
+      "author": "4uJIuH",
+      "author_github": "4uJIuH",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "heroes": [
+        "dark_seer"
+      ],
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-20",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_seer_illusions/dark_seer_illusions.lua",
+        "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.0/dark_seer_illusions.lua"
+      },
+      "ru": {
+        "tagline": "управляет иллюзиями от Wall of Replica и Normal Punch",
+        "about": "Иллюзии от Wall of Replica и Normal Punch сами бьют выбранных врагов по приоритету. Приоритет задаётся в небольшом окне: перетащите иконки героев, клик выключает героя.",
+        "features": [
+          "Приоритет врагов в перетаскиваемом окне: левее значит важнее, клик по иконке выключает героя",
+          "Режимы атаки: сначала герои с малым HP (порог в %) или сначала приоритет",
+          "Если выбранных героев нет рядом, бьёт цель Dark Seer или врага с меньшим HP",
+          "Без целей иллюзии следуют за Dark Seer, фармят лесные кемпы или пушат линию и башню",
+          "Пока иллюзии бьют цель, их нельзя выделить; ручной приказ отключает скрипт для иллюзии на несколько секунд"
+        ],
+        "install": [
+          "Нажмите «Установить» в Script Manager или поместите `dark_seer_illusions.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Heroes → Hero List → Dark Seer → Main Settings` и включите «Управлять иллюзиями»."
+        ]
+      },
+      "en": {
+        "tagline": "controls Wall of Replica and Normal Punch illusions",
+        "about": "Illusions from Wall of Replica and Normal Punch attack the selected enemies by priority on their own. Set the priority in a small window: drag the hero icons, click to turn a hero off.",
+        "features": [
+          "Enemy priority in a draggable window: further left is higher, click an icon to turn a hero off",
+          "Attack modes: low HP heroes first (threshold in %) or priority first",
+          "When no selected hero is in range, attacks Dark Seer's target or the enemy with the lowest HP",
+          "With no targets the illusions follow Dark Seer, farm jungle camps or push the lane and tower",
+          "Illusions can't be selected while attacking a target; a manual order pauses the script for that illusion for a few seconds"
+        ],
+        "install": [
+          "Click Install in Script Manager or place `dark_seer_illusions.lua` in the `umbrella\\scripts` folder.",
+          "Reload Lua scripts.",
+          "Open `Heroes → Hero List → Dark Seer → Main Settings` and turn on \"Control illusions\"."
+        ]
+      },
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/dark_seer_illusions",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=dark-seer-illusions&expanded=true",
+      "manager_catalog": true
     }
   ]
 }
