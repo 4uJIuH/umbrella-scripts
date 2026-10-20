@@ -334,7 +334,7 @@ local localization = qLocalization.new({
         gh_ink_modes_whitelist = "Allowed ally closest to enemies",
         gh_ink_modes_whitelist_range = "Allowed ally near enemies",
         gh_ink_dist = "Ally to Enemy Distance",
-        gh_ink_dist_tip = "An ally farther than this from every enemy is skipped.\nNot used in the second mode.",
+        gh_ink_dist_tip = "An ally farther than this from every enemy is skipped.",
         gh_ink_self = "Allow Self by Default",
         gh_ink_self_tip = "Whether Grimstroke himself starts as allowed in the panel.",
         gh_dp_enable = "Control Illusion",
@@ -349,7 +349,7 @@ local localization = qLocalization.new({
         gh_dp_idles_attack = "Attack nearest enemies",
         gh_dp_idles_hold = "Stay in place",
         gh_dp_wl = "Dark Portrait Whitelist",
-        gh_dp_wl_tip = "While the combo key is held, the built-in combo casts Dark Portrait only on checked enemies.\nOther abilities are not affected.",
+        gh_dp_wl_tip = "Built-in combo casts Dark Portrait only on checked enemies\nor on enemies Soulbound to a checked one.",
         gh_dp_list = "Dark Portrait Targets",
         gh_sb_wl = "Solo Soulbind Whitelist",
         gh_sb_wl_tip = "With the level 15 talent, the combo Soulbinds a checked enemy even when alone.\nOther enemies still need a second enemy in link range.",
@@ -395,7 +395,7 @@ local localization = qLocalization.new({
         gh_ink_modes_whitelist = "Разрешенный, ближайший к врагам",
         gh_ink_modes_whitelist_range = "Разрешенный рядом с врагами",
         gh_ink_dist = "Дистанция до врага",
-        gh_ink_dist_tip = "Союзник дальше этого от всех врагов пропускается.\nВо втором режиме не используется.",
+        gh_ink_dist_tip = "Союзник дальше этого от всех врагов пропускается.",
         gh_ink_self = "Себя разрешить сразу",
         gh_ink_self_tip = "Разрешен ли сам Grimstroke в панели при старте.",
         gh_dp_enable = "Управлять иллюзией",
@@ -410,7 +410,7 @@ local localization = qLocalization.new({
         gh_dp_idles_attack = "Атаковать ближайших",
         gh_dp_idles_hold = "Стоять на месте",
         gh_dp_wl = "Фильтр Dark Portrait",
-        gh_dp_wl_tip = "Пока зажата клавиша комбо, встроенное комбо кастует Dark Portrait только на отмеченных врагов.\nОстальные способности работают как обычно.",
+        gh_dp_wl_tip = "Встроенное комбо кастует Dark Portrait только на отмеченных врагов\nи на врагов, связанных с ними Soulbind.",
         gh_dp_list = "Цели Dark Portrait",
         gh_sb_wl = "Фильтр соло Soulbind",
         gh_sb_wl_tip = "С талантом 15 уровня комбо связывает отмеченного врага, даже если он один.\nОстальным врагам по-прежнему нужен второй враг рядом.",
@@ -446,7 +446,7 @@ local L = localization.Get
 
 --by m0rc1
 
-local VERSION = "1.4.0"
+local VERSION = "1.4.1"
 local GrimHelper = {}
 
 -- ============================================================================
@@ -604,14 +604,17 @@ local function SetBuiltin(key, allowed)
     WriteBuiltin(key, w, value)
 end
 
-local function RestoreBuiltin()
-    if next(combo.saved) == nil then return end
+local function RestoreBuiltin(only)
+    local changed = false
     for key, original in pairs(combo.saved) do
-        local w, current = GetBuiltin(key)
-        if w and current ~= original then WriteBuiltin(key, w, original) end
+        if not only or key == only then
+            local w, current = GetBuiltin(key)
+            if w and current ~= original then WriteBuiltin(key, w, original) end
+            combo.saved[key] = nil
+            changed = true
+        end
     end
-    combo.saved = {}
-    SaveWhitelist()
+    if changed then SaveWhitelist() end
 end
 
 LoadWhitelist()
@@ -634,7 +637,7 @@ local function RefreshDisabled()
     ui_filters_key:Disabled(not on)
     ui_ink_enabled:Disabled(not on)
     ui_ink_mode:Disabled(not ink_on)
-    ui_ink_max_dist:Disabled(not ink_on or MenuOn(ui_ink_mode) == 1)
+    ui_ink_max_dist:Disabled(not ink_on)
     ui_ink_self:Disabled(not ink_on)
     ui_dp_enabled:Disabled(not on)
     ui_dp_target_mode:Disabled(not dp_on)
@@ -957,16 +960,9 @@ local function ProcessInkSwell(my_hero, my_player)
         if allowed then
             local dist_to_grim = (node.pos - hero_pos):Length2D()
             if dist_to_grim <= (cast_range + 80) then
-                if mode == 1 then
-                    if node.enemy_dist < best_enemy_dist then
-                        best_enemy_dist = node.enemy_dist
-                        best_target = node.ent
-                    end
-                else
-                    if node.enemy_dist <= max_enemy_dist and node.enemy_dist < best_enemy_dist then
-                        best_enemy_dist = node.enemy_dist
-                        best_target = node.ent
-                    end
+                if node.enemy_dist <= max_enemy_dist and node.enemy_dist < best_enemy_dist then
+                    best_enemy_dist = node.enemy_dist
+                    best_target = node.ent
                 end
             end
         end
@@ -1058,6 +1054,7 @@ local function ProcessDarkPortrait(my_hero, my_player)
 
     for i = 1, #illusions do
         local illu = illusions[i]
+        if not Entity.IsEntity(illu) or not Entity.IsAlive(illu) then goto continue end
         local idx = Entity.GetIndex(illu)
         local u_pos = Entity.GetAbsOrigin(illu)
 
@@ -1087,6 +1084,7 @@ local function ProcessDarkPortrait(my_hero, my_player)
                 end
             end
         end
+        ::continue::
     end
     last_illu_orders = live_orders
 end
@@ -1140,10 +1138,7 @@ local function GetVisibleEnemies(my_hero)
     return list
 end
 
-local function GetComboTarget(enemies)
-    local t = combo.target
-    if t and Entity.IsAlive(t) and not Entity.IsDormant(t) then return t end
-
+local function CursorTarget(enemies)
     local range_w = BuiltinWidget("range")
     local best_dist = range_w and range_w:Get() or 800
     local cursor = Input.GetWorldCursorPos()
@@ -1155,8 +1150,14 @@ local function GetComboTarget(enemies)
             best = enemies[i]
         end
     end
-    combo.target = best
     return best
+end
+
+local function GetComboTarget(enemies)
+    local t = combo.target
+    if t and Entity.IsEntity(t) and Entity.IsAlive(t) and not Entity.IsDormant(t) then return t end
+    combo.target = CursorTarget(enemies)
+    return combo.target
 end
 
 local function TrySoloSoulbind(my_hero, target, enemies)
@@ -1185,14 +1186,29 @@ local function TrySoloSoulbind(my_hero, target, enemies)
     Ability.CastTarget(soul, target, false, false, true, "GrimHelperSoulbind")
 end
 
-local function ProcessComboWhitelists(my_hero)
-    local dp_on = GetVal(ui_dp_wl_enabled)
-    local sb_on = GetVal(ui_sb_wl_enabled)
-    local key_w = BuiltinWidget("key")
+local function DarkPortraitAllowed(target, enemies)
+    if whitelist.dp[NPC.GetUnitName(target) or ""] then return true end
+    if not NPC.HasModifier(target, "modifier_grimstroke_soul_chain") then return false end
+    for i = 1, #enemies do
+        local e = enemies[i]
+        if e ~= target and NPC.HasModifier(e, "modifier_grimstroke_soul_chain") and whitelist.dp[NPC.GetUnitName(e) or ""] then
+            return true
+        end
+    end
+    return false
+end
 
-    if not panel_active or not (dp_on or sb_on) or not key_w or not key_w:IsDown() then
+local function ProcessComboWhitelists(my_hero)
+    local dp_on = panel_active and GetVal(ui_dp_wl_enabled)
+    local sb_on = panel_active and GetVal(ui_sb_wl_enabled)
+    if not dp_on then RestoreBuiltin("dp") end
+    if not sb_on then RestoreBuiltin("solo") end
+
+    local key_w = BuiltinWidget("key")
+    if not (dp_on or sb_on) or not key_w or not key_w:IsDown() then
         combo.target = nil
-        RestoreBuiltin()
+        if dp_on then SetBuiltin("dp", false) end
+        if sb_on then SetBuiltin("solo", false) end
         return
     end
 
@@ -1201,7 +1217,9 @@ local function ProcessComboWhitelists(my_hero)
     local name = target and NPC.GetUnitName(target)
 
     if dp_on then
-        SetBuiltin("dp", name ~= nil and whitelist.dp[name] == true)
+        local hovered = CursorTarget(enemies)
+        SetBuiltin("dp", target ~= nil and DarkPortraitAllowed(target, enemies)
+            and (hovered == nil or hovered == target or DarkPortraitAllowed(hovered, enemies)))
     end
 
     if sb_on then
@@ -2825,7 +2843,7 @@ local function RefreshWindowData()
         GW.dp_text, GW.dp_col = L("gh_hud_paused"), T.yellow
     elseif #cache.illusions == 0 then
         GW.dp_text, GW.dp_col = L("gh_hud_none"), T.t4
-    elseif cache.illu_target and Entity.IsAlive(cache.illu_target) then
+    elseif cache.illu_target and Entity.IsEntity(cache.illu_target) and Entity.IsAlive(cache.illu_target) then
         local t_name = HeroDisplayName(NPC.GetUnitName(cache.illu_target))
         GW.dp_text, GW.dp_col = string.format(L("gh_hud_focus"), t_name, Entity.GetHealth(cache.illu_target)), AT
     else

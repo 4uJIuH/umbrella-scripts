@@ -1,3 +1,11 @@
+# Update 1.4.1
+
+- Dark Portrait filter: the built-in combo no longer casts Dark Portrait on an unmarked enemy after the combo key is released and pressed again.
+- Dark Portrait filter: Dark Portrait is also allowed on an enemy bound by Soulbind to a marked enemy.
+- Dark Portrait filter: if the enemy under the cursor changes while the combo key is held, Dark Portrait is cast only when both the first target and the new one are allowed.
+- Ink Swell: the ally-to-enemy distance now works in every mode, including "Allowed ally closest to enemies".
+- Fixed Lua errors when an illusion or its target disappears.
+
 # Update 1.4.0
 
 - The helper window looks like Umbrella's own panels (Illusion Controller, Wards): colours come from the cheat menu, the header has the switch and filters on the left, the title in the middle and a red chevron on the right.
