@@ -1,4 +1,4 @@
-local SCRIPT_VERSION = "2.1.1"
+local SCRIPT_VERSION = "2.1.2"
 local bh = {}
 
 local protobuf = require('protobuf')
@@ -41,7 +41,6 @@ local localization = qLocalization.new({
         bs_text = "Message text",
         bs_greet_enable_tip = "Writes a message to chat when the match starts.",
         bs_gg_enable_tip = "Writes a message to chat after the throne falls.",
-        bs_gg_delay = "Delay after throne falls",
         bs_gg_default = "gg wp, commend pls",
 
         bs_ctrl_enable = "Text Chat Control",
@@ -179,7 +178,6 @@ local localization = qLocalization.new({
         bs_text = "Текст сообщения",
         bs_greet_enable_tip = "Пишет сообщение в чат в начале матча.",
         bs_gg_enable_tip = "Пишет сообщение в чат после падения трона.",
-        bs_gg_delay = "Пауза после падения трона",
         bs_gg_default = "спс за игру, киньте лайк пж",
 
         bs_ctrl_enable = "Контроль текстового чата",
@@ -658,8 +656,6 @@ do
     ui.ggEnabled:ToolTip("bs_gg_enable_tip")
     ui.ggChat = gGG:Combo("bs_chat_to", chats, 0)
     ui.ggChat:Icon("\u{f075}")
-    ui.ggDelay = gGG:Slider("bs_gg_delay", 0, 5, 1, fmtSec)
-    ui.ggDelay:Icon("\u{f017}")
     ui.ggText = gGG:Input("bs_text", L("bs_gg_default"), "\u{f040}")
 
     ui.msgCtrlEnabled = gCtrl:Switch("bs_ctrl_enable", false, "\u{f05e}")
@@ -781,7 +777,6 @@ local function refreshUi()
 
     local ggOn = ui.ggEnabled:Get()
     ui.ggChat:Disabled(not ggOn)
-    ui.ggDelay:Disabled(not ggOn)
     ui.ggText:Disabled(not ggOn)
 
     local ctrlOn = ui.msgCtrlEnabled:Get()
@@ -1918,7 +1913,7 @@ function bh.OnUpdateEx()
             local valid = Entity.IsEntity(fort)
             if not valid or not Entity.IsAlive(fort) or (Entity.GetHealth(fort) or 1) <= 0 then
                 throneBroken = true
-                ggTime = t + ui.ggDelay:Get()
+                ggTime = t
                 break
             end
         end
@@ -2098,7 +2093,7 @@ function bh.OnEntityKilled(data)
     if Entity.IsNPC(target) and NPC.IsFort(target) then
         throneBroken = true
         if not ggTime then
-            ggTime = os.clock() + ui.ggDelay:Get()
+            ggTime = os.clock()
         end
         return
     end

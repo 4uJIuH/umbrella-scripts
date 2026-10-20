@@ -1,3 +1,7 @@
+# Fix v2.1.2
+
+- Auto GG: removed the "Delay after throne falls" setting. GG is sent as soon as the throne falls.
+
 # Fix v2.1.1
 
 - Block profanity and insults: a blocked message is not sent, and you get a notice in your chat with the word that stopped it. Normal messages are sent as before.
