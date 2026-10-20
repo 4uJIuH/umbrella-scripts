@@ -629,7 +629,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 12 | `visage-familiar-tp-v1.0.0` |
 | [Grimstroke Helper](scripts/grimstroke_helper) | 27 | `grimstroke-helper-v1.4.1` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 10 | `phoenix-smartnova-v1.0.0` |
-| [BehaviorScoreHelper](scripts/behavior_score_helper) | 19 | `behavior-score-helper-v2.1.1` |
+| [BehaviorScoreHelper](scripts/behavior_score_helper) | 19 | `behavior-score-helper-v2.1.2` |
 | [Disable Tracker](scripts/disable_tracker) | 6 | `disable-tracker-v1.0.0` |
 | [Russian Roulette](scripts/russian_roulette) | 2 | `russian-roulette-v1.0.0` |
 | [MoM Swapper](scripts/mom_swapper) | 9 | `mom-swapper-v1.0.0` |
