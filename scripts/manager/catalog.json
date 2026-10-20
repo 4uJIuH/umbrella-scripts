@@ -6351,6 +6351,10 @@
       "heroes": [
         "dark_seer"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_seer_illusions/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_seer_illusions/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     }
   ]

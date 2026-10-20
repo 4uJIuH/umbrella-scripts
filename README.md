@@ -248,6 +248,7 @@
 - [Календарь](scripts/calendar) — календарь событий с напоминаниями поверх Dota 2
 - [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) — пика от клона для спасения Арк Вардена
 - [PT Mana Abuse (ctx)](scripts/pt_mana_abuse_ctx) — автоматически переключает Power Treads на интеллект для каста
+- [Dark Seer Illusion Control](scripts/dark_seer_illusions) — управляет иллюзиями от Wall of Replica и Normal Punch
 <!-- scripts:ru:end -->
 
 На странице скрипта есть описание, установка, история версий и загрузка.
@@ -543,6 +544,7 @@ Repository: https://github.com/4uJIuH/umbrella-scripts
 - [Календарь](scripts/calendar) — an event calendar with reminders over Dota 2
 - [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) — use the clone's Pike to save Arc Warden
 - [PT Mana Abuse (ctx)](scripts/pt_mana_abuse_ctx) — switches Power Treads to Intelligence when needed to cast
+- [Dark Seer Illusion Control](scripts/dark_seer_illusions) — controls Wall of Replica and Normal Punch illusions
 <!-- scripts:en:end -->
 
 The script page includes its description, installation steps, version history, and download.
@@ -611,13 +613,13 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [DS Spot Block](scripts/ds_spot_block) | 58 | `ds-spot-block-v1.0.1` |
 | [Custom Background](scripts/custom_background) | 51 | `custom-background-v1.0.0` |
 | [Auto Stack](scripts/auto_stack) | 163 | `auto-stack-v1.1.0` |
-| [Draft Helper](scripts/draft_helper) | 1489 | `draft-helper-v2.0.0-beta.20` |
+| [Draft Helper](scripts/draft_helper) | 1490 | `draft-helper-v2.0.0-beta.20` |
 | [MusicUI](scripts/musicui) | 742 | `musicui-v1.0.8` |
 | [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 205 | `umbrella-lua-v1.0.4` |
 | [Custom Stats](scripts/custom_stats) | 15 | `custom-stats-v1.0.0` |
 | [Bloodrage AutoCast](scripts/bloodrage_autocast) | 8 | `bloodrage-autocast-v1.0.0` |
 | [Naga PT Abuse](scripts/naga_pt_abuse) | 16 | `naga-pt-abuse-v1.0.0` |
-| [Auto Aegis Mover](scripts/auto_aegis_mover) | 23 | `auto-aegis-mover-v1.0.0` |
+| [Auto Aegis Mover](scripts/auto_aegis_mover) | 24 | `auto-aegis-mover-v1.0.0` |
 | [Anti-Rubick](scripts/anti_rubick) | 18 | `anti-rubick-v1.0.0` |
 | [Arc Warden Blocker](scripts/arc_warden_blocker) | 11 | `arc-warden-blocker-v1.0.0` |
 | [Invoker Combo Switcher](scripts/invoker_combo_switcher) | 14 | `invoker-combo-switcher-v1.0.0` |
@@ -627,7 +629,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Hero Grid](scripts/hero_grid) | 1 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 15 | `weather-v1.0.0` |
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 12 | `visage-familiar-tp-v1.0.0` |
-| [Grimstroke Helper](scripts/grimstroke_helper) | 27 | `grimstroke-helper-v1.4.1` |
+| [Grimstroke Helper](scripts/grimstroke_helper) | 28 | `grimstroke-helper-v1.4.1` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 10 | `phoenix-smartnova-v1.0.0` |
 | [BehaviorScoreHelper](scripts/behavior_score_helper) | 19 | `behavior-score-helper-v2.1.2` |
 | [Disable Tracker](scripts/disable_tracker) | 6 | `disable-tracker-v1.0.0` |
@@ -645,11 +647,11 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Invoker Jarvis](scripts/invoker_jarvis) | 43 | `v1.3.1` |
 | [TikTok](scripts/umbrella_tiktok) | 314 | `v1.3.2` |
 | [Invoker AutoStack](scripts/invoker_autostack) | 79 | `v1.4.2` |
-| [Old Last Match](scripts/old_last_match) | 15 | `old-last-match-v1.0.0` |
+| [Old Last Match](scripts/old_last_match) | 16 | `old-last-match-v1.0.0` |
 | [Unusual Secret](scripts/unusual_secret) | 13 | `unusual-secret-v2.1.0` |
 | [Atmospheric Fog Restorer](scripts/atmospheric_fog) | 8 | `atmospheric-fog-v1.0.0` |
 | [Windranger Powershot Killsteal](scripts/windranger_powershot) | 19 | `windranger-powershot-v1.0.0` |
-| [MoM Sabre Abuse](scripts/mom_sabre_abuse) | 7 | `mom-sabre-abuse-v2.0.0` |
+| [MoM Sabre Abuse](scripts/mom_sabre_abuse) | 8 | `mom-sabre-abuse-v2.0.0` |
 | [Tinker 1x6 Farm](scripts/tinker_1x6_farm) | 4 | `tinker-1x6-farm-v1.0.0` |
 | [Forge Spirit Helper](scripts/forge_spirit_helper) | 18 | `forge-spirit-helper-v1.0.0` |
 | [Gank Threat](scripts/gank_threat) | 15 | `gank-threat-v1.0.0` |
@@ -672,13 +674,13 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Hoodwink Blast Off Catch](scripts/hoodwink_bushwhack_techies) | 7 | `hoodwink-bushwhack-techies-v1.0.0` |
 | [Ringmaster Eul Combo](scripts/ringmaster_eul_combo) | 8 | `ringmaster-eul-combo-v1.0.0` |
 | [Spirit Breaker Charge Combo](scripts/spirit_breaker_charge) | 16 | `spirit-breaker-charge-v1.0.0` |
-| [Ward Predictor](scripts/ward_predictor) | 22 | `ward-predictor-v1.0.0` |
+| [Ward Predictor](scripts/ward_predictor) | 23 | `ward-predictor-v1.0.0` |
 | [Invoker SS](scripts/invoker_ss) | 3 | `invoker-ss-v138` |
 | [Sentry](scripts/sentry) | 12 | `sentry-v1.0.0` |
 | [Changer](scripts/changer) | 11 | `changer-v1.0.0` |
 | [Self Play](scripts/self_play_bot) | 7 | `self-play-v1.0.1` |
 | [Farm Pattern 2.5](scripts/farm_pattern) | 5 | `farm-pattern-v2.5` |
-| [Win Condition Engine](scripts/win_condition_engine) | 43 | `win-condition-engine-v1.0.0` |
+| [Win Condition Engine](scripts/win_condition_engine) | 44 | `win-condition-engine-v1.0.0` |
 | [Invoker (beta)](scripts/invoker_beta) | 40 | `invoker-beta-v1.0.0` |
 | [Kez Combo](scripts/kez_combo) | 13 | `kez-combo-v1.0.0` |
 | [Techies Combo](scripts/techies_combo) | 17 | `techies-combo-v1.0.0` |
@@ -734,6 +736,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |
 | [Календарь](scripts/calendar) | 2 | `calendar-v1.0.0` |
 | [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) | 2 | `arc-warden-clone-pike-v1.0.0` |
+| [Dark Seer Illusion Control](scripts/dark_seer_illusions) | 0 | `dark-seer-illusions-v1.0.0` |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/stats/stats-dark.svg">
