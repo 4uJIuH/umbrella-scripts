@@ -859,9 +859,9 @@
     },
     {
       "id": "grimstroke_helper",
-      "version": "1.4.1",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/74146ff5e6af8ea3d9c462133d86e9063da058b5/scripts/grimstroke_helper/grimstroke_helper.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.1/grimstroke_helper.lua",
+      "version": "1.4.2",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/aacb7b6249c87a4edd3878851e080056bc1e5cc3/scripts/grimstroke_helper/grimstroke_helper.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.2/grimstroke_helper.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "! M0RC1 (Discord: wh1teray)",
@@ -873,7 +873,7 @@
           "Heroes \u2192 Hero List \u2192 Grimstroke"
         ]
       },
-      "date": "2026-10-20",
+      "date": "2026-10-21",
       "heroes": [
         "grimstroke"
       ],
