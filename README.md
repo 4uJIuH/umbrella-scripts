@@ -606,17 +606,17 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Rem Assistant](scripts/rem_assistant) | 2 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
 | [qLocalization](scripts/q_localizer) | 131 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 474 | `script-manager-v2.14.2` |
+| [Script Manager](scripts/script_manager) | 475 | `script-manager-v2.14.2` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 647 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 13 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 288 | `lane-pull-v1.0.4` |
 | [DS Spot Block](scripts/ds_spot_block) | 60 | `ds-spot-block-v1.0.1` |
 | [Custom Background](scripts/custom_background) | 53 | `custom-background-v1.0.0` |
 | [Auto Stack](scripts/auto_stack) | 169 | `auto-stack-v1.1.0` |
-| [Draft Helper](scripts/draft_helper) | 1524 | `draft-helper-v2.0.0-beta.20` |
+| [Draft Helper](scripts/draft_helper) | 1527 | `draft-helper-v2.0.0-beta.20` |
 | [MusicUI](scripts/musicui) | 745 | `musicui-v1.0.8` |
 | [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 207 | `umbrella-lua-v1.0.4` |
-| [Custom Stats](scripts/custom_stats) | 21 | `custom-stats-v1.0.0` |
+| [Custom Stats](scripts/custom_stats) | 22 | `custom-stats-v1.0.0` |
 | [Bloodrage AutoCast](scripts/bloodrage_autocast) | 10 | `bloodrage-autocast-v1.0.0` |
 | [Naga PT Abuse](scripts/naga_pt_abuse) | 17 | `naga-pt-abuse-v1.0.0` |
 | [Auto Aegis Mover](scripts/auto_aegis_mover) | 26 | `auto-aegis-mover-v1.0.0` |
@@ -626,7 +626,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Magnus Skewer Ally](scripts/magnus_skewer_ally) | 16 | `magnus-skewer-ally-v1.0.0` |
 | [Better Better Techies Combo](scripts/better_better_techies_combo) | 45 | `better-better-techies-combo-v1.0.0` |
 | [Chat Translator](scripts/chat_translator) | 25 | `chat-translator-v1.0.0` |
-| [Hero Grid](scripts/hero_grid) | 1 | `hero-grid-v1.0.0` |
+| [Hero Grid](scripts/hero_grid) | 2 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 18 | `weather-v1.0.0` |
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 15 | `visage-familiar-tp-v1.0.0` |
 | [Grimstroke Helper](scripts/grimstroke_helper) | 44 | `grimstroke-helper-v1.4.1` |
@@ -730,7 +730,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
 | [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 4 | `terrorblade-sunder-dagon-v1.0.0` |
 | [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 4 | `venomancer-ward-controller-v1.0.0` |
-| [Cloud Radar](scripts/web_radar) | 76 | `web-radar-v2.3.3` |
+| [Cloud Radar](scripts/web_radar) | 76 | `web-radar-v2.5.0` |
 | [Murzik Kitty Widget](scripts/murzik) | 2 | `murzik-v1.0.0` |
 | [Трекер привычек](scripts/habits) | 3 | `habits-v1.0.0` |
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |

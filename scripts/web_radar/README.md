@@ -3,11 +3,12 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua) — `web-radar-v2.3.3`, 2026-10-19
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.5.0/web_radar.lua) — `web-radar-v2.5.0`, 2026-10-21
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`web-radar-v2.3.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.3) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua) | 71 |
+| [`web-radar-v2.5.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.5.0) | 2026-10-21 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.5.0/web_radar.lua) | 0 |
+| [`web-radar-v2.3.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.3) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua) | 72 |
 | [`web-radar-v2.3.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.2) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.2/web_radar.lua) | 3 |
 | [`web-radar-v2.3.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.1/web_radar.lua) | 0 |
 | [`web-radar-v2.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.0) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.0/web_radar.lua) | 0 |
@@ -36,6 +37,13 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Обновление v2.5.0
+
+- Радар работает и когда вы смотрите чужой матч зрителем, а не только в своем. Зрителю на сайт уходят KDA, золото и последний байбек всех десяти игроков, а лавка показана для Radiant и Dire.
+- Новая настройка «Частота сбора»: как часто радар читает игру (герои, предметы и способности, обход карты). Прежний «Режим» стал «Частотой передачи» и отвечает только за отправку на сайт; она не бывает чаще сбора.
+- Поиск фризов: если игра замирает дольше полсекунды, строка нагрузки в меню показывает длительность фриза, время работы радара и самую медленную часть (сбор, сеть, события или игра). С включенной отладкой подробности уходят в лог.
+- История применений способностей и счетчики эффектов очищаются, когда юнит исчезает, а не копятся до конца матча.
 
 # Исправление v2.3.3
 
@@ -121,6 +129,13 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Update v2.5.0
+
+- The radar also works when you watch someone else's match as a spectator, not only in your own. For a spectator it sends KDA, gold and last buyback for all ten players, and the shop stock for both Radiant and Dire.
+- New setting "Collection rate": how often the radar reads the game (heroes, items and abilities, map scan). The old "Mode" is now "Send rate" and only controls sending to the site; it is never faster than collection.
+- Freeze finder: if the game stalls for more than half a second, the menu load line shows the freeze length, the radar's own time and its slowest part (collection, network, events or the game). With debug on, the details go to the log.
+- Ability use history and effect counters are cleared when a unit is removed instead of piling up until the match ends.
 
 # Fix v2.3.3
 
