@@ -6164,9 +6164,9 @@
     },
     {
       "id": "web_radar",
-      "version": "2.3.3",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/e1557f60601c9b13978abcad1980ac535705bc8d/scripts/web_radar/web_radar.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua",
+      "version": "2.5.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/8d5766477925caadd78025bc6a02ec34b571ce49/scripts/web_radar/web_radar.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.5.0/web_radar.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "4uJIuH",
@@ -6178,7 +6178,7 @@
           "Scripts \u2192 Scripts \u2192 Cloud Radar"
         ]
       },
-      "date": "2026-10-19",
+      "date": "2026-10-21",
       "history": {
         "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/web_radar/CHANGELOG.md",
         "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/web_radar/CHANGELOG.en.md"
