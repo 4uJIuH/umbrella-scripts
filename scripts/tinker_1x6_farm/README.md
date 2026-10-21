@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`tinker-1x6-farm-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/tinker-1x6-farm-v1.0.0) | 2026-10-13 | [tinker_1x6_farm.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-1x6-farm-v1.0.0/tinker_1x6_farm.lua) | 4 |
+| [`tinker-1x6-farm-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/tinker-1x6-farm-v1.0.0) | 2026-10-13 | [tinker_1x6_farm.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-1x6-farm-v1.0.0/tinker_1x6_farm.lua) | 9 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=tinker-1x6-farm&expanded=true)
 <!-- releases:end -->

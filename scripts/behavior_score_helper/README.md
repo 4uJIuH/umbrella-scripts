@@ -3,10 +3,11 @@
 повышает порядочность: авто GG, авто репорты, анти-тильт и авто лайк / raises your behavior score: auto GG, auto reports, anti-tilt and auto commend
 
 <!-- releases:start -->
-Скачать: [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.2/BehaviorScoreHelper.lua) — `behavior-score-helper-v2.1.2`, 2026-10-20
+Скачать: [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.3/BehaviorScoreHelper.lua) — `behavior-score-helper-v2.1.3`, 2026-10-21
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`behavior-score-helper-v2.1.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.3) | 2026-10-21 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.3/BehaviorScoreHelper.lua) | 0 |
 | [`behavior-score-helper-v2.1.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.2) | 2026-10-20 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.2/BehaviorScoreHelper.lua) | 2 |
 | [`behavior-score-helper-v2.1.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.1) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.1/BehaviorScoreHelper.lua) | 2 |
 | [`behavior-score-helper-v2.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.0) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.0/BehaviorScoreHelper.lua) | 0 |
@@ -43,6 +44,12 @@ BehaviorScoreHelper берет на себя рутину порядочност
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
 
 ## Что нового
+
+# Исправление v2.1.3
+
+- Убраны лаги после падения трона: авто-лайк больше не ищет экран итогов каждый кадр, а проверяет его два раза в секунду и перестает через 5 минут.
+- Скрытие тильт-уведомлений и мут за пинги по тебе не работают после конца игры, когда они уже не нужны.
+- Авто GG больше не отправляется дважды в конце игры.
 
 # Исправление v2.1.2
 
@@ -123,6 +130,12 @@ BehaviorScoreHelper takes care of the behavior score routine in Dota 2: it write
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
 
 ## Changelog
+
+# Fix v2.1.3
+
+- Fixed lag after the throne falls: auto commend no longer looks for the end screen every frame, it checks twice a second and gives up after 5 minutes.
+- Hiding tilt alerts and muting for pings at you stop after the game ends, when they are no longer needed.
+- Auto GG is no longer sent twice at the end of the game.
 
 # Fix v2.1.2
 
