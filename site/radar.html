@@ -1286,8 +1286,10 @@ function renderObjs() {
   if (o.camps && camps.length) cells.push(['radar/icons/' + CAMP_ICON, TEXT.camps, camps.filter(c => c.s === 1).length + ' / ' + camps.length, '']);
   const st = obj.stock || {};
   const stockItem = (name, n) => '<span class="it" title="' + esc(itemName(name)) + '"><img src="' + esc(itemImg(name)) + '" alt="">' + esc(n ?? '—') + '</span>';
+  const stockRow = s => stockItem('item_smoke_of_deceit', s.smoke) + stockItem('item_ward_observer', s.obs) + stockItem('item_ward_sentry', s.sen);
+  const sd = obj.stock_dire;
   if (o.stock && typeof st.smoke === 'number') cells.push([itemImg('item_smoke_of_deceit'), TEXT.stock,
-    { html: stockItem('item_smoke_of_deceit', st.smoke) + stockItem('item_ward_observer', st.obs) + stockItem('item_ward_sentry', st.sen) }, '']);
+    { html: sd ? chip('rad', '', true) + stockRow(st) + chip('dire', '', true) + stockRow(sd) : stockRow(st) }, '']);
   objsEl.innerHTML = cells.map(c => '<div class="obj">' + (c[0].indexOf('fa-') === 0 ? '<i class="fa-solid ' + c[0] + '"></i>' : '<img src="' + esc(c[0]) + '" alt="">') +
     '<span class="k">' + esc(c[1]) + '</span><span class="v ' + (c[2] === TEXT.noData ? 'none' : c[3]) + '">' + (typeof c[2] === 'object' ? c[2].html : esc(c[2])) + '</span></div>').join('');
 }

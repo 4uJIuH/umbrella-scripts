@@ -328,7 +328,7 @@ local localization = qLocalization.new({
         cr_enabled_tip = "Turn it on, then press Start.\nStop closes the session and the old link.",
         cr_gear_extra = "Diagnostics",
         cr_debug = "Log unknown effects",
-        cr_debug_tip = "Writes unknown particle names\nto the AI bridge log",
+        cr_debug_tip = "Writes unknown particles and freezes\nto the AI bridge log",
         cr_status = "Status: %s",
         cr_start = "Start",
         cr_stop = "Stop",
@@ -362,13 +362,19 @@ local localization = qLocalization.new({
         cr_active_items = "Active items",
         cr_casts = "Other abilities",
         cr_scans = "Scan",
-        cr_profile = "Mode",
-        cr_profile_tip = "Sets the send rate and how often data is collected.\nEconomy costs the least FPS, Smooth updates fastest.",
+        cr_profile = "Send rate",
+        cr_profile_tip = "How often data goes to the site.\nIt is never faster than the collection rate.",
         cr_profiles_eco = "Eco, 3 Hz",
         cr_profiles_balanced = "Balanced, 5 Hz",
         cr_profiles_smooth = "Smooth, 10 Hz",
+        cr_collect = "Collection rate",
+        cr_collect_tip = "How often the game is read: heroes, details, map scan.\nEco costs the least FPS.",
+        cr_collects_eco = "Eco, 3 Hz",
+        cr_collects_balanced = "Balanced, 5 Hz",
+        cr_collects_smooth = "Smooth, 10 Hz",
         cr_performance_wait = "Load: no data yet",
         cr_performance = "Load: %.1f ms, %.1f KB",
+        cr_hitch = "Last freeze: %.1f s, script %.0f ms, %s",
         cr_st_off = "off",
         cr_st_stopping = "stopping",
         cr_st_stopped = "stopped",
@@ -391,7 +397,7 @@ local localization = qLocalization.new({
         cr_link_hint = "Start, then send the link",
         cr_effects_tip = "Casts, teleports and scans on the map\nand in the event feed",
         cr_details_tip = "Needs the Heroes layer",
-        cr_version = "Version 2.3.2",
+        cr_version = "Version 2.5.0",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -404,7 +410,7 @@ local localization = qLocalization.new({
         cr_enabled_tip = "После включения нажмите Start.\nStop закрывает сессию и старую ссылку.",
         cr_gear_extra = "Диагностика",
         cr_debug = "Неизвестные эффекты в журнал",
-        cr_debug_tip = "Пишет имена неизвестных частиц\nв журнал моста",
+        cr_debug_tip = "Пишет неизвестные частицы и фризы\nв журнал моста",
         cr_status = "Статус: %s",
         cr_start = "Start",
         cr_stop = "Stop",
@@ -438,13 +444,19 @@ local localization = qLocalization.new({
         cr_active_items = "Активные предметы",
         cr_casts = "Остальные способности",
         cr_scans = "Скан",
-        cr_profile = "Режим",
-        cr_profile_tip = "Задает частоту передачи и сбора данных.\nЭкономный бережет FPS, Плавный обновляет быстрее всего.",
+        cr_profile = "Частота передачи",
+        cr_profile_tip = "Как часто данные уходят на сайт.\nНе бывает чаще частоты сбора.",
         cr_profiles_eco = "Эконом, 3 Гц",
         cr_profiles_balanced = "Баланс, 5 Гц",
         cr_profiles_smooth = "Плавный, 10 Гц",
+        cr_collect = "Частота сбора",
+        cr_collect_tip = "Как часто читается игра: герои, детали, скан карты.\nЭконом бережет FPS.",
+        cr_collects_eco = "Эконом, 3 Гц",
+        cr_collects_balanced = "Баланс, 5 Гц",
+        cr_collects_smooth = "Плавный, 10 Гц",
         cr_performance_wait = "Нагрузка: нет данных",
         cr_performance = "Нагрузка: %.1f мс, %.1f КБ",
+        cr_hitch = "Последний фриз: %.1f с, скрипт %.0f мс, %s",
         cr_st_off = "выключен",
         cr_st_stopping = "остановка",
         cr_st_stopped = "остановлен",
@@ -467,7 +479,7 @@ local localization = qLocalization.new({
         cr_link_hint = "Start и отправьте ссылку",
         cr_effects_tip = "Касты, телепорты и сканы на карте\nи в ленте событий",
         cr_details_tip = "Нужен слой «Герои»",
-        cr_version = "Версия 2.3.2",
+        cr_version = "Версия 2.5.0",
     },
 })
 
@@ -475,7 +487,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.3.3"
+script.VERSION = "2.5.0"
 local ui = {}
 local JSON
 local state = {
@@ -530,16 +542,16 @@ local function finite(value)
 end
 
 local MODES = {
-    [0] = {rate = 3, detail = 1.2, slow = 2.5, scanMs = 0.0008, scanCount = 8, couriers = 1, creeps = 12, roshan = 1,
+    [0] = {rate = 3, hz = 3, detail = 1.2, slow = 2.5, scanMs = 0.0008, scanCount = 8, couriers = 1, creeps = 12, roshan = 1,
         parts = {info = 1.5, units = 1, wards = 2, runes = 1, camps = 4, objectives = 1}},
-    [1] = {rate = 5, detail = 0.7, slow = 1.5, scanMs = 0.0012, scanCount = 12, couriers = 0.5, creeps = 24, roshan = 0.5,
+    [1] = {rate = 5, hz = 5, detail = 0.7, slow = 1.5, scanMs = 0.0012, scanCount = 12, couriers = 0.5, creeps = 24, roshan = 0.5,
         parts = {info = 0.8, units = 0.4, wards = 1, runes = 0.5, camps = 2, objectives = 0.5}},
-    [2] = {rate = 10, detail = 0.4, slow = 1, scanMs = 0.0018, scanCount = 20, couriers = 0.25, creeps = 32, roshan = 0.25,
+    [2] = {rate = 10, hz = 10, detail = 0.4, slow = 1, scanMs = 0.0018, scanCount = 20, couriers = 0.25, creeps = 32, roshan = 0.25,
         parts = {info = 0.5, units = 0.2, wards = 0.5, runes = 0.3, camps = 1, objectives = 0.3}},
 }
 
 local function mode()
-    return MODES[state.profile] or MODES[1]
+    return state.mode or MODES[1]
 end
 
 local function refreshFlags(now)
@@ -550,7 +562,13 @@ local function refreshFlags(now)
         state.flags[key] = enabled
     end
     state.flags.enabled = get(ui.enabled, false)
-    state.profile = get(ui.profile, 1)
+    local send, gather = get(ui.profile, 1), get(ui.collect, 1)
+    if not state.mode or state.profile ~= send or state.gather ~= gather then
+        local merged = {}
+        for key, value in pairs(MODES[gather] or MODES[1]) do merged[key] = value end
+        merged.rate, merged.parts = (MODES[send] or MODES[1]).rate, (MODES[send] or MODES[1]).parts
+        state.mode, state.profile, state.gather = merged, send, gather
+    end
     state.nextFlags = now + 0.5
 end
 
@@ -648,6 +666,9 @@ local function initMenu()
     ui.profile = connection:Combo("cr_profile", {"cr_profiles_eco", "cr_profiles_balanced", "cr_profiles_smooth"}, 1)
     ui.profile:Icon("\u{f1de}")
     ui.profile:ToolTip("cr_profile_tip")
+    ui.collect = connection:Combo("cr_collect", {"cr_collects_eco", "cr_collects_balanced", "cr_collects_smooth"}, 1)
+    ui.collect:Icon("\u{f1c0}")
+    ui.collect:ToolTip("cr_collect_tip")
     ui.performance = connection:Label("cr_performance_wait", "\u{f080}")
     connection:Label("cr_version", "\u{f02b}")
 
@@ -685,6 +706,7 @@ local function initMenu()
     ui.heroes:SetCallback(refreshDisabled)
     ui.effects:SetCallback(refreshDisabled)
     ui.profile:SetCallback(function() state.nextFlags = 0 end)
+    ui.collect:SetCallback(function() state.nextFlags = 0 end)
     for _, list in ipairs({LAYERS, DETAILS, EVENTS}) do
         for _, key in ipairs(list) do ui[key]:SetCallback(function() state.nextFlags = 0 end) end
     end
@@ -757,12 +779,16 @@ local function request(method, url, body, callback, headers)
     state.requests[#state.requests + 1] = pending
     local data = {headers = headers or {["Content-Type"] = "application/json"}, timeout = 12000}
     if body then data.data = body end
+    local began = clock()
     local sent = call(HTTP and HTTP.Request, method, url, data, function(response)
+        local replyBegan = clock()
         local code = tonumber(response and response.code) or 0
         local text = response and response.response or ""
         local decoded = text ~= "" and call(JSON and JSON.decode, JSON, text) or nil
         finish(decoded, code)
+        state.perf.reply_ms = math.max(state.perf.reply_ms or 0, (clock() - replyBegan) * 1000)
     end)
+    state.perf.http_ms = math.max(state.perf.http_ms or 0, (clock() - began) * 1000)
     if not sent then finish(nil, 0) end
 end
 
@@ -1195,7 +1221,7 @@ local function heroDetails(unit, row, now, refresh)
     if state.flags.stats or state.flags.buybacks then
         local player = state.players[row.player_id]
         if player then
-            local team = state.hasLocalHero and row.team == state.localTeam and (call(Player.GetTeamData, player) or {}) or {}
+            local team = (state.localTeam == 1 or state.hasLocalHero and row.team == state.localTeam) and (call(Player.GetTeamData, player) or {}) or {}
             -- Reuse the native output table, but clear fields that would otherwise
             -- survive a missing field in the next Player Resource observation.
             for key in pairs(playerData) do playerData[key] = nil end
@@ -1887,17 +1913,40 @@ local function recordFarming(unit, target, source, now)
         observed_at = now, expires_at = now + 4, source = source}
 end
 
+local function inGame()
+    if call(Engine.IsInGame) == true then return true end
+    local phase = call(GameRules.GetGameState)
+    local watching = (phase == Enum.GameState.DOTA_GAMERULES_STATE_PRE_GAME or phase == Enum.GameState.DOTA_GAMERULES_STATE_GAME_IN_PROGRESS)
+        and (call(Heroes.Count) or 0) > 0
+    if get(ui.debug, false) and state.lastPhase ~= phase and ai_bridge and ai_bridge.mcp_log then
+        state.lastPhase = phase
+        call(ai_bridge.mcp_log, "debug", "[Cloud Radar] in-game check", {engine = false, phase = phase,
+            heroes = call(Heroes.Count), local_hero = call(Heroes.GetLocal) ~= nil, watching = watching})
+    end
+    return watching
+end
+
+local function localTeam(hero)
+    local team = hero and call(Entity.GetTeamNum, hero)
+    if team ~= 2 and team ~= 3 then
+        local player = call(Players.GetLocal)
+        team = player and call(Entity.GetTeamNum, player)
+    end
+    return (team == 2 or team == 3) and team or 1
+end
+
 local function collect()
     local now = gameClock()
     local packet = {type = "update", match = tostring(call(GameRules.GetMatchID) or "local"),
         game_time = call(GameRules.GetDOTATime, true, true) or now, game_clock = now,
-        paused = call(GameRules.IsPaused) == true, in_game = call(Engine.IsInGame) == true,
+        paused = call(GameRules.IsPaused) == true, in_game = inGame(),
         heroes = {}, events = {}, objectives = {}}
     if not packet.in_game then resetMatch(); return packet end
     if state.match and state.match ~= packet.match then resetMatch() end
     state.match = packet.match
     local localHero = call(Heroes.GetLocal)
-    packet.local_team = localHero and call(Entity.GetTeamNum, localHero) or 2
+    packet.local_team = localTeam(localHero)
+    packet.spectator = packet.local_team == 1
     state.hasLocalHero = localHero ~= nil
     state.localTeam, state.detailsBudget = packet.local_team, 1
     if clock() >= state.nextPlayers then
@@ -2558,6 +2607,7 @@ function script.OnEntityDestroy(entity, confirmedDeath)
             if not obscured and observed then rune.row.taken_at, rune.row.source = gameClock(), "observed_disappearance" end
         end
         state.laneMovers[key], state.courierMotion[key], state.courierSamples[id] = nil, nil, nil
+        state.casts[key], state.genericRates[key] = nil, nil
         local shrine = state.wisdom[key]
         if shrine then shrine.unit = nil; shrine.row.visible, shrine.row.data_stale = false, true end
         state.classifications[id] = nil
@@ -2811,7 +2861,7 @@ do
         local gt = packet.game_time or 0
         local now = packet.game_clock or gt
         local offset = gt - now
-        local v = {clock = {t = round(gt) or 0, in_game = packet.in_game == true, team = packet.local_team, paused = packet.paused == true}}
+        local v = {clock = {t = round(gt) or 0, in_game = packet.in_game == true, team = packet.local_team, spec = packet.spectator or nil, paused = packet.paused == true}}
         if not packet.in_game then return v end
         local tod = call(GameRules.GetTimeOfDay)
         if finite(tod) then v.clock.day = tod >= 0.25 and tod < 0.75 end
@@ -2882,7 +2932,7 @@ do
                             info.stats.sen = finite(pd.sentry_wards_placed) and pd.sentry_wards_placed > 0 and pd.sentry_wards_placed or nil
                             info.stats.stk = finite(pd.camps_stacked) and pd.camps_stacked > 0 and pd.camps_stacked or nil
                         end
-                        if h.team == state.localTeam and type(pd) == "table" and (finite(pd.reliable_gold) or finite(pd.unreliable_gold)) then
+                        if (h.team == state.localTeam or state.localTeam == 1) and type(pd) == "table" and (finite(pd.reliable_gold) or finite(pd.unreliable_gold)) then
                             info.stats.g = round((finite(pd.reliable_gold) and pd.reliable_gold or 0) + (finite(pd.unreliable_gold) and pd.unreliable_gold or 0))
                         end
                     end
@@ -2979,8 +3029,13 @@ do
         end
         if type(o.roshan) == "table" and o.roshan.stale ~= true and o.roshan.source == "entity" then v.objectives.roshan = boss(o.roshan) end
         v.objectives.scan_charges = {r = call(GameRules.GetGoodScanCharges), d = call(GameRules.GetBadScanCharges)}
-        v.objectives.stock = {smoke = call(GameRules.GetStockCount, 188, state.localTeam), obs = call(GameRules.GetStockCount, 42, state.localTeam),
-            sen = call(GameRules.GetStockCount, 43, state.localTeam)}
+        local function stock(team)
+            return {smoke = call(GameRules.GetStockCount, 188, team), obs = call(GameRules.GetStockCount, 42, team),
+                sen = call(GameRules.GetStockCount, 43, team)}
+        end
+        if state.localTeam == 1 then
+            v.objectives.stock, v.objectives.stock_dire = stock(2), stock(3)
+        else v.objectives.stock = stock(state.localTeam) end
         for _, t in ipairs(o.tormentors or {}) do
             if t.stale ~= true then v.objectives.tormentors[#v.objectives.tormentors + 1] = boss(t) end
         end
@@ -3268,7 +3323,35 @@ function script.OnScriptsLoaded()
     if get(ui.enabled, false) and #session == 20 then start() end
 end
 
+local function traceHitch(frameBegan)
+    local gap = frameBegan - (state.lastFrame or frameBegan)
+    state.lastFrame = frameBegan
+    local p = state.perf
+    local parts = {scan = p.scan_ms or 0, collect = p.collect_ms or 0, build = p.build_ms or 0, encode = p.encode_ms or 0,
+        http = p.http_ms or 0, reply = p.reply_ms or 0, events = (state.eventTime or 0) * 1000, frame = p.frame_ms or 0}
+    state.eventTime, p.http_ms, p.reply_ms, p.build_ms, p.frame_ms = 0, 0, 0, 0, 0
+    if gap < 0.5 then return end
+    local total, worst, worstMs = 0, "game", 0
+    for name, ms in pairs(parts) do
+        if name ~= "frame" then
+            total = total + ms
+            if ms > worstMs then worst, worstMs = name, ms end
+        end
+    end
+    total = math.max(total, parts.frame)
+    if worstMs < 100 then worst = "game" end
+    state.hitch = {gap = gap, ms = total, part = worst}
+    state.nextPerf = 0
+    if get(ui.debug, false) and ai_bridge and ai_bridge.mcp_log then
+        parts.gap_s, parts.lua_kb, parts.bytes = gap, math.floor(collectgarbage("count")), p.bytes
+        parts.pending = #state.requests
+        call(ai_bridge.mcp_log, "warn", "[Cloud Radar] freeze", parts)
+    end
+end
+
 function script.OnUpdateEx()
+    local frameBegan = clock()
+    traceHitch(frameBegan)
     initMenu()
     if state.ready and clock() >= (state.nextLabels or 0) then
         state.nextLabels = clock() + 1
@@ -3291,8 +3374,8 @@ function script.OnUpdateEx()
     local now = clock()
     refreshFlags(now)
     if not state.flags.enabled then return end
-    if not state.localTeam then local hero = call(Heroes.GetLocal); state.localTeam = hero and call(Entity.GetTeamNum, hero) or 2 end
-    if call(Engine.IsInGame) == true and (state.scanJob or now >= state.nextSlow) then
+    if not state.localTeam then state.localTeam = localTeam(call(Heroes.GetLocal)) end
+    if inGame() and (state.scanJob or now >= state.nextSlow) then
         local scanBegan = clock()
         slowSnapshot(gameClock())
         state.perf.scan_ms = (clock() - scanBegan) * 1000
@@ -3307,7 +3390,7 @@ function script.OnUpdateEx()
     local rate = mode().rate
     -- Keep the cadence across game frames (90 / 20 is not an integer).
     -- Reset after a long stall instead of sending a catch-up burst.
-    local period = 1 / rate
+    local period = 1 / math.min(rate, mode().hz)
     state.nextSend = now - state.nextSend > period and now + period or state.nextSend + period
     local fb = state.fb
     if not fb.token or wallClock() >= (fb.expires or 0) then
@@ -3328,7 +3411,9 @@ function script.OnUpdateEx()
     local ok, packet = pcall(collect)
     state.perf.collect_ms = (clock() - began) * 1000
     if not ok then show("cr_st_collect_fail", tostring(packet)); state.nextSend = now + 1; return end
+    local buildBegan = clock()
     local built, view = pcall(relay.build, packet, due)
+    state.perf.build_ms = (clock() - buildBegan) * 1000
     if not built then show("cr_st_collect_fail", tostring(view)); state.nextSend = now + 1; return end
     local body, commit, feedCount = relay.patch(view)
     local clearing = state.clearFeed
@@ -3372,8 +3457,12 @@ function script.OnUpdateEx()
     if now >= (state.nextPerf or 0) then
         state.nextPerf = now + 2
         state.perfText = string.format(L("cr_performance"), state.perf.collect_ms, state.perf.bytes / 1024)
+        if state.hitch then
+            state.perfText = state.perfText .. "\n" .. string.format(L("cr_hitch"), state.hitch.gap, state.hitch.ms, state.hitch.part)
+        end
         setLabel(ui.performance, state.perfText)
     end
+    state.perf.frame_ms = (clock() - frameBegan) * 1000
     if get(ui.debug, false) and now >= (state.nextDiag or 0) and ai_bridge and ai_bridge.mcp_log then
         state.nextDiag = now + 30
         local sizes = {}
@@ -3388,6 +3477,18 @@ function script.OnUpdateEx()
             bytes = state.perf.bytes, sizes = sizes})
     end
 end
+
+for _, name in ipairs({"OnParticleCreate", "OnLinearProjectileCreate", "OnParticleUpdate", "OnParticleUpdateEntity",
+    "OnUnitAnimation", "OnProjectile", "OnStartSound", "OnModifierCreate", "OnModifierUpdate", "OnModifierDestroy",
+    "OnEntityKilled", "OnEntityDestroy", "OnNpcSpawned", "OnParticleDestroy"}) do
+    local handler = script[name]
+    script[name] = function(...)
+        local began = clock()
+        handler(...)
+        state.eventTime = (state.eventTime or 0) + clock() - began
+    end
+end
+script.OnParticleUpdateFallback = script.OnParticleUpdate
 
 local ok, result = pcall(require, "assets.JSON")
 if ok then JSON = result end

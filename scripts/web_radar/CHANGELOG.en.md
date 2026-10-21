@@ -1,3 +1,10 @@
+# Update v2.5.0
+
+- The radar also works when you watch someone else's match as a spectator, not only in your own. For a spectator it sends KDA, gold and last buyback for all ten players, and the shop stock for both Radiant and Dire.
+- New setting "Collection rate": how often the radar reads the game (heroes, items and abilities, map scan). The old "Mode" is now "Send rate" and only controls sending to the site; it is never faster than collection.
+- Freeze finder: if the game stalls for more than half a second, the menu load line shows the freeze length, the radar's own time and its slowest part (collection, network, events or the game). With debug on, the details go to the log.
+- Ability use history and effect counters are cleared when a unit is removed instead of piling up until the match ends.
+
 # Fix v2.3.3
 
 - The game no longer starts lagging in the middle and late match. Each time the game reused an entity number (a new creep in place of a dead one), the radar walked its whole list of seen abilities and sent a full packet. Now this is a single step, and a full packet goes out only when a hero changes.
