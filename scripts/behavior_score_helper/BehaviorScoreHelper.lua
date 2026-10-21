@@ -1,4 +1,4 @@
-local SCRIPT_VERSION = "2.1.2"
+local SCRIPT_VERSION = "2.1.3"
 local bh = {}
 
 local protobuf = require('protobuf')
@@ -954,6 +954,7 @@ local lastGameState = -1
 local gameEndTime = nil
 local likePending = false
 local likeAttempts = 0
+local likeNextT = 0
 
 local function getHud()
     if not hudRoot then
@@ -1775,8 +1776,13 @@ function bh.OnUpdateEx()
     local t = os.clock()
     if likePending and ui.likeEnabled:Get() then
         local delay = ui.likeDelayOn:Get() and ui.likeDelay:Get() or 0
-        if gameEndTime and (t - gameEndTime) >= delay then
-            tryProcessLikes(false)
+        if gameEndTime and (t - gameEndTime) >= delay + 300 then
+            likePending = false
+        elseif gameEndTime and (t - gameEndTime) >= delay then
+            if t >= likeNextT then
+                likeNextT = t + 0.5
+                tryProcessLikes(false)
+            end
         elseif not gameEndTime then
             gameEndTime = t - delay
         end
@@ -1854,7 +1860,7 @@ function bh.OnUpdateEx()
 
     processReportQueue()
     updateBases()
-    if gs and gs >= 4 then
+    if gs and gs >= 4 and gs < 6 then
         checkHud(localHero)
     end
 
@@ -2132,8 +2138,6 @@ function bh.OnGameEnd()
         likePending = true
         likeAttempts = 0
     end
-    throneBroken = false
-    ggSent = false
 end
 
 return bh

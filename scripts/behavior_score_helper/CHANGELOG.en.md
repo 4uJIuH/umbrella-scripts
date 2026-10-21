@@ -1,3 +1,9 @@
+# Fix v2.1.3
+
+- Fixed lag after the throne falls: auto commend no longer looks for the end screen every frame, it checks twice a second and gives up after 5 minutes.
+- Hiding tilt alerts and muting for pings at you stop after the game ends, when they are no longer needed.
+- Auto GG is no longer sent twice at the end of the game.
+
 # Fix v2.1.2
 
 - Auto GG: removed the "Delay after throne falls" setting. GG is sent as soon as the throne falls.
