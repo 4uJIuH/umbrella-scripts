@@ -3,10 +3,11 @@
 подбирает цели для Ink Swell и управляет Dark Portrait / selects Ink Swell targets and controls Dark Portrait
 
 <!-- releases:start -->
-Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.1/grimstroke_helper.lua) — `grimstroke-helper-v1.4.1`, 2026-10-20
+Скачать: [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.2/grimstroke_helper.lua) — `grimstroke-helper-v1.4.2`, 2026-10-21
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`grimstroke-helper-v1.4.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.2) | 2026-10-21 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.2/grimstroke_helper.lua) | 0 |
 | [`grimstroke-helper-v1.4.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.1) | 2026-10-20 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.1/grimstroke_helper.lua) | 16 |
 | [`grimstroke-helper-v1.4.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.4.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.4.0/grimstroke_helper.lua) | 10 |
 | [`grimstroke-helper-v1.3.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/grimstroke-helper-v1.3.0) | 2026-10-19 | [grimstroke_helper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/grimstroke-helper-v1.3.0/grimstroke_helper.lua) | 4 |
@@ -31,6 +32,13 @@ Grimstroke Helper помогает автоматически выбирать �
 3. Откройте Heroes → Hero List → Grimstroke → Helper.
 
 ## Что нового
+
+# Обновление 1.4.2
+
+- Окно помощника обновлено до новой версии интерфейса: шрифт как в меню Umbrella, кнопки подсвечиваются цветом акцента при наведении.
+- Стрелка в заголовке стоит со стороны края экрана, к которому ближе окно.
+- Кнопка прижатия к краю работает из любого места экрана: окно само переезжает к ближайшему краю.
+- Вкладка прижатого окна стала крупнее и по высоте совпадает с заголовком.
 
 # Обновление 1.4.1
 
@@ -95,6 +103,13 @@ Grimstroke Helper automatically selects an ally for Ink Swell and controls the D
 3. Open Heroes → Hero List → Grimstroke → Helper.
 
 ## Changelog
+
+# Update 1.4.2
+
+- The helper window uses the new interface version: the font matches the Umbrella menu, buttons light up in the accent colour on hover.
+- The header chevron sits on the side of the screen edge the window is closer to.
+- The dock button works from anywhere on the screen: the window moves to the nearest edge by itself.
+- The docked tab is larger and as tall as the header.
 
 # Update 1.4.1
 
