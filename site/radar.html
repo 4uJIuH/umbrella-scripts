@@ -304,11 +304,7 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 .toast.on{opacity:1;transform:translateX(-50%)}
 
 /* Broadcast layer: slate night palette, Barlow at three widths, a scorebug as the one loud element. */
-:root{--bg:#eef1f4;--card:#fff;--sec:#e7ebf0;--border:#d6dce4;--soft:#e4e8ee;--fg:#121821;--muted:#566173;--faint:#8b95a5;
-  --ok:#3f8a1f;--warn:#a87414;--bad:#c2392a;--rad:#3f8a1f;--dire:#c2392a;--gold:#a87414;--blue:#2c66c4;--violet:#7446c4;--mapbg:#141b24;--hp:#4a9a2a;--mp:#2f6fd0;
-  --num:'Barlow Condensed',system-ui,sans-serif;--ui:'Barlow Semi Condensed',system-ui,sans-serif}
-.dark{--bg:#0f141b;--card:#141b24;--sec:#1b2430;--border:#253041;--soft:#1c2531;--fg:#e6e9ee;--muted:#9aa4b2;--faint:#5f6b7c;
-  --ok:#86c34a;--warn:#e3b04b;--bad:#e2533e;--rad:#86c34a;--dire:#e2533e;--gold:#e3b04b;--blue:#6ea6f2;--violet:#b49af2;--mapbg:#0c1117;--hp:#6fae3c;--mp:#4f8fe8}
+:root{--num:'Barlow Condensed',system-ui,sans-serif;--ui:'Barlow Semi Condensed',system-ui,sans-serif}
 html,body{font:15px/1.45 var(--ui);letter-spacing:.005em}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 header{background:var(--bg);border-bottom-color:var(--border)}
@@ -509,7 +505,7 @@ let TEXT = ALL[LANG];
 const CFG_DEFAULT = {
   layout: { top: ['score'], left: ['objectives', 'events'], center: ['map'], right: ['heroes'], hidden: [], wl: 320, wr: 380, auto: true, h: {} },
   layers: { heroes: true, bars: true, fog: true, labels: true, creeps: true, waves: true, jungle: true, wards: true, runes: true, couriers: true, buildings: true, events: true },
-  look: { theme: 'dark', density: 'normal', zoom: 100, rad: '#86c34a', dire: '#e2533e', mapScale: 100, heroScale: 100, legend: true },
+  look: { theme: 'dark', density: 'normal', zoom: 100, rad: '#57c785', dire: '#ef6b6b', mapScale: 100, heroScale: 100, legend: true },
   top: { nw: true, heads: true, mana: true, numbers: true, ult: true, clock: true, corner: 'lh' },
   heroes: { view: 'all', order: 'mine', compact: false, name: true, state: true, bars: true, kpis: true, attrs: true, extra: true, items: true, backpack: true, abilities: true },
   events: { death: true, rune: true, tp: true, cast: true, smoke: true, intel: true, ward: true, building: true, boss: true, scan: true, icons: true, newest: false },
@@ -730,7 +726,7 @@ const RUNE_ICONS = { 0: 'rune_strong.png', 1: 'rune_speed.png', 2: 'rune_ilusion
 const TOWER_ICON = 'dota_minimap_assets/towers/minimap_tower90_psd_a98bbc61.png';
 const CAMP_ICON = 'dota_minimap_assets/camps/minimap_creepcamp_psd_72d26740.png';
 const TORM_ICON = side => 'radar/icons/dota_minimap_assets/tormentor/tormentor_timer_icon_' + side + '_png.png';
-let RAD = [134, 195, 74], DIRE = [226, 83, 62];
+let RAD = [87, 199, 133], DIRE = [239, 107, 107];
 const NEUTRAL = [217, 168, 78];
 
 function fitColumns() {
@@ -1689,8 +1685,6 @@ function applyLook() {
   document.documentElement.classList.toggle('dark', dark);
   document.body.classList.toggle('compact', cfg.look.density === 'compact');
   document.documentElement.style.setProperty('--z', String(cfg.look.zoom / 100));
-  if (cfg.look.rad === '#57c785') cfg.look.rad = '#86c34a';
-  if (cfg.look.dire === '#ef6b6b') cfg.look.dire = '#e2533e';
   const rad = hexRgb(cfg.look.rad), dire = hexRgb(cfg.look.dire);
   if (rad) { RAD = rad; document.documentElement.style.setProperty('--rad', cfg.look.rad); }
   if (dire) { DIRE = dire; document.documentElement.style.setProperty('--dire', cfg.look.dire); }
