@@ -6360,7 +6360,7 @@
     {
       "id": "muerta_anti_techies",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/muerta_anti_techies/muerta_anti_techies.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/97e901924b9043e0c1ee929f09dc8e8a51a6ca42/scripts/muerta_anti_techies/muerta_anti_techies.lua",
       "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/muerta-anti-techies-v1.0.0/muerta_anti_techies.lua",
       "manual": false,
       "needs_q_localizer": false,
