@@ -603,7 +603,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 <!-- stats:start -->
 | script | downloads | latest |
 | --- | --- | --- |
-| [Auto Support Buy](scripts/auto_support_buy) | 24 | `auto-support-buy-v1.1.0` |
+| [Auto Support Buy](scripts/auto_support_buy) | 25 | `auto-support-buy-v1.1.0` |
 | [Tinker Turret Dodge](scripts/tinker_turret_dodge) | 50 | `tinker-turret-dodge-v1.1.5` |
 | [Tinker Auto Farm](scripts/tinker_auto_farm) | 16 | `tinker-auto-farm-v1.0.4` |
 | [Auto Shackleshot](scripts/auto_shackleshot) | 26 | `auto-shackleshot-v1.0.0` |
@@ -615,15 +615,15 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Dorman Combo Assistant](scripts/dorman_combo_assistant) | 1 | `dorman-combo-assistant-v1.0.0` |
 | [Rem Assistant](scripts/rem_assistant) | 2 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
-| [qLocalization](scripts/q_localizer) | 141 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 524 | `script-manager-v2.14.3` |
-| [Dynamic Island](scripts/dynamic_island_dota) | 650 | `v2.5.3` |
+| [qLocalization](scripts/q_localizer) | 142 | `q-localizer-v1.0.0` |
+| [Script Manager](scripts/script_manager) | 532 | `script-manager-v2.14.3` |
+| [Dynamic Island](scripts/dynamic_island_dota) | 651 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 16 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 293 | `lane-pull-v1.0.4` |
 | [DS Spot Block](scripts/ds_spot_block) | 60 | `ds-spot-block-v1.0.1` |
 | [Custom Background](scripts/custom_background) | 55 | `custom-background-v1.0.0` |
 | [Auto Stack](scripts/auto_stack) | 171 | `auto-stack-v1.1.0` |
-| [Draft Helper](scripts/draft_helper) | 1557 | `draft-helper-v2.0.0-beta.20` |
+| [Draft Helper](scripts/draft_helper) | 1559 | `draft-helper-v2.0.0-beta.20` |
 | [MusicUI](scripts/musicui) | 756 | `musicui-v1.0.8` |
 | [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 207 | `umbrella-lua-v1.0.4` |
 | [Custom Stats](scripts/custom_stats) | 25 | `custom-stats-v1.0.0` |
@@ -634,17 +634,17 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Arc Warden Blocker](scripts/arc_warden_blocker) | 17 | `arc-warden-blocker-v1.0.0` |
 | [Invoker Combo Switcher](scripts/invoker_combo_switcher) | 16 | `invoker-combo-switcher-v1.0.0` |
 | [Magnus Skewer Ally](scripts/magnus_skewer_ally) | 20 | `magnus-skewer-ally-v1.0.0` |
-| [Better Better Techies Combo](scripts/better_better_techies_combo) | 52 | `better-better-techies-combo-v1.1.0` |
+| [Better Better Techies Combo](scripts/better_better_techies_combo) | 58 | `better-better-techies-combo-v1.1.0` |
 | [Chat Translator](scripts/chat_translator) | 30 | `chat-translator-v1.0.0` |
 | [Hero Grid](scripts/hero_grid) | 2 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 19 | `weather-v1.0.0` |
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 17 | `visage-familiar-tp-v1.0.0` |
-| [Grimstroke Helper](scripts/grimstroke_helper) | 63 | `grimstroke-helper-v1.4.2` |
+| [Grimstroke Helper](scripts/grimstroke_helper) | 64 | `grimstroke-helper-v1.4.2` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 13 | `phoenix-smartnova-v1.0.0` |
 | [BehaviorScoreHelper](scripts/behavior_score_helper) | 22 | `behavior-score-helper-v2.1.3` |
 | [Disable Tracker](scripts/disable_tracker) | 7 | `disable-tracker-v1.0.0` |
 | [Russian Roulette](scripts/russian_roulette) | 3 | `russian-roulette-v1.0.0` |
-| [MoM Swapper](scripts/mom_swapper) | 10 | `mom-swapper-v1.0.0` |
+| [MoM Swapper](scripts/mom_swapper) | 11 | `mom-swapper-v1.0.0` |
 | [Botle Abuse](scripts/botle) | 24 | `botle-abuse-v1.0.0` |
 | [Action Recorder](scripts/action_recorder) | 5 | `action-recorder-v1.0.0` |
 | [Io Overcharge](scripts/io_overcharge) | 16 | `io-overcharge-v1.0.0` |
@@ -655,7 +655,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Spirit Breaker Combo & Ghoul 1000-7](scripts/spirit_breaker_bara) | 6 | `spirit-breaker-bara-v1.0.0` |
 | [1000-7 Counter](scripts/ghoul_counter) | 11 | `ghoul-counter-v1.0.0` |
 | [Invoker Jarvis](scripts/invoker_jarvis) | 50 | `v1.3.1` |
-| [TikTok](scripts/umbrella_tiktok) | 336 | `v1.3.2` |
+| [TikTok](scripts/umbrella_tiktok) | 338 | `v1.3.2` |
 | [Invoker AutoStack](scripts/invoker_autostack) | 84 | `v1.4.2` |
 | [Old Last Match](scripts/old_last_match) | 19 | `old-last-match-v1.0.0` |
 | [Unusual Secret](scripts/unusual_secret) | 20 | `unusual-secret-v2.1.0` |
@@ -692,7 +692,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Farm Pattern 2.5](scripts/farm_pattern) | 7 | `farm-pattern-v2.5` |
 | [Win Condition Engine](scripts/win_condition_engine) | 56 | `win-condition-engine-v1.0.0` |
 | [Invoker (beta)](scripts/invoker_beta) | 43 | `invoker-beta-v1.0.0` |
-| [Kez Combo](scripts/kez_combo) | 19 | `kez-combo-v1.0.0` |
+| [Kez Combo](scripts/kez_combo) | 20 | `kez-combo-v1.0.0` |
 | [Techies Combo](scripts/techies_combo) | 24 | `techies-combo-v1.0.0` |
 | [Lone Druid Auto Farm](scripts/ld_farm) | 1 | `ld-farm-v1.7` |
 | [Unusual Effects](scripts/unusual_cosmetics) | 12 | `unusual-cosmetics-v1.0.0` |
@@ -732,7 +732,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [PT Mana Abuse](scripts/pt_mana_abuse) | 7 | `pt-mana-abuse-ctx-v1.0.0` |
 | [Lone Druid Bear AI Deluxe](scripts/lone_druid_bear_ai_deluxe) | 21 | `lone-druid-bear-ai-deluxe-v1.0.0` |
 | [PudgeHook AI](scripts/pudge_hook_ai) | 22 | `pudge-hook-ai-v1.0.0` |
-| [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) | 59 | `arc-warden-wave-pusher-v1.2.0` |
+| [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) | 62 | `arc-warden-wave-pusher-v1.2.0` |
 | [Echo BKB Dodge](scripts/echo_bkb_dodge) | 16 | `echo-bkb-dodge-v1.2.0` |
 | [Force Staffer](scripts/force_staffer) | 8 | `force-staffer-v1.0.0` |
 | [AntiPause Helper](scripts/anti_pause_helper) | 6 | `anti-pause-helper-v1.0.0` |
@@ -740,18 +740,18 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
 | [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 4 | `terrorblade-sunder-dagon-v1.0.0` |
 | [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 5 | `venomancer-ward-controller-v1.0.0` |
-| [Cloud Radar](scripts/web_radar) | 120 | `web-radar-v2.6.2` |
+| [Cloud Radar](scripts/web_radar) | 122 | `web-radar-v2.6.2` |
 | [Murzik Kitty Widget](scripts/murzik) | 3 | `murzik-v1.0.0` |
 | [Трекер привычек](scripts/habits) | 3 | `habits-v1.0.0` |
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |
 | [Календарь](scripts/calendar) | 2 | `calendar-v1.0.0` |
 | [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) | 4 | `arc-warden-clone-pike-v1.0.0` |
-| [Dark Seer Illusion Control](scripts/dark_seer_illusions) | 28 | `dark-seer-illusions-v1.0.3` |
+| [Dark Seer Illusion Control](scripts/dark_seer_illusions) | 29 | `dark-seer-illusions-v1.0.3` |
 | [Muerta Anti Techies](scripts/muerta_anti_techies) | 0 | `muerta-anti-techies-v1.0.0` |
 | [Arc Warden Auto Stack](scripts/avto_stak_arc_warden) | 0 | `avto-stak-arc-warden-v1.0.0` |
 | [Techies Legit](scripts/techies_legit) | 0 | `techies-legit-v1.0.0` |
 | [Dodger Utilities](scripts/dodger_utilities) | 0 | `dodger-utilities-v1.0.0` |
-| [History Changer](scripts/history_changer) | 61 | `history-changer-v1.0.1` |
+| [History Changer](scripts/history_changer) | 62 | `history-changer-v1.0.1` |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/stats/stats-dark.svg">
