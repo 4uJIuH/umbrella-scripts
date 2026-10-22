@@ -3,11 +3,12 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.5.0/web_radar.lua) — `web-radar-v2.5.0`, 2026-10-21
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.0/web_radar.lua) — `web-radar-v2.6.0`, 2026-10-22
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`web-radar-v2.5.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.5.0) | 2026-10-21 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.5.0/web_radar.lua) | 8 |
+| [`web-radar-v2.6.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.6.0) | 2026-10-22 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.0/web_radar.lua) | 0 |
+| [`web-radar-v2.5.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.5.0) | 2026-10-21 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.5.0/web_radar.lua) | 36 |
 | [`web-radar-v2.3.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.3) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua) | 72 |
 | [`web-radar-v2.3.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.2) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.2/web_radar.lua) | 3 |
 | [`web-radar-v2.3.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.1) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.1/web_radar.lua) | 0 |
@@ -37,6 +38,15 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Обновление v2.6.0
+
+- Плавный режим обновляет сайт почти мгновенно: 20 Гц и до 8 пакетов в пути одновременно, радар больше не ждет ответа на прошлый пакет. В Балансе до 2 пакетов, в Экономе по одному. Настройка «Плавный» может один раз сброситься на «Баланс», выберите ее заново.
+- Обрыв соединения с сервером (частый при блокировках провайдера) больше не останавливает отправку на несколько секунд и не заставляет пересылать весь пакет: уходит только то, что не дошло.
+- Исправлен фриз и вылет игры после падения трона. Как только матч закончился, радар перестает трогать объекты игры и обрабатывать события, отправка замедляется до раза в 2 секунды, а ответы сервера, пришедшие в этот момент, больше не могут уронить игру.
+- В строке нагрузки виден пинг до сервера.
+- Сайт: новое оформление в стиле трансляции, с крупным счетом и временем матча, цветами команд из игры и узким шрифтом для цифр. Страница помещается на экран телефона.
+- Сайт: герои двигаются по точной временной шкале матча и плавно идут между пакетами, без рывков при неровной сети. Карта рисуется с частотой экрана, а боковые панели обновляются не чаще 4 раз в секунду.
 
 # Обновление v2.5.0
 
@@ -129,6 +139,15 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Update v2.6.0
+
+- Smooth mode updates the site almost instantly: 20 Hz with up to 8 packets in flight, and the radar no longer waits for the reply to the previous packet. Balanced keeps up to 2 packets in flight, Eco one. The Smooth choice may reset to Balanced once; pick it again.
+- A dropped connection to the server (common when a provider blocks it) no longer pauses sending for several seconds or forces a full resend: only what did not arrive is sent again.
+- Fixed the game freezing and crashing after the throne falls. As soon as the match ends, the radar stops touching game objects and handling events, sending slows to once every 2 seconds, and server replies that arrive at that moment can no longer crash the game.
+- The load line shows the ping to the server.
+- Site: a new broadcast-style look with a large score and match clock, the game's team colors and a narrow typeface for numbers. The page fits a phone screen.
+- Site: heroes move along the exact match timeline and glide between packets, without jerks on an uneven connection. The map draws at the screen refresh rate, and the side panels update at most 4 times per second.
 
 # Update v2.5.0
 
