@@ -3,13 +3,9 @@
 автоматические предметы и ускорения во время Charge of Darkness / automated items and speed boosts during Charge of Darkness
 
 <!-- releases:start -->
-Скачать: [spirit_breaker_charge.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/spirit-breaker-charge-v1.0.0/spirit_breaker_charge.lua) — `spirit-breaker-charge-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `spirit_breaker_charge.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/spirit-breaker-charge-v1.0.0/spirit_breaker_charge.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`spirit-breaker-charge-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/spirit-breaker-charge-v1.0.0) | 2026-10-13 | [spirit_breaker_charge.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/spirit-breaker-charge-v1.0.0/spirit_breaker_charge.lua) | 22 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=spirit-breaker-charge&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=spirit-breaker-charge&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 2. Перезагрузите скрипты и откройте Spirit Breaker → Charge Combo.
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ Times Spirit Breaker's items and abilities during the charge, preserving selecte
 2. Reload scripts and open Spirit Breaker → Charge Combo.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

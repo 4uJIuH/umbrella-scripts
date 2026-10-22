@@ -3,13 +3,9 @@
 автоматизирует взаимодействие Feast of Souls с предметами и эффектами / automates Feast of Souls interactions with items and effects
 
 <!-- releases:start -->
-Скачать: [sf_feast_of_souls_abuse.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/sf-feast-of-souls-v4.0/sf_feast_of_souls_abuse.lua) — `sf-feast-of-souls-v4.0`, 2026-10-13
+Последняя версия: [`v4.0` — `sf_feast_of_souls_abuse.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/sf-feast-of-souls-v4.0/sf_feast_of_souls_abuse.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`sf-feast-of-souls-v4.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/sf-feast-of-souls-v4.0) | 2026-10-13 | [sf_feast_of_souls_abuse.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/sf-feast-of-souls-v4.0/sf_feast_of_souls_abuse.lua) | 1 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=sf-feast-of-souls&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=sf-feast-of-souls&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -24,12 +20,6 @@
 
 1. Поместите `sf_feast_of_souls_abuse.lua` в `Umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и настройте раздел `Heroes → Shadow Fiend → Feast of Souls Abuse`.
-
-## Что нового
-
-# Релиз v4.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -47,9 +37,3 @@ A Shadow Fiend script with KOTL and Octarine options and protections for stored 
 
 1. Place `sf_feast_of_souls_abuse.lua` in `Umbrella\scripts`.
 2. Reload scripts and configure `Heroes → Shadow Fiend → Feast of Souls Abuse`.
-
-## Changelog
-
-# Release v4.0
-
-- Release version: the first publication of the script.

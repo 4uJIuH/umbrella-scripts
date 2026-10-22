@@ -6377,6 +6377,10 @@
       "heroes": [
         "muerta"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/muerta_anti_techies/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/muerta_anti_techies/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6399,6 +6403,10 @@
       "heroes": [
         "arc_warden"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/avto_stak_arc_warden/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/avto_stak_arc_warden/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6421,6 +6429,10 @@
       "heroes": [
         "techies"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_legit/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_legit/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6445,6 +6457,10 @@
         "bane",
         "arc_warden"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dodger_utilities/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dodger_utilities/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     }
   ]

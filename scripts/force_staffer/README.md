@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`force-staffer-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/force-staffer-v1.0.0) | 2026-10-18 | [forcestaffer.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/force-staffer-v1.0.0/forcestaffer.lua) | 7 |
+| [`force-staffer-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/force-staffer-v1.0.0) | 2026-10-18 | [forcestaffer.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/force-staffer-v1.0.0/forcestaffer.lua) | 8 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=force-staffer&expanded=true)
 <!-- releases:end -->

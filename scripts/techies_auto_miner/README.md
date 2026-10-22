@@ -3,13 +3,9 @@
 автоматически минирует выбранные зоны карты на Techies / automatically mines selected map zones as Techies
 
 <!-- releases:start -->
-Скачать: [techies_auto_miner.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-auto-miner-v1.1/techies_auto_miner.lua) — `techies-auto-miner-v1.1`, 2026-10-13
+Последняя версия: [`v1.1` — `techies_auto_miner.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_auto_miner/techies_auto_miner.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`techies-auto-miner-v1.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/techies-auto-miner-v1.1) | 2026-10-13 | [techies_auto_miner.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-auto-miner-v1.1/techies_auto_miner.lua) | 0 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-auto-miner&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-auto-miner&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -27,12 +23,6 @@
 2. Перезагрузите скрипты, выберите зоны на панели карты и запустите минирование.
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
-
-## Что нового
-
-# Релиз v1.1
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -53,9 +43,3 @@ Automatically traverses zones selected on an interactive minimap and plants Prox
 2. Reload scripts, select zones on the map panel, and start mining.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
-
-## Changelog
-
-# Release v1.1
-
-- Release version: the first publication of the script.

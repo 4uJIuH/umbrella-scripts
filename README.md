@@ -249,6 +249,11 @@
 - [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) — пика от клона для спасения Арк Вардена
 - [PT Mana Abuse (ctx)](scripts/pt_mana_abuse_ctx) — автоматически переключает Power Treads на интеллект для каста
 - [Dark Seer Illusion Control](scripts/dark_seer_illusions) — управляет иллюзиями от Wall of Replica и Normal Punch
+- [Muerta Anti Techies](scripts/muerta_anti_techies) — Dead Shot через дерево по Techies во время Blast Off
+- [Arc Warden Auto Stack](scripts/avto_stak_arc_warden) — автостак нейтральных кемпов клоном Arc Warden и Midas после удара
+- [Techies Legit](scripts/techies_legit) — автоставка мин Techies с выбором точки или цели
+- [Dodger Utilities](scripts/dodger_utilities) — набор утилит для Dodger: Manta, Forge Spirit, ломание мин Techies и уход от Bane
+- [History Changer](scripts/history_changer) — MMR после каждой игры в истории матчей и плашка итогов за сутки, неделю или месяц
 <!-- scripts:ru:end -->
 
 На странице скрипта есть описание, установка, история версий и загрузка.
@@ -545,6 +550,11 @@ Repository: https://github.com/4uJIuH/umbrella-scripts
 - [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) — use the clone's Pike to save Arc Warden
 - [PT Mana Abuse (ctx)](scripts/pt_mana_abuse_ctx) — switches Power Treads to Intelligence when needed to cast
 - [Dark Seer Illusion Control](scripts/dark_seer_illusions) — controls Wall of Replica and Normal Punch illusions
+- [Muerta Anti Techies](scripts/muerta_anti_techies) — Dead Shot through a tree onto Techies during Blast Off
+- [Arc Warden Auto Stack](scripts/avto_stak_arc_warden) — auto-stacks neutral camps with the Arc Warden clone and Midas after the strike
+- [Techies Legit](scripts/techies_legit) — automatic Techies mine placement with a choice of point or target
+- [Dodger Utilities](scripts/dodger_utilities) — Dodger utilities: Manta, Forge Spirit, Techies mine breaking and Bane escape
+- [History Changer](scripts/history_changer) — post-match MMR in match history and a 24h, 7-day or 30-day totals pill
 <!-- scripts:en:end -->
 
 The script page includes its description, installation steps, version history, and download.
@@ -594,7 +604,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | script | downloads | latest |
 | --- | --- | --- |
 | [Auto Support Buy](scripts/auto_support_buy) | 24 | `auto-support-buy-v1.1.0` |
-| [Tinker Turret Dodge](scripts/tinker_turret_dodge) | 49 | `tinker-turret-dodge-v1.1.5` |
+| [Tinker Turret Dodge](scripts/tinker_turret_dodge) | 50 | `tinker-turret-dodge-v1.1.5` |
 | [Tinker Auto Farm](scripts/tinker_auto_farm) | 16 | `tinker-auto-farm-v1.0.4` |
 | [Auto Shackleshot](scripts/auto_shackleshot) | 26 | `auto-shackleshot-v1.0.0` |
 | [Auto Spark](scripts/auto_spark) | 30 | `auto-spark-v1.0.0` |
@@ -605,8 +615,8 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Dorman Combo Assistant](scripts/dorman_combo_assistant) | 1 | `dorman-combo-assistant-v1.0.0` |
 | [Rem Assistant](scripts/rem_assistant) | 2 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
-| [qLocalization](scripts/q_localizer) | 140 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 518 | `script-manager-v2.14.3` |
+| [qLocalization](scripts/q_localizer) | 141 | `q-localizer-v1.0.0` |
+| [Script Manager](scripts/script_manager) | 521 | `script-manager-v2.14.3` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 650 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 16 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 293 | `lane-pull-v1.0.4` |
@@ -628,7 +638,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Chat Translator](scripts/chat_translator) | 30 | `chat-translator-v1.0.0` |
 | [Hero Grid](scripts/hero_grid) | 2 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 19 | `weather-v1.0.0` |
-| [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 16 | `visage-familiar-tp-v1.0.0` |
+| [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 17 | `visage-familiar-tp-v1.0.0` |
 | [Grimstroke Helper](scripts/grimstroke_helper) | 63 | `grimstroke-helper-v1.4.2` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 13 | `phoenix-smartnova-v1.0.0` |
 | [BehaviorScoreHelper](scripts/behavior_score_helper) | 22 | `behavior-score-helper-v2.1.3` |
@@ -648,7 +658,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [TikTok](scripts/umbrella_tiktok) | 336 | `v1.3.2` |
 | [Invoker AutoStack](scripts/invoker_autostack) | 84 | `v1.4.2` |
 | [Old Last Match](scripts/old_last_match) | 19 | `old-last-match-v1.0.0` |
-| [Unusual Secret](scripts/unusual_secret) | 19 | `unusual-secret-v2.1.0` |
+| [Unusual Secret](scripts/unusual_secret) | 20 | `unusual-secret-v2.1.0` |
 | [Atmospheric Fog Restorer](scripts/atmospheric_fog) | 9 | `atmospheric-fog-v1.0.0` |
 | [Windranger Powershot Killsteal](scripts/windranger_powershot) | 22 | `windranger-powershot-v1.0.0` |
 | [MoM Sabre Abuse](scripts/mom_sabre_abuse) | 8 | `mom-sabre-abuse-v2.0.0` |
@@ -661,7 +671,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Arc Warden Clone Safe Me](scripts/arc_warden_clone_safe_me) | 6 | `arc-warden-clone-safe-me-v1.0.0` |
 | [Arc Warden Multi Stack](scripts/arc_warden_multi_stack) | 8 | `arc-warden-multi-stack-v1.0.0` |
 | [Map Chat Troll](scripts/maptroll) | 12 | `maptroll-v1.0.0` |
-| [Creep Aggro](scripts/creep_aggro) | 26 | `creep-aggro-v1.0.0` |
+| [Creep Aggro](scripts/creep_aggro) | 27 | `creep-aggro-v1.0.0` |
 | [Nyx Assassin Auto Burrow](scripts/nyx_auto_burrow) | 6 | `nyx-auto-burrow-v1.0.0` |
 | [Dawnbreaker Solar Guardian Auto-Save Helper](scripts/dawnbreaker_solar_guardian) | 21 | `dawnbreaker-solar-guardian-v1.0.0` |
 | [Dota 1x6 Pack](scripts/dota1x6_pack) | 45 | `dota-1x6-pack-v1.0.0` |
@@ -677,7 +687,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Ward Predictor](scripts/ward_predictor) | 30 | `ward-predictor-v1.0.0` |
 | [Invoker SS](scripts/invoker_ss) | 4 | `invoker-ss-v138` |
 | [Sentry](scripts/sentry) | 14 | `sentry-v1.0.0` |
-| [Changer](scripts/changer) | 15 | `changer-v1.0.0` |
+| [Changer](scripts/changer) | 16 | `changer-v1.0.0` |
 | [Self Play](scripts/self_play_bot) | 8 | `self-play-v1.0.1` |
 | [Farm Pattern 2.5](scripts/farm_pattern) | 7 | `farm-pattern-v2.5` |
 | [Win Condition Engine](scripts/win_condition_engine) | 56 | `win-condition-engine-v1.0.0` |
@@ -722,9 +732,9 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [PT Mana Abuse](scripts/pt_mana_abuse) | 7 | `pt-mana-abuse-ctx-v1.0.0` |
 | [Lone Druid Bear AI Deluxe](scripts/lone_druid_bear_ai_deluxe) | 21 | `lone-druid-bear-ai-deluxe-v1.0.0` |
 | [PudgeHook AI](scripts/pudge_hook_ai) | 22 | `pudge-hook-ai-v1.0.0` |
-| [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) | 57 | `arc-warden-wave-pusher-v1.1.0` |
+| [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) | 58 | `arc-warden-wave-pusher-v1.2.0` |
 | [Echo BKB Dodge](scripts/echo_bkb_dodge) | 16 | `echo-bkb-dodge-v1.2.0` |
-| [Force Staffer](scripts/force_staffer) | 7 | `force-staffer-v1.0.0` |
+| [Force Staffer](scripts/force_staffer) | 8 | `force-staffer-v1.0.0` |
 | [AntiPause Helper](scripts/anti_pause_helper) | 6 | `anti-pause-helper-v1.0.0` |
 | [Shadow Shaman Ward Controller](scripts/shadow_shaman_ward_controller) | 5 | `shadow-shaman-ward-controller-v1.0.0` |
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
@@ -736,7 +746,12 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |
 | [Календарь](scripts/calendar) | 2 | `calendar-v1.0.0` |
 | [Arc Warden Clone Pike](scripts/arc_warden_clone_pike) | 4 | `arc-warden-clone-pike-v1.0.0` |
-| [Dark Seer Illusion Control](scripts/dark_seer_illusions) | 26 | `dark-seer-illusions-v1.0.3` |
+| [Dark Seer Illusion Control](scripts/dark_seer_illusions) | 28 | `dark-seer-illusions-v1.0.3` |
+| [Muerta Anti Techies](scripts/muerta_anti_techies) | 0 | `muerta-anti-techies-v1.0.0` |
+| [Arc Warden Auto Stack](scripts/avto_stak_arc_warden) | 0 | `avto-stak-arc-warden-v1.0.0` |
+| [Techies Legit](scripts/techies_legit) | 0 | `techies-legit-v1.0.0` |
+| [Dodger Utilities](scripts/dodger_utilities) | 0 | `dodger-utilities-v1.0.0` |
+| [History Changer](scripts/history_changer) | 61 | `history-changer-v1.0.1` |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/stats/stats-dark.svg">

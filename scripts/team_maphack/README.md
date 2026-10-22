@@ -3,13 +3,9 @@
 отмечает события игры в чате и на миникарте / marks game events in chat and on the minimap
 
 <!-- releases:start -->
-Скачать: [team_maphack.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/team-maphack-v1.0.0/team_maphack.lua) — `team-maphack-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `team_maphack.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/team-maphack-v1.0.0/team_maphack.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`team-maphack-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/team-maphack-v1.0.0) | 2026-10-13 | [team_maphack.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/team-maphack-v1.0.0/team_maphack.lua) | 5 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=team-maphack&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=team-maphack&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -23,12 +19,6 @@
 
 1. Поместите `team_maphack.lua` в `Umbrella\scripts` и перезагрузите скрипты.
 2. Проверьте, что выбранные уведомления соответствуют правилам игры и платформы.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -45,9 +35,3 @@ Displays and sends signals about teleports, smokes, scans, runes, Roshan, Tormen
 
 1. Place `team_maphack.lua` in `Umbrella\scripts` and reload scripts.
 2. Check that selected notifications comply with the game and platform rules.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

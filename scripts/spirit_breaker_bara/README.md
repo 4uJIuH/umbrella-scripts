@@ -3,13 +3,9 @@
 комбо для Spirit Breaker с предметами и чат-отсчётом / Spirit Breaker combo with items and a chat countdown
 
 <!-- releases:start -->
-Скачать: [bara.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/spirit-breaker-bara-v1.0.0/bara.lua) — `spirit-breaker-bara-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `bara.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/spirit_breaker_bara/bara.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`spirit-breaker-bara-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/spirit-breaker-bara-v1.0.0) | 2026-10-13 | [bara.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/spirit-breaker-bara-v1.0.0/bara.lua) | 6 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=spirit-breaker-bara&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=spirit-breaker-bara&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 1. Поместите `bara.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты.
 3. Отключите Auto Pause On Impact и 1000-7 Chat Countdown, если эти действия не нужны.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ Uses Bulldoze before impact, can cast Nether Strike, and activates items. It can
 1. Place `bara.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Disable Auto Pause On Impact and 1000-7 Chat Countdown if you do not want those actions.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.
