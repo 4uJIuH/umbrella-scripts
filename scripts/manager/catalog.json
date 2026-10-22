@@ -6376,7 +6376,8 @@
       "date": "2026-10-22",
       "heroes": [
         "muerta"
-      ]
+      ],
+      "version_marker": "NONE"
     },
     {
       "id": "avto_stak_arc_warden",
@@ -6397,7 +6398,8 @@
       "date": "2026-10-22",
       "heroes": [
         "arc_warden"
-      ]
+      ],
+      "version_marker": "NONE"
     },
     {
       "id": "techies_legit",
@@ -6418,7 +6420,8 @@
       "date": "2026-10-22",
       "heroes": [
         "techies"
-      ]
+      ],
+      "version_marker": "NONE"
     },
     {
       "id": "dodger_utilities",
@@ -6441,7 +6444,8 @@
         "techies",
         "bane",
         "arc_warden"
-      ]
+      ],
+      "version_marker": "NONE"
     }
   ]
 }

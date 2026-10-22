@@ -11904,7 +11904,8 @@
           "Open `Scripts → Other → muerta_anti_techies → Защита → Blast Off` and enable the script.",
           "Select Muerta, learn Dead Shot, keep Q ready and have enough mana."
         ]
-      }
+      },
+      "version_marker": "NONE"
     },
     {
       "id": "avto_stak_arc_warden",
@@ -11954,7 +11955,8 @@
           "Reload Lua scripts.",
           "Open `Heroes → Hero List → Arc Warden → AW Helper` and enable the script in the `Авто стак клоном` tab."
         ]
-      }
+      },
+      "version_marker": "NONE"
     },
     {
       "id": "techies_legit",
@@ -12002,7 +12004,8 @@
           "Reload Lua scripts.",
           "Open `Heroes → Hero List → Techies` and enable the script in `Main Settings`."
         ]
-      }
+      },
+      "version_marker": "NONE"
     },
     {
       "id": "dodger_utilities",
@@ -12054,7 +12057,8 @@
           "Reload Lua scripts.",
           "Open `General → Main → Dodger` and enable the script in the `Utilities` tab."
         ]
-      }
+      },
+      "version_marker": "NONE"
     },
     {
       "id": "history_changer",
