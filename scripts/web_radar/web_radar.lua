@@ -921,6 +921,7 @@ start = function(rotate)
                     state.needFull, state.layersDirty, state.nextFlags = true, true, 0
                     state.sentParts, state.feedQueue, state.feedSeq, state.mem = {}, {}, 0, {}
                     state.feedBase, state.feedKeys, state.feedPrune = math.floor(wallClock()), {}, {}
+                    state.clearFeed = true
                     state.resendAll = true
                     state.relayMatch = sid == old and savedGet("match") or nil
                     refreshFlags(clock())
@@ -1914,6 +1915,20 @@ local function eventAllowed(event)
     return state.flags.casts
 end
 
+local KEEP_EVENTS = {teleport = true, scan = true, smoke = true, blink = true, innate = true}
+
+local function eventRoom(kind)
+    local count, oldest, oldestAt = 0, nil, math.huge
+    for id, event in pairs(state.events) do
+        count = count + 1
+        if not KEEP_EVENTS[event.kind] and (event.started or 0) < oldestAt then oldest, oldestAt = id, event.started or 0 end
+    end
+    if count < 96 then return true end
+    if not KEEP_EVENTS[kind] or not oldest then return false end
+    state.events[oldest], state.particles[oldest] = nil, nil
+    return true
+end
+
 local function recordFarming(unit, target, source, now)
     if not unit or not target or call(NPC.IsNeutral, target) ~= true then return end
     local name = call(NPC.GetUnitName, unit)
@@ -2129,12 +2144,10 @@ observeCast = function(unit, ability, source, now, native, effect, ownerIndex)
     local p = not hidden and pos(call(Entity.GetAbsOrigin, unit)) or nativePosition
     p = p or cached
     if not p or type(p.x) ~= "number" or type(p.y) ~= "number" then return end
-    local count = 0
-    for _ in pairs(state.events) do count = count + 1 end
-    if count >= 96 then return end
+    local isBlink = name == "item_blink" or name == "item_overwhelming_blink" or name == "item_swift_blink" or name == "item_arcane_blink"
+    if not eventRoom(isBlink and "blink" or "cast") then return end
     state.castSerial = state.castSerial + 1
     local id = "cast:" .. tostring(state.castSerial)
-    local isBlink = name == "item_blink" or name == "item_overwhelming_blink" or name == "item_swift_blink" or name == "item_arcane_blink"
     local event = {id = id, kind = isBlink and "blink" or "cast", name = name, ability_name = name,
         x = p.x, y = p.y, started = now, ending = now + 4,
         timing = "observed_lifetime", source = source, location = "caster",
@@ -2309,15 +2322,13 @@ local function addEvent(data, projectile)
         if clock() - rate.time >= 1 then rate.time, rate.count = clock(), 0 end
         if rate.count >= 6 then return end
         rate.count = rate.count + 1; state.genericRates[ownerKey] = rate
-        duration = 15
+        duration = 6
     end
     if projectile and kind == "effect" then kind = "projectile" end
     local id = tostring(projectile and (data.handle or data.particleIndex) or data.index)
     if id == "nil" then return end
     id = (projectile and "projectile:" or "particle:") .. id
-    local count = 0
-    for _ in pairs(state.events) do count = count + 1 end
-    if count >= 96 and not state.events[id] then return end
+    if not state.events[id] and not eventRoom(kind) then return end
     local p = projectile and pos(data.origin or data.position) or nil
     -- Particle creation coordinates can be the caster rather than the target.
     -- Wait for control point 0 for particle world position.
@@ -3249,6 +3260,13 @@ do
         end
         state.kills = {}
 
+        m.recent = m.recent or {}
+        for key, at in pairs(m.recent) do if m.gt - at > 4 or at > m.gt then m.recent[key] = nil end end
+        local function fresh(key)
+            if m.recent[key] then return false end
+            m.recent[key] = m.gt
+            return true
+        end
         for _, e in ipairs(packet.events or {}) do
             if e.id and finite(e.x) and finite(e.y) and not m.ev[e.id] then
                 m.ev[e.id] = m.gt
@@ -3257,7 +3275,7 @@ do
                 local entry = {s = sideOf(owner and owner.team or e.team), h = name, p = place(e.x, e.y)}
                 if e.kind == "teleport" then
                     entry.k = e.phase == "destination" and "tp_to" or "tp_from"
-                    log(entry)
+                    if fresh(entry.k .. tostring(e.owner_id or name)) then log(entry) end
                 elseif e.kind == "scan" then
                     if m.scan and m.gt - m.scan.at <= 4 then addScanPlace(entry.p)
                     else m.scan = {entry = log({k = "scan", p = entry.p}), at = m.gt, places = {[entry.p or ""] = true}} end
@@ -3268,7 +3286,7 @@ do
                     if e.phase ~= "origin" then entry.k = "blink"; log(entry) end
                 elseif e.kind ~= "innate" then
                     entry.k, entry.a = e.ultimate == true and "ult" or "ability", e.ability_name or e.name
-                    log(entry)
+                    if fresh("a" .. tostring(e.owner_id or name) .. tostring(entry.a)) then log(entry) end
                 end
             end
         end

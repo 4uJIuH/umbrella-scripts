@@ -1,6 +1,8 @@
 # Fix v2.6.1
 
 - The 10 Hz mode is back, as Smooth used to be: "Fast, 10 Hz" sits between Balanced and Smooth (20 Hz) in both settings, send rate and collection rate.
+- Teleports show on the map and in the feed again. While spectating, ten heroes' ability effects used up the whole event limit and new teleports were dropped. Now the oldest effect makes room, and teleports, scans, smokes and blinks always get through.
+- The event feed no longer fills with repeats: the same hero ability is logged at most once every 4 seconds, a teleport as one line. Old entries from earlier radar runs are removed at start.
 
 # Update v2.6.0
 
