@@ -80,7 +80,7 @@ local ui = {}
 
 do
 	local hero_tab = UI.Find("Heroes", "Hero List", "Dark Seer")
-	local page = hero_tab and hero_tab:Find("Main Settings")
+	local page = hero_tab and hero_tab:Create("Illusions")
 	if not page then
 		local tab = UI.Create("Scripts", "Scripts", "Illusion Control")
 		tab:Icon("\u{f0c0}")

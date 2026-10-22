@@ -1,3 +1,7 @@
+# Update 1.0.2
+
+- The settings moved to their own tab: Heroes → Hero List → Dark Seer → Illusions.
+
 # Update 1.0.1
 
 - The window header button folds the window and only docks it into the screen edge when the window touches that edge.

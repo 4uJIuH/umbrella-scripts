@@ -11830,7 +11830,7 @@
         "install": [
           "Нажмите «Установить» в Script Manager или поместите `dark_seer_illusions.lua` в папку `umbrella\\scripts`.",
           "Перезагрузите Lua-скрипты.",
-          "Откройте `Heroes → Hero List → Dark Seer → Main Settings` и включите «Управлять иллюзиями»."
+          "Откройте `Heroes → Hero List → Dark Seer → Illusions` и включите «Управлять иллюзиями»."
         ]
       },
       "en": {
@@ -11846,7 +11846,7 @@
         "install": [
           "Click Install in Script Manager or place `dark_seer_illusions.lua` in the `umbrella\\scripts` folder.",
           "Reload Lua scripts.",
-          "Open `Heroes → Hero List → Dark Seer → Main Settings` and turn on \"Control illusions\"."
+          "Open `Heroes → Hero List → Dark Seer → Illusions` and turn on \"Control illusions\"."
         ]
       },
       "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/dark_seer_illusions",
