@@ -3,13 +3,9 @@
 пытается использовать BKB перед вражеским циклоном / attempts to use BKB before an enemy cyclone
 
 <!-- releases:start -->
-Скачать: [sf_anti_cyclone_bkb.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/sf-anti-cyclone-bkb-v2.0/sf_anti_cyclone_bkb.lua) — `sf-anti-cyclone-bkb-v2.0`, 2026-10-13
+Последняя версия: [`v2.0` — `sf_anti_cyclone_bkb.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/sf-anti-cyclone-bkb-v2.0/sf_anti_cyclone_bkb.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`sf-anti-cyclone-bkb-v2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/sf-anti-cyclone-bkb-v2.0) | 2026-10-13 | [sf_anti_cyclone_bkb.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/sf-anti-cyclone-bkb-v2.0/sf_anti_cyclone_bkb.lua) | 0 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=sf-anti-cyclone-bkb&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=sf-anti-cyclone-bkb&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -23,12 +19,6 @@
 
 1. Поместите `sf_anti_cyclone_bkb.lua` в `Umbrella\scripts`.
 2. Перезагрузите скрипты и настройте раздел `Anti-Cyclone BKB`.
-
-## Что нового
-
-# Релиз v2.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -45,9 +35,3 @@ A Shadow Fiend script that watches for an enemy Eul's Scepter or Wind Waker targ
 
 1. Place `sf_anti_cyclone_bkb.lua` in `Umbrella\scripts`.
 2. Reload scripts and configure the `Anti-Cyclone BKB` section.
-
-## Changelog
-
-# Release v2.0
-
-- Release version: the first publication of the script.

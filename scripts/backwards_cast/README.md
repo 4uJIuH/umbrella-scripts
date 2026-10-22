@@ -22,6 +22,8 @@
 2. Перезагрузите Lua-скрипты.
 3. Откройте General → Main → Back Cast и включите Enable.
 
+Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
+
 ---
 
 # Back Cast (English)
@@ -39,3 +41,5 @@ Lets you aim selected fixed-range abilities without turning the hero. The author
 1. Place `backwards_cast.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Open General → Main → Back Cast and enable it.
+
+Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.

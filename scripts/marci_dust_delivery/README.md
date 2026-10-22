@@ -23,6 +23,8 @@
 2. Перезагрузите Lua-скрипты.
 3. Откройте `Heroes → Hero List → Marci → Dusts` или `Scripts → Marci → Marci → Dusts`.
 
+Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
+
 ---
 
 # Marci Dust Delivery (English)
@@ -41,3 +43,5 @@ When a detected enemy within 400–1050 radius turns invisible and Marci has no 
 1. Place `marci_dust_delivery.lua` in `umbrella\scripts`.
 2. Reload Lua scripts.
 3. Open `Heroes → Hero List → Marci → Dusts` or `Scripts → Marci → Marci → Dusts`.
+
+Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.

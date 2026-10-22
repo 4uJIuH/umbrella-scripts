@@ -22,6 +22,8 @@
 2. Перезагрузите Lua-скрипты.
 3. Откройте настройки героя и выберите режим переключения.
 
+Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
+
 ---
 
 # MoM Swapper (English)
@@ -39,3 +41,5 @@ Rebuilds Mask of Madness into Echo Sabre or Specialist's Array and back using th
 1. Place `mom_swapper.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Open the hero settings and choose a swap mode.
+
+Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.

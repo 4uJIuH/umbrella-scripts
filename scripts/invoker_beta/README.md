@@ -21,8 +21,6 @@
 1. Поместите `invoker.lua` и `!_qLocalizer.lua` в `Umbrella\scripts`.
 2. Отключите стандартный скрипт Invoker, чтобы избежать конфликтов.
 
-Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
-
 ---
 
 # Invoker (beta) (English)
@@ -39,5 +37,3 @@ A beta with automatic combo selection, improved Auto Sunstrike, Auto Sphere, and
 
 1. Place `invoker.lua` and `!_qLocalizer.lua` in `Umbrella\scripts`.
 2. Disable the standard Invoker script to avoid conflicts.
-
-Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
