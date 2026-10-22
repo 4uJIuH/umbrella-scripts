@@ -5942,9 +5942,9 @@
     },
     {
       "id": "arc_warden_wave_pusher",
-      "version": "1.1.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/4c85653bddb1b765e22f8ceef09fe99ece6a6ee3/scripts/arc_warden_wave_pusher/ArcWardenWavePusher.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-wave-pusher-v1.1.0/ArcWardenWavePusher.lua",
+      "version": "1.2.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/97e901924b9043e0c1ee929f09dc8e8a51a6ca42/scripts/arc_warden_wave_pusher/ArcWardenWavePusher.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-wave-pusher-v1.2.0/ArcWardenWavePusher.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "Kishin | \u9b3c\u795e\u963f\u4fee\u7f85 (Discord: madnessvessel)",
@@ -5956,7 +5956,7 @@
           "Heroes \u2192 Hero List \u2192 Arc Warden \u2192 Clone Settings \u2192 Auto Play Settings \u2192 \u0423\u043c\u043d\u044b\u0439 \u043f\u0443\u0448 \u043f\u0430\u0447\u0435\u043a"
         ]
       },
-      "date": "2026-10-15",
+      "date": "2026-10-22",
       "heroes": [
         "arc_warden"
       ],
