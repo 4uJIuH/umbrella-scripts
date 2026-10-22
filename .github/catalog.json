@@ -11855,6 +11855,255 @@
       "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/dark_seer_illusions",
       "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=dark-seer-illusions&expanded=true",
       "manager_catalog": true
+    },
+    {
+      "id": "muerta_anti_techies",
+      "tag": "muerta-anti-techies",
+      "title": "Muerta Anti Techies",
+      "kind": "lua",
+      "category": "dota",
+      "file": "muerta_anti_techies.lua",
+      "author": "dofamineaddict (Discord: sn3gx)",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=muerta-anti-techies&expanded=true",
+      "heroes": [
+        "muerta"
+      ],
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-22",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/muerta_anti_techies/muerta_anti_techies.lua",
+        "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/muerta-anti-techies-v1.0.0/muerta_anti_techies.lua"
+      },
+      "ru": {
+        "tagline": "Dead Shot через дерево по Techies во время Blast Off",
+        "about": "Muerta использует Dead Shot через дерево, чтобы рикошетом попасть в Techies и наложить страх. Ждёт сигнала Blast Off или перехватывает героя в полёте, сам выбирает дерево и рассчитывает упреждение с учётом дальности, поворота и пути пули. Срабатывание зависит от данных о Techies и времени рикошета; если герой появляется из тумана или далеко от дерева, перехват может не успеть. Гарантированного прерывания любого прыжка из тумана нет.",
+        "features": [
+          "Выбирает дерево и рассчитывает упреждение Dead Shot",
+          "Реагирует на Blast Off или перехватывает героя в полёте",
+          "Учитывает дальность, поворот, путь пули и время каста с модификаторами"
+        ],
+        "install": [
+          "Поместите `muerta_anti_techies.lua` в папку `umbrella\\scripts`.",
+          "Нажмите Reload Scripts.",
+          "Откройте `Scripts → Other → muerta_anti_techies → Защита → Blast Off` и включите скрипт.",
+          "Выберите Muerta, изучите Dead Shot, держите Q готовым и достаточно маны."
+        ]
+      },
+      "en": {
+        "tagline": "Dead Shot through a tree onto Techies during Blast Off",
+        "about": "Muerta uses Dead Shot through a tree to ricochet into Techies and apply fear. It waits for the Blast Off signal or intercepts the hero in flight, picks the tree itself, and calculates lead from range, turn, bullet path and cast time with modifiers. Triggering depends on available Techies data and ricochet timing; a hero appearing late from fog or far from the tree may not be intercepted in time. A guaranteed interruption of any jump from fog is not claimed.",
+        "features": [
+          "Chooses the tree and calculates the Dead Shot lead",
+          "Responds to Blast Off or intercepts the hero in flight",
+          "Accounts for range, turn, bullet path and cast time with modifiers"
+        ],
+        "install": [
+          "Put `muerta_anti_techies.lua` into `umbrella\\scripts`.",
+          "Click Reload Scripts.",
+          "Open `Scripts → Other → muerta_anti_techies → Защита → Blast Off` and enable the script.",
+          "Select Muerta, learn Dead Shot, keep Q ready and have enough mana."
+        ]
+      }
+    },
+    {
+      "id": "avto_stak_arc_warden",
+      "tag": "avto-stak-arc-warden",
+      "title": "Arc Warden Auto Stack",
+      "kind": "lua",
+      "category": "dota",
+      "file": "avto_stak.lua",
+      "author": "negligible (Discord: s1ntoshi)",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=avto-stak-arc-warden&expanded=true",
+      "heroes": [
+        "arc_warden"
+      ],
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-22",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/avto_stak_arc_warden/avto_stak.lua",
+        "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/avto-stak-arc-warden-v1.0.0/avto_stak.lua"
+      },
+      "ru": {
+        "tagline": "автостак нейтральных кемпов клоном Arc Warden и Midas после удара",
+        "about": "После Tempest Double клон идёт к ближайшим нейтральным кемпам (1 или 2), бьёт их в нужную минуту и после удара, если есть Hand of Midas, применяет его на один крип. Скрипт управляет только клоном, основной герой не затрагивается. Есть ручной запуск по бинду.",
+        "features": [
+          "Стакает 1 или 2 ближайших кемпа клоном",
+          "Окно удара настраивается по минуте",
+          "Hand of Midas после удара на один крип",
+          "Ручной запуск по бинду"
+        ],
+        "install": [
+          "Поместите `avto_stak.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Heroes → Hero List → Arc Warden → AW Helper` и включите скрипт во вкладке `Авто стак клоном`."
+        ]
+      },
+      "en": {
+        "tagline": "auto-stacks neutral camps with the Arc Warden clone and Midas after the strike",
+        "about": "After Tempest Double, the clone goes to the nearest neutral camps (1 or 2), strikes them in the chosen minute, and after a strike applies Hand of Midas to one creep if you have it. The script controls only the clone; the main hero is not affected. A manual run is available on a bind.",
+        "features": [
+          "Stacks 1 or 2 nearest camps with the clone",
+          "Strike window set by minute",
+          "Hand of Midas on one creep after the strike",
+          "Manual run on a bind"
+        ],
+        "install": [
+          "Put `avto_stak.lua` into `umbrella\\scripts`.",
+          "Reload Lua scripts.",
+          "Open `Heroes → Hero List → Arc Warden → AW Helper` and enable the script in the `Авто стак клоном` tab."
+        ]
+      }
+    },
+    {
+      "id": "techies_legit",
+      "tag": "techies-legit",
+      "title": "Techies Legit",
+      "kind": "lua",
+      "category": "dota",
+      "file": "techies_legit.lua",
+      "author": "Filadelfi (Discord: filadelfi)",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-legit&expanded=true",
+      "heroes": [
+        "techies"
+      ],
+      "needs_q_localizer": true,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-22",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_legit/techies_legit.lua",
+        "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-legit-v1.0.0/techies_legit.lua"
+      },
+      "ru": {
+        "tagline": "автоставка мин Techies с выбором точки или цели",
+        "about": "Ставит мины Techies по случайному разбросу и с настраиваемой задержкой, интервалом и радиусом. Можно включить автокаст на точке или на цели. Случайный разброс можно отключить.",
+        "features": [
+          "Случайный разброс мин и задержка",
+          "Настройка начала, радиуса и интервала установки",
+          "Автокаст на точке или на цели"
+        ],
+        "install": [
+          "Поместите `techies_legit.lua` и `!_qLocalizer.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Heroes → Hero List → Techies` и включите скрипт в `Main Settings`."
+        ]
+      },
+      "en": {
+        "tagline": "automatic Techies mine placement with a choice of point or target",
+        "about": "Places Techies mines with randomized scatter and a random delay, with adjustable start time, radius and interval. Autocast can target a point or a target. The randomized scatter can be turned off.",
+        "features": [
+          "Randomized mine scatter and delay",
+          "Adjustable start time, radius and interval",
+          "Autocast on a point or on a target"
+        ],
+        "install": [
+          "Put `techies_legit.lua` and `!_qLocalizer.lua` into `umbrella\\scripts`.",
+          "Reload Lua scripts.",
+          "Open `Heroes → Hero List → Techies` and enable the script in `Main Settings`."
+        ]
+      }
+    },
+    {
+      "id": "dodger_utilities",
+      "tag": "dodger-utilities",
+      "title": "Dodger Utilities",
+      "kind": "lua",
+      "category": "dota",
+      "file": "dodger_utilities.lua",
+      "author": "russia.mvd (Discord: russia.mvd)",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=dodger-utilities&expanded=true",
+      "heroes": [
+        "techies",
+        "bane",
+        "arc_warden"
+      ],
+      "needs_q_localizer": true,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-22",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dodger_utilities/dodger_utilities.lua",
+        "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/dodger-utilities-v1.0.0/dodger_utilities.lua"
+      },
+      "ru": {
+        "tagline": "набор утилит для Dodger: Manta, Forge Spirit, ломание мин Techies и уход от Bane",
+        "about": "Основано на Forge Spirit Helper автора russia.mvd, доработано и очищено от лишнего кода. Нажимает Manta, руны-иллюзии и Forge Spirit, ломает мины Techies и уводит героя из радиуса Bane. Настройки: порог HP, максимальный уровень и поведение в невидимости.",
+        "features": [
+          "Нажимает Manta, руны-иллюзии и Forge Spirit",
+          "Ломает мины Techies",
+          "Уводит героя из радиуса Bane 900",
+          "Ставит юнит в центр спарка Arc Warden, чтобы не получить урон"
+        ],
+        "install": [
+          "Поместите `dodger_utilities.lua` и `!_qLocalizer.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `General → Main → Dodger` и включите скрипт во вкладке `Утилиты`."
+        ]
+      },
+      "en": {
+        "tagline": "Dodger utilities: Manta, Forge Spirit, Techies mine breaking and Bane escape",
+        "about": "Based on russia.mvd's Forge Spirit Helper, reworked and cleaned of unused code. Presses Manta, illusion runes and Forge Spirit, breaks Techies mines, and pulls the hero out of Bane's radius. Settings: HP threshold, maximum level and invisibility behaviour.",
+        "features": [
+          "Presses Manta, illusion runes and Forge Spirit",
+          "Breaks Techies mines",
+          "Pulls the hero out of Bane's 900 radius",
+          "Places a unit on the Arc Warden spark centre to avoid damage"
+        ],
+        "install": [
+          "Put `dodger_utilities.lua` and `!_qLocalizer.lua` into `umbrella\\scripts`.",
+          "Reload Lua scripts.",
+          "Open `General → Main → Dodger` and enable the script in the `Utilities` tab."
+        ]
+      }
+    },
+    {
+      "id": "history_changer",
+      "tag": "history-changer",
+      "title": "History Changer",
+      "kind": "lua",
+      "category": "dota",
+      "file": "history_changer.lua",
+      "external": true,
+      "author": "BraVoEw",
+      "author_github": "BraVoEw",
+      "source_url": "https://github.com/BraVoEw/Scripts-Umbrella",
+      "releases_url": "https://github.com/BraVoEw/Scripts-Umbrella/releases",
+      "initial": {
+        "version": "1.0.1",
+        "date": "2026-10-21",
+        "url": "https://github.com/BraVoEw/Scripts-Umbrella/releases/download/history-changer-v1.0.1/history_changer.lua",
+        "release": "https://github.com/BraVoEw/Scripts-Umbrella/releases/tag/history-changer-v1.0.1"
+      },
+      "ru": {
+        "tagline": "MMR после каждой игры в истории матчей и плашка итогов за сутки, неделю или месяц",
+        "about": "Внешний проект BraVoEw. Показывает настоящий MMR и его изменение в истории матчей, а над профилем — вины, лузы и сумму MMR. Видно только вам.",
+        "features": [
+          "MMR и изменение после матча вместо Win или Loss",
+          "Плашка над профилем: 24 часа, 7 или 30 дней",
+          "Свой текст вместо имени героя"
+        ],
+        "install": [
+          "Скачайте `history_changer.lua` из релиза автора.",
+          "Положите в папку `scripts` Umbrella и перезагрузите Lua.",
+          "Откройте `Scripts → Scripts → History Changer` и включите скрипт.",
+          "Откройте профиль → История."
+        ]
+      },
+      "en": {
+        "tagline": "post-match MMR in match history and a 24h, 7-day or 30-day totals pill",
+        "about": "External project by BraVoEw. Shows your real MMR and its change in match history, plus a pill above the profile with wins, losses and MMR total. Only you see it.",
+        "features": [
+          "Post-match MMR and change instead of Win or Loss",
+          "Profile pill: 24 hours, 7 or 30 days",
+          "Custom text instead of the hero name"
+        ],
+        "install": [
+          "Download `history_changer.lua` from the author's release.",
+          "Put it into Umbrella's `scripts` folder and reload Lua.",
+          "Open `Scripts → Scripts → History Changer` and enable the script.",
+          "Open your profile → History."
+        ]
+      }
     }
   ]
 }

@@ -6356,6 +6356,92 @@
         "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dark_seer_illusions/CHANGELOG.en.md"
       },
       "version_marker": "NONE"
+    },
+    {
+      "id": "muerta_anti_techies",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/muerta_anti_techies/muerta_anti_techies.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/muerta-anti-techies-v1.0.0/muerta_anti_techies.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "dofamineaddict (Discord: sn3gx)",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 Other \u2192 muerta_anti_techies \u2192 \u0417\u0430\u0449\u0438\u0442\u0430 \u2192 Blast Off"
+        ],
+        "en": [
+          "Scripts \u2192 Other \u2192 muerta_anti_techies \u2192 \u0417\u0430\u0449\u0438\u0442\u0430 \u2192 Blast Off"
+        ]
+      },
+      "date": "2026-10-22",
+      "heroes": [
+        "muerta"
+      ]
+    },
+    {
+      "id": "avto_stak_arc_warden",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/avto_stak_arc_warden/avto_stak.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/avto-stak-arc-warden-v1.0.0/avto_stak.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "negligible (Discord: s1ntoshi)",
+      "menu": {
+        "ru": [
+          "\u041e\u0431\u0449\u0435\u0435 \u2192 AW Helper \u2192 aw_helper"
+        ],
+        "en": [
+          "\u041e\u0431\u0449\u0435\u0435 \u2192 AW Helper \u2192 aw_helper"
+        ]
+      },
+      "date": "2026-10-22",
+      "heroes": [
+        "arc_warden"
+      ]
+    },
+    {
+      "id": "techies_legit",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_legit/techies_legit.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-legit-v1.0.0/techies_legit.lua",
+      "manual": false,
+      "needs_q_localizer": true,
+      "author": "Filadelfi (Discord: filadelfi)",
+      "menu": {
+        "ru": [
+          "Heroes \u2192 Hero List \u2192 Techies"
+        ],
+        "en": [
+          "Heroes \u2192 Hero List \u2192 Techies"
+        ]
+      },
+      "date": "2026-10-22",
+      "heroes": [
+        "techies"
+      ]
+    },
+    {
+      "id": "dodger_utilities",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dodger_utilities/dodger_utilities.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/dodger-utilities-v1.0.0/dodger_utilities.lua",
+      "manual": false,
+      "needs_q_localizer": true,
+      "author": "russia.mvd (Discord: russia.mvd)",
+      "menu": {
+        "ru": [
+          "General \u2192 Main \u2192 Dodger"
+        ],
+        "en": [
+          "General \u2192 Main \u2192 Dodger"
+        ]
+      },
+      "date": "2026-10-22",
+      "heroes": [
+        "techies",
+        "bane",
+        "arc_warden"
+      ]
     }
   ]
 }
