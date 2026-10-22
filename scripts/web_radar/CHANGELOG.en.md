@@ -1,3 +1,12 @@
+# Update v2.6.0
+
+- Smooth mode updates the site almost instantly: 20 Hz with up to 8 packets in flight, and the radar no longer waits for the reply to the previous packet. Balanced keeps up to 2 packets in flight, Eco one. The Smooth choice may reset to Balanced once; pick it again.
+- A dropped connection to the server (common when a provider blocks it) no longer pauses sending for several seconds or forces a full resend: only what did not arrive is sent again.
+- Fixed the game freezing and crashing after the throne falls. As soon as the match ends, the radar stops touching game objects and handling events, sending slows to once every 2 seconds, and server replies that arrive at that moment can no longer crash the game.
+- The load line shows the ping to the server.
+- Site: a new broadcast-style look with a large score and match clock, the game's team colors and a narrow typeface for numbers. The page fits a phone screen.
+- Site: heroes move along the exact match timeline and glide between packets, without jerks on an uneven connection. The map draws at the screen refresh rate, and the side panels update at most 4 times per second.
+
 # Update v2.5.0
 
 - The radar also works when you watch someone else's match as a spectator, not only in your own. For a spectator it sends KDA, gold and last buyback for all ten players, and the shop stock for both Radiant and Dire.

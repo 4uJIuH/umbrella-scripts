@@ -366,14 +366,14 @@ local localization = qLocalization.new({
         cr_profile_tip = "How often data goes to the site.\nIt is never faster than the collection rate.",
         cr_profiles_eco = "Eco, 3 Hz",
         cr_profiles_balanced = "Balanced, 5 Hz",
-        cr_profiles_smooth = "Smooth, 10 Hz",
+        cr_profiles_smooth = "Smooth, 20 Hz",
         cr_collect = "Collection rate",
         cr_collect_tip = "How often the game is read: heroes, details, map scan.\nEco costs the least FPS.",
         cr_collects_eco = "Eco, 3 Hz",
         cr_collects_balanced = "Balanced, 5 Hz",
-        cr_collects_smooth = "Smooth, 10 Hz",
+        cr_collects_smooth = "Smooth, 20 Hz",
         cr_performance_wait = "Load: no data yet",
-        cr_performance = "Load: %.1f ms, %.1f KB",
+        cr_performance = "Load: %.1f ms, %.1f KB, ping %.0f ms",
         cr_hitch = "Last freeze: %.1f s, script %.0f ms, %s",
         cr_st_off = "off",
         cr_st_stopping = "stopping",
@@ -397,7 +397,7 @@ local localization = qLocalization.new({
         cr_link_hint = "Start, then send the link",
         cr_effects_tip = "Casts, teleports and scans on the map\nand in the event feed",
         cr_details_tip = "Needs the Heroes layer",
-        cr_version = "Version 2.5.0",
+        cr_version = "Version 2.6.0",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -448,14 +448,14 @@ local localization = qLocalization.new({
         cr_profile_tip = "Как часто данные уходят на сайт.\nНе бывает чаще частоты сбора.",
         cr_profiles_eco = "Эконом, 3 Гц",
         cr_profiles_balanced = "Баланс, 5 Гц",
-        cr_profiles_smooth = "Плавный, 10 Гц",
+        cr_profiles_smooth = "Плавный, 20 Гц",
         cr_collect = "Частота сбора",
         cr_collect_tip = "Как часто читается игра: герои, детали, скан карты.\nЭконом бережет FPS.",
         cr_collects_eco = "Эконом, 3 Гц",
         cr_collects_balanced = "Баланс, 5 Гц",
-        cr_collects_smooth = "Плавный, 10 Гц",
+        cr_collects_smooth = "Плавный, 20 Гц",
         cr_performance_wait = "Нагрузка: нет данных",
-        cr_performance = "Нагрузка: %.1f мс, %.1f КБ",
+        cr_performance = "Нагрузка: %.1f мс, %.1f КБ, пинг %.0f мс",
         cr_hitch = "Последний фриз: %.1f с, скрипт %.0f мс, %s",
         cr_st_off = "выключен",
         cr_st_stopping = "остановка",
@@ -479,7 +479,7 @@ local localization = qLocalization.new({
         cr_link_hint = "Start и отправьте ссылку",
         cr_effects_tip = "Касты, телепорты и сканы на карте\nи в ленте событий",
         cr_details_tip = "Нужен слой «Герои»",
-        cr_version = "Версия 2.5.0",
+        cr_version = "Версия 2.6.0",
     },
 })
 
@@ -487,12 +487,12 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.5.0"
+script.VERSION = "2.6.0"
 local ui = {}
 local JSON
 local state = {
     ready = false, active = false, control = false, pendingStop = false,
-    session = nil, url = "", nextSend = 0, nextSlow = 0, sending = false,
+    session = nil, url = "", nextSend = 0, nextSlow = 0, inflight = {}, sendSerial = 0, feedOwner = nil,
     requestId = 0, sentAt = 0, failures = 0, status = nil, statusKey = "cr_st_off",
     heroes = {}, events = {}, particles = {}, units = {}, wards = {}, runes = {}, camps = {},
     match = nil, requests = {}, details = {}, players = {}, nextPlayers = 0,
@@ -542,11 +542,11 @@ local function finite(value)
 end
 
 local MODES = {
-    [0] = {rate = 3, hz = 3, detail = 1.2, slow = 2.5, scanMs = 0.0008, scanCount = 8, couriers = 1, creeps = 12, roshan = 1,
+    [0] = {rate = 3, hz = 3, pipeline = 1, detail = 1.2, slow = 2.5, scanMs = 0.0008, scanCount = 8, couriers = 1, creeps = 12, roshan = 1,
         parts = {info = 1.5, units = 1, wards = 2, runes = 1, camps = 4, objectives = 1}},
-    [1] = {rate = 5, hz = 5, detail = 0.7, slow = 1.5, scanMs = 0.0012, scanCount = 12, couriers = 0.5, creeps = 24, roshan = 0.5,
+    [1] = {rate = 5, hz = 5, pipeline = 2, detail = 0.7, slow = 1.5, scanMs = 0.0012, scanCount = 12, couriers = 0.5, creeps = 24, roshan = 0.5,
         parts = {info = 0.8, units = 0.4, wards = 1, runes = 0.5, camps = 2, objectives = 0.5}},
-    [2] = {rate = 10, hz = 10, detail = 0.4, slow = 1, scanMs = 0.0018, scanCount = 20, couriers = 0.25, creeps = 32, roshan = 0.25,
+    [2] = {rate = 20, hz = 20, pipeline = 8, detail = 0.4, slow = 1, scanMs = 0.0018, scanCount = 20, couriers = 0.25, creeps = 32, roshan = 0.25,
         parts = {info = 0.5, units = 0.2, wards = 0.5, runes = 0.3, camps = 1, objectives = 0.3}},
 }
 
@@ -566,7 +566,8 @@ local function refreshFlags(now)
     if not state.mode or state.profile ~= send or state.gather ~= gather then
         local merged = {}
         for key, value in pairs(MODES[gather] or MODES[1]) do merged[key] = value end
-        merged.rate, merged.parts = (MODES[send] or MODES[1]).rate, (MODES[send] or MODES[1]).parts
+        local sendMode = MODES[send] or MODES[1]
+        merged.rate, merged.parts, merged.pipeline = sendMode.rate, sendMode.parts, sendMode.pipeline
         state.mode, state.profile, state.gather = merged, send, gather
     end
     state.nextFlags = now + 0.5
@@ -783,9 +784,12 @@ local function request(method, url, body, callback, headers)
     local sent = call(HTTP and HTTP.Request, method, url, data, function(response)
         local replyBegan = clock()
         local code = tonumber(response and response.code) or 0
-        local text = response and response.response or ""
+        local text = type(response) == "table" and type(response.response) == "string" and response.response or ""
         local decoded = text ~= "" and call(JSON and JSON.decode, JSON, text) or nil
-        finish(decoded, code)
+        local ok, err = pcall(finish, decoded, code)
+        if not ok and get(ui.debug, false) and ai_bridge and ai_bridge.mcp_log then
+            call(ai_bridge.mcp_log, "error", "[Cloud Radar] reply handler", {error = tostring(err), code = code})
+        end
         state.perf.reply_ms = math.max(state.perf.reply_ms or 0, (clock() - replyBegan) * 1000)
     end)
     state.perf.http_ms = math.max(state.perf.http_ms or 0, (clock() - began) * 1000)
@@ -793,7 +797,7 @@ local function request(method, url, body, callback, headers)
 end
 
 local function dbRequest(method, sid, body, callback)
-    local headers = {["Content-Type"] = "application/json"}
+    local headers = {["Content-Type"] = "application/json", ["Connection"] = "keep-alive"}
     if method ~= "GET" then headers["X-HTTP-Method-Override"] = method end
     request(method == "GET" and "GET" or "POST", FB.db .. "/sessions/" .. sid .. ".json?print=silent&auth=" .. (state.fb.token or ""),
         body, callback, headers)
@@ -859,7 +863,7 @@ end
 stop = function()
     state.active, state.retryAt = false, nil
     state.requestId = state.requestId + 1
-    state.sending = false
+    state.inflight, state.feedOwner = {}, nil
     if state.control then state.pendingStop = true; show("cr_st_stopping"); return end
     if not state.session then show("cr_st_stopped"); return end
     state.control = true
@@ -883,7 +887,8 @@ start = function(rotate)
     if state.control then return end
     if not get(ui.enabled, false) then show("cr_st_enable_first"); return end
     if not JSON then show("cr_st_no_json"); return end
-    state.active, state.sending, state.control = false, false, true
+    state.active, state.control = false, true
+    state.inflight, state.feedOwner = {}, nil
     state.requestId = state.requestId + 1
     show("cr_st_auth")
     authorize(function(ok, code)
@@ -1914,8 +1919,12 @@ local function recordFarming(unit, target, source, now)
 end
 
 local function inGame()
-    if call(Engine.IsInGame) == true then return true end
     local phase = call(GameRules.GetGameState)
+    if phase == Enum.GameState.DOTA_GAMERULES_STATE_POST_GAME or phase == Enum.GameState.DOTA_GAMERULES_STATE_DISCONNECT then
+        state.over = true
+        return false
+    end
+    if call(Engine.IsInGame) == true then state.over = false; return true end
     local watching = (phase == Enum.GameState.DOTA_GAMERULES_STATE_PRE_GAME or phase == Enum.GameState.DOTA_GAMERULES_STATE_GAME_IN_PROGRESS)
         and (call(Heroes.Count) or 0) > 0
     if get(ui.debug, false) and state.lastPhase ~= phase and ai_bridge and ai_bridge.mcp_log then
@@ -1923,6 +1932,7 @@ local function inGame()
         call(ai_bridge.mcp_log, "debug", "[Cloud Radar] in-game check", {engine = false, phase = phase,
             heroes = call(Heroes.Count), local_hero = call(Heroes.GetLocal) ~= nil, watching = watching})
     end
+    state.over = not watching
     return watching
 end
 
@@ -2570,7 +2580,10 @@ end
 
 function script.OnGameEnd()
     resetMatch()
-    state.match, state.nextSend = nil, 0
+    state.over, state.match = true, nil
+    state.requestId = state.requestId + 1
+    state.inflight, state.feedOwner = {}, nil
+    state.nextSend = clock() + 2
 end
 
 function script.OnUnitInventoryUpdated(entity)
@@ -2861,7 +2874,7 @@ do
         local gt = packet.game_time or 0
         local now = packet.game_clock or gt
         local offset = gt - now
-        local v = {clock = {t = round(gt) or 0, in_game = packet.in_game == true, team = packet.local_team, spec = packet.spectator or nil, paused = packet.paused == true}}
+        local v = {clock = {t = round(gt) or 0, ms = finite(gt) and math.floor(gt * 100 + 0.5) / 100 or nil, in_game = packet.in_game == true, team = packet.local_team, spec = packet.spectator or nil, paused = packet.paused == true}}
         if not packet.in_game then return v end
         local tod = call(GameRules.GetTimeOfDay)
         if finite(tod) then v.clock.day = tod >= 0.25 and tod < 0.75 end
@@ -3287,7 +3300,7 @@ do
         return v
     end
 
-    function relay.patch(v)
+    function relay.patch(v, withFeed)
         local began = clock()
         local fields, commit, feedCount = {}, {}, 0
         local inGame = v.clock and v.clock.in_game
@@ -3300,7 +3313,8 @@ do
                 commit[key] = encoded
             end
         end
-        if state.clearFeed then
+        if not withFeed then
+        elseif state.clearFeed then
             fields[#fields + 1] = '"feed":null'
         else
             for _, key in ipairs(state.feedPrune) do fields[#fields + 1] = '"feed/' .. key .. '":null' end
@@ -3375,22 +3389,29 @@ function script.OnUpdateEx()
     refreshFlags(now)
     if not state.flags.enabled then return end
     if not state.localTeam then state.localTeam = localTeam(call(Heroes.GetLocal)) end
-    if inGame() and (state.scanJob or now >= state.nextSlow) then
+    local playing = inGame()
+    if playing and (state.scanJob or now >= state.nextSlow) then
         local scanBegan = clock()
         slowSnapshot(gameClock())
         state.perf.scan_ms = (clock() - scanBegan) * 1000
     end
-    if state.sending then
-        if now - state.sentAt < 5 then return end
-        state.requestId = state.requestId + 1
-        state.sending = false
-        state.needFull, state.layersDirty, state.resendAll = true, true, true
+    local inflight = 0
+    for serial, sentAt in pairs(state.inflight) do
+        if now - sentAt >= 5 then
+            state.inflight[serial] = nil
+            if state.feedOwner == serial then state.feedOwner = nil end
+            state.needFull, state.layersDirty, state.resendAll = true, true, true
+        else inflight = inflight + 1 end
+    end
+    if inflight >= mode().pipeline then return end
+    if mode().pipeline > 1 and now >= (state.nextRefresh or 0) then
+        state.sentParts, state.nextRefresh = {}, now + 10
     end
     if now < state.nextSend then return end
     local rate = mode().rate
     -- Keep the cadence across game frames (90 / 20 is not an integer).
     -- Reset after a long stall instead of sending a catch-up burst.
-    local period = 1 / math.min(rate, mode().hz)
+    local period = playing and 1 / math.min(rate, mode().hz) or 2
     state.nextSend = now - state.nextSend > period and now + period or state.nextSend + period
     local fb = state.fb
     if not fb.token or wallClock() >= (fb.expires or 0) then
@@ -3415,19 +3436,23 @@ function script.OnUpdateEx()
     local built, view = pcall(relay.build, packet, due)
     state.perf.build_ms = (clock() - buildBegan) * 1000
     if not built then show("cr_st_collect_fail", tostring(view)); state.nextSend = now + 1; return end
-    local body, commit, feedCount = relay.patch(view)
-    local clearing = state.clearFeed
+    local carriesFeed = state.feedOwner == nil
+    local body, commit, feedCount = relay.patch(view, carriesFeed)
+    local clearing = carriesFeed and state.clearFeed
     state.perf.bytes = #body
-    state.sending, state.sentAt = true, now
-    state.requestId = state.requestId + 1
-    local id = state.requestId
+    state.sendSerial = state.sendSerial + 1
+    local serial, epoch = state.sendSerial, state.requestId
+    state.inflight[serial] = now
+    if carriesFeed then state.feedOwner = serial end
     state.perf.rate = rate
     dbRequest("PATCH", state.session, body, function(_, code)
-        if state.requestId ~= id then return end
-        state.sending = false
+        if state.requestId ~= epoch or not state.inflight[serial] then return end
+        state.inflight[serial] = nil
+        if state.feedOwner == serial then state.feedOwner = nil end
         if code >= 200 and code < 300 then
             for key, encoded in pairs(commit) do state.sentParts[key] = encoded end
-            if not clearing then
+            if not carriesFeed then
+            elseif not clearing then
                 state.feedPrune = {}
                 local known = {}
                 for _, key in ipairs(state.feedKeys) do known[key] = true end
@@ -3446,17 +3471,21 @@ function script.OnUpdateEx()
             state.perf.upload_ms = math.max(0, (clock() - now) * 1000)
             show(packet.in_game and "cr_st_running" or "cr_st_waiting")
         else
-            state.resendAll = true
             state.failures = math.min(state.failures + 1, 6)
-            state.nextSend = clock() + math.min(8, 0.5 * 2 ^ state.failures)
+            if code ~= 0 then
+                state.resendAll = true
+                state.nextSend = clock() + math.min(8, 0.5 * 2 ^ state.failures)
+            elseif state.failures >= 4 then
+                state.nextSend = math.max(state.nextSend, clock() + 0.5)
+            end
             if code == 401 or code == 403 then state.fb.token = nil end
             if code == 403 and state.failures >= 3 then state.active = false end
-            show("cr_st_send_fail", code)
+            if code ~= 0 or state.failures >= 3 then show("cr_st_send_fail", code) end
         end
     end)
     if now >= (state.nextPerf or 0) then
         state.nextPerf = now + 2
-        state.perfText = string.format(L("cr_performance"), state.perf.collect_ms, state.perf.bytes / 1024)
+        state.perfText = string.format(L("cr_performance"), state.perf.collect_ms, state.perf.bytes / 1024, state.perf.upload_ms or 0)
         if state.hitch then
             state.perfText = state.perfText .. "\n" .. string.format(L("cr_hitch"), state.hitch.gap, state.hitch.ms, state.hitch.part)
         end
@@ -3473,6 +3502,7 @@ function script.OnUpdateEx()
             sizes[name] = count
         end
         call(ai_bridge.mcp_log, "debug", "[Cloud Radar] perf", {lua_kb = math.floor(collectgarbage("count")),
+            gc_running = collectgarbage("isrunning"), inflight = inflight,
             collect_ms = state.perf.collect_ms, encode_ms = state.perf.encode_ms, scan_ms = state.perf.scan_ms,
             bytes = state.perf.bytes, sizes = sizes})
     end
@@ -3483,6 +3513,7 @@ for _, name in ipairs({"OnParticleCreate", "OnLinearProjectileCreate", "OnPartic
     "OnEntityKilled", "OnEntityDestroy", "OnNpcSpawned", "OnParticleDestroy"}) do
     local handler = script[name]
     script[name] = function(...)
+        if state.over then return end
         local began = clock()
         handler(...)
         state.eventTime = (state.eventTime or 0) + clock() - began

@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>Cloud Radar · Umbrella Scripts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 :root{--bg:#f6f6f4;--card:#fff;--sec:#efefec;--border:#e2e2de;--soft:#ebebe8;--fg:#18181a;--muted:#62626a;--faint:#9a9aa1;--ok:#2f9a5e;--warn:#b07d1c;--bad:#c93c3c;--accent:#18181a;--accent-fg:#fff;
@@ -233,7 +233,7 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 .slot.sm{width:27px;height:20px;opacity:.7}
 .slot.nt{width:26px;height:26px;border-radius:50%;margin-left:4px}
 .slot.old img{filter:grayscale(.8) brightness(.7)}
-.slot em{display:none;position:absolute;inset:0;font:600 7px/1.1 Inter,sans-serif;color:var(--faint);padding:2px;overflow:hidden;font-style:normal}
+.slot em{display:none;position:absolute;inset:0;font:600 7px/1.1 'Barlow Semi Condensed',sans-serif;color:var(--faint);padding:2px;overflow:hidden;font-style:normal}
 .slot.noimg em{display:block}
 .slot .cd{position:absolute;inset:0;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
 .slot .ch{position:absolute;right:2px;bottom:0;font-size:9px;font-weight:700;color:#fff;text-shadow:0 0 3px #000}
@@ -302,6 +302,96 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:12p
 .chip-p.off span{text-decoration:line-through}
 .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(10px);z-index:60;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 14px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .toast.on{opacity:1;transform:translateX(-50%)}
+
+/* Broadcast layer: slate night palette, Barlow at three widths, a scorebug as the one loud element. */
+:root{--bg:#eef1f4;--card:#fff;--sec:#e7ebf0;--border:#d6dce4;--soft:#e4e8ee;--fg:#121821;--muted:#566173;--faint:#8b95a5;
+  --ok:#3f8a1f;--warn:#a87414;--bad:#c2392a;--rad:#3f8a1f;--dire:#c2392a;--gold:#a87414;--blue:#2c66c4;--violet:#7446c4;--mapbg:#141b24;--hp:#4a9a2a;--mp:#2f6fd0;
+  --num:'Barlow Condensed',system-ui,sans-serif;--ui:'Barlow Semi Condensed',system-ui,sans-serif}
+.dark{--bg:#0f141b;--card:#141b24;--sec:#1b2430;--border:#253041;--soft:#1c2531;--fg:#e6e9ee;--muted:#9aa4b2;--faint:#5f6b7c;
+  --ok:#86c34a;--warn:#e3b04b;--bad:#e2533e;--rad:#86c34a;--dire:#e2533e;--gold:#e3b04b;--blue:#6ea6f2;--violet:#b49af2;--mapbg:#0c1117;--hp:#6fae3c;--mp:#4f8fe8}
+html,body{font:15px/1.45 var(--ui);letter-spacing:.005em}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+header{background:var(--bg);border-bottom-color:var(--border)}
+.bar{height:52px}
+.brand{font-weight:700;font-size:16px;letter-spacing:.01em}
+.brand i{border-radius:50%}
+.crumb b{font-weight:700}
+.chip{border-radius:6px;height:28px;font-size:13.5px;background:var(--card)}
+#clock{font:700 17px/1 var(--num);letter-spacing:.02em}
+.seg,.seg button,.ghost,.icon-btn{border-radius:6px}
+main{gap:10px;padding:10px 16px 14px}
+.gut{width:10px}
+.card{border-radius:10px;border-color:var(--soft)}
+.dark .card{box-shadow:0 1px 0 rgba(255,255,255,.02) inset}
+.card-h{padding:10px 14px;border-bottom-color:var(--soft)}
+.card-h h2{font-size:15px;font-weight:600;color:var(--fg)}
+.card-h h2 i{font-size:12px}
+#mapCard{border-radius:12px;border-color:var(--border)}
+#stage{padding:8px}
+#map,#marks{border-radius:8px}
+.legend{font-size:13px;gap:6px 18px}
+
+/* Scorebug */
+#scoreCard{background:linear-gradient(90deg,color-mix(in srgb,var(--rad) 9%,var(--card)) 0,var(--card) 34%,var(--card) 66%,color-mix(in srgb,var(--dire) 9%,var(--card)) 100%);
+  border-color:var(--border);position:relative}
+#scoreCard::before,#scoreCard::after{content:'';position:absolute;top:0;bottom:0;width:4px}
+#scoreCard::before{left:0;background:var(--rad);border-radius:10px 0 0 10px}
+#scoreCard::after{right:0;background:var(--dire);border-radius:0 10px 10px 0}
+.sb{gap:28px;padding:10px 22px 12px}
+.sb-head{font-size:13.5px}
+.sb-head b{font:700 18px/1 var(--num);letter-spacing:.02em}
+.sb-head .gold{font:700 18px/1 var(--num);color:var(--gold)}
+.sb-mid{padding-top:10px;gap:4px;min-width:170px}
+.score{font:700 56px/.9 var(--num);gap:14px;letter-spacing:-.01em}
+.score i{font-size:30px;color:var(--faint)}
+.daybox{font:700 18px/1 var(--num);background:transparent;padding:2px 6px;letter-spacing:.02em}
+.daybox span{font:600 14px/1 var(--num);color:var(--muted)}
+.pt{border-radius:5px;box-shadow:inset 0 3px 0 var(--tc)}
+.pt .lv,.pt .k{font:700 13px/1.1 var(--num)}
+.hb b{font:700 11px/12px var(--num)}
+.mb b{font:700 8.5px/8px var(--num)}
+.tile.fog .pt::after{border-color:var(--warn);border-radius:5px}
+
+/* Objectives */
+.obj{min-height:36px}
+.obj .k{font-size:14px}
+.obj .v{font:700 16px/1 var(--num);letter-spacing:.02em}
+.obj .v em,.obj .v .it{font:700 15px/1.25 var(--num);border-radius:5px}
+.obj > i,.obj > img{border-radius:5px}
+
+/* Event feed */
+.ev{font-size:14.5px;line-height:1.4;grid-template-columns:44px 22px 1fr}
+.ev .t{font:600 14px/1.45 var(--num);color:var(--faint);letter-spacing:.02em}
+.ev img{border-radius:4px}
+.ev:hover{background:color-mix(in srgb,var(--sec) 70%,transparent)}
+
+/* Heroes panel */
+.team-h h2{font:700 17px/1 var(--num);letter-spacing:.02em}
+.team-h .sum{font-size:13.5px}
+.team-h .sum b{font:700 16px/1 var(--num)}
+.hero .name{font-size:15.5px;font-weight:700}
+.hero .pn{font-size:13px}
+.portrait,.portrait img{border-radius:50%}
+.portrait .lv,.hc-ic b{font:700 11.5px/16px var(--num);border-radius:4px}
+.state{font-size:13px;border-radius:5px}
+.meter b{font:700 11px/12px var(--num)}
+.kpis span{font-size:12px}
+.kpis b{font:700 16px/1.15 var(--num);letter-spacing:.02em}
+.attrs{font:600 14px/1.3 var(--num)}
+.slot .cd{font:700 14px/1 var(--num)}
+.slot .ch{font:700 11px/1 var(--num)}
+.hero.hc .st{font:600 14px/1 var(--num)}
+
+/* Settings: sentence case, no tracked caps */
+.dr-body h3,.le-box::before{text-transform:none;letter-spacing:0;font-size:13px}
+.dr-body h3{color:var(--muted)}
+.opts{border-radius:10px}
+.opts h3{font-size:13px;color:var(--muted)}
+.opt{font-size:14px}
+.toast{border-radius:8px;font-size:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:900px){.score{font-size:44px}#scoreCard::before,#scoreCard::after{width:3px}.bar{flex-wrap:wrap;height:auto;min-height:52px;padding:8px 12px;row-gap:6px}
+  main{padding:8px 10px 12px}.cols,.zone,.card{min-width:0;max-width:100%}.sb{padding:10px 14px 12px;gap:14px}html,body{overflow-x:hidden}}
 </style>
 </head>
 <body>
@@ -419,7 +509,7 @@ let TEXT = ALL[LANG];
 const CFG_DEFAULT = {
   layout: { top: ['score'], left: ['objectives', 'events'], center: ['map'], right: ['heroes'], hidden: [], wl: 320, wr: 380, auto: true, h: {} },
   layers: { heroes: true, bars: true, fog: true, labels: true, creeps: true, waves: true, jungle: true, wards: true, runes: true, couriers: true, buildings: true, events: true },
-  look: { theme: 'dark', density: 'normal', zoom: 100, rad: '#57c785', dire: '#ef6b6b', mapScale: 100, heroScale: 100, legend: true },
+  look: { theme: 'dark', density: 'normal', zoom: 100, rad: '#86c34a', dire: '#e2533e', mapScale: 100, heroScale: 100, legend: true },
   top: { nw: true, heads: true, mana: true, numbers: true, ult: true, clock: true, corner: 'lh' },
   heroes: { view: 'all', order: 'mine', compact: false, name: true, state: true, bars: true, kpis: true, attrs: true, extra: true, items: true, backpack: true, abilities: true },
   events: { death: true, rune: true, tp: true, cast: true, smoke: true, intel: true, ward: true, building: true, boss: true, scan: true, icons: true, newest: false },
@@ -514,6 +604,7 @@ let live = {};
 let meta = null, metaSeen = false, connected = false, serverOffset = 0, stale = true;
 let bgCache = null, dotaImg = null;
 let liveAt = performance.now();
+let clockOffset = null, sampleGap = 0.2, lastSampleT = null, sideAt = 0, sideTimer = 0;
 let sideHtml = '';
 const feedData = new Map();
 const feedLines = new Map();
@@ -639,7 +730,7 @@ const RUNE_ICONS = { 0: 'rune_strong.png', 1: 'rune_speed.png', 2: 'rune_ilusion
 const TOWER_ICON = 'dota_minimap_assets/towers/minimap_tower90_psd_a98bbc61.png';
 const CAMP_ICON = 'dota_minimap_assets/camps/minimap_creepcamp_psd_72d26740.png';
 const TORM_ICON = side => 'radar/icons/dota_minimap_assets/tormentor/tormentor_timer_icon_' + side + '_png.png';
-let RAD = [87, 199, 133], DIRE = [239, 107, 107];
+let RAD = [134, 195, 74], DIRE = [226, 83, 62];
 const NEUTRAL = [217, 168, 78];
 
 function fitColumns() {
@@ -756,7 +847,7 @@ function drawIcon(path, x, y, s, round) {
   return true;
 }
 function label(text, x, y, color, px) {
-  ctx.font = '600 ' + (px || 10) + 'px Inter, system-ui, sans-serif';
+  ctx.font = '700 ' + Math.round((px || 10) * 1.12) + 'px "Barlow Condensed", system-ui, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   const w = ctx.measureText(text).width + 8;
@@ -1052,6 +1143,26 @@ function syncMarks() {
 }
 
 let lastFrame = performance.now();
+function samplePos(list, t) {
+  if (!list || !list.length) return null;
+  const last = list[list.length - 1];
+  if (t >= last.t) {
+    const prev = list[list.length - 2];
+    if (!prev || last.t - prev.t <= 0) return [last.x, last.y];
+    const ahead = Math.min(0.25, t - last.t) / (last.t - prev.t);
+    return [last.x + (last.x - prev.x) * ahead, last.y + (last.y - prev.y) * ahead];
+  }
+  if (t <= list[0].t) return [list[0].x, list[0].y];
+  for (let i = list.length - 1; i > 0; i--) {
+    const a = list[i - 1], b = list[i];
+    if (t >= a.t) {
+      const f = b.t > a.t ? (t - a.t) / (b.t - a.t) : 1;
+      return [a.x + (b.x - a.x) * f, a.y + (b.y - a.y) * f];
+    }
+  }
+  return [last.x, last.y];
+}
+
 function frame() {
   marks = [];
   const nowMs = performance.now();
@@ -1066,10 +1177,13 @@ function frame() {
   drawEvents();
   const t = gameTime();
   const ids = Object.keys(heroes).sort((a, b) => (heroes[b].row.f || 0) - (heroes[a].row.f || 0));
+  const renderT = clockOffset === null ? null : nowMs / 1000 - clockOffset - Math.min(0.6, Math.max(0.08, sampleGap * 1.6));
   for (const id of ids) {
     const h = heroes[id];
-    h.cx += (h.row.x - h.cx) * k;
-    h.cy += (h.row.y - h.cy) * k;
+    const p = renderT === null || (live.clock || {}).paused ? null : samplePos(h.samples, renderT);
+    const tx = p ? p[0] : h.row.x, ty = p ? p[1] : h.row.y;
+    h.cx += (tx - h.cx) * (p ? Math.min(1, k * 3) : k);
+    h.cy += (ty - h.cy) * (p ? Math.min(1, k * 3) : k);
     drawHero(h, t);
   }
   syncMarks();
@@ -1374,6 +1488,15 @@ function feedLine(key, e) {
 function applyLive() {
   liveAt = performance.now();
   const clock = live.clock || {};
+  const st = typeof clock.ms === 'number' ? clock.ms : null;
+  const fresh = st !== null && (lastSampleT === null || st > lastSampleT || st < lastSampleT - 5);
+  if (fresh) {
+    const off = liveAt / 1000 - st;
+    if (clockOffset === null || off < clockOffset || off - clockOffset > 1) clockOffset = off;
+    else clockOffset += (off - clockOffset) * 0.05;
+    if (lastSampleT !== null && st > lastSampleT) sampleGap += (Math.min(1, st - lastSampleT) - sampleGap) * 0.2;
+    lastSampleT = st;
+  }
   clockEl.innerHTML = clock.in_game ? '<i class="fa-solid ' + (clock.day === false || clock.ns ? 'fa-moon' : 'fa-sun') + '" style="color:' + (clock.day === false || clock.ns ? '#8fa8ff' : '#f5c542') + '"></i>' + esc(clockText(clock.t) + (clock.paused ? ' · ' + TEXT.paused : '')) : '';
   if (!clock.in_game) { roster = {}; heroes = {}; }
   const info = live.info || {};
@@ -1384,14 +1507,20 @@ function applyLive() {
     const key = String(row.id);
     const old = heroes[key];
     const jump = !old || old.row.f !== row.f || Math.hypot(old.cx - row.x, old.cy - row.y) > 2500;
-    next[key] = { row: row, cx: jump ? row.x : old.cx, cy: jump ? row.y : old.cy };
+    let samples = jump || !old.samples ? [] : old.samples;
+    if (fresh) {
+      samples.push({ t: st, x: row.x, y: row.y });
+      while (samples.length > 2 && st - samples[1].t > 2) samples.shift();
+    }
+    next[key] = { row: row, cx: jump ? row.x : old.cx, cy: jump ? row.y : old.cy, samples: samples };
     const prev = roster[key];
     nextRoster[key] = { row: row, info: info['h' + key] || (prev && prev.info) };
   }
   heroes = next;
   roster = nextRoster;
-  renderObjs();
-  renderSide();
+  const wait = 250 - (liveAt - sideAt);
+  if (wait <= 0) { sideAt = liveAt; renderObjs(); renderSide(); }
+  else if (!sideTimer) sideTimer = setTimeout(() => { sideTimer = 0; sideAt = performance.now(); renderObjs(); renderSide(); }, wait);
 }
 
 function refreshStatus() {
@@ -1560,6 +1689,8 @@ function applyLook() {
   document.documentElement.classList.toggle('dark', dark);
   document.body.classList.toggle('compact', cfg.look.density === 'compact');
   document.documentElement.style.setProperty('--z', String(cfg.look.zoom / 100));
+  if (cfg.look.rad === '#57c785') cfg.look.rad = '#86c34a';
+  if (cfg.look.dire === '#ef6b6b') cfg.look.dire = '#e2533e';
   const rad = hexRgb(cfg.look.rad), dire = hexRgb(cfg.look.dire);
   if (rad) { RAD = rad; document.documentElement.style.setProperty('--rad', cfg.look.rad); }
   if (dire) { DIRE = dire; document.documentElement.style.setProperty('--dire', cfg.look.dire); }
@@ -1829,11 +1960,15 @@ if (/^[A-Za-z0-9]{20}$/.test(sessionId)) {
 refreshStatus();
 setInterval(function () { refreshStatus(); renderSide(); renderObjs(); }, 1000);
 
+let rafAt = 0;
+function rafLoop() { rafAt = performance.now(); frame(); requestAnimationFrame(rafLoop); }
+requestAnimationFrame(rafLoop);
+const tick = () => { if (performance.now() - rafAt > 100) frame(); };
 try {
   const wurl = URL.createObjectURL(new Blob(['setInterval(function(){postMessage(0)},33)'], { type: 'text/javascript' }));
-  new Worker(wurl).onmessage = frame;
+  new Worker(wurl).onmessage = tick;
 } catch (e) {
-  setInterval(frame, 33);
+  setInterval(tick, 33);
 }
 window.addEventListener('hashchange', () => location.reload());
 
