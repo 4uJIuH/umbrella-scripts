@@ -728,9 +728,9 @@
     },
     {
       "id": "better_better_techies_combo",
-      "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/a3ca0b990cf724e40b8fca054f355b32975ac16a/scripts/better_better_techies_combo/better_better_techies_combo.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/better-better-techies-combo-v1.0.0/better_better_techies_combo.lua",
+      "version": "1.1.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/8b2263ecbdd7b2b3076b35c3500041fb70c89e57/scripts/better_better_techies_combo/better_better_techies_combo.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/better-better-techies-combo-v1.1.0/better_better_techies_combo.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "sataroz (Discord: sataroz)",
@@ -742,7 +742,7 @@
           "Heroes \u2192 Hero List \u2192 Techies \u2192 Better Better Techies Combo"
         ]
       },
-      "date": "2026-10-13",
+      "date": "2026-10-22",
       "heroes": [
         "techies"
       ],
