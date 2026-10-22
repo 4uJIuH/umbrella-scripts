@@ -399,7 +399,7 @@ local localization = qLocalization.new({
         cr_link_hint = "Start, then send the link",
         cr_effects_tip = "Casts, teleports and scans on the map\nand in the event feed",
         cr_details_tip = "Needs the Heroes layer",
-        cr_version = "Version 2.6.1",
+        cr_version = "Version 2.6.2",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -483,7 +483,7 @@ local localization = qLocalization.new({
         cr_link_hint = "Start и отправьте ссылку",
         cr_effects_tip = "Касты, телепорты и сканы на карте\nи в ленте событий",
         cr_details_tip = "Нужен слой «Герои»",
-        cr_version = "Версия 2.6.1",
+        cr_version = "Версия 2.6.2",
     },
 })
 
@@ -491,7 +491,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.6.1"
+script.VERSION = "2.6.2"
 local ui = {}
 local JSON
 local state = {
@@ -1319,7 +1319,10 @@ local function classify(unit)
     if call(NPC.IsTormentor, unit) or call(NPC.GetUnitName, unit) == "npc_dota_miniboss" then return "tormentor", "tormentors" end
     if call(NPC.IsCourier, unit) then return "courier", "couriers" end
     if call(NPC.IsIllusion, unit) or call(NPC.IsMeepoClone, unit) then return "illusion", "illusions" end
-    if call(NPC.IsTower, unit) or (call(NPC.GetUnitName, unit) or ""):find("_tower", 1, true) then return "building", "buildings" end
+    local unitName = call(NPC.GetUnitName, unit) or ""
+    if unitName:find("npc_dota_lone_druid_bear", 1, true) == 1 then return "bear", "heroes" end
+    if call(NPC.IsTower, unit) or unitName:find("_tower", 1, true) or call(NPC.IsBarracks, unit) == true or unitName:find("_rax_", 1, true)
+        or call(NPC.IsFort, unit) == true or unitName:find("_fort", 1, true) then return "building", "buildings" end
     local neutral = call(NPC.IsNeutral, unit) == true
     if neutral then return "neutral", "neutrals", true end
     if call(NPC.IsLaneCreep, unit) then return "creep", "creeps" end
@@ -1652,9 +1655,10 @@ local function objectSnapshot(now, packet)
             state.courierCosts[owner] = entry
         end end
     end
-    local runes, runeSeen = {}, {}
+    local runes, runeSeen, runePresent = {}, {}, {}
     if state.flags.runes then for _, rune in ipairs(call(Runes and Runes.GetAll) or {}) do
         local id, hidden = call(Entity.GetIndex, rune), call(Entity.IsDormant, rune) == true
+        if id then runePresent[tostring(id)] = true end
         if id and state.destroyed[id] ~= rune and #runes < 64 then
             local remembered = state.runeMemory[tostring(id)]
             local previous = remembered and remembered.row
@@ -1679,7 +1683,9 @@ local function objectSnapshot(now, packet)
     end end
     if state.flags.runes then for id, entry in pairs(state.runeMemory) do
         local row = entry.row
+        local spot = not runePresent[id] and finite(row.x) and call(Vector, row.x, row.y, call(World.GetGroundZ, row.x, row.y) or 128)
         if row.memory_until and row.memory_until <= now then state.runeMemory[id] = nil
+        elseif spot and call(FogOfWar.IsPointVisible, spot) == true then state.runeMemory[id] = nil
         elseif #runes < 64 then
             local copy = {}; for key, value in pairs(row) do copy[key] = value end
             if not runeSeen[id] then copy.visible, copy.data_stale, copy.source = false, true, "last_observation" end
@@ -2634,7 +2640,7 @@ function script.OnEntityDestroy(entity, confirmedDeath)
         if rune then
             local observed = rune.row.visible ~= false
             rune.unit = nil; rune.row.visible, rune.row.data_stale = false, true
-            if not obscured and observed then rune.row.taken_at, rune.row.source = gameClock(), "observed_disappearance" end
+            if not obscured and observed then state.runeMemory[key] = nil end
         end
         state.laneMovers[key], state.courierMotion[key], state.courierSamples[id] = nil, nil, nil
         state.casts[key], state.genericRates[key] = nil, nil
@@ -2887,6 +2893,44 @@ do
         end
     end
 
+    local function roshanPits(v, gt, objective)
+        local pits = state.roshPits
+        if not pits then
+            pits = call(JSON.decode, JSON, savedGet("rosh_pits"))
+            pits = type(pits) == "table" and pits or {}
+            state.roshPits = pits
+        end
+        local day = v.clock.day == false and "night" or "day"
+        local rosh
+        for index = #v.units, 1, -1 do
+            if v.units[index].kind == "roshan" then rosh = rosh or v.units[index]; table.remove(v.units, index) end
+        end
+        local m = state.mem
+        if rosh and rosh.f == 0 then
+            local still = m.roshStill
+            if still and (rosh.x - still.x) ^ 2 + (rosh.y - still.y) ^ 2 < 150 ^ 2 then
+                local pit = pits[day]
+                if gt - still.since >= 5 and (type(pit) ~= "table" or (pit.x - rosh.x) ^ 2 + (pit.y - rosh.y) ^ 2 > 600 ^ 2) then
+                    pits[day] = {x = rosh.x, y = rosh.y}
+                    savedSet("rosh_pits", call(JSON.encode, JSON, pits) or "")
+                end
+            else m.roshStill = {x = rosh.x, y = rosh.y, since = gt} end
+        end
+        for key, pit in pairs(pits) do
+            if type(pit) == "table" and finite(pit.x) and finite(pit.y) then
+                v.units[#v.units + 1] = {id = "pit" .. key, kind = "rpit", x = round(pit.x), y = round(pit.y), f = 1}
+            end
+        end
+        local alive = rosh ~= nil or type(objective) == "table" and objective.alive == true
+        if rosh and rosh.f == 0 then v.units[#v.units + 1] = rosh
+        elseif alive then
+            local pit = pits[day]
+            if type(pit) == "table" and finite(pit.x) then
+                v.units[#v.units + 1] = {id = "rosh", kind = "roshan", x = round(pit.x), y = round(pit.y), f = 1}
+            elseif rosh then v.units[#v.units + 1] = rosh end
+        end
+    end
+
     function relay.view(packet, due)
         local gt = packet.game_time or 0
         local now = packet.game_clock or gt
@@ -2981,6 +3025,12 @@ do
         for _, u in pairs(r.units) do
             if u.alive ~= false and finite(u.x) and finite(u.y) then
                 local row = {id = u.id, kind = u.kind, team = u.team, x = round(u.x), y = round(u.y), f = u.visible == true and 0 or 1}
+                if u.kind == "wisdom" then row.a = u.active == true and 1 or u.active == false and 0 or nil end
+                if u.kind == "bear" and finite(u.hp) and finite(u.max_hp) and u.max_hp > 0 then row.hp = round(u.hp / u.max_hp * 100) end
+                if u.kind == "building" then
+                    local name = tostring(u.name or "")
+                    row.b = name:find("_fort", 1, true) and "fort" or name:find("watch_tower", 1, true) and "out" or name:find("_rax_", 1, true) and "rax" or name:match("tower(%d)") and "t" .. name:match("tower(%d)") or nil
+                end
                 if u.kind == "building" then
                     local key = tostring(u.name or ""):gsub("^npc_dota_", "")
                     local tier, lane = key:match("tower(%d)_(%a+)$")
@@ -3008,6 +3058,7 @@ do
             end
         end
         simulateWaves(visible, alive, gt, v.units)
+        roshanPits(v, gt, packet.objectives and packet.objectives.roshan)
         table.sort(v.units, byId)
         end
         if due.wards then

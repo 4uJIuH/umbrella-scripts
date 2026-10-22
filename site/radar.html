@@ -724,6 +724,16 @@ function icon(path) {
 const RUNE_ICONS = { 0: 'rune_strong.png', 1: 'rune_speed.png', 2: 'rune_ilusion.png', 3: 'rune_invisible.png', 4: 'rune_regeniration.png',
   5: 'rune_bounty.png', 6: 'rune_magic.png', 7: 'rune_water.png', 8: 'Wisdom.png', 9: 'rune_shield.png' };
 const TOWER_ICON = 'dota_minimap_assets/towers/minimap_tower90_psd_a98bbc61.png';
+const BUILDINGS = {
+  t1: { icon: 'dota_minimap_assets/towers/minimap_tower_psd_ec6783b6.png', r: 5.5, s: 9, tier: '1' },
+  t2: { icon: 'dota_minimap_assets/towers/minimap_tower45_psd_da58cb65.png', r: 6.5, s: 10.5, tier: '2' },
+  t3: { icon: 'dota_minimap_assets/towers/minimap_tower90_psd_a98bbc61.png', r: 7.5, s: 12, tier: '3' },
+  t4: { icon: 'dota_minimap_assets/towers/minimap_tower90_psd_a98bbc61.png', r: 7.5, s: 12, tier: '4' },
+  rax: { icon: 'dota_minimap_assets/throne/minimap_racks90_psd_83ad2f93.png', r: 4.8, s: 8, box: true },
+  fort: { icon: 'dota_minimap_assets/throne/minimap_ancient_psd_1bfdd08d.png', r: 11, s: 19 },
+  out: { icon: 'dota_minimap_assets/throne/minimap_miscbuilding_psd_b56d0d26.png', r: 6, s: 9 }
+};
+const ROSH_PIT_ICON = 'dota_minimap_assets/roshan/minimap_roshancamp_psd_a910ba97.png';
 const CAMP_ICON = 'dota_minimap_assets/camps/minimap_creepcamp_psd_72d26740.png';
 const TORM_ICON = side => 'radar/icons/dota_minimap_assets/tormentor/tormentor_timer_icon_' + side + '_png.png';
 let RAD = [87, 199, 133], DIRE = [239, 107, 107];
@@ -893,17 +903,30 @@ function drawUnits() {
     const kind = row.kind;
     if (kind === 'building') {
       if (!layers.buildings) continue;
+      const b = BUILDINGS[row.b] || BUILDINGS.t3;
+      const r = b.r * u;
       ctx.globalAlpha = row.f ? 0.55 : 1;
-      circle(x, y, 7 * u);
+      if (b.box) { ctx.beginPath(); ctx.roundRect(x - r, y - r, r * 2, r * 2, 2 * u); } else circle(x, y, r);
       ctx.fillStyle = teamColor(row.team, 0.9);
       ctx.fill();
-      ctx.strokeStyle = 'rgba(0,0,0,.55)';
+      ctx.strokeStyle = 'rgba(0,0,0,.6)';
       ctx.lineWidth = 1;
       ctx.stroke();
-      drawIcon(TOWER_ICON, x, y, 11 * u);
+      drawIcon(b.icon, x, y, b.s * u);
+      if (b.tier) {
+        const bx = x + r * 0.95, by = y + r * 0.95, br = 4.4 * u;
+        circle(bx, by, br);
+        ctx.fillStyle = 'rgba(12,12,13,.9)';
+        ctx.fill();
+        ctx.font = '700 ' + Math.round(8 * u) + 'px "Barlow Condensed", system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#fff';
+        ctx.fillText(b.tier, bx, by + 0.5);
+      }
       if (typeof row.hp === 'number' && row.hp < 100) {
         ctx.beginPath();
-        ctx.arc(x, y, 9.5 * u, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * row.hp / 100);
+        ctx.arc(x, y, r + 2.5 * u, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * row.hp / 100);
         ctx.strokeStyle = row.hp > 50 ? '#bbf7d0' : (row.hp > 25 ? '#fde68a' : '#fecaca');
         ctx.lineWidth = 2;
         ctx.stroke();
@@ -953,14 +976,40 @@ function drawUnits() {
       ctx.strokeStyle = 'rgba(0,0,0,.7)';
       ctx.lineWidth = 1;
       ctx.stroke();
+    } else if (kind === 'rpit') {
+      ctx.globalAlpha = 0.35;
+      drawIcon(ROSH_PIT_ICON, x, y, 16 * u);
     } else if (kind === 'roshan') {
-      ctx.globalAlpha = 1;
+      ctx.globalAlpha = row.f ? 0.75 : 1;
       drawIcon('roshan.png', x, y, 22 * u);
+    } else if (kind === 'bear') {
+      if (!layers.heroes) continue;
+      const r = 7.5 * u;
+      ctx.globalAlpha = row.f ? 0.55 : 1;
+      circle(x, y, r);
+      ctx.fillStyle = teamColor(row.team);
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+      ctx.font = '900 ' + Math.round(9 * u) + 'px "Font Awesome 6 Free"';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#121214';
+      ctx.fillText('\uf1b0', x, y + 0.5);
+      if (typeof row.hp === 'number') {
+        ctx.beginPath();
+        ctx.arc(x, y, r + 2.2 * u, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * row.hp / 100);
+        ctx.strokeStyle = row.hp > 50 ? '#86efac' : (row.hp > 25 ? '#fde68a' : '#fca5a5');
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
     } else if (kind === 'tormentor') {
       ctx.globalAlpha = row.f ? 0.6 : 1;
       drawIcon(TORM_ICON(row.x + row.y < 0 ? 'radiant' : 'dire'), x, y, 20 * u);
     } else if (kind === 'wisdom') {
-      ctx.globalAlpha = row.f ? 0.6 : 1;
+      if (row.a === 0) continue;
+      ctx.globalAlpha = row.a === 1 ? 1 : 0.5;
       drawIcon('Wisdom.png', x, y, 18 * u);
     }
   }

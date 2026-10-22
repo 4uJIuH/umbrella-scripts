@@ -1,3 +1,11 @@
+# Fix v2.6.2
+
+- Buildings are told apart on the map: T1, T2, T3 and T4 towers each have their own icon, size and number, barracks are squares, the throne has its own icon, and so do outposts.
+- Roshan is shown in the pit he is in now. The radar learns which pit Roshan uses by day and by night, and when Roshan is in the fog it places him in the pit for the time of day. The other pit shows as a dim mark.
+- Wisdom is shown only while the rune is lying there: a taken one or one that has not appeared yet is not drawn.
+- Runes, gold ones included, leave the map as soon as they are taken in sight or their spot is visible with no rune in it.
+- Lone Druid's bear shows on the map: a paw icon in team color with a health ring.
+
 # Fix v2.6.1
 
 - The 10 Hz mode is back, as Smooth used to be: "Fast, 10 Hz" sits between Balanced and Smooth (20 Hz) in both settings, send rate and collection rate.
