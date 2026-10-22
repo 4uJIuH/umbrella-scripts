@@ -6333,9 +6333,9 @@
     },
     {
       "id": "dark_seer_illusions",
-      "version": "1.0.1",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/7101a9743a061ae5f1ff6f6d1c83667dd5433197/scripts/dark_seer_illusions/dark_seer_illusions.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.1/dark_seer_illusions.lua",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/ad789efdf18974a4ae9d402425e7e18abf38d7a5/scripts/dark_seer_illusions/dark_seer_illusions.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.2/dark_seer_illusions.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "4uJIuH",
@@ -6347,7 +6347,7 @@
           "Heroes \u2192 Hero List \u2192 Dark Seer \u2192 Illusions"
         ]
       },
-      "date": "2026-10-20",
+      "date": "2026-10-22",
       "heroes": [
         "dark_seer"
       ],
