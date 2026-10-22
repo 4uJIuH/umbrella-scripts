@@ -1,3 +1,7 @@
+# Update v2.14.3
+
+- When a script needs !_qLocalizer.lua but the catalog does not say so, the manager notices it after the download and installs the library.
+
 # Update v2.14.2
 
 - Suggestions and bug reports are protected the same way as votes: only one account writes from an IP, and the Steam ID must be real.

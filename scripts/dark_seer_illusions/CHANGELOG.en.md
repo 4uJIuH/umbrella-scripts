@@ -1,3 +1,7 @@
+# Update 1.0.3
+
+- qLocalization is built into the script: the separate !_qLocalizer.lua file is no longer needed.
+
 # Update 1.0.2
 
 - The settings moved to their own tab: Heroes → Hero List → Dark Seer → Illusions.

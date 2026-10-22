@@ -764,7 +764,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 local JSON = require("assets.JSON")
 
-local VERSION = "2.14.2"
+local VERSION = "2.14.3"
 
 local K = {
 	CFG = "script_market",
@@ -2661,6 +2661,15 @@ function market.run(id)
 	local function fetch()
 		market.download(s, function(body, key, detail)
 			if not body then return market.fail(s, key, detail) end
+			if not s.nlz and #s.files == 0 and body:find("qLocalization", 1, true)
+				and not body:find("function lib.new(", 1, true) and not body:find("function qLocalization.new(", 1, true) then
+				s.nlz = true
+				return market.ensure_nlz(function(ok, nlz_key, nlz_detail)
+					if not ok then return market.fail(s, nlz_key, nlz_detail) end
+					S.busy[id] = nil
+					market.run(id)
+				end)
+			end
 			local function finish(files, file_key, file_detail)
 				if not files then return market.fail(s, file_key or "sm_e_net", file_detail) end
 				local function complete()

@@ -1169,7 +1169,7 @@
       "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/mom_swapper/mom_swapper.lua",
       "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/mom-swapper-v1.0.0/mom_swapper.lua",
       "manual": false,
-      "needs_q_localizer": false,
+      "needs_q_localizer": true,
       "author": "+ (Discord: obsessed.caress)",
       "menu": {
         "ru": [
@@ -1289,7 +1289,7 @@
       "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/backwards_cast/backwards_cast.lua",
       "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/backwards-cast-v1.0.0/backwards_cast.lua",
       "manual": false,
-      "needs_q_localizer": false,
+      "needs_q_localizer": true,
       "author": "dami\u044f (Discord: vacnul)",
       "menu": {
         "ru": [
@@ -2863,7 +2863,7 @@
       "url": "https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-beta-v1.0.0/invoker.lua",
       "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-beta-v1.0.0/invoker.lua",
       "manual": false,
-      "needs_q_localizer": true,
+      "needs_q_localizer": false,
       "author": "64qt (Discord: 32tq)",
       "menu": {
         "ru": [
@@ -3829,7 +3829,7 @@
       "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/marci_dust_delivery/marci_dust_delivery.lua",
       "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/marci_dust_delivery/marci_dust_delivery.lua",
       "manual": false,
-      "needs_q_localizer": false,
+      "needs_q_localizer": true,
       "author": "Yerka (Discord: argenov)",
       "menu": {
         "ru": [

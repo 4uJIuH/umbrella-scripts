@@ -2526,6 +2526,7 @@
       "kind": "lua",
       "category": "dota",
       "file": "mom_swapper.lua",
+      "needs_q_localizer": true,
       "heroes": [
         "sven",
         "muerta"
@@ -2769,6 +2770,7 @@
       "kind": "lua",
       "category": "dota",
       "file": "backwards_cast.lua",
+      "needs_q_localizer": true,
       "author": "damiя (Discord: vacnul)",
       "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/backwards_cast",
       "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=backwards-cast&expanded=true",
@@ -4945,7 +4947,7 @@
       "author": "64qt (Discord: 32tq)",
       "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/invoker_beta",
       "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=invoker-beta&expanded=true",
-      "needs_q_localizer": true,
+      "needs_q_localizer": false,
       "version_marker": "NONE",
       "initial": {
         "version": "1.0.0",
@@ -6982,6 +6984,7 @@
       "kind": "lua",
       "category": "dota",
       "file": "marci_dust_delivery.lua",
+      "needs_q_localizer": true,
       "author": "Yerka (Discord: argenov)",
       "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/marci_dust_delivery",
       "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=marci-dust-delivery&expanded=true",
