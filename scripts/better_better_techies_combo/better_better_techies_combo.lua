@@ -1,7 +1,4 @@
--- Better Better Techies Combo v1.0.0
--- Author: sataroz (Discord: sataroz)
-
-local VERSION = "1.0.0"
+local VERSION = "1.1.0"
 
 --[[
      ~ qLocalization
@@ -321,12 +318,39 @@ local script = {}
 
 local localization = qLocalization.new({
     en = {
+        tc_build_info = "Version: 1.1",
+        tc_build_info_tip = "This marker identifies the build with the imported cast modes.",
+
+        tc_cast_mode = "Cast mode",
+        tc_cast_mode_tip = "Cursor follows the mouse. Lock point freezes it on press.\nLock target keeps one enemy for the combo.",
+        tc_cast_cursor = "Cursor",
+        tc_cast_point = "Lock point",
+        tc_cast_target = "Lock target",
+        tc_mine_settings = "Mine settings",
+        tc_mine_settings_tip = "Formation radius, placement distance and order timing.\nThe existing limit stays at three mines per wave.",
+        tc_mine_ring = "Formation radius",
+        tc_mine_ring_tip = "Radius of the mine formation. Applies to both waves.",
+        tc_mine_near = "Start placement",
+        tc_mine_near_tip = "Start placing in flight within this distance of landing.",
+        tc_order_interval = "Order interval, ms",
+        tc_order_interval_tip = "Minimum interval between scheduled combo steps.",
+        tc_legit = "Legit mines",
+        tc_legit_tip = "Random mine offsets and pauses before placement.",
+        tc_legit_settings = "Legit settings",
+        tc_legit_jitter = "Position jitter",
+        tc_legit_jitter_tip = "Maximum random offset. Invalid positions are rejected.",
+        tc_legit_pause = "Random pause, ms",
+        tc_legit_pause_tip = "Random pause before each mine, up to this value.",
+        tc_debug_settings = "Diagnostics",
+        tc_debug = "Debug log",
+        tc_debug_tip = "Log state changes and issued orders for troubleshooting.",
+
         tc_group_hero = "Hero Settings",
         tc_group_goods = "Items Settings",
         tc_enable = "Enable",
         tc_enable_tip = "Master switch for Techies combo",
         tc_key = "Combo Key",
-        tc_key_tip = "Hold to execute combo on the enemy nearest to cursor",
+        tc_key_tip = "Hold to execute the combo in the selected cast mode",
         tc_mode = "Combo Mode",
         tc_mode_tip = "Aggressive hexes immediately. Max Damage delays hex to chain control after Blast Off.",
         tc_aggressive = "Aggressive",
@@ -368,12 +392,39 @@ local localization = qLocalization.new({
         tc_mad_mode_always = "Always in Combo",
     },
     ru = {
+        tc_build_info = "Версия: 1.1",
+        tc_build_info_tip = "Эта отметка отличает версию с перенесёнными режимами каста.",
+
+        tc_cast_mode = "Режим каста",
+        tc_cast_mode_tip = "Курсор следует за мышью. Фикс точки запоминает её.\nФикс цели сохраняет одного врага на всё комбо.",
+        tc_cast_cursor = "По курсору",
+        tc_cast_point = "Фикс точки",
+        tc_cast_target = "Фикс цели",
+        tc_mine_settings = "Настройки мин",
+        tc_mine_settings_tip = "Радиус схемы, начало установки и интервал команд.\nОстаётся до трёх мин за волну.",
+        tc_mine_ring = "Радиус схемы",
+        tc_mine_ring_tip = "Радиус расстановки мин в обеих волнах.",
+        tc_mine_near = "Начало установки",
+        tc_mine_near_tip = "Начинать установку в полёте на этой дистанции до точки.",
+        tc_order_interval = "Интервал команд, мс",
+        tc_order_interval_tip = "Минимальный интервал между шагами комбо.",
+        tc_legit = "Легит мины",
+        tc_legit_tip = "Случайный разброс мин и паузы перед установкой.",
+        tc_legit_settings = "Настройки легит мин",
+        tc_legit_jitter = "Разброс позиций",
+        tc_legit_jitter_tip = "Максимальное смещение. Недопустимые точки исключаются.",
+        tc_legit_pause = "Случайная пауза, мс",
+        tc_legit_pause_tip = "Случайная пауза перед каждой миной до этого значения.",
+        tc_debug_settings = "Диагностика",
+        tc_debug = "Лог отладки",
+        tc_debug_tip = "Записывать смену состояния и отданные команды.",
+
         tc_group_hero = "Настройки героя",
         tc_group_goods = "Настройки предметов",
         tc_enable = "Включить",
         tc_enable_tip = "Главный переключатель комбо на Течиса",
         tc_key = "Клавиша комбо",
-        tc_key_tip = "Зажмите для выполнения комбо по врагу у курсора",
+        tc_key_tip = "Удерживайте для комбо в выбранном режиме каста",
         tc_mode = "Режим комбо",
         tc_mode_tip = "Агрессивный жмет хекс сразу. Макс. урон откладывает хекс для продления контроля после Blast Off.",
         tc_aggressive = "Агрессивный",
@@ -419,6 +470,7 @@ local localization = qLocalization.new({
 local UI = localization.WrapLibrary(Menu)
 
 local ui = {}
+local extra = {}
 local state = {
     step = 0,
     target = nil,
@@ -497,8 +549,14 @@ do
     local hero = UI.Create("Heroes", "Hero List", "Techies", "Better Better Techies Combo", "tc_group_hero")
     local goods = UI.Create("Heroes", "Hero List", "Techies", "Better Better Techies Combo", "tc_group_goods")
 
+    local build_info = hero:Label("tc_build_info", "\u{f05a}")
+    build_info:ToolTip("tc_build_info_tip")
+
     ui.enable = hero:Switch("tc_enable", false, "\u{f011}")
     ui.enable:ToolTip("tc_enable_tip")
+    local diagnostics = ui.enable:Gear("tc_debug_settings")
+    ui.debug = diagnostics:Switch("tc_debug", false, "\u{f188}")
+    ui.debug:ToolTip("tc_debug_tip")
 
     ui.key = hero:Bind("tc_key", Enum.ButtonCode.KEY_G, "\u{f11c}")
     ui.key:ToolTip("tc_key_tip")
@@ -506,6 +564,33 @@ do
     ui.mode = hero:Combo("tc_mode", { "tc_aggressive", "tc_maxdmg" }, 0)
     ui.mode:Icon("\u{f0e7}")
     ui.mode:ToolTip("tc_mode_tip")
+
+    ui.cast_mode = hero:Combo("tc_cast_mode", { "tc_cast_cursor", "tc_cast_point", "tc_cast_target" }, 2)
+    ui.cast_mode:Icon("\u{f05b}")
+    ui.cast_mode:ToolTip("tc_cast_mode_tip")
+
+    local mine_settings = hero:Label("tc_mine_settings", "\u{f1de}")
+    mine_settings:ToolTip("tc_mine_settings_tip")
+    local formation = mine_settings:Gear("tc_mine_settings")
+    ui.mine_ring = formation:Slider("tc_mine_ring", 210, 320, 230, "%d")
+    ui.mine_ring:Icon("\u{f1ce}")
+    ui.mine_ring:ToolTip("tc_mine_ring_tip")
+    ui.mine_near = formation:Slider("tc_mine_near", 240, 500, 290, "%d")
+    ui.mine_near:Icon("\u{f140}")
+    ui.mine_near:ToolTip("tc_mine_near_tip")
+    ui.order_interval = formation:Slider("tc_order_interval", 30, 200, 60, "%d")
+    ui.order_interval:Icon("\u{f017}")
+    ui.order_interval:ToolTip("tc_order_interval_tip")
+
+    ui.legit = hero:Switch("tc_legit", false, "\u{f06e}")
+    ui.legit:ToolTip("tc_legit_tip")
+    local legit = ui.legit:Gear("tc_legit_settings")
+    ui.legit_jitter = legit:Slider("tc_legit_jitter", 0, 200, 60, "%d")
+    ui.legit_jitter:Icon("\u{f05b}")
+    ui.legit_jitter:ToolTip("tc_legit_jitter_tip")
+    ui.legit_pause = legit:Slider("tc_legit_pause", 0, 3000, 800, "%d")
+    ui.legit_pause:Icon("\u{f017}")
+    ui.legit_pause:ToolTip("tc_legit_pause_tip")
 
     ui.abilities = hero:MultiSelect("tc_abilities", {
         { "Blast Off", "panorama/images/spellicons/techies_suicide_png.vtex_c", true },
@@ -601,6 +686,14 @@ do
         local on = ui.enable:Get()
         ui.key:Disabled(not on)
         ui.mode:Disabled(not on)
+        ui.cast_mode:Disabled(not on)
+        ui.mine_ring:Disabled(not on or not ui.abilities:Get("Proximity Mines"))
+        ui.mine_near:Disabled(not on or not ui.abilities:Get("Proximity Mines"))
+        ui.order_interval:Disabled(not on)
+        ui.legit:Disabled(not on or not ui.abilities:Get("Proximity Mines"))
+        ui.legit_jitter:Disabled(not on or not ui.legit:Get() or not ui.abilities:Get("Proximity Mines"))
+        ui.legit_pause:Disabled(not on or not ui.legit:Get() or not ui.abilities:Get("Proximity Mines"))
+        ui.debug:Disabled(not on)
         ui.abilities:Disabled(not on)
         ui.detonate:Disabled(not on)
         ui.use_mad:Disabled(not on)
@@ -614,13 +707,51 @@ do
         ui.blink_out:Disabled(not on)
     end
 
+    ui.legit:SetCallback(refresh_disabled)
+    ui.abilities:SetCallback(refresh_disabled)
     ui.enable:SetCallback(refresh_disabled, true)
     ui.use_mad:SetCallback(refresh_disabled, true)
 end
 
+function extra.mode()
+    return state.cast_mode or ui.cast_mode:Get()
+end
+
+function extra.mine_budget()
+    return 2.5 + (ui.legit:Get() and ui.legit_pause:Get() * 0.003 or 0) + ui.order_interval:Get() * 0.003
+end
+
+function extra.position(target)
+    if extra.mode() == 2 then
+        return target and Entity.IsAlive(target) and Entity.GetAbsOrigin(target) or state.aim_pos or state.mine_center
+    end
+    local me = Heroes.GetLocal()
+    if me and NPC.HasModifier(me, "modifier_techies_suicide_leap") and state.aim_pos then return state.aim_pos end
+    if extra.mode() == 1 then return state.cast_point or Input.GetWorldCursorPos() end
+    return Input.GetWorldCursorPos() or state.cast_point
+end
+
+function extra.log(text)
+    if ui.debug:Get() and text ~= state.last_debug_text then
+        local now = GameRules.GetGameTime()
+        if now >= (state.next_debug_at or 0) then
+            state.last_debug_text = text
+            state.next_debug_at = now + 0.2
+            Log.Write(text)
+        end
+    end
+end
+
 local function reset_combo_state(keep_target)
     state.step = 0
+    state.point_run = nil
+    state.legit_wait = nil
+    state.legit_index = nil
+    state.legit_points = {}
     if not keep_target then
+        state.cast_mode = nil
+        state.cast_point = nil
+        state.combo_end_at = nil
         state.target = nil
         state.test_active_until = nil
         state.test_target = nil
@@ -700,7 +831,7 @@ local function cancel_hero_orders(me)
 end
 
 local function pause_action(sec)
-    state.next_at = GameRules.GetGameTime() + sec + NetChannel.GetAvgLatency()
+    state.next_at = GameRules.GetGameTime() + math.max(sec, ui.order_interval:Get() / 1000) + NetChannel.GetAvgLatency()
 end
 
 local function is_valid_target(t)
@@ -1108,7 +1239,7 @@ end
 local MIN_MINE_DIST_SQ = 355.0 * 355.0
 
 local function get_or_create_mine_positions(target)
-    local cur_target_pos = target and Entity.IsAlive(target) and Entity.GetAbsOrigin(target)
+    local cur_target_pos = extra.position(target)
 
     if cur_target_pos and state.mine_center then
         if dist_sq_2d(cur_target_pos, state.mine_center) > 65.0 * 65.0 then
@@ -1131,7 +1262,7 @@ local function get_or_create_mine_positions(target)
         local dx = my_pos.x - c.x
         local dy = my_pos.y - c.y
         if dx * dx + dy * dy > 25 then
-            base_ang = math.atan2(dy, dx)
+            base_ang = math.atan(dy, dx)
         end
     end
 
@@ -1147,7 +1278,7 @@ local function get_or_create_mine_positions(target)
         return true
     end
 
-    local R = 230.0
+    local R = ui.mine_ring:Get()
     local a_step = 2.094395
     local test_rotations = {
         0,
@@ -1251,7 +1382,7 @@ local function find_fallback_mine_pos(me, target, next_idx, raw_cast_range, hero
     local my_pos = hero_pos_override or Entity.GetAbsOrigin(me)
     if not my_pos then return nil end
 
-    local tp = (target and Entity.IsAlive(target)) and Entity.GetAbsOrigin(target) or state.mine_center or my_pos
+    local tp = extra.position(target) or state.mine_center or my_pos
     local max_hero_dist = raw_cast_range + 25
     local max_hero_dist_sq = max_hero_dist * max_hero_dist
 
@@ -1278,7 +1409,7 @@ local function find_fallback_mine_pos(me, target, next_idx, raw_cast_range, hero
     local dx = my_pos.x - tp.x
     local dy = my_pos.y - tp.y
     if dx * dx + dy * dy > 25 then
-        base_ang = math.atan2(dy, dx)
+        base_ang = math.atan(dy, dx)
     end
 
     local radii = { 0, 80, 150, 220, 280, 340, 390 }
@@ -1329,7 +1460,7 @@ local function plant_mine(me, target)
         if charges < state.mine_charges_before then
             state.mines_planted = math.max(state.mines_planted, state.mine_pending_idx)
             if Log and Log.Write then
-                Log.Write(string.format("[Techies Mines] #%d CONFIRMED charges %d -> %d (planted=%d)", state.mine_pending_idx, state.mine_charges_before, charges, state.mines_planted))
+                extra.log(string.format("[Techies Mines] #%d CONFIRMED charges %d -> %d (planted=%d)", state.mine_pending_idx, state.mine_charges_before, charges, state.mines_planted))
             end
             state.mine_pending = false
             state.last_mine_cast_at = now
@@ -1337,7 +1468,7 @@ local function plant_mine(me, target)
             return true
         else
             if Log and Log.Write then
-                Log.Write(string.format("[Techies Mines] #%d TIMEOUT without charge decrement, retrying", state.mine_pending_idx))
+                extra.log(string.format("[Techies Mines] #%d TIMEOUT without charge decrement, retrying", state.mine_pending_idx))
             end
             state.mine_pending = false
             if state.planted_positions and #state.planted_positions > 0 then
@@ -1363,6 +1494,17 @@ local function plant_mine(me, target)
     if state.mines_planted >= target_mines then return false end
 
     local next_idx = state.mines_planted + 1
+    if NPC.HasModifier(me, "modifier_techies_suicide_leap") then
+        local landing = state.aim_pos or state.manual_blast_pos
+        if landing and dist_sq_2d(Entity.GetAbsOrigin(me), landing) > ui.mine_near:Get()^2 then return false end
+    end
+    if ui.legit:Get() then
+        if state.legit_index ~= next_idx then
+            state.legit_index = next_idx
+            state.legit_wait = now + math.random() * ui.legit_pause:Get() / 1000
+        end
+        if now < (state.legit_wait or 0) then return true end
+    end
     if next_idx > target_mines then return false end
 
     local my_pos = Entity.GetAbsOrigin(me)
@@ -1376,18 +1518,41 @@ local function plant_mine(me, target)
         if positions then positions[next_idx] = p end
     end
 
+    if ui.legit:Get() and ui.legit_jitter:Get() > 0 then
+        local cached = state.legit_points[next_idx]
+        if cached and dist_sq_2d(cached.base, p) < 1 then
+            p = cached.point
+        else
+            local base = p
+            for attempt = 1, 12 do
+                local angle = math.random() * math.pi * 2
+                local radius = math.random() * ui.legit_jitter:Get()
+                local candidate = make_ground_pos(base.x + math.cos(angle) * radius, base.y + math.sin(angle) * radius, base.z)
+                local valid = is_valid_mine_pos(candidate, state.mine_center)
+                    and dist_sq_2d(candidate, my_pos) <= cast_range^2
+                for _, previous in ipairs(state.planted_positions) do
+                    if dist_sq_2d(candidate, previous) < MIN_MINE_DIST_SQ then valid = false; break end
+                end
+                for i = next_idx + 1, #positions do
+                    if dist_sq_2d(candidate, positions[i]) < MIN_MINE_DIST_SQ then valid = false; break end
+                end
+                if valid then p = candidate; break end
+            end
+            state.legit_points[next_idx] = { base = base, point = p }
+        end
+    end
     local dx = p.x - my_pos.x
     local dy = p.y - my_pos.y
     local dist_sq = dx * dx + dy * dy
 
-    local tp = target and Entity.IsAlive(target) and Entity.GetAbsOrigin(target)
+    local tp = extra.position(target)
 
     local needs_recalc = false
     local recalc_reason = nil
     if dist_sq > cast_range * cast_range then
         needs_recalc = true
         recalc_reason = "out of cast range"
-    elseif tp and dist_sq_2d(p, tp) > 280.0 * 280.0 then
+    elseif tp and dist_sq_2d(p, tp) > math.max(280, ui.mine_ring:Get() + (ui.legit:Get() and ui.legit_jitter:Get() or 0))^2 then
         needs_recalc = true
         recalc_reason = "target moved too far from mine pos"
     else
@@ -1408,7 +1573,7 @@ local function plant_mine(me, target)
                 local el = now - state.leap_start
                 leap_str = string.format(" [Leap +%.3fs, rem %.3fs]", el, math.max(0, 0.9 - el))
             end
-            Log.Write(string.format("[Techies Mines] #%d pos=(%.1f, %.1f) dist=%.1f range=%.1f charges=%d%s",
+            extra.log(string.format("[Techies Mines] #%d pos=(%.1f, %.1f) dist=%.1f range=%.1f charges=%d%s",
                 next_idx, p.x, p.y, math.sqrt(dist_sq), cast_range, charges, leap_str))
         end
         state.mine_pending = true
@@ -1417,6 +1582,7 @@ local function plant_mine(me, target)
         state.mine_pending_until = now + 0.25
         state.last_mine_cast_at = now
         state.committed = true
+        positions[next_idx] = p
         table.insert(state.planted_positions, p)
         Ability.CastPosition(mine_ab, p, false, true, false, "tc_mine")
         pause_action(0.04)
@@ -1431,7 +1597,7 @@ local function plant_mine(me, target)
         local n_dist_sq = n_dx * n_dx + n_dy * n_dy
 
         if Log and Log.Write then
-            Log.Write(string.format("[Techies Mines] #%d pos=(%.1f, %.1f) dist=%.1f range=%.1f charges=%d [recalculated: %s]",
+            extra.log(string.format("[Techies Mines] #%d pos=(%.1f, %.1f) dist=%.1f range=%.1f charges=%d [recalculated: %s]",
                 next_idx, p.x, p.y, math.sqrt(n_dist_sq), cast_range, charges, recalc_reason or "out of range"))
         end
         state.mine_pending = true
@@ -1440,6 +1606,7 @@ local function plant_mine(me, target)
         state.mine_pending_until = now + 0.25
         state.last_mine_cast_at = now
         state.committed = true
+        positions[next_idx] = p
         table.insert(state.planted_positions, p)
         Ability.CastPosition(mine_ab, p, false, true, false, "tc_mine")
         pause_action(0.04)
@@ -1474,11 +1641,12 @@ local function cast_tazer(me)
 end
 
 local function cast_bomb(me, target)
-    if state.done.bomb or not is_valid_target(target) then return false end
+    if state.done.bomb or (extra.mode() == 2 and not is_valid_target(target)) then return false end
     local bomb_ab = get_ready_ability(me, "techies_sticky_bomb", "Sticky Bomb")
     if not bomb_ab then return false end
     local my_pos = Entity.GetAbsOrigin(me)
-    local target_pos = Entity.GetAbsOrigin(target)
+    local target_pos = extra.position(target)
+    if not target_pos then return false end
     local dx, dy = target_pos.x - my_pos.x, target_pos.y - my_pos.y
     local dist = math.sqrt(dx * dx + dy * dy)
     local cast_r = get_cast_range(me, bomb_ab) + 100
@@ -1489,7 +1657,7 @@ local function cast_bomb(me, target)
     local cp = Ability.GetCastPoint(bomb_ab) or 0.2
     if cp <= 0 then cp = 0.2 end
     local travel_time = cp + math.max(dist / speed, 0.25)
-    Ability.CastPosition(bomb_ab, predict_target_pos(target, travel_time), false, true, false, "tc_bomb")
+    Ability.CastPosition(bomb_ab, extra.mode() == 2 and predict_target_pos(target, travel_time) or target_pos, false, true, false, "tc_bomb")
     state.committed = true
     state.done.bomb = true
     local in_leap = NPC.HasModifier(me, "modifier_techies_suicide_leap")
@@ -1530,7 +1698,7 @@ end
 
 local function try_cast_mad(me, target, target_pos)
     if not ui.use_mad:Get() or state.done.mad then return false end
-    if not is_valid_target(target) then return false end
+    if extra.mode() == 2 and not is_valid_target(target) then return false end
 
     local mad_ab = NPC.GetAbility(me, "techies_mutually_assured_destruction")
     if not mad_ab or Ability.IsHidden(mad_ab) or Ability.IsPassive(mad_ab) then return false end
@@ -1540,7 +1708,7 @@ local function try_cast_mad(me, target, target_pos)
     local now = GameRules.GetGameTime()
     if ui.mad_mode:Get() == 0 then
         local is_controlled = is_target_controlled(target)
-            or NPC.HasState(target, Enum.ModifierState.MODIFIER_STATE_ROOTED)
+            or (target and NPC.HasState(target, Enum.ModifierState.MODIFIER_STATE_ROOTED))
             or (get_stun_remaining_time(target) > 0.1)
             or (state.did_leap and (not state.landed_at or now - state.landed_at < 2.5))
         if not is_controlled then return false end
@@ -1620,6 +1788,158 @@ local function get_escape_pos(me)
     return Vector(0, 0, 0)
 end
 
+do
+    function extra.finish()
+        if state.committed and ui.blink_out:Get() then
+            state.blink_until = GameRules.GetGameTime() + 3.5
+            state.step = 10
+        else
+            state.completed = true
+            stop_combo()
+        end
+    end
+
+    function extra.point_update(me)
+        local now = GameRules.GetGameTime()
+        local my_pos = Entity.GetAbsOrigin(me)
+        if not state.point_run then
+            local point = Input.GetWorldCursorPos()
+            if not point then return end
+            reset_combo_state(true)
+            state.cast_point = Vector(point.x, point.y, point.z)
+            if NPC.HasModifier(me, "modifier_techies_suicide_leap") then state.aim_pos = state.manual_blast_pos or state.cast_point end
+            state.point_run = { phase = "entry", deadline = now + 20 + extra.mine_budget() }
+            state.step = 50
+            local candidate = Input.GetNearestHeroToCursor(Entity.GetTeamNum(me), Enum.TeamType.TEAM_ENEMY)
+            if is_valid_target(candidate) and dist_sq_2d(Entity.GetAbsOrigin(candidate), point) <= 600 * 600 then
+                state.target = candidate
+            end
+        end
+        local run = state.point_run
+        if now >= run.deadline then
+            extra.finish()
+            return
+        end
+        if now < state.next_at then return end
+        local point = extra.position(nil)
+        if not point then return end
+        if now >= (run.next_target_at or 0) then
+            run.next_target_at = now + 0.15
+            local best, distance = nil, 600 * 600
+            for _, enemy in pairs(Heroes.GetAll()) do
+                if Entity.GetTeamNum(enemy) ~= Entity.GetTeamNum(me) and is_valid_target(enemy) then
+                    local d = dist_sq_2d(Entity.GetAbsOrigin(enemy), point)
+                    if d < distance then best, distance = enemy, d end
+                end
+            end
+            state.target = best
+        end
+        local target = is_valid_target(state.target) and state.target or nil
+        local in_leap = NPC.HasModifier(me, "modifier_techies_suicide_leap")
+        for _, name in ipairs({ "techies_suicide", "techies_sticky_bomb", "techies_mutually_assured_destruction" }) do
+            local ability = NPC.GetAbility(me, name)
+            if ability and Ability.IsInAbilityPhase(ability) then return end
+        end
+        if run.phase == "entry" then
+            if in_leap then
+                state.did_leap = true
+                run.phase = "burst"
+            else
+                if try_use_soul_ring(me) then pause_action(0.04); return end
+                local blast = get_ready_ability(me, "techies_suicide", "Blast Off")
+                if blast then
+                    if dist_sq_2d(point, my_pos) > get_cast_range(me, blast)^2 then
+                        NPC.MoveTo(me, point)
+                        pause_action(0.06)
+                        return
+                    end
+                    state.aim_pos = Vector(point.x, point.y, point.z)
+                    state.mine_center = state.aim_pos
+                    state.did_leap = true
+                    state.committed = true
+                    run.phase = "jump"
+                    run.jump_deadline = now + Ability.GetCastPoint(blast) + 2.0
+                    Ability.CastPosition(blast, state.aim_pos, false, true, false, "tc_blast")
+                    pause_action(0.06)
+                    return
+                end
+                run.phase = "burst"
+            end
+        end
+        if run.phase == "jump" then
+            if in_leap then
+                run.phase = "burst"
+            elseif now >= run.jump_deadline then
+                run.phase = "burst"
+                state.did_leap = false
+            else
+                return
+            end
+        end
+        if not run.burst_deadline then run.burst_deadline = now + extra.mine_budget() + 3.5 end
+        if now >= run.burst_deadline then extra.finish(); return end
+        if cast_tazer(me) then return end
+        if target and try_break_linken(me, target) then return end
+        if not state.done["Veil of Discord"] and try_cast_veil(me, target, point) then pause_action(0.04); return end
+        if not state.done["Shiva's Guard"] and try_cast_shiva(me, point) then pause_action(0.04); return end
+        if target then
+            for _, id in ipairs(ui.use_items:ListEnabled()) do
+                if id ~= "Veil of Discord" and id ~= "Shiva's Guard" and not state.done[id]
+                    and (id ~= "Hex" or ui.mode:Get() == 0 or not in_leap and get_stun_remaining_time(target) <= 0.25) then
+                    if id ~= "Dagon" or not ui.use_items:Get("Ethereal Blade")
+                        or not has_item_in_inventory(me, ITEM_NAMES["Ethereal Blade"])
+                        or NPC.HasModifier(target, "modifier_item_ethereal_blade_ethereal")
+                        or state.done["Ethereal Blade"] and now - state.eblade_cast_at > 0.18 then
+                        if cast_item_id(me, target, id) then return end
+                    end
+                end
+            end
+        end
+        if cast_bomb(me, target) then return end
+        local mine = get_ready_ability(me, "techies_land_mines", "Proximity Mines")
+        local can_mine = mine and Ability.GetCurrentCharges(mine) > 0
+        if not run.mine_deadline then run.mine_deadline = now + extra.mine_budget() end
+        if not state.mines_failed and (can_mine or state.mine_pending)
+            and state.mines_planted < 3 and now < run.mine_deadline then
+            if plant_mine(me, target) then return end
+        end
+        if in_leap then return end
+        if detonate_tazer(me, point) then return end
+        if try_detonate_mad(me) then return end
+        if try_cast_mad(me, target, point) then return end
+        if state.done.mad and not state.done.mad_detonate and state.mad_cast_at
+            and now - state.mad_cast_at < 2.5 then return end
+        local pending = not state.mines_failed and (can_mine or state.mine_pending)
+            and state.mines_planted < 3 and now < run.mine_deadline
+        if pending then return end
+        if not ui.blink_out:Get() and not state.done.sign then
+            local sign = get_ready_ability(me, "techies_minefield_sign", "Minefield Sign")
+            if sign and dist_sq_2d(my_pos, point) <= get_cast_range(me, sign)^2 then
+                Ability.CastPosition(sign, point, false, true, false, "tc_sign")
+                state.done.sign = true
+                pause_action(0.08)
+                return
+            end
+        end
+        if ui.refresher:Get() and not state.refreshed then
+            local ref = get_ready_item(me, REFRESHER_NAMES)
+            if ref then
+                local fixed = state.cast_point
+                Ability.CastNoTarget(ref, false, true, false, "tc_refresher")
+                reset_combo_state(true)
+                state.cast_point = fixed
+                state.refreshed = true
+                state.committed = true
+                state.step = 50
+                state.point_run = { phase = "entry", deadline = now + 20 + extra.mine_budget() }
+                pause_action(0.15)
+                return
+            end
+        end
+        extra.finish()
+    end
+end
+
 function script.OnUpdate()
     local me = Heroes.GetLocal()
     if not ui.enable:Get() or not me or not Entity.IsAlive(me) or NPC.GetUnitName(me) ~= "npc_dota_hero_techies" then
@@ -1630,6 +1950,7 @@ function script.OnUpdate()
         return
     end
 
+    if Input.IsInputCaptured() then return end
     local is_testing = state.test_active_until and GameRules.GetGameTime() < state.test_active_until
     local key_down = Input.IsKeyDown(ui.key:Get()) or is_testing
     if not key_down then
@@ -1646,6 +1967,19 @@ function script.OnUpdate()
     end
 
     local my_pos = Entity.GetAbsOrigin(me)
+    local current_time = GameRules.GetGameTime()
+    if state.step == 0 then
+        state.cast_mode = ui.cast_mode:Get()
+        state.combo_end_at = current_time + 35 + extra.mine_budget() * 2
+    end
+    if state.combo_end_at and current_time > state.combo_end_at and state.step ~= 10 then
+        extra.finish()
+        return
+    end
+    if extra.mode() ~= 2 and state.step ~= 10 then
+        extra.point_update(me)
+        return
+    end
 
     if state.step == 0 then
         if is_testing and state.test_target and is_valid_target(state.test_target) then
@@ -1677,7 +2011,7 @@ function script.OnUpdate()
     local target = state.target
     if target and Entity.IsAlive(target) then
         update_target_tracker(target)
-    elseif state.step <= 1 then
+    elseif state.step <= 1 and extra.mode() ~= 2 then
         local cursor_target = Input.GetNearestHeroToCursor(Entity.GetTeamNum(me), Enum.TeamType.TEAM_ENEMY)
         if is_valid_target(cursor_target) then
             local tp = Entity.GetAbsOrigin(cursor_target)
@@ -1764,7 +2098,7 @@ function script.OnUpdate()
         local dist_to_target = math.sqrt((target_pos.x - my_pos.x)^2 + (target_pos.y - my_pos.y)^2)
 
         if dist_to_target <= blast_range + 250 then
-            try_use_soul_ring(me)
+            if try_use_soul_ring(me) then pause_action(0.04); return end
         end
 
         local blast_ab = get_ready_ability(me, "techies_suicide", "Blast Off")
@@ -1796,7 +2130,7 @@ function script.OnUpdate()
             local blast_radius = Ability.GetLevelSpecialValueFor and Ability.GetLevelSpecialValueFor(blast_ab, "radius") or 400
             if Log and Log.Write and not state.logged_blast_radius then
                 state.logged_blast_radius = true
-                Log.Write(string.format("[Techies Radius] Ability.GetLevelSpecialValueFor(blast_ab, 'radius') = %s", tostring(blast_radius)))
+                extra.log(string.format("[Techies Radius] Ability.GetLevelSpecialValueFor(blast_ab, 'radius') = %s", tostring(blast_radius)))
             end
             if blast_radius <= 0 then blast_radius = 400 end
 
@@ -1809,7 +2143,7 @@ function script.OnUpdate()
 
             local goal = predicted
 
-            try_use_soul_ring(me)
+            if try_use_soul_ring(me) then pause_action(0.04); return end
             Ability.CastPosition(blast_ab, goal, false, true, false, "tc_blast")
             state.committed = true
             state.did_leap = true
@@ -1855,7 +2189,7 @@ function script.OnUpdate()
             local cast_start = Ability.GetCastStartTime(blast_ab)
             if cast_start and cast_start > 0 and not state.logged_cast_start then
                 state.logged_cast_start = true
-                Log.Write(string.format("[Techies Blast] cast_start=%.3f, land_at=%.3f, diff=%.3f",
+                extra.log(string.format("[Techies Blast] cast_start=%.3f, land_at=%.3f, diff=%.3f",
                     cast_start, state.land_at, (cast_start + 0.9) - state.land_at))
             end
         end
@@ -1869,9 +2203,9 @@ function script.OnUpdate()
             return
         end
 
-        try_use_soul_ring(me)
-        try_cast_veil(me, target, target_pos)
-        try_cast_shiva(me, target_pos)
+        if try_use_soul_ring(me) then pause_action(0.04); return end
+        if try_cast_veil(me, target, target_pos) then pause_action(0.04); return end
+        if try_cast_shiva(me, target_pos) then pause_action(0.04); return end
 
         if try_break_linken(me, target) then return end
 
@@ -1927,14 +2261,14 @@ function script.OnUpdate()
         end
     elseif state.step == 4 then
         if state.mine_timeout == 0 then
-            state.mine_timeout = now + 2.5
+            state.mine_timeout = now + extra.mine_budget()
         end
         if not state.step4_deadline or state.step4_deadline == 0 then
-            state.step4_deadline = now + 3.0
+            state.step4_deadline = now + 3.0 + extra.mine_budget()
         end
 
-        try_cast_veil(me, target, target_pos)
-        try_cast_shiva(me, target_pos)
+        if try_cast_veil(me, target, target_pos) then pause_action(0.04); return end
+        if try_cast_shiva(me, target_pos) then pause_action(0.04); return end
 
         if try_break_linken(me, target) then return end
 
@@ -2045,7 +2379,7 @@ function script.OnUpdate()
         end
     elseif state.step == 5 then
         if not state.step5_deadline or state.step5_deadline == 0 then
-            state.step5_deadline = now + (ui.use_mad:Get() and 4.5 or 3.0)
+            state.step5_deadline = now + (ui.use_mad:Get() and 4.5 or 3.0) + extra.mine_budget()
         end
 
         if ui.refresher:Get() and not state.refreshed then
@@ -2061,8 +2395,8 @@ function script.OnUpdate()
             end
         end
 
-        try_cast_veil(me, target, target_pos)
-        try_cast_shiva(me, target_pos)
+        if try_cast_veil(me, target, target_pos) then pause_action(0.04); return end
+        if try_cast_shiva(me, target_pos) then pause_action(0.04); return end
 
         if not state.done.Hex and ui.use_items:Get("Hex") and is_valid_target(target) then
             if combo_mode == 0 then
@@ -2181,7 +2515,7 @@ function script.OnUpdate()
             end
         end
 
-        try_detonate_mad(me)
+        if try_detonate_mad(me) then return end
         if not is_valid_target(target) or not Entity.IsAlive(target) then
             if state.committed and ui.blink_out:Get() then
                 state.blink_until = now + 3.5
@@ -2214,7 +2548,7 @@ function script.OnUpdate()
             state.step = 3
             return
         end
-        try_detonate_mad(me)
+        if try_detonate_mad(me) then return end
         if not is_valid_target(target) or not Entity.IsAlive(target) then
             if state.committed and ui.blink_out:Get() then
                 state.blink_until = now + 3.5
@@ -2231,10 +2565,10 @@ function script.OnUpdate()
             state.step6_start_at = now
         end
         if state.mine_timeout == 0 then
-            state.mine_timeout = now + 2.5
+            state.mine_timeout = now + extra.mine_budget()
         end
 
-        if now - state.step6_start_at > 5.0 then
+        if now - state.step6_start_at > 5.0 + extra.mine_budget() then
             if state.committed then
                 state.completed = true
             end
@@ -2253,7 +2587,7 @@ function script.OnUpdate()
         end
 
         if dist <= 900 then
-            try_use_soul_ring(me)
+            if try_use_soul_ring(me) then pause_action(0.04); return end
         end
 
         if is_linkens_protected(target) then
@@ -2325,8 +2659,8 @@ function script.OnUpdate()
             if cast_item_id(me, target, "Dagon") then return end
         end
 
-        try_cast_veil(me, target, target_pos)
-        try_cast_shiva(me, target_pos)
+        if try_cast_veil(me, target, target_pos) then pause_action(0.04); return end
+        if try_cast_shiva(me, target_pos) then pause_action(0.04); return end
 
         if cast_tazer(me) then return end
 
@@ -2458,7 +2792,7 @@ function script.OnUpdate()
             local mad_pending = mad_can_cast or mad_in_phase or mad_waiting_detonate or mad_needs_detonate
 
             local all_actions_done = not hex_pending and not eblade_pending and not dagon_pending and not sil_pending and not tazer_pending and not bomb_pending and not mines_pending and not state.mine_pending and not mad_pending
-            local step6_timeout = state.step6_start_at and (now - state.step6_start_at >= (ui.use_mad:Get() and 4.5 or 3.0))
+            local step6_timeout = state.step6_start_at and (now - state.step6_start_at >= (ui.use_mad:Get() and 4.5 or 3.0) + extra.mine_budget())
 
             if all_actions_done or step6_timeout then
                 state.blink_until = now + 3.5
@@ -2467,7 +2801,7 @@ function script.OnUpdate()
             end
         end
     elseif state.step == 10 then
-        try_detonate_mad(me)
+        if try_detonate_mad(me) then return end
 
         if not has_item_in_inventory(me, BLINK_NAMES) then
             state.completed = true
@@ -2723,6 +3057,20 @@ local function draw_all(me)
         return
     end
 
+    if extra.mode() ~= 2 then
+        local point = extra.position(nil)
+        if point and (combo_active or show_preview) then
+            if ui.draw_line:Get() then
+                draw_targeting_line(my_pos, point, state.step > 0, dist_sq_2d(my_pos, point) <= (raw_blast and get_cast_range(me, raw_blast) or 0)^2)
+            end
+            if ui.draw_blast:Get() and not blast_drawn then draw_blast_indicator(point, state.step > 0, me) end
+            if state.mine_positions then
+                for _, mine_pos in ipairs(state.mine_positions) do draw_ground_circle(mine_pos, 24, Color(255, 190, 80, 170), 1, 16) end
+            end
+        end
+        return
+    end
+
     if not is_locked then
         local hover = Input.GetNearestHeroToCursor(Entity.GetTeamNum(me), Enum.TeamType.TEAM_ENEMY)
         if is_valid_target(hover) then
@@ -2826,7 +3174,7 @@ function script.OnPrepareUnitOrders(data)
     if state.step > 0 and Log and Log.Write then
         local order_str = ORDER_NAMES[data.order] or tostring(data.order)
         local ident = data.identifier or "-"
-        Log.Write(string.format("[Techies Order] step=%d order=%s ab=%s id=%s q=%s",
+        extra.log(string.format("[Techies Order] step=%d order=%s ab=%s id=%s q=%s",
             state.step, order_str, ab_name or "none", tostring(ident), tostring(data.queue)))
     end
 
@@ -2845,7 +3193,7 @@ function script.OnModifierCreate(entity, modifier)
         state.did_leap = true
         if state.manual_blast_pos then
             state.aim_pos = state.manual_blast_pos
-            state.mine_center = (state.target and Entity.IsAlive(state.target) and Entity.GetAbsOrigin(state.target)) or state.manual_blast_pos
+            state.mine_center = extra.mode() ~= 2 and state.manual_blast_pos or (state.target and Entity.IsAlive(state.target) and Entity.GetAbsOrigin(state.target)) or state.manual_blast_pos
         end
         local blast_ab = NPC.GetAbility(me, "techies_suicide")
         local cast_point = blast_ab and Ability.GetCastPoint(blast_ab) or 0
@@ -2853,7 +3201,7 @@ function script.OnModifierCreate(entity, modifier)
         local dur = Modifier.GetDuration and Modifier.GetDuration(modifier)
         local rem_str = (die_time and die_time > now) and string.format("%.3f", die_time - now) or "nil"
         if Log and Log.Write then
-            Log.Write(string.format("[Techies Leap] Started at %.3f (step=%d) CastPoint=%.3f DieTime=%s Dur=%s rem=%s",
+            extra.log(string.format("[Techies Leap] Started at %.3f (step=%d) CastPoint=%.3f DieTime=%s Dur=%s rem=%s",
                 now, state.step, cast_point, tostring(die_time), tostring(dur), rem_str))
         end
         if die_time and die_time > now then
@@ -2894,7 +3242,7 @@ function script.OnModifierDestroy(entity, modifier)
                     end
                 end
             end
-            Log.Write(string.format("[Techies Leap] Ended at %.3f (duration: %.3fs, mines: %d, dist_to_goal: %s, unplanted:%s, step=%d)",
+            extra.log(string.format("[Techies Leap] Ended at %.3f (duration: %.3fs, mines: %d, dist_to_goal: %s, unplanted:%s, step=%d)",
                 now, dur, state.mines_planted, goal_dist_str, unplanted_str == "" and " none" or unplanted_str, state.step))
         end
         if state.step == 3 then
@@ -2931,7 +3279,7 @@ function script.OnDraw()
     local ok, err = pcall(draw_all, me)
     if not ok and err ~= state.draw_error then
         state.draw_error = err
-        Log.Write("[Techies] draw: " .. tostring(err))
+        extra.log("[Techies] draw: " .. tostring(err))
     end
 end
 
@@ -2940,6 +3288,8 @@ function script.OnGameEnd()
     state.completed = false
     state.fountain = nil
     state.draw_error = nil
+    state.next_debug_at = nil
+    state.last_debug_text = nil
     state.leap_start = nil
     cached_barrel_positions = {}
     last_barrel_scan = 0
