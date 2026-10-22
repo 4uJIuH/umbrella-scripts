@@ -609,14 +609,14 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Auto Shackleshot](scripts/auto_shackleshot) | 26 | `auto-shackleshot-v1.0.0` |
 | [Auto Spark](scripts/auto_spark) | 30 | `auto-spark-v1.0.0` |
 | [Rune Destruction](scripts/rune_destruction) | 33 | `rune-destruction-v1.0.2` |
-| [Earth Spirit Kick Combo](scripts/earth_spirit_kick_combo) | 25 | `earth-spirit-kick-combo-v1.0.0` |
+| [Earth Spirit Kick Combo](scripts/earth_spirit_kick_combo) | 26 | `earth-spirit-kick-combo-v1.0.0` |
 | [HP/Mana 67 Ping](scripts/hp_mana_67_ping) | 15 | `hp-mana-67-ping-v1.0.1` |
 | [Spirit Bear Pull](scripts/spirit_bear_pull) | 19 | `spirit-bear-pull-v1.0.0` |
 | [Dorman Combo Assistant](scripts/dorman_combo_assistant) | 1 | `dorman-combo-assistant-v1.0.0` |
 | [Rem Assistant](scripts/rem_assistant) | 2 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
 | [qLocalization](scripts/q_localizer) | 141 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 521 | `script-manager-v2.14.3` |
+| [Script Manager](scripts/script_manager) | 524 | `script-manager-v2.14.3` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 650 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 16 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 293 | `lane-pull-v1.0.4` |
@@ -624,7 +624,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Custom Background](scripts/custom_background) | 55 | `custom-background-v1.0.0` |
 | [Auto Stack](scripts/auto_stack) | 171 | `auto-stack-v1.1.0` |
 | [Draft Helper](scripts/draft_helper) | 1557 | `draft-helper-v2.0.0-beta.20` |
-| [MusicUI](scripts/musicui) | 755 | `musicui-v1.0.8` |
+| [MusicUI](scripts/musicui) | 756 | `musicui-v1.0.8` |
 | [Umbrella Lua Developer Skill](scripts/umbrella_lua) | 207 | `umbrella-lua-v1.0.4` |
 | [Custom Stats](scripts/custom_stats) | 25 | `custom-stats-v1.0.0` |
 | [Bloodrage AutoCast](scripts/bloodrage_autocast) | 12 | `bloodrage-autocast-v1.0.0` |
@@ -634,7 +634,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Arc Warden Blocker](scripts/arc_warden_blocker) | 17 | `arc-warden-blocker-v1.0.0` |
 | [Invoker Combo Switcher](scripts/invoker_combo_switcher) | 16 | `invoker-combo-switcher-v1.0.0` |
 | [Magnus Skewer Ally](scripts/magnus_skewer_ally) | 20 | `magnus-skewer-ally-v1.0.0` |
-| [Better Better Techies Combo](scripts/better_better_techies_combo) | 51 | `better-better-techies-combo-v1.0.0` |
+| [Better Better Techies Combo](scripts/better_better_techies_combo) | 52 | `better-better-techies-combo-v1.1.0` |
 | [Chat Translator](scripts/chat_translator) | 30 | `chat-translator-v1.0.0` |
 | [Hero Grid](scripts/hero_grid) | 2 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 19 | `weather-v1.0.0` |
@@ -732,7 +732,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [PT Mana Abuse](scripts/pt_mana_abuse) | 7 | `pt-mana-abuse-ctx-v1.0.0` |
 | [Lone Druid Bear AI Deluxe](scripts/lone_druid_bear_ai_deluxe) | 21 | `lone-druid-bear-ai-deluxe-v1.0.0` |
 | [PudgeHook AI](scripts/pudge_hook_ai) | 22 | `pudge-hook-ai-v1.0.0` |
-| [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) | 58 | `arc-warden-wave-pusher-v1.2.0` |
+| [Arc Warden Wave Pusher](scripts/arc_warden_wave_pusher) | 59 | `arc-warden-wave-pusher-v1.2.0` |
 | [Echo BKB Dodge](scripts/echo_bkb_dodge) | 16 | `echo-bkb-dodge-v1.2.0` |
 | [Force Staffer](scripts/force_staffer) | 8 | `force-staffer-v1.0.0` |
 | [AntiPause Helper](scripts/anti_pause_helper) | 6 | `anti-pause-helper-v1.0.0` |

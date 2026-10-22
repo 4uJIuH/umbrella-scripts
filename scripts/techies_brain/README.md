@@ -3,13 +3,9 @@
 комбо Techies от Hex до детонации мин / Techies combo from Hex through mine detonation
 
 <!-- releases:start -->
-Скачать: [techies_brain.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-brain-v0.2.6/techies_brain.lua) — `techies-brain-v0.2.6`, 2026-10-13
+Последняя версия: [`v0.2.6` — `techies_brain.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-brain-v0.2.6/techies_brain.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`techies-brain-v0.2.6`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/techies-brain-v0.2.6) | 2026-10-13 | [techies_brain.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-brain-v0.2.6/techies_brain.lua) | 5 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-brain&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-brain&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -23,12 +19,6 @@
 
 1. Поместите `techies_brain.lua` в `Umbrella\scripts` и перезагрузите скрипты.
 2. Отключите или отвяжите другой скрипт комбо Techies и задайте Combo Key в `Heroes → Hero List → Techies → Brain`.
-
-## Что нового
-
-# Релиз v0.2.6
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -45,9 +35,3 @@ A unified combo controller for Hex, Sticky Bomb, Tazer, Ethereal Blade, Blast Of
 
 1. Place `techies_brain.lua` in `Umbrella\scripts` and reload scripts.
 2. Disable or unbind any other Techies combo script and set the Combo Key under `Heroes → Hero List → Techies → Brain`.
-
-## Changelog
-
-# Release v0.2.6
-
-- Release version: the first publication of the script.
