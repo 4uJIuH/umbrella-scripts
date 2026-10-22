@@ -1,3 +1,7 @@
+# Fix v2.6.1
+
+- The 10 Hz mode is back, as Smooth used to be: "Fast, 10 Hz" sits between Balanced and Smooth (20 Hz) in both settings, send rate and collection rate.
+
 # Update v2.6.0
 
 - Smooth mode updates the site almost instantly: 20 Hz with up to 8 packets in flight, and the radar no longer waits for the reply to the previous packet. Balanced keeps up to 2 packets in flight, Eco one. The Smooth choice may reset to Balanced once; pick it again.

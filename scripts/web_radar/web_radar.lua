@@ -366,11 +366,13 @@ local localization = qLocalization.new({
         cr_profile_tip = "How often data goes to the site.\nIt is never faster than the collection rate.",
         cr_profiles_eco = "Eco, 3 Hz",
         cr_profiles_balanced = "Balanced, 5 Hz",
+        cr_profiles_fast = "Fast, 10 Hz",
         cr_profiles_smooth = "Smooth, 20 Hz",
         cr_collect = "Collection rate",
         cr_collect_tip = "How often the game is read: heroes, details, map scan.\nEco costs the least FPS.",
         cr_collects_eco = "Eco, 3 Hz",
         cr_collects_balanced = "Balanced, 5 Hz",
+        cr_collects_fast = "Fast, 10 Hz",
         cr_collects_smooth = "Smooth, 20 Hz",
         cr_performance_wait = "Load: no data yet",
         cr_performance = "Load: %.1f ms, %.1f KB, ping %.0f ms",
@@ -397,7 +399,7 @@ local localization = qLocalization.new({
         cr_link_hint = "Start, then send the link",
         cr_effects_tip = "Casts, teleports and scans on the map\nand in the event feed",
         cr_details_tip = "Needs the Heroes layer",
-        cr_version = "Version 2.6.0",
+        cr_version = "Version 2.6.1",
     },
     ru = {
         cr_group_main = "Cloud Radar",
@@ -448,11 +450,13 @@ local localization = qLocalization.new({
         cr_profile_tip = "Как часто данные уходят на сайт.\nНе бывает чаще частоты сбора.",
         cr_profiles_eco = "Эконом, 3 Гц",
         cr_profiles_balanced = "Баланс, 5 Гц",
+        cr_profiles_fast = "Быстрый, 10 Гц",
         cr_profiles_smooth = "Плавный, 20 Гц",
         cr_collect = "Частота сбора",
         cr_collect_tip = "Как часто читается игра: герои, детали, скан карты.\nЭконом бережет FPS.",
         cr_collects_eco = "Эконом, 3 Гц",
         cr_collects_balanced = "Баланс, 5 Гц",
+        cr_collects_fast = "Быстрый, 10 Гц",
         cr_collects_smooth = "Плавный, 20 Гц",
         cr_performance_wait = "Нагрузка: нет данных",
         cr_performance = "Нагрузка: %.1f мс, %.1f КБ, пинг %.0f мс",
@@ -479,7 +483,7 @@ local localization = qLocalization.new({
         cr_link_hint = "Start и отправьте ссылку",
         cr_effects_tip = "Касты, телепорты и сканы на карте\nи в ленте событий",
         cr_details_tip = "Нужен слой «Герои»",
-        cr_version = "Версия 2.6.0",
+        cr_version = "Версия 2.6.1",
     },
 })
 
@@ -487,7 +491,7 @@ local UI = localization.WrapLibrary(Menu)
 local L = localization.Get
 
 local script = {}
-script.VERSION = "2.6.0"
+script.VERSION = "2.6.1"
 local ui = {}
 local JSON
 local state = {
@@ -546,7 +550,9 @@ local MODES = {
         parts = {info = 1.5, units = 1, wards = 2, runes = 1, camps = 4, objectives = 1}},
     [1] = {rate = 5, hz = 5, pipeline = 2, detail = 0.7, slow = 1.5, scanMs = 0.0012, scanCount = 12, couriers = 0.5, creeps = 24, roshan = 0.5,
         parts = {info = 0.8, units = 0.4, wards = 1, runes = 0.5, camps = 2, objectives = 0.5}},
-    [2] = {rate = 20, hz = 20, pipeline = 8, detail = 0.4, slow = 1, scanMs = 0.0018, scanCount = 20, couriers = 0.25, creeps = 32, roshan = 0.25,
+    [2] = {rate = 10, hz = 10, pipeline = 4, detail = 0.4, slow = 1, scanMs = 0.0018, scanCount = 20, couriers = 0.25, creeps = 32, roshan = 0.25,
+        parts = {info = 0.5, units = 0.2, wards = 0.5, runes = 0.3, camps = 1, objectives = 0.3}},
+    [3] = {rate = 20, hz = 20, pipeline = 8, detail = 0.4, slow = 1, scanMs = 0.0018, scanCount = 20, couriers = 0.25, creeps = 32, roshan = 0.25,
         parts = {info = 0.5, units = 0.2, wards = 0.5, runes = 0.3, camps = 1, objectives = 0.3}},
 }
 
@@ -664,10 +670,10 @@ local function initMenu()
     ui.stop = connection:Button("cr_stop", function() stop() end)
     ui.stop:Icon("\u{f04d}")
     ui.status = connection:Label("cr_st_off", "\u{f05a}")
-    ui.profile = connection:Combo("cr_profile", {"cr_profiles_eco", "cr_profiles_balanced", "cr_profiles_smooth"}, 1)
+    ui.profile = connection:Combo("cr_profile", {"cr_profiles_eco", "cr_profiles_balanced", "cr_profiles_fast", "cr_profiles_smooth"}, 1)
     ui.profile:Icon("\u{f1de}")
     ui.profile:ToolTip("cr_profile_tip")
-    ui.collect = connection:Combo("cr_collect", {"cr_collects_eco", "cr_collects_balanced", "cr_collects_smooth"}, 1)
+    ui.collect = connection:Combo("cr_collect", {"cr_collects_eco", "cr_collects_balanced", "cr_collects_fast", "cr_collects_smooth"}, 1)
     ui.collect:Icon("\u{f1c0}")
     ui.collect:ToolTip("cr_collect_tip")
     ui.performance = connection:Label("cr_performance_wait", "\u{f080}")
