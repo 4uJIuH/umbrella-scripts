@@ -3,13 +3,9 @@
 переносит камеру к выбранному юниту или группе / moves the camera to the selected unit or group
 
 <!-- releases:start -->
-Скачать: [selection_camera.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/selection-camera-v1.1.0/selection_camera.lua) — `selection-camera-v1.1.0`, 2026-10-13
+Последняя версия: [`v1.1.0` — `selection_camera.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/selection_camera/selection_camera.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`selection-camera-v1.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/selection-camera-v1.1.0) | 2026-10-13 | [selection_camera.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/selection-camera-v1.1.0/selection_camera.lua) | 8 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=selection-camera&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=selection-camera&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 1. Поместите `selection_camera.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты.
 3. Настройте Selection Camera в General → Main.
-
-## Что нового
-
-# Релиз v1.1.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ On a selection change, moves the camera once to the active unit or group center 
 1. Place `selection_camera.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts.
 3. Configure Selection Camera under General → Main.
-
-## Changelog
-
-# Release v1.1.0
-
-- Release version: the first publication of the script.

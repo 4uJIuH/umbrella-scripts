@@ -3,10 +3,11 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.0/web_radar.lua) — `web-radar-v2.6.0`, 2026-10-22
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.1/web_radar.lua) — `web-radar-v2.6.1`, 2026-10-22
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`web-radar-v2.6.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.6.1) | 2026-10-22 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.1/web_radar.lua) | 0 |
 | [`web-radar-v2.6.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.6.0) | 2026-10-22 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.0/web_radar.lua) | 0 |
 | [`web-radar-v2.5.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.5.0) | 2026-10-21 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.5.0/web_radar.lua) | 36 |
 | [`web-radar-v2.3.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.3.3) | 2026-10-19 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.3.3/web_radar.lua) | 72 |
@@ -38,6 +39,12 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Исправление v2.6.1
+
+- Вернулся режим 10 Гц, каким Плавный был раньше: «Быстрый, 10 Гц» стоит между Балансом и Плавным (20 Гц) в обеих настройках, частоте передачи и частоте сбора.
+- Телепорты снова видны на карте и в ленте. Когда смотришь матч зрителем, эффекты способностей десяти героев занимали весь лимит событий, и новые телепорты отбрасывались. Теперь при заполнении место освобождается за счет самого старого эффекта, а телепорты, скан, смоук и блинк проходят всегда.
+- Лента событий больше не забивается повторами: одна и та же способность героя пишется не чаще раза в 4 секунды, телепорт одной строкой. Старые записи от прошлых запусков радара удаляются при старте.
 
 # Обновление v2.6.0
 
@@ -139,6 +146,12 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Fix v2.6.1
+
+- The 10 Hz mode is back, as Smooth used to be: "Fast, 10 Hz" sits between Balanced and Smooth (20 Hz) in both settings, send rate and collection rate.
+- Teleports show on the map and in the feed again. While spectating, ten heroes' ability effects used up the whole event limit and new teleports were dropped. Now the oldest effect makes room, and teleports, scans, smokes and blinks always get through.
+- The event feed no longer fills with repeats: the same hero ability is logged at most once every 4 seconds, a teleport as one line. Old entries from earlier radar runs are removed at start.
 
 # Update v2.6.0
 

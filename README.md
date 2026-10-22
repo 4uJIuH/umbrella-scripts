@@ -606,7 +606,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Rem Assistant](scripts/rem_assistant) | 2 | `rem-assistant-v1.0.0` |
 | [Souls Vault / Rem's Tunnel ESP](scripts/vault_tunnel_esp) | 1 | `vault-tunnel-esp-v1.0.0` |
 | [qLocalization](scripts/q_localizer) | 138 | `q-localizer-v1.0.0` |
-| [Script Manager](scripts/script_manager) | 511 | `script-manager-v2.14.2` |
+| [Script Manager](scripts/script_manager) | 512 | `script-manager-v2.14.2` |
 | [Dynamic Island](scripts/dynamic_island_dota) | 650 | `v2.5.3` |
 | [Tinker Smart Escape](scripts/tinker_smart_escape) | 16 | `tinker-smart-escape-v1.0.0` |
 | [Lane Pull](scripts/lane_pull) | 293 | `lane-pull-v1.0.4` |
@@ -629,7 +629,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Hero Grid](scripts/hero_grid) | 2 | `hero-grid-v1.0.0` |
 | [Weather](scripts/weather) | 19 | `weather-v1.0.0` |
 | [Visage Familiar TP Helper](scripts/visage_familiar_tp) | 16 | `visage-familiar-tp-v1.0.0` |
-| [Grimstroke Helper](scripts/grimstroke_helper) | 60 | `grimstroke-helper-v1.4.2` |
+| [Grimstroke Helper](scripts/grimstroke_helper) | 61 | `grimstroke-helper-v1.4.2` |
 | [Phoenix SmartNova](scripts/phoenix_smartnova) | 12 | `phoenix-smartnova-v1.0.0` |
 | [BehaviorScoreHelper](scripts/behavior_score_helper) | 22 | `behavior-score-helper-v2.1.3` |
 | [Disable Tracker](scripts/disable_tracker) | 7 | `disable-tracker-v1.0.0` |
@@ -664,7 +664,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Creep Aggro](scripts/creep_aggro) | 24 | `creep-aggro-v1.0.0` |
 | [Nyx Assassin Auto Burrow](scripts/nyx_auto_burrow) | 6 | `nyx-auto-burrow-v1.0.0` |
 | [Dawnbreaker Solar Guardian Auto-Save Helper](scripts/dawnbreaker_solar_guardian) | 19 | `dawnbreaker-solar-guardian-v1.0.0` |
-| [Dota 1x6 Pack](scripts/dota1x6_pack) | 43 | `dota-1x6-pack-v1.0.0` |
+| [Dota 1x6 Pack](scripts/dota1x6_pack) | 44 | `dota-1x6-pack-v1.0.0` |
 | [Kez Raptor Dance Dispel](scripts/kez_raptor_dispel) | 16 | `kez-raptor-dispel-v1.0.0` |
 | [Huskar Life Break](scripts/huskar_life_break) | 11 | `huskar-life-break-v1.0.0` |
 | [Dragon Camp Pull](scripts/dragon_camp_pull) | 0 | `dragon-camp-pull-v1.0` |
@@ -730,7 +730,7 @@ This third-party library is by qfun (qfun_g9s), not my script.
 | [Force Staff Direction](scripts/force_staff_direction) | 3 | `force-staff-direction-v1.0.0` |
 | [Terrorblade Sunder + Dagon](scripts/terrorblade_sunder_dagon) | 4 | `terrorblade-sunder-dagon-v1.0.0` |
 | [Venomancer Ward Controller](scripts/venomancer_ward_controller) | 5 | `venomancer-ward-controller-v1.0.0` |
-| [Cloud Radar](scripts/web_radar) | 113 | `web-radar-v2.6.0` |
+| [Cloud Radar](scripts/web_radar) | 113 | `web-radar-v2.6.1` |
 | [Murzik Kitty Widget](scripts/murzik) | 3 | `murzik-v1.0.0` |
 | [Трекер привычек](scripts/habits) | 3 | `habits-v1.0.0` |
 | [Калории](scripts/calories) | 1 | `calories-v1.0.0` |
