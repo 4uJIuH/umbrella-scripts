@@ -3,10 +3,11 @@
 живой радар матча для друзей по ссылке / live match radar for friends via a link
 
 <!-- releases:start -->
-Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.1/web_radar.lua) — `web-radar-v2.6.1`, 2026-10-22
+Скачать: [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.2/web_radar.lua) — `web-radar-v2.6.2`, 2026-10-22
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
+| [`web-radar-v2.6.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.6.2) | 2026-10-22 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.2/web_radar.lua) | 0 |
 | [`web-radar-v2.6.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.6.1) | 2026-10-22 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.1/web_radar.lua) | 0 |
 | [`web-radar-v2.6.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.6.0) | 2026-10-22 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.6.0/web_radar.lua) | 0 |
 | [`web-radar-v2.5.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/web-radar-v2.5.0) | 2026-10-21 | [web_radar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/web-radar-v2.5.0/web_radar.lua) | 36 |
@@ -39,6 +40,14 @@
 4. Скопируйте ссылку из поля «Ссылка» и отправьте друзьям.
 
 ## Что нового
+
+# Исправление v2.6.2
+
+- Здания на карте различаются: у вышек T1, T2, T3 и T4 своя иконка, размер и номер, бараки показаны квадратами, трон отдельной иконкой, аванпосты своей.
+- Рошан показан в том логове, где он сейчас. Радар запоминает, в каком логове Рошан днем и в каком ночью, и когда Рошан в тумане, ставит его в логово по времени суток. Второе логово видно приглушенной отметкой.
+- Мудрость показана, только пока руна лежит: взятую или еще не появившуюся радар не рисует.
+- Руны, включая золотые, пропадают с карты, как только их взяли на виду или их место видно, а руны там нет.
+- Медведь Lone Druid виден на карте: иконка с лапой в цвете команды и полоска здоровья.
 
 # Исправление v2.6.1
 
@@ -146,6 +155,14 @@ Shows your match map to friends in a browser: heroes, including those in the fog
 4. Copy the link from the Link field and send it to friends.
 
 ## Changelog
+
+# Fix v2.6.2
+
+- Buildings are told apart on the map: T1, T2, T3 and T4 towers each have their own icon, size and number, barracks are squares, the throne has its own icon, and so do outposts.
+- Roshan is shown in the pit he is in now. The radar learns which pit Roshan uses by day and by night, and when Roshan is in the fog it places him in the pit for the time of day. The other pit shows as a dim mark.
+- Wisdom is shown only while the rune is lying there: a taken one or one that has not appeared yet is not drawn.
+- Runes, gold ones included, leave the map as soon as they are taken in sight or their spot is visible with no rune in it.
+- Lone Druid's bear shows on the map: a paw icon in team color with a health ring.
 
 # Fix v2.6.1
 
