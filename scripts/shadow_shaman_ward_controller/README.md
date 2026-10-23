@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`shadow-shaman-ward-controller-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/shadow-shaman-ward-controller-v1.0.0) | 2026-10-18 | [shadow_shaman_ward_controller.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/shadow-shaman-ward-controller-v1.0.0/shadow_shaman_ward_controller.lua) | 5 |
+| [`shadow-shaman-ward-controller-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/shadow-shaman-ward-controller-v1.0.0) | 2026-10-18 | [shadow_shaman_ward_controller.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/shadow-shaman-ward-controller-v1.0.0/shadow_shaman_ward_controller.lua) | 7 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=shadow-shaman-ward-controller&expanded=true)
 <!-- releases:end -->

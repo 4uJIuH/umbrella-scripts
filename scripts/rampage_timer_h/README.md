@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`rampage-timer-h-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/rampage-timer-h-v1.0.0) | 2026-10-14 | [rampage_timer_h.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/rampage-timer-h-v1.0.0/rampage_timer_h.lua) | 1 |
+| [`rampage-timer-h-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/rampage-timer-h-v1.0.0) | 2026-10-14 | [rampage_timer_h.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/rampage-timer-h-v1.0.0/rampage_timer_h.lua) | 2 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=rampage-timer-h&expanded=true)
 <!-- releases:end -->
