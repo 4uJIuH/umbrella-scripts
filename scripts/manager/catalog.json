@@ -2364,8 +2364,8 @@
     {
       "id": "burning_changer_alternate",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/burning_changer_alternate/burning_changer_alternate.lua",
-      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/burning_changer_alternate/burning_changer_alternate.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/426256ff4af0a11c0599d1642a34b124168c7c82/scripts/burning_changer_alternate/burning_changer_alternate.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/burning-changer-alternate-v1.0.0/burning_changer_alternate.lua",
       "manual": false,
       "needs_q_localizer": false,
       "author": "Yerka (Discord: argenov)",
@@ -2379,7 +2379,7 @@
           "Changer \u2192 Main \u2192 Burning Changer (Alternate) \u2192 Main \u2192 \u041f\u0440\u0435\u0432\u044c\u044e"
         ]
       },
-      "date": "2026-10-19",
+      "date": "2026-10-24",
       "version_marker": "NONE"
     },
     {
