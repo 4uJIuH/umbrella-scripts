@@ -3,13 +3,9 @@
 автофарм кемпов и волн крипов с подбором сфер / farms camps and creep waves while collecting upgrade orbs
 
 <!-- releases:start -->
-Скачать: [tinker_1x6_farm.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-1x6-farm-v1.0.0/tinker_1x6_farm.lua) — `tinker-1x6-farm-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `tinker_1x6_farm.lua`](https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/tinker_1x6_farm/tinker_1x6_farm.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`tinker-1x6-farm-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/tinker-1x6-farm-v1.0.0) | 2026-10-13 | [tinker_1x6_farm.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-1x6-farm-v1.0.0/tinker_1x6_farm.lua) | 11 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=tinker-1x6-farm&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=tinker-1x6-farm&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -24,12 +20,6 @@
 
 1. Поместите `tinker_1x6_farm.lua` в `umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и откройте Heroes → Hero List → Tinker → 1x6 Farm.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -47,9 +37,3 @@ Automates Tinker farming with movement between locations, camp and lane farming,
 
 1. Place `tinker_1x6_farm.lua` in `umbrella\scripts`.
 2. Reload the Lua scripts and open Heroes → Hero List → Tinker → 1x6 Farm.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

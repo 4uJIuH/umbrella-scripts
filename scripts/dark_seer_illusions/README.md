@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`dark-seer-illusions-v1.0.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dark-seer-illusions-v1.0.3) | 2026-10-22 | [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.3/dark_seer_illusions.lua) | 11 |
+| [`dark-seer-illusions-v1.0.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dark-seer-illusions-v1.0.3) | 2026-10-22 | [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.3/dark_seer_illusions.lua) | 17 |
 | [`dark-seer-illusions-v1.0.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dark-seer-illusions-v1.0.2) | 2026-10-22 | [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.2/dark_seer_illusions.lua) | 2 |
 | [`dark-seer-illusions-v1.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dark-seer-illusions-v1.0.1) | 2026-10-20 | [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.1/dark_seer_illusions.lua) | 22 |
 | [`dark-seer-illusions-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dark-seer-illusions-v1.0.0) | 2026-10-20 | [dark_seer_illusions.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dark-seer-illusions-v1.0.0/dark_seer_illusions.lua) | 3 |

@@ -3,13 +3,9 @@
 автоматически снимает некоторые эффекты Reactive Tazer / automatically dispels selected effects with Reactive Tazer
 
 <!-- releases:start -->
-Скачать: [techies_tazer_dispel.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-tazer-dispel-v1.0.0/techies_tazer_dispel.lua) — `techies-tazer-dispel-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `techies_tazer_dispel.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-tazer-dispel-v1.0.0/techies_tazer_dispel.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`techies-tazer-dispel-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/techies-tazer-dispel-v1.0.0) | 2026-10-13 | [techies_tazer_dispel.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-tazer-dispel-v1.0.0/techies_tazer_dispel.lua) | 8 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-tazer-dispel&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-tazer-dispel&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -23,12 +19,6 @@
 
 1. Поместите `techies_tazer_dispel.lua` в `Umbrella\scripts`.
 2. Перезагрузите Lua-скрипты и проверьте настройки Techies.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -45,9 +35,3 @@ A Techies utility that uses Reactive Tazer's explosion to automatically dispel. 
 
 1. Place `techies_tazer_dispel.lua` in `Umbrella\scripts`.
 2. Reload Lua scripts and check the Techies settings.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

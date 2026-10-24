@@ -2380,6 +2380,10 @@
         ]
       },
       "date": "2026-10-24",
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/burning_changer_alternate/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/burning_changer_alternate/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6504,6 +6508,10 @@
       "heroes": [
         "faceless_void"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/chronosphere_helper/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/chronosphere_helper/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     },
     {
@@ -6526,6 +6534,10 @@
       "heroes": [
         "invoker"
       ],
+      "history": {
+        "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_tornado_guard/CHANGELOG.md",
+        "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_tornado_guard/CHANGELOG.en.md"
+      },
       "version_marker": "NONE"
     }
   ]

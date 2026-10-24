@@ -3,13 +3,9 @@
 комбо Techies с режимами агрессии и максимального урона / Techies combo with aggressive and maximum-damage modes
 
 <!-- releases:start -->
-Скачать: [techies_combo.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-combo-v1.0.0/techies_combo.lua) — `techies-combo-v1.0.0`, 2026-10-13
+Последняя версия: [`v1.0.0` — `techies_combo.lua`](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-combo-v1.0.0/techies_combo.lua)
 
-| версия | дата | файл | загрузок |
-| --- | --- | --- | --- |
-| [`techies-combo-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/techies-combo-v1.0.0) | 2026-10-13 | [techies_combo.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-combo-v1.0.0/techies_combo.lua) | 27 |
-
-[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-combo&expanded=true)
+[Релизы автора на GitHub](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-combo&expanded=true)
 <!-- releases:end -->
 
 ## Что умеет
@@ -26,12 +22,6 @@
 2. Перезагрузите Lua-скрипты.
 
 Примечание: GitHub скачивает библиотеку как `_qLocalizer.lua`; переименуй её в `!_qLocalizer.lua` перед загрузкой Lua-скриптов.
-
-## Что нового
-
-# Релиз v1.0.0
-
-- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -51,9 +41,3 @@ An improved Techies combo with an optional Blink escape after the sequence finis
 2. Reload Lua scripts.
 
 Note: GitHub downloads the library as `_qLocalizer.lua`; rename it to `!_qLocalizer.lua` before loading Lua scripts.
-
-## Changelog
-
-# Release v1.0.0
-
-- Release version: the first publication of the script.

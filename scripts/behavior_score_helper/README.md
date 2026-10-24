@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`behavior-score-helper-v2.1.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.3) | 2026-10-21 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.3/BehaviorScoreHelper.lua) | 2 |
+| [`behavior-score-helper-v2.1.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.3) | 2026-10-21 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.3/BehaviorScoreHelper.lua) | 5 |
 | [`behavior-score-helper-v2.1.2`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.2) | 2026-10-20 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.2/BehaviorScoreHelper.lua) | 2 |
 | [`behavior-score-helper-v2.1.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.1) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.1/BehaviorScoreHelper.lua) | 2 |
 | [`behavior-score-helper-v2.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/behavior-score-helper-v2.1.0) | 2026-10-19 | [BehaviorScoreHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/behavior-score-helper-v2.1.0/BehaviorScoreHelper.lua) | 0 |

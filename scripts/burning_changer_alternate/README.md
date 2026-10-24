@@ -2,21 +2,36 @@
 
 альтернативный визуальный changer с эффектами частиц / an alternate visual changer with particle effects
 
+<!-- releases:start -->
+Скачать: [burning_changer_alternate.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/burning-changer-alternate-v1.0.0/burning_changer_alternate.lua) — `burning-changer-alternate-v1.0.0`, 2026-10-24
+
+| версия | дата | файл | загрузок |
+| --- | --- | --- | --- |
+| [`burning-changer-alternate-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/burning-changer-alternate-v1.0.0) | 2026-10-24 | [burning_changer_alternate.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/burning-changer-alternate-v1.0.0/burning_changer_alternate.lua) | 0 |
+
+[Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=burning-changer-alternate&expanded=true)
+<!-- releases:end -->
+
 ## Что умеет
 
-- Выбор из 15 эффектов частиц.
-- Цель: только вы, вы и союзники или все герои.
-- По желанию накладывает эффект на косметические предметы; настраиваются число слоёв и размер.
-- Превью эффектов в главном меню и витрине.
-- Это визуальные эффекты, а не замена шмоток или изменение инвентаря.
+Накладывает выбранные particle-эффекты на героя и, по желанию, его косметические предметы. Это визуальные эффекты, а не замена шмоток или изменение инвентаря. Добавлен отдельным скриптом рядом с существующим Changer.
+
+- Выбор из 15 эффектов частиц
+- Настройки цели: только вы, вы и союзники или все герои
+- Можно накладывать эффекты на косметические предметы, менять число слоёв и размер
+- Отдельное превью эффектов в главном меню и витрине
+- Использует собственный пункт меню `Burning Changer (Alternate)` и не заменяет существующий Changer
 
 ## Установка
 
-1. Поместите `burning_changer_alternate.lua` в папку `umbrella\scripts`.
-2. Перезагрузите Lua-скрипты.
-3. Откройте `Changer → Main → Burning Changer (Alternate) → Main → Эффект` или `Changer → Main → Burning Changer (Alternate) → Main → Превью`.
+1. Поместите `burning_changer_alternate.lua` в папку `umbrella\scripts` и перезагрузите Lua-скрипты.
+2. Откройте `Changer → Main → Burning Changer (Alternate) → Main → Эффект` или `Changer → Main → Burning Changer (Alternate) → Main → Превью`.
 
-Автор: Yerka (Discord: argenov).
+## Что нового
+
+# Релиз v1.0.0
+
+- Релизная версия: первая публикация скрипта.
 
 ---
 
@@ -24,17 +39,21 @@
 
 ## What it does
 
-Applies selected particle effects to your hero and optionally its cosmetic items. This is a separate script from the existing Changer and does not replace items or change the inventory.
+Applies selected particle effects to your hero and optionally its cosmetic items. These are visual effects, not item replacements or inventory changes. This is added alongside the existing Changer as a separate script.
 
-- Choose from 15 particle effects.
-- Target yourself, yourself and allies, or all heroes.
-- Optionally attach effects to cosmetic items and adjust the number of layers and size.
-- Preview effects in the Dota 2 main menu and showcase.
+- Choose from 15 particle effects
+- Target yourself, yourself and allies, or all heroes
+- Optionally attach effects to cosmetic items and adjust the number of layers and size
+- Preview effects in the Dota 2 main menu and showcase
+- Uses its own `Burning Changer (Alternate)` menu entry and does not replace the existing Changer
 
 ## Install
 
-1. Place `burning_changer_alternate.lua` in `umbrella\scripts`.
-2. Reload the Lua scripts.
-3. Open `Changer → Main → Burning Changer (Alternate) → Main → Эффект` or `Changer → Main → Burning Changer (Alternate) → Main → Превью`.
+1. Place `burning_changer_alternate.lua` in `umbrella\scripts` and reload the Lua scripts.
+2. Open `Changer → Main → Burning Changer (Alternate) → Main → Эффект` or `Changer → Main → Burning Changer (Alternate) → Main → Превью`.
 
-Author: Yerka (Discord: argenov).
+## Changelog
+
+# Release v1.0.0
+
+- Release version: the first publication of the script.
