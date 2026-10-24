@@ -6487,7 +6487,7 @@
     {
       "id": "chronosphere_helper",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/chronosphere_helper/ChronosphereHelper.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/426256ff4af0a11c0599d1642a34b124168c7c82/scripts/chronosphere_helper/ChronosphereHelper.lua",
       "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/chronosphere-helper-v1.0.0/ChronosphereHelper.lua",
       "manual": false,
       "needs_q_localizer": false,
