@@ -2147,9 +2147,9 @@
     },
     {
       "id": "techies_auto_miner",
-      "version": "1.1",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/techies_auto_miner/techies_auto_miner.lua",
-      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-auto-miner-v1.1/techies_auto_miner.lua",
+      "version": "1.5",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/426256ff4af0a11c0599d1642a34b124168c7c82/scripts/techies_auto_miner/techies_auto_miner.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-auto-miner-v1.5/techies_auto_miner.lua",
       "manual": false,
       "needs_q_localizer": true,
       "author": "guzlichenok, suicide (Discord: suicideeee)",
@@ -2161,7 +2161,7 @@
           "Heroes \u2192 Hero List \u2192 Techies \u2192 \u0410\u0432\u0442\u043e-\u043c\u0438\u043d\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435"
         ]
       },
-      "date": "2026-10-13",
+      "date": "2026-10-24",
       "heroes": [
         "techies"
       ],
