@@ -6509,7 +6509,7 @@
     {
       "id": "invoker_tornado_guard",
       "version": "1.0.0",
-      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_tornado_guard/_invoker_tornado_ally_cc_guard.lua",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/426256ff4af0a11c0599d1642a34b124168c7c82/scripts/invoker_tornado_guard/_invoker_tornado_ally_cc_guard.lua",
       "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-tornado-guard-v1.0.0/_invoker_tornado_ally_cc_guard.lua",
       "manual": false,
       "needs_q_localizer": false,
