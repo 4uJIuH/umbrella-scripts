@@ -2152,7 +2152,7 @@
       "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-auto-miner-v1.1/techies_auto_miner.lua",
       "manual": false,
       "needs_q_localizer": true,
-      "author": "Discord: guzlichenok",
+      "author": "guzlichenok, suicide (Discord: suicideeee)",
       "menu": {
         "ru": [
           "Heroes \u2192 Hero List \u2192 Techies \u2192 \u0410\u0432\u0442\u043e-\u043c\u0438\u043d\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435"
@@ -2359,6 +2359,27 @@
         "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/changer/CHANGELOG.md",
         "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/changer/CHANGELOG.en.md"
       },
+      "version_marker": "NONE"
+    },
+    {
+      "id": "burning_changer_alternate",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/burning_changer_alternate/burning_changer_alternate.lua",
+      "release": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/burning_changer_alternate/burning_changer_alternate.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "Yerka (Discord: argenov)",
+      "menu": {
+        "ru": [
+          "Changer \u2192 Main \u2192 Burning Changer (Alternate) \u2192 Main \u2192 \u042d\u0444\u0444\u0435\u043a\u0442",
+          "Changer \u2192 Main \u2192 Burning Changer (Alternate) \u2192 Main \u2192 \u041f\u0440\u0435\u0432\u044c\u044e"
+        ],
+        "en": [
+          "Changer \u2192 Main \u2192 Burning Changer (Alternate) \u2192 Main \u2192 \u042d\u0444\u0444\u0435\u043a\u0442",
+          "Changer \u2192 Main \u2192 Burning Changer (Alternate) \u2192 Main \u2192 \u041f\u0440\u0435\u0432\u044c\u044e"
+        ]
+      },
+      "date": "2026-10-19",
       "version_marker": "NONE"
     },
     {
@@ -6461,6 +6482,50 @@
         "ru": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dodger_utilities/CHANGELOG.md",
         "en": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/dodger_utilities/CHANGELOG.en.md"
       },
+      "version_marker": "NONE"
+    },
+    {
+      "id": "chronosphere_helper",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/chronosphere_helper/ChronosphereHelper.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/chronosphere-helper-v1.0.0/ChronosphereHelper.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "\u2694LegaXye\u79aa (Discord: legaxye)",
+      "menu": {
+        "ru": [
+          "Scripts \u2192 General \u2192 Utility \u2192 Chronosphere"
+        ],
+        "en": [
+          "Scripts \u2192 General \u2192 Utility \u2192 Chronosphere"
+        ]
+      },
+      "date": "2026-10-24",
+      "heroes": [
+        "faceless_void"
+      ],
+      "version_marker": "NONE"
+    },
+    {
+      "id": "invoker_tornado_guard",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_tornado_guard/_invoker_tornado_ally_cc_guard.lua",
+      "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-tornado-guard-v1.0.0/_invoker_tornado_ally_cc_guard.lua",
+      "manual": false,
+      "needs_q_localizer": false,
+      "author": "\u0421\u0430\u043a\u0441\u0430\u043a\u044b\u0447 (Discord: saksakych)",
+      "menu": {
+        "ru": [
+          "Heroes \u2192 Hero List \u2192 Invoker \u2192 Main Settings \u2192 Tornado Guard"
+        ],
+        "en": [
+          "Heroes \u2192 Hero List \u2192 Invoker \u2192 Main Settings \u2192 Tornado Guard"
+        ]
+      },
+      "date": "2026-10-24",
+      "heroes": [
+        "invoker"
+      ],
       "version_marker": "NONE"
     }
   ]

@@ -4352,7 +4352,7 @@
       "heroes": [
         "techies"
       ],
-      "author": "Discord: guzlichenok",
+      "author": "guzlichenok, suicide (Discord: suicideeee)",
       "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/techies_auto_miner",
       "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-auto-miner&expanded=true",
       "initial": {
@@ -4362,31 +4362,41 @@
         "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-auto-miner-v1.1/techies_auto_miner.lua"
       },
       "ru": {
-        "tagline": "автоматически минирует выбранные зоны карты на Techies",
-        "about": "Автоматически обходит выбранные через интерактивную мини-карту зоны и закладывает Proximity Mines.",
+        "tagline": "сам застраивает выбранные зоны минами",
+        "about": "Скрипт для Techies: застраивает выбранные зоны минами, умеет рисовать области мышью, по умолчанию не блокирует нейтральные кемпы и плотно заставляет базы. Авто-зоны и ручные области можно совмещать.",
         "features": [
-          "Интерактивная панель карты с выбором зон, фильтрами и стартом/остановкой",
-          "Покрывает проходимые участки и показывает мины, точки, границы и текущую цель",
-          "Управляет маной: использует Arcane Boots, заряды, Mango и ждёт восстановления",
-          "Прерывает автоматизацию при ручном приказе игрока; требуется qLocalization"
+          "Авто-зоны по миникарте: своя и вражеская база, тройка (аванпост), лес, потайной магазин",
+          "Ручные зоны мышью: бинд, ЛКМ ставит точки, Ctrl+ЛКМ замыкает; области сохраняются в конфиг",
+          "Споун-боксы нейтральных кемпов по умолчанию исключаются; опция «Заставлять кемпы (нейтралы)» включает их",
+          "Базы: прямоугольная сетка от трона, 2600 вперёд и 800 назад, шаг 360; здания и непроходимые клетки отсекаются",
+          "Неудачные касты повторяются через 45 с, недостижимые точки через 90 с",
+          "Мана: Arcane Boots, Stick/Wand и манго, если не хватает на мину",
+          "ESP: круги мин, незаминированные точки, линия до цели, статус над героем",
+          "ПКМ по игре или ручной приказ герою останавливают минирование; плашка состояния и дамп в debug.log"
         ],
         "install": [
-          "Поместите `techies_auto_miner.lua` и `!_qLocalizer.lua` в `umbrella\\scripts`.",
-          "Перезагрузите скрипты, выберите зоны на панели карты и запустите минирование."
+          "Нажмите «Установить» в Script Manager или поместите `techies_auto_miner.lua` и `!_qLocalizer.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Heroes → Hero List → Techies → Авто-минирование` и назначьте клавишу «Старт / Стоп»."
         ]
       },
       "en": {
-        "tagline": "automatically mines selected map zones as Techies",
-        "about": "Automatically traverses zones selected on an interactive minimap and plants Proximity Mines.",
+        "tagline": "fills the chosen zones with mines on its own",
+        "about": "A Techies script that mines the chosen zones by itself and lets you draw areas with the mouse. By default it leaves neutral camps unblocked and mines bases densely. Auto zones and manual areas can be combined.",
         "features": [
-          "Interactive map panel with zone selection, filters, and start/stop controls",
-          "Covers walkable areas and visualizes mines, points, zone boundaries, and the current target",
-          "Manages mana with Arcane Boots, charges, Mango, and regeneration waits",
-          "Stops automation on a manual player order; requires qLocalization"
+          "Auto zones from the minimap: your base, enemy base, triangle (outpost), jungle, secret shop",
+          "Manual zones with the mouse: press the bind, left click adds points, Ctrl+left click closes; areas are saved to the config",
+          "Neutral camp spawn boxes are excluded by default; \"Force camps (neutrals)\" mines them too",
+          "Bases: a rectangular grid from the throne, 2600 forward and 800 back, step 360; buildings and unwalkable cells are cut off",
+          "Failed casts retry after 45 s, unreachable points after 90 s",
+          "Mana: uses Arcane Boots, Stick/Wand and mango when a mine needs more mana",
+          "ESP: mine circles, unmined points, a line to the current target, status above the hero",
+          "Right click or any manual order stops mining; status panel and a dump in debug.log"
         ],
         "install": [
-          "Place `techies_auto_miner.lua` and `!_qLocalizer.lua` in `umbrella\\scripts`.",
-          "Reload scripts, select zones on the map panel, and start mining."
+          "Click Install in Script Manager or place `techies_auto_miner.lua` and `!_qLocalizer.lua` in the `umbrella\\scripts` folder.",
+          "Reload Lua scripts.",
+          "Open `Heroes → Hero List → Techies → Авто-минирование` and bind the Start / Stop key."
         ]
       }
     },
@@ -4797,6 +4807,52 @@
         "install": [
           "Place `changer.lua` in `Umbrella\\scripts`.",
           "Reload Lua scripts."
+        ]
+      }
+    },
+    {
+      "id": "burning_changer_alternate",
+      "tag": "burning-changer-alternate",
+      "title": "Burning Changer (Alternate)",
+      "kind": "lua",
+      "category": "dota",
+      "file": "burning_changer_alternate.lua",
+      "author": "Yerka (Discord: argenov)",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-19",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/burning_changer_alternate/burning_changer_alternate.lua"
+      },
+      "ru": {
+        "tagline": "альтернативный визуальный changer с эффектами частиц",
+        "about": "Накладывает выбранные particle-эффекты на героя и, по желанию, его косметические предметы. Это визуальные эффекты, а не замена шмоток или изменение инвентаря. Добавлен отдельным скриптом рядом с существующим Changer.",
+        "features": [
+          "Выбор из 15 эффектов частиц",
+          "Настройки цели: только вы, вы и союзники или все герои",
+          "Можно накладывать эффекты на косметические предметы, менять число слоёв и размер",
+          "Отдельное превью эффектов в главном меню и витрине",
+          "Использует собственный пункт меню `Burning Changer (Alternate)` и не заменяет существующий Changer"
+        ],
+        "install": [
+          "Поместите `burning_changer_alternate.lua` в папку `umbrella\\scripts` и перезагрузите Lua-скрипты.",
+          "Откройте `Changer → Main → Burning Changer (Alternate) → Main → Эффект` или `Changer → Main → Burning Changer (Alternate) → Main → Превью`."
+        ]
+      },
+      "en": {
+        "tagline": "an alternate visual changer with particle effects",
+        "about": "Applies selected particle effects to your hero and optionally its cosmetic items. These are visual effects, not item replacements or inventory changes. This is added alongside the existing Changer as a separate script.",
+        "features": [
+          "Choose from 15 particle effects",
+          "Target yourself, yourself and allies, or all heroes",
+          "Optionally attach effects to cosmetic items and adjust the number of layers and size",
+          "Preview effects in the Dota 2 main menu and showcase",
+          "Uses its own `Burning Changer (Alternate)` menu entry and does not replace the existing Changer"
+        ],
+        "install": [
+          "Place `burning_changer_alternate.lua` in `umbrella\\scripts` and reload the Lua scripts.",
+          "Open `Changer → Main → Burning Changer (Alternate) → Main → Эффект` or `Changer → Main → Burning Changer (Alternate) → Main → Превью`."
         ]
       }
     },
@@ -12108,6 +12164,116 @@
           "Open your profile → History."
         ]
       }
+    },
+    {
+      "id": "chronosphere_helper",
+      "tag": "chronosphere-helper",
+      "title": "Chronosphere Helper",
+      "kind": "lua",
+      "category": "dota",
+      "file": "ChronosphereHelper.lua",
+      "author": "⚔LegaXye禪 (Discord: legaxye)",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "heroes": [
+        "faceless_void"
+      ],
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-24",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/chronosphere_helper/ChronosphereHelper.lua",
+        "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/chronosphere-helper-v1.0.0/ChronosphereHelper.lua"
+      },
+      "ru": {
+        "tagline": "поправляет позицию Chronosphere, кастует комбо и отменяет пустые купола",
+        "about": "Немного поправляет точку Chronosphere в пределах заданного времени. Если это возможно, захватывает больше врагов, ставит их в радиус атаки союзников ближнего боя и оставляет союзников снаружи. Чудес не делает: если поправить нельзя, каст идёт как есть.",
+        "features": [
+          "Helper: больше врагов в куполе, враги в радиусе атаки союзников ближнего боя, союзники снаружи",
+          "Приоритетных союзников скрипт старается оставить вне купола, если это возможно",
+          "Combo: Chronosphere через Time Walk или Blink Dagger со всеми поправками Helper",
+          "Fail Switch: не даёт поставить купол без врагов и отменяет анимацию, если враги вышли из радиуса во время каста",
+          "Fail Switch выключается, если позиции не всех врагов известны, поэтому не мешает ставить купол на невидимых врагов",
+          "Работает на враге, который возрождается с Aegis"
+        ],
+        "install": [
+          "Нажмите «Установить» в Script Manager или поместите `ChronosphereHelper.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Scripts → General → Utility → Chronosphere` и настройте группы Helper, Combo и Fail Switch."
+        ]
+      },
+      "en": {
+        "tagline": "corrects Chronosphere placement, casts a combo and cancels empty domes",
+        "about": "Makes small corrections to Chronosphere within the configured time range. When feasible, it fits more enemies inside, places them within attack range of melee allies and keeps allies outside. It doesn't work magic: if no correction is possible, the cast goes as is.",
+        "features": [
+          "Helper: more enemies inside the dome, enemies within reach of melee allies, allies outside",
+          "Priority allies are kept outside the dome when possible",
+          "Combo: casts Chronosphere through Time Walk or Blink Dagger with all Helper corrections",
+          "Fail Switch: blocks a dome with no enemies and cancels the animation if enemies leave the range during the cast",
+          "Fail Switch stays off unless all enemy positions are known, so it won't stop casts on invisible enemies",
+          "Works on an enemy reviving with Aegis"
+        ],
+        "install": [
+          "Click Install in Script Manager or place `ChronosphereHelper.lua` in the `umbrella\\scripts` folder.",
+          "Reload Lua scripts.",
+          "Open `Scripts → General → Utility → Chronosphere` and set up the Helper, Combo and Fail Switch groups."
+        ]
+      },
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/chronosphere_helper",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=chronosphere-helper&expanded=true"
+    },
+    {
+      "id": "invoker_tornado_guard",
+      "tag": "invoker-tornado-guard",
+      "title": "Invoker Tornado Guard",
+      "kind": "lua",
+      "category": "dota",
+      "file": "_invoker_tornado_ally_cc_guard.lua",
+      "author": "Саксакыч (Discord: saksakych)",
+      "version_marker": "NONE",
+      "needs_q_localizer": false,
+      "heroes": [
+        "invoker"
+      ],
+      "initial": {
+        "version": "1.0.0",
+        "date": "2026-10-24",
+        "url": "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/invoker_tornado_guard/_invoker_tornado_ally_cc_guard.lua",
+        "release": "https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-tornado-guard-v1.0.0/_invoker_tornado_ally_cc_guard.lua"
+      },
+      "ru": {
+        "tagline": "не даёт Tornado сбить контроль на враге",
+        "about": "Если цель или враг на пути смерча обездвижен (стан, хекс, рут, сон, страх, таунт, поводок, циклон, Chrono, Black Hole, Kinetic Field, Arena, каналы союзников вроде Dismember), Tornado не кастуется, а летит стыком к концу контроля.",
+        "features": [
+          "В комбо Tornado пропускается ещё до Invoke, комбо продолжает остальными скиллами",
+          "Если контроль кончится не позже чем через 0.3 с, комбо ждёт и кидает Tornado ровно к концу контроля",
+          "При ручном нажатии каст блокируется, и охранник сам кидает Tornado к концу контроля",
+          "Остаток контроля берётся у движка; если его нельзя прочитать, Tornado ждёт, пока контроль спадёт",
+          "Каждый запрет пишется в лог строкой BLOCK (ручное нажатие) или COMBO (комбо)"
+        ],
+        "install": [
+          "Нажмите «Установить» в Script Manager или поместите `_invoker_tornado_ally_cc_guard.lua` в папку `umbrella\\scripts`.",
+          "Перезагрузите Lua-скрипты.",
+          "Откройте `Heroes → Hero List → Invoker → Main Settings → Tornado Guard`."
+        ]
+      },
+      "en": {
+        "tagline": "keeps Tornado from breaking control on an enemy",
+        "about": "If the target or an enemy in the tornado's path is disabled (stun, hex, root, sleep, fear, taunt, leash, cyclone, Chrono, Black Hole, Kinetic Field, Arena, ally channels like Dismember), Tornado isn't cast and lands right as the control ends instead.",
+        "features": [
+          "In a combo, Tornado is skipped before Invoke and the combo goes on with the other spells",
+          "If the control ends within 0.3 s, the combo waits and throws Tornado exactly at the end",
+          "On a manual press the cast is blocked and the guard throws Tornado at the end of the control itself",
+          "The remaining control time comes from the engine; if it can't be read, Tornado waits until the control is gone",
+          "Each block is logged as a BLOCK (manual press) or COMBO (combo) line"
+        ],
+        "install": [
+          "Click Install in Script Manager or place `_invoker_tornado_ally_cc_guard.lua` in the `umbrella\\scripts` folder.",
+          "Reload Lua scripts.",
+          "Open `Heroes → Hero List → Invoker → Main Settings → Tornado Guard`."
+        ]
+      },
+      "source_url": "https://github.com/4uJIuH/umbrella-scripts/tree/main/scripts/invoker_tornado_guard",
+      "releases_url": "https://github.com/4uJIuH/umbrella-scripts/releases?q=invoker-tornado-guard&expanded=true"
     }
   ]
 }

@@ -467,6 +467,24 @@ class MenuLocationsTests(unittest.TestCase):
             },
         )
 
+    def test_alternate_burning_changer_has_separate_menu_and_identity(self):
+        script = self.by_id["burning_changer_alternate"]
+        self.assertEqual(
+            paths_for(script),
+            {
+                "ru": [
+                    "Changer → Main → Burning Changer (Alternate) → Main → Эффект",
+                    "Changer → Main → Burning Changer (Alternate) → Main → Превью",
+                ],
+                "en": [
+                    "Changer → Main → Burning Changer (Alternate) → Main → Эффект",
+                    "Changer → Main → Burning Changer (Alternate) → Main → Превью",
+                ],
+            },
+        )
+        self.assertNotEqual(script["id"], self.by_id["changer"]["id"])
+        self.assertNotEqual(script["file"], self.by_id["changer"]["file"])
+
     def test_catalog_paths_have_localized_list_shapes(self):
         for script in self.scripts:
             with self.subTest(script=script["id"]):
