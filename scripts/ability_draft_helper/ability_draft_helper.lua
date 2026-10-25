@@ -501,8 +501,8 @@ local VERSION = "1.0.0"
 local K = {
 	TAG = "[AD Helper] ",
 	DATA = "https://raw.githubusercontent.com/4uJIuH/umbrella-scripts/main/scripts/ability_draft_helper/data/",
-	-- Steam account ids (the short profile number) allowed to run the helper
-	USERS = { [125775785] = true, [128880242] = true },
+	-- Steam account ids (the short profile number) allowed to run the helper, one per line
+	USERS = "ad_users.txt",
 	TTL = 43200,
 	RETRY = 60,
 	REFRESH_COOLDOWN = 60,
@@ -4917,19 +4917,44 @@ function input.end_drag()
 	P.drag, P.resize, P.slide, P.sb_drag = nil, nil, nil, nil
 end
 
--- the helper runs only for K.USERS; nil until Steam reports the account
-local access = { ok = nil, at = 0 }
+-- the helper runs only for accounts listed in K.USERS on GitHub; nil until Steam and the list answer
+local access = { ok = nil, at = 0, wait = false }
+
+local function access_decide(n, text)
+	access.ok = false
+	for line in text:gmatch("[^\r\n]+") do
+		if tonumber(line:match("^%s*(%d+)")) == n then access.ok = true break end
+	end
+	if not access.ok then say("this Steam account has no access to the helper") end
+end
 
 function access.check()
 	if access.ok ~= nil then return access.ok end
-	if os.clock() < access.at then return false end
+	if access.wait or os.clock() < access.at then return false end
 	access.at = os.clock() + 2
 	local ok, id = pcall(GC.GetSteamID)
 	local n = ok and math.tointeger(tonumber(tostring(id or ""))) or nil
 	if not n or n <= 76561197960265728 then return false end
-	access.ok = K.USERS[n - 76561197960265728] == true
-	if not access.ok then say("this Steam account has no access to the helper") end
-	return access.ok
+	n = n - 76561197960265728
+	access.wait = true
+	local sent = HTTP.Request("GET", K.DATA .. K.USERS, { headers = { ["User-Agent"] = K.AGENT }, timeout = K.TIMEOUT }, function(r)
+		access.wait = false
+		local body = type(r.response) == "string" and r.response or ""
+		if tonumber(r.code) == 200 and #body > 0 then
+			write_file(K.USERS, body)
+			access_decide(n, body)
+			return
+		end
+		-- offline: fall back to the last list that came from GitHub
+		local cached = read_file(K.USERS)
+		if cached then return access_decide(n, cached) end
+		access.at = os.clock() + K.RETRY
+	end)
+	if not sent then
+		access.wait = false
+		access.at = os.clock() + K.RETRY
+	end
+	return false
 end
 
 local script = {}
