@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`calories-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/calories-v1.0.0) | 2026-10-19 | [calories.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/calories-v1.0.0/calories.lua) | 2 |
+| [`calories-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/calories-v1.0.0) | 2026-10-19 | [calories.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/calories-v1.0.0/calories.lua) | 5 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=calories&expanded=true)
 <!-- releases:end -->

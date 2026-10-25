@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`avto-stak-arc-warden-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/avto-stak-arc-warden-v1.0.0) | 2026-10-22 | [avto_stak.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/avto-stak-arc-warden-v1.0.0/avto_stak.lua) | 6 |
+| [`avto-stak-arc-warden-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/avto-stak-arc-warden-v1.0.0) | 2026-10-22 | [avto_stak.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/avto-stak-arc-warden-v1.0.0/avto_stak.lua) | 9 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=avto-stak-arc-warden&expanded=true)
 <!-- releases:end -->

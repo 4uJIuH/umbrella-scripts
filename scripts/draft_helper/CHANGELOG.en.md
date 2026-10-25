@@ -1,3 +1,7 @@
+# Update v2.0.0-beta.22
+
+- The author did not describe the changes in this version.
+
 # Update v2.0.0-beta.21
 
 - The author did not describe the changes in this version.
