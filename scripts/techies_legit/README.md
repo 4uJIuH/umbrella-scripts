@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`techies-legit-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/techies-legit-v1.0.0) | 2026-10-22 | [techies_legit.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-legit-v1.0.0/techies_legit.lua) | 9 |
+| [`techies-legit-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/techies-legit-v1.0.0) | 2026-10-22 | [techies_legit.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-legit-v1.0.0/techies_legit.lua) | 16 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-legit&expanded=true)
 <!-- releases:end -->
