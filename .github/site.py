@@ -99,6 +99,7 @@ def main():
     html = (BASE / "site" / "index.html").read_text(encoding="utf-8").replace("data.js", "data.js?v=" + stamp)
     (OUT / "index.html").write_text(html, encoding="utf-8")
     shutil.copy(BASE / "site" / "radar.html", OUT / "radar.html")
+    shutil.copy(BASE / "site" / "deadlock.html", OUT / "deadlock.html")
     shutil.copytree(BASE / "site" / "radar", OUT / "radar")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     print("site: %d items, %d days" % (len(items), len(ROWS)))
