@@ -51,6 +51,8 @@ function pic(src) {
   return i.complete && i.naturalWidth ? i : null;
 }
 const mapImg = pic(BASE + 'map.png');
+const ALIAS = { atlas: 'bull', dynamo: 'sumo', forge: 'engineer', ghost: 'spectre', krill: 'digger', orion: 'archer', viper: 'kali', targetdummy: 'generic' };
+const heroIcon = n => BASE + 'hero/' + (ALIAS[n] || n) + '.png';
 
 let live = {}, seenAt = 0;
 
@@ -78,7 +80,7 @@ function label(p, text, dy, color) {
 function fmt(s) { s = Math.max(0, s | 0); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
 const gt = () => (live.clock || {}).gt || 0;
 const NEUTRAL = '#9aa3b2';
-const PICKUP = { Health: '#58e08a', Gold: '#ffd54a', Modifier: '#b36bff' };
+const PICKUP = { Health: '#58e08a', Gold: '#ffd54a', AssignedGold: '#ffd54a', Modifier: '#b36bff' };
 
 function draw() {
   requestAnimationFrame(draw);
@@ -142,7 +144,7 @@ function draw() {
       ctx.lineTo(p[0] + Math.cos(a - 2.5) * (r + 1), p[1] + Math.sin(a - 2.5) * (r + 1));
       ctx.fillStyle = col; ctx.fill();
     }
-    const i = pic(BASE + 'hero/' + h.n + '.png');
+    const i = pic(heroIcon(h.n));
     if (i) {
       ctx.save(); ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 7); ctx.clip();
       ctx.drawImage(i, p[0] - r, p[1] - r, r * 2, r * 2); ctx.restore();
@@ -166,7 +168,7 @@ function side() {
   let html = rows.map(h => {
     const pct = h.mh ? Math.round(100 * h.hp / h.mh) : 0;
     const info = [h.g ? Math.round(h.g / 100) / 10 + 'k' : '', h.d ? 'fog' : '', h.zl ? 'zip' : ''].filter(Boolean).join(' · ');
-    return '<div class="row' + (h.a === false ? ' dead' : '') + '"><img src="' + BASE + 'hero/' + h.n + '.png" alt="" onerror="this.className=\'ph\';this.removeAttribute(\'src\')">' +
+    return '<div class="row' + (h.a === false ? ' dead' : '') + '"><img src="' + heroIcon(h.n) + '" alt="" onerror="this.className=\'ph\';this.removeAttribute(\'src\')">' +
       '<div class="nm"><div>' + h.n + ' <span style="color:var(--mut)">' + info + '</span></div><div class="bar"><i style="width:' + pct + '%;background:' + colorOf(h.t) + '"></i></div></div></div>';
   }).join('');
   if (mine && mine.kit) {
