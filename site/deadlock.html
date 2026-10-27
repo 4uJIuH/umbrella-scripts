@@ -672,17 +672,18 @@ try {
   tw.onmessage = () => { if (document.hidden || pipVideo) render(); };
 } catch (e) {}
 let pipVideo = false;
+// start the stream up front: requestPictureInPicture fails until the video has a frame
+try { $('pipv').srcObject = canvas.captureStream(20); $('pipv').play().catch(() => {}); } catch (e) {}
 $('pip').onclick = async () => {
   try {
     // video PiP, not document PiP: the browser draws no address bar over a video window
     if (document.pictureInPictureElement) { await document.exitPictureInPicture(); return; }
     const v = $('pipv');
-    if (!v.srcObject) { v.srcObject = canvas.captureStream(20); }
-    await v.play();
+    if (v.readyState < 1) { v.play().catch(() => {}); await new Promise(r => v.addEventListener('loadedmetadata', r, { once: true })); }
     if (v.requestPictureInPicture) { await v.requestPictureInPicture(); pipVideo = true; v.addEventListener('leavepictureinpicture', () => { pipVideo = false; $('pip').classList.remove('on'); }, { once: true }); }
     else if (v.webkitSetPresentationMode) { v.webkitSetPresentationMode('picture-in-picture'); pipVideo = true; }
     $('pip').classList.toggle('on', pipVideo);
-  } catch (e) { $('pip').title = 'Picture in picture is not supported here'; }
+  } catch (e) { console.error('pip', e); $('pip').title = 'Picture in picture failed: ' + e.message; }
 };
 </script>
 </body>
