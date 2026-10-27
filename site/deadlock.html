@@ -58,6 +58,10 @@ canvas{border-radius:10px;display:block;background:var(--mapbg)}
 #empty{position:absolute;inset:0;display:none;align-items:center;justify-content:center;pointer-events:none}
 #empty.on{display:flex}
 #empty div{background:rgba(12,12,13,.82);border:1px solid rgba(255,255,255,.08);color:#d4d4d8;border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:center;font-weight:500}
+#empty small{display:block;color:#8a8a93;font-size:12px;font-weight:400;margin-top:2px}
+.hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:3;pointer-events:none;font-size:11.5px;color:#9a9aa1;background:rgba(12,12,13,.6);border-radius:8px;padding:3px 10px;white-space:nowrap}
+#map{cursor:grab}
+#map:active{cursor:grabbing}
 .gear{position:absolute;right:20px;top:20px;z-index:3;width:30px;height:30px;border-radius:8px;color:#d4d4d8;display:grid;place-items:center;background:rgba(12,12,13,.72);border:1px solid rgba(255,255,255,.1)}
 .gear:hover{color:#fff}
 .opts{position:absolute;right:20px;top:56px;z-index:20;width:300px;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.35);padding:8px;display:none}
@@ -163,7 +167,8 @@ canvas{border-radius:10px;display:block;background:var(--mapbg)}
       <div id="stage">
         <canvas id="map"></canvas>
         <div id="tip"></div>
-        <div id="empty"><div><i class="fa-solid fa-hourglass-half"></i><span id="etext">Waiting for a match</span></div></div>
+        <div id="empty"><div><i class="fa-solid fa-hourglass-half"></i><span><span id="etext">Waiting for a match</span><small>In the cheat menu: Miscellaneous › Web Radar › Enabled, then Start</small></span></div></div>
+        <div class="hint">Scroll to zoom · drag to move · double-click to reset</div>
         <div class="tools">
           <button class="tb" id="vmap" title="Map only"><i class="fa-solid fa-expand"></i></button>
           <button class="tb" id="pip" title="Picture in picture"><i class="fa-solid fa-clone"></i></button>
@@ -175,7 +180,7 @@ canvas{border-radius:10px;display:block;background:var(--mapbg)}
             <div class="rng"><label>Map size <b id="v_ms"></b></label><input type="range" id="r_ms" min="30" max="100" step="1"></div>
             <div class="rng"><label>Icon size <b id="v_ic"></b></label><input type="range" id="r_ic" min="60" max="220" step="5"></div>
             <div class="rng"><label>Map opacity <b id="v_bg"></b></label><input type="range" id="r_bg" min="10" max="100" step="5"></div>
-            <div class="rng"><label>Zoom (map only) <b id="v_zm"></b></label><input type="range" id="r_zm" min="60" max="300" step="5"></div>
+            <div class="rng"><label>Zoom <b id="v_zm"></b></label><input type="range" id="r_zm" min="60" max="400" step="5"></div>
           </div>
         </div>
         <video id="pipv" class="pipbox" muted playsinline></video>
@@ -184,6 +189,7 @@ canvas{border-radius:10px;display:block;background:var(--mapbg)}
         <span><i style="background:var(--amber)"></i>Amber</span><span><i style="background:var(--sapph)"></i>Sapphire</span>
         <span><i style="background:#9aa3b2"></i>Neutral</span><span><i style="background:#ffb020"></i>Mid Boss</span>
         <span><i style="background:#b36bff"></i>Powerup</span><span><i style="background:#7ad7ff"></i>Urn</span><span><i style="background:#ff4df0"></i>Rift</span>
+        <span><i style="background:#aa82e6"></i>Tunnels</span><span><i style="background:#f2d024;border-radius:1px"></i><i style="background:#3aa0ff;border-radius:1px"></i><i style="background:#38d36a;border-radius:1px"></i>Your lanes</span>
       </div>
     </div>
     <div class="stack">
@@ -220,7 +226,8 @@ $('theme').onclick = () => setTheme(root.className === 'dark' ? '' : 'dark');
 
 const LAYERS = [['heroes', 'fa-user', 'Heroes'], ['bars', 'fa-heart-pulse', 'Health bars'], ['view', 'fa-location-arrow', 'View direction'], ['troopers', 'fa-people-group', 'Troopers'],
   ['neutrals', 'fa-paw', 'Neutrals'], ['camps', 'fa-tree', 'Camps'], ['powerups', 'fa-gem', 'Powerups'],
-  ['buildings', 'fa-chess-rook', 'Buildings'], ['boss', 'fa-skull', 'Mid Boss'], ['urn', 'fa-jar', 'Urn'], ['rift', 'fa-circle-nodes', 'Rift'], ['labels', 'fa-clock', 'Timers']];
+  ['buildings', 'fa-chess-rook', 'Buildings'], ['boss', 'fa-skull', 'Mid Boss'], ['urn', 'fa-jar', 'Urn'], ['rift', 'fa-circle-nodes', 'Rift'], ['labels', 'fa-clock', 'Timers'],
+  ['tunnels', 'fa-route', 'Tunnels']];
 let layers = {};
 try { layers = JSON.parse(store.get('dl_layers') || '{}'); } catch (e) {}
 const on = k => layers[k] !== false;
@@ -246,11 +253,18 @@ const fmt = s => { s = Math.max(0, s | 0); return Math.floor(s / 60) + ':' + Str
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const title = s => String(s || '').replace(/_/g, ' ');
 
-const BOUND = 10752;
-const flipped = () => cfg.rot !== false && (live.clock || {}).me === 3;
+// World corners of the game minimap texture, sent by the script from utils.minimap_to_world; the fallback is the last measured value.
+const bounds = () => (live.clock || {}).mb || [-10752, -10752, 10752, 10752];
+function uv(x, y) { const b = bounds(); return [(x - b[0]) / (b[2] - b[0]), 1 - (y - b[1]) / (b[3] - b[1])]; }
+let FLIP = false;
+function flipped() {
+  if (cfg.rot === false) return false;
+  const pat = L(live.o).find(o => /Tier3/.test(o.c) && o.t === me());
+  return pat ? uv(pat.x, pat.y)[1] < 0.5 : me() === SAPPH;
+}
 function pt(x, y) {
-  let u = (x + BOUND) / (2 * BOUND) + 12 / 1100, v = 1 - (y + BOUND) / (2 * BOUND) + 38 / 1100;
-  if (flipped()) { u = 1 - u; v = 1 - v; }
+  let [u, v] = uv(x, y);
+  if (FLIP) { u = 1 - u; v = 1 - v; }
   return [MX + u * MS, MY + v * MS];
 }
 
@@ -275,19 +289,19 @@ function fitCanvas() {
   if (full) {
     const w = Math.max(120, box.clientWidth), h = Math.max(120, box.clientHeight);
     CW = Math.round(w * dpr); CH = Math.round(h * dpr);
-    canvas.width = CW; canvas.height = CH;
     canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    MS = Math.max(CW, CH) * cfg.zm / 100;
-    MX = (CW - MS) / 2 + cfg.px * MS; MY = (CH - MS) / 2 + cfg.py * MS;
     canvas.style.borderRadius = '0';
   } else {
     const side = Math.max(120, Math.min(box.clientWidth - 20, box.clientHeight - 20) * cfg.ms / 100);
-    CW = CH = MS = Math.round(side * dpr); MX = MY = 0;
-    canvas.width = canvas.height = CW;
+    CW = CH = Math.round(side * dpr);
     canvas.style.width = canvas.style.height = side + 'px';
     canvas.style.borderRadius = '10px';
   }
-  W = MS;
+  if (canvas.width !== CW) canvas.width = CW;
+  if (canvas.height !== CH) canvas.height = CH;
+  MS = Math.min(CW, CH) * cfg.zm / 100;
+  MX = (CW - MS) / 2 + cfg.px * MS; MY = (CH - MS) / 2 + cfg.py * MS;
+  W = Math.min(CW, CH);
 }
 new ResizeObserver(fitCanvas).observe($('stage'));
 window.addEventListener('resize', fitCanvas);
@@ -353,13 +367,15 @@ function glow() {
 function render() {
   hits.length = 0; placed.length = 0;
   ctx.clearRect(0, 0, CW, CH);
+  FLIP = flipped();
   const ba = cfg.bg / 100;
-  const m = pic(BASE + 'map_real.png');
-  if (m) {
-    ctx.save(); ctx.globalAlpha = ba;
-    if (flipped()) { ctx.translate(MX + MS / 2, MY + MS / 2); ctx.rotate(Math.PI); ctx.translate(-MX - MS / 2, -MY - MS / 2); }
-    ctx.drawImage(m, MX, MY, MS, MS); ctx.restore();
+  ctx.save(); ctx.globalAlpha = ba;
+  if (FLIP) { ctx.translate(MX + MS / 2, MY + MS / 2); ctx.rotate(Math.PI); ctx.translate(-MX - MS / 2, -MY - MS / 2); }
+  for (const [file, layer] of [['map_game.png'], ['map_tunnels.png', 'tunnels']]) {
+    const m = pic(BASE + file);
+    if (m && (!layer || on(layer))) ctx.drawImage(m, MX, MY, MS, MS);
   }
+  ctx.restore();
   const s = S();
 
   if (on('urn')) for (const l of L(live.ud)) dot(pt(l[0], l[1]), 9 * s, null, '#7ad7ff', 2 * s);
@@ -437,6 +453,7 @@ function render() {
     } else if (key) {
       const sz = BICON[key][1] * 2 * s;
       if (!sprite(BICON[key][0], p, sz, col)) { ctx.fillStyle = col; ctx.fillRect(p[0] - 6 * s, p[1] - 6 * s, 12 * s, 12 * s); }
+      if (key === 'Boss_Tier3' && on('labels')) label(p, o.t === me() ? 'YOUR BASE' : 'ENEMY BASE', sz / s / 2 + 14, col, 11, true);
       if (o.mh > 0 && o.hp < o.mh) {
         ctx.fillStyle = '#000'; ctx.fillRect(p[0] - sz / 2, p[1] + sz / 2 + 2 * s, sz, 4 * s);
         ctx.fillStyle = col; ctx.fillRect(p[0] - sz / 2, p[1] + sz / 2 + 2 * s, sz * o.hp / o.mh, 4 * s);
@@ -507,7 +524,7 @@ function render() {
 canvas.onmousemove = e => { const r = canvas.getBoundingClientRect(), k = CW / r.width, st = $('stage').getBoundingClientRect(); hover = { x: (e.clientX - r.left) * k, y: (e.clientY - r.top) * k, cx: e.clientX - st.left, cy: e.clientY - st.top }; };
 canvas.onmouseleave = () => { hover = null; };
 let drag = null;
-canvas.addEventListener('pointerdown', e => { if (cfg.mo || pipWin) { drag = { x: e.clientX, y: e.clientY, px: cfg.px, py: cfg.py }; canvas.setPointerCapture(e.pointerId); } });
+canvas.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, px: cfg.px, py: cfg.py }; canvas.setPointerCapture(e.pointerId); });
 canvas.addEventListener('pointermove', e => {
   if (!drag) return;
   const r = canvas.getBoundingClientRect(), k = CW / r.width;
@@ -515,7 +532,17 @@ canvas.addEventListener('pointermove', e => {
   fitCanvas();
 });
 canvas.addEventListener('pointerup', () => { if (drag) { drag = null; saveCfg(); } });
-canvas.addEventListener('wheel', e => { if (!(cfg.mo || pipWin)) return; e.preventDefault(); cfg.zm = Math.max(60, Math.min(300, cfg.zm + (e.deltaY < 0 ? 10 : -10))); saveCfg(); applyCfg(); }, { passive: false });
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const r = canvas.getBoundingClientRect(), k = CW / r.width, hx = (e.clientX - r.left) * k, hy = (e.clientY - r.top) * k;
+  const u = (hx - MX) / MS, v = (hy - MY) / MS;
+  cfg.zm = Math.max(60, Math.min(400, Math.round(cfg.zm * (e.deltaY < 0 ? 1.15 : 1 / 1.15))));
+  // keep the point under the cursor in place while zooming
+  const ms = Math.min(CW, CH) * cfg.zm / 100;
+  cfg.px = (hx - u * ms - (CW - ms) / 2) / ms; cfg.py = (hy - v * ms - (CH - ms) / 2) / ms;
+  saveCfg(); applyCfg();
+}, { passive: false });
+canvas.addEventListener('dblclick', () => { cfg.zm = 100; cfg.px = cfg.py = 0; saveCfg(); applyCfg(); });
 canvas.style.touchAction = 'none';
 
 const seenHero = {};
@@ -614,7 +641,7 @@ function side() {
   $('stext').textContent = !sid ? 'Invalid link' : !seenAt ? 'Connecting' : fresh ? 'Live' : 'No fresh data';
   $('clock').textContent = inMatch ? fmt(clock.gt) : '';
   $('empty').classList.toggle('on', !inMatch || !fresh);
-  $('etext').textContent = !sid ? 'Invalid link' : !seenAt ? 'Connecting' : !fresh ? 'No fresh data' : 'Waiting for a match';
+  $('etext').textContent = !sid ? 'Invalid link' : !seenAt ? 'Connecting' : !fresh ? 'No fresh data from the game' : 'Waiting for a match';
   $('score').hidden = !inMatch;
   if (!inMatch) return;
   const gr = live.gr || {}, rows = L(live.pos);
