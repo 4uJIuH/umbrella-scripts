@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deadlock Radar</title>
+<style>
+:root{--bg:#0e1116;--card:#171b22;--fg:#e6e9ef;--mut:#8b93a1;--ally:#4fd18b;--enemy:#ff5a5f}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:14px system-ui,sans-serif}
+#app{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:12px;padding:12px;height:100%}
+#stage{position:relative;min-height:0;display:flex;align-items:center;justify-content:center}
+canvas{background:var(--card);border-radius:10px;max-width:100%;max-height:100%;aspect-ratio:1}
+#side{background:var(--card);border-radius:10px;padding:12px;overflow:auto}
+#status{font-size:13px;color:var(--mut);margin-bottom:8px}
+.row{display:flex;align-items:center;gap:8px;padding:5px 0}
+.row img,.row .ph{width:28px;height:28px;border-radius:50%;flex:none;background:#2a303b}
+.row .bar{height:4px;background:#2a303b;border-radius:2px;margin-top:3px}
+.row .bar i{display:block;height:100%;border-radius:2px}
+.row .nm{flex:1;min-width:0}
+.row.dead{opacity:.45}
+h4{margin:10px 0 2px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+@media(max-width:760px){#app{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage"><canvas id="map" width="1024" height="1024"></canvas></div>
+  <div id="side"><div id="status">Connecting</div><div id="heroes"></div></div>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyCGf2e4CIJm1or0klbzXXI5wlfvXPqS514",
+  authDomain: "umbrella-scripts.firebaseapp.com",
+  databaseURL: "https://umbrella-scripts-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "umbrella-scripts",
+});
+const sid = location.hash.replace(/^#\/?/, '');
+const $ = id => document.getElementById(id);
+const canvas = $('map'), ctx = canvas.getContext('2d'), W = canvas.width;
+const BASE = 'radar/deadlock/';
+const L = a => Array.isArray(a) ? a : a ? Object.values(a) : [];
+
+const img = new Map();
+function pic(src) {
+  let i = img.get(src);
+  if (!i) { i = new Image(); i.src = src; img.set(src, i); }
+  return i.complete && i.naturalWidth ? i : null;
+}
+const mapImg = pic(BASE + 'map.png');
+
+let live = {}, seenAt = 0;
+
+function pt(x, y) {
+  const mp = live.mp;
+  const half = mp && mp.ay ? 140 / Math.abs(mp.ay) : 10086;
+  return [(0.5 + x / (2 * half)) * W, (0.5 - y / (2 * half)) * W];
+}
+
+const me = () => (live.clock || {}).me;
+const colorOf = t => t === me() ? '#4fd18b' : '#ff5a5f';
+
+function dot(p, r, fill, stroke) {
+  ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 7);
+  if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+  if (stroke) { ctx.lineWidth = 3; ctx.strokeStyle = stroke; ctx.stroke(); }
+}
+
+function label(p, text, dy, color) {
+  ctx.font = '600 15px system-ui,sans-serif'; ctx.textAlign = 'center';
+  ctx.lineWidth = 4; ctx.strokeStyle = '#000'; ctx.strokeText(text, p[0], p[1] + dy);
+  ctx.fillStyle = color || '#fff'; ctx.fillText(text, p[0], p[1] + dy);
+}
+
+function fmt(s) { s = Math.max(0, s | 0); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+const gt = () => (live.clock || {}).gt || 0;
+const NEUTRAL = '#9aa3b2';
+const PICKUP = { Health: '#58e08a', Gold: '#ffd54a', Modifier: '#b36bff' };
+
+function draw() {
+  requestAnimationFrame(draw);
+  ctx.clearRect(0, 0, W, W);
+  const m = mapImg || pic(BASE + 'map.png');
+  if (m) ctx.drawImage(m, 0, 0, W, W);
+
+  for (const l of L(live.ud)) { const p = pt(l[0], l[1]); dot(p, 9, null, '#7ad7ff'); }
+  const rf = live.rf;
+  if (rf) for (const l of L(rf.loc)) {
+    const p = pt(l.x, l.y), on = l.id === rf.aid, warn = l.id === rf.wid;
+    if (on || warn) dot(p, 12, null, on ? '#ff4df0' : '#ffb020');
+  }
+  for (const c of L(live.c)) {
+    const p = pt(c.x, c.y), r = c.k === 37 ? 9 : c.k === 35 ? 8 : 6;
+    dot(p, r, c.s === 3 ? '#555' : '#e0b84a');
+    if (c.s === 3 && c.nx) label(p, fmt(c.nx - gt()), -r - 3, '#e0b84a');
+    else if (c.mh > 0 && c.hp < c.mh) label(p, Math.round(100 * c.hp / c.mh) + '%', -r - 3);
+  }
+  for (const s of L(live.sn)) {
+    if (s.a === false) continue;
+    const p = pt(s.x, s.y);
+    dot(p, 9, s.j ? '#ffd54a' : '#d96a3a', '#000');
+    if (s.mh > 0 && s.hp < s.mh) label(p, Math.round(100 * s.hp / s.mh) + '%', -13);
+  }
+  for (const t of L(live.tr)) dot(pt(t[0], t[1]), t[2] === 0 ? 2 : 3, t[2] === 0 ? NEUTRAL : colorOf(t[2]));
+  for (const k of L(live.pk)) dot(pt(k[1], k[2]), 3, PICKUP[k[0]] || '#ccc');
+  for (const o of L(live.o)) {
+    if (o.a === false) continue;
+    const p = pt(o.x, o.y), big = /Tier3|Tier2|TrooperBoss/.test(o.c);
+    const s = big ? 9 : 6;
+    ctx.fillStyle = colorOf(o.t); ctx.fillRect(p[0] - s, p[1] - s, s * 2, s * 2);
+    ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.strokeRect(p[0] - s, p[1] - s, s * 2, s * 2);
+    if (o.mh > 0 && o.hp < o.mh) {
+      ctx.fillStyle = '#000'; ctx.fillRect(p[0] - s, p[1] + s + 2, s * 2, 4);
+      ctx.fillStyle = '#fff'; ctx.fillRect(p[0] - s, p[1] + s + 2, s * 2 * o.hp / o.mh, 4);
+    }
+  }
+  for (const u of L(live.u)) {
+    const p = pt(u.x, u.y), on = u.s === 3;
+    dot(p, 7, on ? '#b36bff' : '#444', '#000');
+    if (!on && u.nx) label(p, fmt(u.nx - gt()), -11, '#b36bff');
+  }
+  if (live.b) {
+    const p = pt(live.b.x, live.b.y);
+    dot(p, 13, '#ffb020', '#000');
+    if (typeof live.b.f === 'number' && live.b.f < 1) label(p, Math.round(live.b.f * 100) + '%', -17);
+    else if (live.b.nx && live.b.nx > gt()) label(p, fmt(live.b.nx - gt()), -17, '#ffb020');
+  }
+  if (live.ur && typeof live.ur.x === 'number') dot(pt(live.ur.x, live.ur.y), 8, '#7ad7ff', '#000');
+
+  for (const h of L(live.pos)) {
+    if (h.a === false) continue;
+    const p = pt(h.x, h.y);
+    const col = colorOf(h.t), r = 17;
+    ctx.save(); ctx.globalAlpha = h.d ? 0.45 : 1;
+    if (typeof h.yaw === 'number') {
+      const a = -h.yaw * Math.PI / 180;
+      ctx.beginPath(); ctx.moveTo(p[0] + Math.cos(a) * (r + 10), p[1] + Math.sin(a) * (r + 10));
+      ctx.lineTo(p[0] + Math.cos(a + 2.5) * (r + 1), p[1] + Math.sin(a + 2.5) * (r + 1));
+      ctx.lineTo(p[0] + Math.cos(a - 2.5) * (r + 1), p[1] + Math.sin(a - 2.5) * (r + 1));
+      ctx.fillStyle = col; ctx.fill();
+    }
+    const i = pic(BASE + 'hero/' + h.n + '.png');
+    if (i) {
+      ctx.save(); ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 7); ctx.clip();
+      ctx.drawImage(i, p[0] - r, p[1] - r, r * 2, r * 2); ctx.restore();
+      dot(p, r, null, h.me ? '#fff' : col);
+    } else dot(p, r, '#333', col);
+    if (h.mh > 0) {
+      ctx.fillStyle = '#000'; ctx.fillRect(p[0] - r, p[1] + r + 3, r * 2, 5);
+      ctx.fillStyle = col; ctx.fillRect(p[0] - r, p[1] + r + 3, r * 2 * Math.min(1, h.hp / h.mh), 5);
+    }
+    if (h.cc) label(p, '!', -r - 4, '#ffd54a');
+    ctx.restore();
+  }
+}
+
+function side() {
+  const clock = live.clock || {};
+  const fresh = performance.now() - seenAt < 5000;
+  $('status').textContent = !sid ? 'Invalid link' : !seenAt ? 'Waiting for a match' : fresh ? 'Live  ' + fmt(clock.gt || 0) : 'No fresh data';
+  const rows = L(live.pos).sort((a, b) => (a.t === me() ? 0 : 1) - (b.t === me() ? 0 : 1) || a.i - b.i);
+  const mine = rows.find(h => h.me);
+  let html = rows.map(h => {
+    const pct = h.mh ? Math.round(100 * h.hp / h.mh) : 0;
+    const info = [h.g ? Math.round(h.g / 100) / 10 + 'k' : '', h.d ? 'fog' : '', h.zl ? 'zip' : ''].filter(Boolean).join(' · ');
+    return '<div class="row' + (h.a === false ? ' dead' : '') + '"><img src="' + BASE + 'hero/' + h.n + '.png" alt="" onerror="this.className=\'ph\';this.removeAttribute(\'src\')">' +
+      '<div class="nm"><div>' + h.n + ' <span style="color:var(--mut)">' + info + '</span></div><div class="bar"><i style="width:' + pct + '%;background:' + colorOf(h.t) + '"></i></div></div></div>';
+  }).join('');
+  if (mine && mine.kit) {
+    html += '<h4>Ability cooldowns</h4>' + L(mine.kit).map(k =>
+      '<div class="row"><div class="nm">' + String(k.n).replace(/^(citadel_ability_|upgrade_|ability_)/, '') + ' <span style="color:var(--mut)">lv' + k.l + '</span></div><div>' + (k.cd > 0 ? k.cd.toFixed(1) + 's' : 'ready') + '</div></div>').join('');
+  }
+  $('heroes').innerHTML = html;
+}
+
+if (sid) {
+  onValue(ref(getDatabase(app), 'sessions/' + sid + '/live'), snap => {
+    live = snap.val() || {};
+    seenAt = performance.now();
+  });
+}
+setInterval(side, 500);
+draw();
+</script>
+</body>
+</html>
