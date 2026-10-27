@@ -241,8 +241,22 @@ const fmt = s => { s = Math.max(0, s | 0); return Math.floor(s / 60) + ':' + Str
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const title = s => String(s || '').replace(/_/g, ' ');
 
-function half() { const mp = live.mp; return mp && mp.ay ? 140 / Math.abs(mp.ay) : 10086; }
-function pt(x, y) { const h = half(); return [(0.5 + x / (2 * h)) * W, (0.5 - y / (2 * h)) * W]; }
+function frac(x, y) {
+  const mp = live.mp;
+  if (mp && mp.ay) {
+    const X = mp.bx + mp.ax * x, Y = mp.by + mp.ay * y;
+    if (Math.abs(mp.bx) <= 300) return [X / 255, 1 - Y / 255];
+    const c = [mp.c1, mp.c255].find(q => q && Math.abs(q.x1 - q.x0) >= 50 && Math.abs(q.x1 - q.x0) <= 2000);
+    if (c) {
+      const xl = Math.min(c.x0, c.x1), xr = Math.max(c.x0, c.x1), yt = Math.min(c.y0, c.y1), yb = Math.max(c.y0, c.y1);
+      return [(X - xl) / (xr - xl), (Y - yt) / (yb - yt)];
+    }
+    const half = 140 / Math.abs(mp.ay) * 1.125;
+    return [0.5 + x / (2 * half) + 0.018, 0.5 - y / (2 * half) + 0.045];
+  }
+  return [0.5 + x / 22700, 0.5 - y / 22700];
+}
+function pt(x, y) { const f = frac(x, y); return [f[0] * W, f[1] * W]; }
 
 const cfg = Object.assign({ ms: 100, ic: 125, bg: 100, mo: false }, (() => { try { return JSON.parse(store.get('dl_cfg') || '{}'); } catch (e) { return {}; } })());
 if (/[?&]map\b/.test(location.search)) cfg.mo = true;
@@ -329,7 +343,7 @@ function render() {
   hits.length = 0; placed.length = 0;
   ctx.clearRect(0, 0, W, W);
   const ba = cfg.bg / 100;
-  const m = pic(BASE + 'map_color.jpg');
+  const m = pic(BASE + 'map_real.jpg');
   if (m) { ctx.globalAlpha = ba; ctx.drawImage(m, 0, 0, W, W); ctx.globalAlpha = 1; }
   glow();
   const s = S();
