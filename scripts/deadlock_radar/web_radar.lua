@@ -22,7 +22,6 @@ local localization = qLocalization.new({
 		wr_camps = "Camps",
 		wr_powerups = "Powerups, urn, midboss",
 		wr_troopers = "Troopers and neutrals",
-		wr_pickups = "Pickups",
 		wr_mods = "Hero modifiers",
 		wr_debug = "Debug log",
 		wr_debug_tip = "Log entity classes and map values to the bridge",
@@ -48,7 +47,6 @@ local localization = qLocalization.new({
 		wr_camps = "Кемпы",
 		wr_powerups = "Бонусы, урна, мидбосс",
 		wr_troopers = "Крипы и нейтралы",
-		wr_pickups = "Подбираемые предметы",
 		wr_mods = "Модификаторы героев",
 		wr_debug = "Отладка",
 		wr_debug_tip = "Писать классы сущностей и значения карты в мост",
@@ -285,7 +283,8 @@ local function collectSlow()
 		slow.c = camps
 		local sinners = {}
 		for _, sn in ipairs(map_info.sinners().items or {}) do
-			sinners[#sinners + 1] = { x = round(sn.position.x), y = round(sn.position.y), hp = sn.health, mh = sn.max_health, a = sn.alive, j = sn.jackpot_active or nil }
+			sinners[#sinners + 1] = { x = round(sn.position.x), y = round(sn.position.y), hp = sn.health, mh = sn.max_health, a = sn.alive, j = sn.jackpot_active or nil,
+				jw = sn.jackpot_in_window or nil, ph = sn.jackpot_valid and round(sn.jackpot_phase * 10) / 10 or nil, lp = sn.jackpot_valid and round(sn.jackpot_loop * 10) / 10 or nil }
 		end
 		slow.sn = sinners
 	end
@@ -313,17 +312,6 @@ local function collectSlow()
 			for _, l in ipairs(rift.locations or {}) do locs[#locs + 1] = { x = round(l.position.x), y = round(l.position.y), l = l.lane, id = l.id } end
 			slow.rf = { ph = rift.phase, aid = rift.active_location_id, wid = rift.warning_location_id, loc = locs, nx = rift.next_open and round(rift.next_open.earliest_at) or nil, ex = rift.expires_at and round(rift.expires_at) or nil }
 		end
-	end
-	if ui.pickups:Get() then
-		local pk = {}
-		for _, ent in ipairs(entity_list.get_all()) do
-			local class = ent:get_class_name()
-			if class:find("^C_Citadel_Pickup_") then
-				local pos = ent:get_origin()
-				if pos then pk[#pk + 1] = { class:sub(18), round(pos.x), round(pos.y) } end
-			end
-		end
-		slow.pk = pk
 	end
 	return slow
 end
@@ -420,7 +408,6 @@ do
 	ui.camps = data:Switch("wr_camps", true, "\u{f3c5}")
 	ui.powerups = data:Switch("wr_powerups", true, "\u{f0eb}")
 	ui.troopers = data:Switch("wr_troopers", true, "\u{f0c0}")
-	ui.pickups = data:Switch("wr_pickups", true, "\u{f06b}")
 	ui.mods = data:Switch("wr_mods", true, "\u{f1de}")
 end
 

@@ -175,7 +175,7 @@ setTheme(store.get('dl_theme') === null ? 'dark' : store.get('dl_theme'));
 $('theme').onclick = () => setTheme(root.className === 'dark' ? '' : 'dark');
 
 const LAYERS = [['heroes', 'fa-user', 'Heroes'], ['bars', 'fa-heart-pulse', 'Health bars'], ['view', 'fa-location-arrow', 'View direction'], ['troopers', 'fa-people-group', 'Troopers'],
-  ['neutrals', 'fa-paw', 'Neutrals'], ['camps', 'fa-tree', 'Camps'], ['powerups', 'fa-gem', 'Powerups'], ['pickups', 'fa-heart', 'Pickups'],
+  ['neutrals', 'fa-paw', 'Neutrals'], ['camps', 'fa-tree', 'Camps'], ['powerups', 'fa-gem', 'Powerups'],
   ['buildings', 'fa-chess-rook', 'Buildings'], ['boss', 'fa-skull', 'Mid Boss'], ['urn', 'fa-jar', 'Urn'], ['rift', 'fa-circle-nodes', 'Rift'], ['labels', 'fa-clock', 'Timers']];
 let layers = {};
 try { layers = JSON.parse(store.get('dl_layers') || '{}'); } catch (e) {}
@@ -227,7 +227,6 @@ function label(p, text, dy, color, size) {
   ctx.lineWidth = 3 * s; ctx.strokeStyle = 'rgba(0,0,0,.85)'; ctx.strokeText(text, p[0], p[1] + dy * s);
   ctx.fillStyle = color || '#fff'; ctx.fillText(text, p[0], p[1] + dy * s);
 }
-const PICKUP = { Health: '#58e08a', Gold: '#ffd54a', AssignedGold: '#ffd54a', Modifier: '#b36bff' };
 const hits = [];
 function hit(p, r, html) { hits.push({ x: p[0], y: p[1], r: Math.max(r, 9 * S()), html }); }
 
@@ -255,26 +254,31 @@ function draw() {
     if (act || warn) { dot(p, 14 * s, null, act ? '#ff4df0' : '#ffb020', 3 * s); hit(p, 14 * s, '<b>Rift</b><br>' + (act ? 'active' : 'warning')); }
   }
   if (on('camps')) for (const c of L(live.c)) {
-    const p = pt(c.x, c.y), r = (c.k === 37 ? 9 : c.k === 35 ? 8 : 6) * s, dead = c.s === 3;
-    dot(p, r, dead ? '#4a4f5c' : '#e0b84a', '#000', 1.5 * s);
-    if (on('labels')) {
-      if (dead && c.nx) label(p, fmt(c.nx - gt()), -r / s - 3, '#e0b84a');
-      else if (c.mh > 0 && c.hp < c.mh) label(p, Math.round(100 * c.hp / c.mh) + '%', -r / s - 3);
+    const p = pt(c.x, c.y), alive = c.s === 2, r = (c.k === 37 ? 9 : c.k === 35 ? 8 : 6) * s;
+    if (alive) {
+      dot(p, r, c.k === 37 ? '#d96a3a' : '#e0b84a', '#000', 1.5 * s);
+      if (on('labels') && c.mh > 0 && c.hp < c.mh) label(p, Math.round(100 * c.hp / c.mh) + '%', -r / s - 3);
+      hit(p, r, '<b>' + (c.k === 37 ? 'Sinner camp' : 'Camp') + '</b> ' + (c.k === 36 ? 'large' : c.k === 35 ? 'medium' : c.k === 34 ? 'small' : '') + '<br>' + c.hp + ' / ' + c.mh + ' HP');
+    } else if (c.nx && c.nx > gt() && on('labels')) {
+      label(p, fmt(c.nx - gt()), 4, c.k === 37 ? '#ff9a66' : '#e0b84a', 11);
+      hit(p, r, '<b>' + (c.k === 37 ? 'Sinner camp' : 'Camp') + '</b><br>respawn in ' + fmt(c.nx - gt()));
     }
-    hit(p, r, '<b>Camp</b> ' + (c.k === 37 ? 'Sinner' : c.k === 36 ? 'large' : c.k === 35 ? 'medium' : 'small') + '<br>' + (dead ? 'respawn ' + (c.nx ? fmt(c.nx - gt()) : '?') : c.hp + ' / ' + c.mh + ' HP'));
   }
   if (on('neutrals')) for (const x of L(live.sn)) {
     if (x.a === false) continue;
-    const p = pt(x.x, x.y);
-    dot(p, 8 * s, x.j ? '#ffd54a' : '#d96a3a', '#000', 2 * s);
-    if (x.mh > 0 && x.hp < x.mh && on('labels')) label(p, Math.round(100 * x.hp / x.mh) + '%', -12);
-    hit(p, 8 * s, '<b>Sinner</b><br>' + x.hp + ' / ' + x.mh + (x.j ? '<br>jackpot window' : ''));
+    const p = pt(x.x, x.y), left = x.lp && x.ph != null ? Math.max(0, x.lp - x.ph) : null;
+    dot(p, 8 * s, x.j ? '#ffd54a' : '#d96a3a', x.jw ? '#fff' : '#000', 2 * s);
+    if (on('labels')) {
+      if (x.jw) label(p, 'JACKPOT', -13, '#ffd54a', 11);
+      else if (left != null) label(p, fmt(left), -13, '#ffd54a', 11);
+      if (x.mh > 0 && x.hp < x.mh) label(p, Math.round(100 * x.hp / x.mh) + '%', 20, '#fff', 11);
+    }
+    hit(p, 8 * s, '<b>Sinner</b><br>' + x.hp + ' / ' + x.mh + (x.jw ? '<br>jackpot window open' : left != null ? '<br>jackpot cycle ' + fmt(left) : ''));
   }
   if (on('troopers')) for (const t of L(live.tr)) {
     if (t[2] === 0 && !on('neutrals')) continue;
     dot(pt(t[0], t[1]), (t[2] === 0 ? 2 : 3) * s, TCOL[t[2]] || '#9aa3b2');
   }
-  if (on('pickups')) for (const k of L(live.pk)) dot(pt(k[1], k[2]), 3 * s, PICKUP[k[0]] || '#ccc');
   if (on('buildings')) for (const o of L(live.o)) {
     if (o.a === false) continue;
     const p = pt(o.x, o.y), big = /Tier3|Tier2|TrooperBoss/.test(o.c), sz = (big ? 9 : 6) * s;
@@ -378,7 +382,7 @@ function objectives() {
   const u = L(live.u);
   if (u.length) { const act = u.filter(x => x.s === 3).length, next = u.filter(x => x.nx && x.nx > t).map(x => x.nx).sort((a, c) => a - c)[0]; rows.push(objRow('fa-gem', 'Powerups', act + ' / ' + u.length + (next ? ' · ' + fmt(next - t) : ''), act ? 'ok' : 'none')); }
   const c = L(live.c);
-  if (c.length) { const dead = c.filter(x => x.s === 3).length, next = c.filter(x => x.s === 3 && x.nx > t).map(x => x.nx).sort((a, d) => a - d)[0]; rows.push(objRow('fa-tree', 'Camps', (c.length - dead) + ' alive / ' + c.length + (next ? ' · ' + fmt(next - t) : ''))); }
+  if (c.length) { const alive = c.filter(x => x.s === 2).length, next = c.filter(x => x.s !== 2 && x.nx > t).map(x => x.nx).sort((a, d) => a - d)[0]; rows.push(objRow('fa-tree', 'Camps', alive + ' alive / ' + c.length + (next ? ' · next ' + fmt(next - t) : ''))); }
   for (const team of [AMBER, SAPPH]) {
     const o = L(live.o).filter(x => x.t === team && x.a !== false), n = re => o.filter(x => re.test(x.c)).length;
     rows.push(objRow('fa-chess-rook', tn(team) + ' buildings', 'G ' + n(/Tier2/) + ' · B ' + n(/Barrack/) + ' · S ' + n(/Sentry/) + ' · P ' + n(/Tier3/)));
