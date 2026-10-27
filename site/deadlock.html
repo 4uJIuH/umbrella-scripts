@@ -362,10 +362,20 @@ function glow() {
   }
 }
 
+// full snapshot rows with the newer fast positions (fp) laid over them
+function heroes() {
+  const fp = {};
+  for (const f of L(live.fp)) fp[f.i] = f;
+  return L(live.pos).map(h => fp[h.i] ? Object.assign({}, h, fp[h.i]) : h);
+}
+const smooth = new Map();
+let lastFrame = performance.now();
 function render() {
   hits.length = 0; placed.length = 0;
   ctx.clearRect(0, 0, CW, CH);
   FLIP = flipped();
+  const tNow = performance.now(), ease = Math.min(1, (tNow - lastFrame) / 1000 * 14);
+  lastFrame = tNow;
   const ba = cfg.bg / 100;
   ctx.save(); ctx.globalAlpha = ba;
   if (FLIP) { ctx.translate(MX + MS / 2, MY + MS / 2); ctx.rotate(Math.PI); ctx.translate(-MX - MS / 2, -MY - MS / 2); }
@@ -487,9 +497,13 @@ function render() {
     if (!sprite('urn', p, 22 * s)) dot(p, 8 * s, '#7ad7ff', '#000', 2 * s);
     hit(p, 11 * s, '<b>Urn</b><br>' + ['unknown', 'unavailable', 'on ground', 'carried', 'dropped', 'returning'][live.ur.s || 0]);
   }
-  if (on('heroes')) for (const h of L(live.pos).sort((a, b) => (a.me ? 1 : 0) - (b.me ? 1 : 0))) {
+  if (on('heroes')) for (const h of heroes().sort((a, b) => (a.me ? 1 : 0) - (b.me ? 1 : 0))) {
     if (h.a === false) continue;
-    const p = pt(h.x, h.y), col = TCOL[h.t] || '#999', r = 13 * s;
+    let sm = smooth.get(h.i);
+    if (!sm || Math.hypot(h.x - sm.x, h.y - sm.y) > 2500) sm = { x: h.x, y: h.y };
+    else { sm.x += (h.x - sm.x) * ease; sm.y += (h.y - sm.y) * ease; }
+    smooth.set(h.i, sm);
+    const p = pt(sm.x, sm.y), col = TCOL[h.t] || '#999', r = 13 * s;
     ctx.save(); ctx.globalAlpha = h.d ? 0.55 : 1;
     if (on('view') && typeof h.yaw === 'number') {
       const a = -h.yaw * Math.PI / 180 + (flipped() ? Math.PI : 0), d1 = r + 8 * s, d0 = r + 1 * s;
@@ -642,7 +656,7 @@ function side() {
   $('etext').textContent = !sid ? 'Invalid link' : !seenAt ? 'Connecting' : !fresh ? 'No fresh data from the game' : 'Waiting for a match';
   $('score').hidden = !inMatch;
   if (!inMatch) return;
-  const gr = live.gr || {}, rows = L(live.pos);
+  const gr = live.gr || {}, rows = heroes();
   const sum = t => rows.filter(h => h.t === t).reduce((a, h) => a + (h.g || 0), 0);
   const ag = gr.ag != null ? gr.ag : sum(AMBER), sg = gr.sg != null ? gr.sg : sum(SAPPH);
   const k = n => n >= 1000 ? (n / 1000).toFixed(1) + 'k' : n;
