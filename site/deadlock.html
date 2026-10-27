@@ -189,7 +189,7 @@ canvas{border-radius:10px;display:block;background:var(--mapbg)}
         <span><i style="background:var(--amber)"></i>Amber</span><span><i style="background:var(--sapph)"></i>Sapphire</span>
         <span><i style="background:#9aa3b2"></i>Neutral</span><span><i style="background:#ffb020"></i>Mid Boss</span>
         <span><i style="background:#b36bff"></i>Powerup</span><span><i style="background:#7ad7ff"></i>Urn</span><span><i style="background:#ff4df0"></i>Rift</span>
-        <span><i style="background:#aa82e6"></i>Tunnels</span><span><i style="background:#f2d024;border-radius:1px"></i><i style="background:#3aa0ff;border-radius:1px"></i><i style="background:#38d36a;border-radius:1px"></i>Your lanes</span>
+        <span><i style="background:#f2d024;border-radius:1px"></i><i style="background:#3aa0ff;border-radius:1px"></i><i style="background:#38d36a;border-radius:1px"></i>Your lanes</span>
       </div>
     </div>
     <div class="stack">
@@ -226,8 +226,7 @@ $('theme').onclick = () => setTheme(root.className === 'dark' ? '' : 'dark');
 
 const LAYERS = [['heroes', 'fa-user', 'Heroes'], ['bars', 'fa-heart-pulse', 'Health bars'], ['view', 'fa-location-arrow', 'View direction'], ['troopers', 'fa-people-group', 'Troopers'],
   ['neutrals', 'fa-paw', 'Neutrals'], ['camps', 'fa-tree', 'Camps'], ['powerups', 'fa-gem', 'Powerups'],
-  ['buildings', 'fa-chess-rook', 'Buildings'], ['boss', 'fa-skull', 'Mid Boss'], ['urn', 'fa-jar', 'Urn'], ['rift', 'fa-circle-nodes', 'Rift'], ['labels', 'fa-clock', 'Timers'],
-  ['tunnels', 'fa-route', 'Tunnels']];
+  ['buildings', 'fa-chess-rook', 'Buildings'], ['boss', 'fa-skull', 'Mid Boss'], ['urn', 'fa-jar', 'Urn'], ['rift', 'fa-circle-nodes', 'Rift'], ['labels', 'fa-clock', 'Timers']];
 let layers = {};
 try { layers = JSON.parse(store.get('dl_layers') || '{}'); } catch (e) {}
 const on = k => layers[k] !== false;
@@ -271,7 +270,6 @@ function pt(x, y) {
 const cfg = Object.assign({ ms: 100, ic: 100, bg: 100, mo: false, zm: 100, px: 0, py: 0 }, (() => { try { return JSON.parse(store.get('dl_cfg') || '{}'); } catch (e) { return {}; } })());
 if (/[?&]map\b/.test(location.search)) cfg.mo = true;
 function saveCfg() { store.set('dl_cfg', JSON.stringify(cfg)); }
-let pipWin = null;
 const RNG = ['ms', 'ic', 'bg', 'zm'];
 function applyCfg() {
   root.classList.toggle('mo', !!cfg.mo);
@@ -283,8 +281,8 @@ function applyCfg() {
   fitCanvas();
 }
 function fitCanvas() {
-  const full = !!cfg.mo || !!pipWin;
-  const box = pipWin ? { clientWidth: pipWin.innerWidth, clientHeight: pipWin.innerHeight } : $('stage');
+  const full = !!cfg.mo;
+  const box = $('stage');
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   if (full) {
     const w = Math.max(120, box.clientWidth), h = Math.max(120, box.clientHeight);
@@ -371,10 +369,8 @@ function render() {
   const ba = cfg.bg / 100;
   ctx.save(); ctx.globalAlpha = ba;
   if (FLIP) { ctx.translate(MX + MS / 2, MY + MS / 2); ctx.rotate(Math.PI); ctx.translate(-MX - MS / 2, -MY - MS / 2); }
-  for (const [file, layer] of [['map_game.png'], ['map_tunnels.png', 'tunnels']]) {
-    const m = pic(BASE + file);
-    if (m && (!layer || on(layer))) ctx.drawImage(m, MX, MY, MS, MS);
-  }
+  const m = pic(BASE + 'map_game.png');
+  if (m) ctx.drawImage(m, MX, MY, MS, MS);
   ctx.restore();
   const s = S();
 
@@ -399,7 +395,7 @@ function render() {
       if (on('labels') && c.mh > 0 && c.hp < c.mh) label(p, Math.round(100 * c.hp / c.mh) + '%', -r / s - 4);
       hit(p, r, '<b>' + (sin ? 'Sinner camp' : 'Camp') + '</b> ' + (c.k === 36 ? 'large' : c.k === 35 ? 'medium' : c.k === 34 ? 'small' : '') + '<br>' + c.hp + ' / ' + c.mh + ' HP');
     } else if (c.nx && c.nx > gt()) {
-      if (on('labels') && c.nx - gt() <= 75) label(p, fmt(c.nx - gt()), 4, sin ? '#ff9a66' : '#e0b84a', 10);
+      if (on('labels')) label(p, fmt(c.nx - gt()), 4, sin ? '#ff9a66' : '#e0b84a', 10);
       hit(p, r, '<b>' + (sin ? 'Sinner camp' : 'Camp') + '</b><br>respawn in ' + fmt(c.nx - gt()));
     }
   }
@@ -444,6 +440,7 @@ function render() {
   if (on('buildings')) for (const o of L(live.o)) {
     if (o.a === false) continue;
     const p = pt(o.x, o.y), key = Object.keys(BICON).find(k => o.c.includes(k)), col = TCOL[o.t] || '#999';
+    ctx.globalAlpha = o.st ? 0.55 : 1;
     const nm = '<b>' + title(o.c.replace(/^C_(NPC_)?/, '')) + '</b><br>' + o.hp + ' / ' + o.mh;
     if (key === 'TrooperBoss' || key === 'Boss_Tier2') {
       const r = (key === 'Boss_Tier2' ? 9 : 7) * s;
@@ -464,6 +461,7 @@ function render() {
       hit(p, 5 * s, nm);
     }
   }
+  ctx.globalAlpha = 1;
   const PU = { 1: ['powerup_weapon', '#ff8a4d'], 2: ['powerup_movement', '#52d6ff'], 3: ['powerup_health', '#5ee28f'], 4: ['powerup_magic', '#c07bff'] }, PUN = { 1: 'weapon', 2: 'movement', 3: 'survival', 4: 'casting' };
   if (on('powerups')) for (const u of L(live.u)) {
     const p = pt(u.x, u.y), act = u.s === 3, d = PU[u.k] || PU[1], sz = 24 * s;
@@ -671,24 +669,13 @@ function loop() { requestAnimationFrame(loop); render(); }
 loop();
 try {
   const tw = new Worker(URL.createObjectURL(new Blob(['setInterval(function(){postMessage(0)},50)'])));
-  tw.onmessage = () => { if (document.hidden || pipWin || pipVideo) render(); };
+  tw.onmessage = () => { if (document.hidden || pipVideo) render(); };
 } catch (e) {}
 let pipVideo = false;
 $('pip').onclick = async () => {
   try {
-    if (pipWin) { pipWin.close(); return; }
-    if (window.documentPictureInPicture) {
-      const w = await window.documentPictureInPicture.requestWindow({ width: 420, height: 420 });
-      const holder = document.createElement('div');
-      holder.style.cssText = 'position:fixed;inset:0;display:grid;place-items:center;background:#0a0d14';
-      w.document.body.style.cssText = 'margin:0;overflow:hidden;background:#0a0d14';
-      holder.append(canvas); w.document.body.append(holder);
-      pipWin = w; fitCanvas();
-      w.addEventListener('resize', fitCanvas);
-      w.addEventListener('pagehide', () => { pipWin = null; $('stage').insertBefore(canvas, $('stage').firstChild); fitCanvas(); $('pip').classList.remove('on'); });
-      $('pip').classList.add('on');
-      return;
-    }
+    // video PiP, not document PiP: the browser draws no address bar over a video window
+    if (document.pictureInPictureElement) { await document.exitPictureInPicture(); return; }
     const v = $('pipv');
     if (!v.srcObject) { v.srcObject = canvas.captureStream(20); }
     await v.play();
