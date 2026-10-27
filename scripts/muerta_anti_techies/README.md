@@ -7,7 +7,7 @@ Dead Shot через дерево по Techies во время Blast Off / Dead 
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`muerta-anti-techies-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/muerta-anti-techies-v1.0.0) | 2026-10-22 | [muerta_anti_techies.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/muerta-anti-techies-v1.0.0/muerta_anti_techies.lua) | 11 |
+| [`muerta-anti-techies-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/muerta-anti-techies-v1.0.0) | 2026-10-22 | [muerta_anti_techies.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/muerta-anti-techies-v1.0.0/muerta_anti_techies.lua) | 12 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=muerta-anti-techies&expanded=true)
 <!-- releases:end -->

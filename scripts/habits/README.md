@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`habits-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/habits-v1.0.0) | 2026-10-19 | [habits.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/habits-v1.0.0/habits.lua) | 11 |
+| [`habits-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/habits-v1.0.0) | 2026-10-19 | [habits.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/habits-v1.0.0/habits.lua) | 12 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=habits&expanded=true)
 <!-- releases:end -->

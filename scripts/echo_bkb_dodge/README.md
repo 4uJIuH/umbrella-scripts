@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`echo-bkb-dodge-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/echo-bkb-dodge-v1.2.0) | 2026-10-17 | [echo_bkb_dodge.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/echo-bkb-dodge-v1.2.0/echo_bkb_dodge.lua) | 23 |
+| [`echo-bkb-dodge-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/echo-bkb-dodge-v1.2.0) | 2026-10-17 | [echo_bkb_dodge.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/echo-bkb-dodge-v1.2.0/echo_bkb_dodge.lua) | 24 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=echo-bkb-dodge&expanded=true)
 <!-- releases:end -->
