@@ -10,9 +10,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 :root{--bg:#f6f6f4;--card:#fff;--sec:#efefec;--border:#e2e2de;--soft:#ebebe8;--fg:#18181a;--muted:#62626a;--faint:#9a9aa1;--ok:#2f9a5e;--warn:#b07d1c;--bad:#c93c3c;
-  --amber:#c98512;--sapph:#2f6fd0;--violet:#7c4dcc;--mapbg:#0d1018;--hp:#2f9a5e}
+  --amber:#c98512;--sapph:#2f6fd0;--violet:#7c4dcc;--mapbg:#07090e;--hp:#2f9a5e}
 .dark{--bg:#0c0c0d;--card:#121214;--sec:#19191c;--border:#222225;--soft:#1a1a1d;--fg:#ececee;--muted:#9a9aa1;--faint:#616168;--ok:#57c785;--warn:#d9a84e;--bad:#ef6b6b;
-  --amber:#f0a93b;--sapph:#5b9bf5;--violet:#b394f0;--mapbg:#0a0d14;--hp:#4cb879}
+  --amber:#f0a93b;--sapph:#5b9bf5;--violet:#b394f0;--mapbg:#07090e;--hp:#4cb879}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--fg);font:14px/1.5 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
 body{display:flex;flex-direction:column}
@@ -175,9 +175,6 @@ canvas{border-radius:10px;display:block;background:var(--mapbg)}
             <div class="rng"><label>Icon size <b id="v_ic"></b></label><input type="range" id="r_ic" min="60" max="220" step="5"></div>
             <div class="rng"><label>Map opacity <b id="v_bg"></b></label><input type="range" id="r_bg" min="10" max="100" step="5"></div>
             <div class="rng"><label>Zoom (map only) <b id="v_zm"></b></label><input type="range" id="r_zm" min="60" max="300" step="5"></div>
-            <div class="rng"><label>Calibration scale <b id="v_cs"></b></label><input type="range" id="r_cs" min="60" max="150" step="1"></div>
-            <div class="rng"><label>Calibration X <b id="v_cx"></b></label><input type="range" id="r_cx" min="-150" max="150" step="1"></div>
-            <div class="rng"><label>Calibration Y <b id="v_cy"></b></label><input type="range" id="r_cy" min="-150" max="150" step="1"></div>
           </div>
         </div>
         <video id="pipv" class="pipbox" muted playsinline></video>
@@ -248,38 +245,23 @@ const fmt = s => { s = Math.max(0, s | 0); return Math.floor(s / 60) + ':' + Str
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const title = s => String(s || '').replace(/_/g, ' ');
 
-function frac(x, y) {
-  const mp = live.mp;
-  if (mp && mp.ay) {
-    const X = mp.bx + mp.ax * x, Y = mp.by + mp.ay * y;
-    if (Math.abs(mp.bx) <= 300) return [X / 255, 1 - Y / 255];
-    const c = [mp.c1, mp.c255].find(q => q && Math.abs(q.x1 - q.x0) >= 50 && Math.abs(q.x1 - q.x0) <= 2000);
-    if (c) {
-      const xl = Math.min(c.x0, c.x1), xr = Math.max(c.x0, c.x1), yt = Math.min(c.y0, c.y1), yb = Math.max(c.y0, c.y1);
-      return [(X - xl) / (xr - xl), (Y - yt) / (yb - yt)];
-    }
-    const half = 140 / Math.abs(mp.ay) * 1.125;
-    return [0.5 + x / (2 * half) + 0.018, 0.5 - y / (2 * half) + 0.045];
-  }
-  return [0.5 + x / 22700, 0.5 - y / 22700];
-}
+const BOUND = 10752;
 function pt(x, y) {
-  const f = frac(x, y);
-  const u = 0.5 + (f[0] - 0.5) * cfg.cs / 100 + cfg.cx / 1000, v = 0.5 + (f[1] - 0.5) * cfg.cs / 100 + cfg.cy / 1000;
+  const u = (x + BOUND) / (2 * BOUND) + 12 / 1100, v = 1 - (y + BOUND) / (2 * BOUND) + 38 / 1100;
   return [MX + u * MS, MY + v * MS];
 }
 
-const cfg = Object.assign({ ms: 100, ic: 125, bg: 100, mo: false, zm: 100, px: 0, py: 0, cs: 100, cx: 0, cy: 0 }, (() => { try { return JSON.parse(store.get('dl_cfg') || '{}'); } catch (e) { return {}; } })());
+const cfg = Object.assign({ ms: 100, ic: 125, bg: 100, mo: false, zm: 100, px: 0, py: 0 }, (() => { try { return JSON.parse(store.get('dl_cfg') || '{}'); } catch (e) { return {}; } })());
 if (/[?&]map\b/.test(location.search)) cfg.mo = true;
 function saveCfg() { store.set('dl_cfg', JSON.stringify(cfg)); }
 let pipWin = null;
-const RNG = ['ms', 'ic', 'bg', 'zm', 'cs', 'cx', 'cy'];
+const RNG = ['ms', 'ic', 'bg', 'zm'];
 function applyCfg() {
   root.classList.toggle('mo', !!cfg.mo);
   root.classList.toggle('clear', !!cfg.mo && cfg.bg < 100);
   $('vmap').classList.toggle('on', !!cfg.mo);
   $('vmap').firstChild.className = 'fa-solid ' + (cfg.mo ? 'fa-compress' : 'fa-expand');
-  for (const k of RNG) { $('r_' + k).value = cfg[k]; $('v_' + k).textContent = cfg[k] + (k === 'cx' || k === 'cy' ? '' : '%'); }
+  for (const k of RNG) { $('r_' + k).value = cfg[k]; $('v_' + k).textContent = cfg[k] + '%'; }
   fitCanvas();
 }
 function fitCanvas() {
@@ -367,7 +349,7 @@ function render() {
   hits.length = 0; placed.length = 0;
   ctx.clearRect(0, 0, CW, CH);
   const ba = cfg.bg / 100;
-  const m = pic(BASE + 'map_real.jpg');
+  const m = pic(BASE + 'map_real.png');
   if (m) { ctx.globalAlpha = ba; ctx.drawImage(m, MX, MY, MS, MS); ctx.globalAlpha = 1; }
   glow();
   const s = S();
