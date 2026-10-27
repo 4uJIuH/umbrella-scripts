@@ -23,6 +23,7 @@ local localization = qLocalization.new({
 		wr_powerups = "Powerups, urn, midboss",
 		wr_troopers = "Troopers and neutrals",
 		wr_pickups = "Pickups",
+		wr_mods = "Hero modifiers",
 		wr_debug = "Debug log",
 		wr_debug_tip = "Log entity classes and map values to the bridge",
 		wr_st_off = "off",
@@ -48,6 +49,7 @@ local localization = qLocalization.new({
 		wr_powerups = "Бонусы, урна, мидбосс",
 		wr_troopers = "Крипы и нейтралы",
 		wr_pickups = "Подбираемые предметы",
+		wr_mods = "Модификаторы героев",
 		wr_debug = "Отладка",
 		wr_debug_tip = "Писать классы сущностей и значения карты в мост",
 		wr_st_off = "выключен",
@@ -180,6 +182,32 @@ local function kit(pawn)
 	return out
 end
 
+local function mods(ent)
+	local out = {}
+	local list = ent:get_modifiers() or {}
+	for i = 1, math.min(#list, 14) do
+		local name = list[i]:get_name()
+		if name and name ~= "" then out[#out + 1] = name end
+	end
+	return out
+end
+
+local function readField(obj, key)
+	local ok, v = pcall(function() return obj[key] end)
+	if ok then return v end
+end
+
+local function gameRules()
+	local gr = game_rules.get()
+	if not gr then return nil end
+	return {
+		ag = readField(gr, "m_nAmberGold"), sg = readField(gr, "m_nSapphireGold"),
+		mk = readField(gr, "m_iMidbossKillCount"), ar = readField(gr, "m_iAmberRejuvCount"), sr = readField(gr, "m_iSapphireRejuvCount"),
+		p = readField(gr, "m_bServerPaused"), gs = readField(gr, "m_eGameState"), w = readField(gr, "m_iWinningTeam"),
+		nb = readField(gr, "m_tNextMidBossSpawnTime"), sp = readField(gr, "m_unSpectatorCount"),
+	}
+end
+
 local function collectHeroes()
 	local rows = {}
 	local lp = entity_list.local_pawn()
@@ -208,6 +236,7 @@ local function collectHeroes()
 				me = lp ~= nil and lp:get_index() == pawn:get_index() or nil,
 			}
 			if rows[#rows].me then rows[#rows].kit = kit(pawn) end
+			if ui.mods:Get() then rows[#rows].mods = mods(pawn) end
 		end
 	end
 	return rows
@@ -328,6 +357,7 @@ local function send()
 		clock = { gt = game_rules.game_time(), mid = game_rules.match_id(), wall = os.time(), me = team(entity_list.local_pawn() or {}) },
 		pos = collectHeroes(),
 		mp = calibrate(),
+		gr = gameRules(),
 	}
 	for k, v in pairs(S.slow) do live[k] = v end
 	S.busy = true
@@ -391,6 +421,7 @@ do
 	ui.powerups = data:Switch("wr_powerups", true, "\u{f0eb}")
 	ui.troopers = data:Switch("wr_troopers", true, "\u{f0c0}")
 	ui.pickups = data:Switch("wr_pickups", true, "\u{f06b}")
+	ui.mods = data:Switch("wr_mods", true, "\u{f1de}")
 end
 
 callback.on_scripts_loaded:set(function()
