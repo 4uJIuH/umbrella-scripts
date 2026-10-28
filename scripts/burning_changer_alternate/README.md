@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`burning-changer-alternate-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/burning-changer-alternate-v1.0.0) | 2026-10-24 | [burning_changer_alternate.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/burning-changer-alternate-v1.0.0/burning_changer_alternate.lua) | 4 |
+| [`burning-changer-alternate-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/burning-changer-alternate-v1.0.0) | 2026-10-24 | [burning_changer_alternate.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/burning-changer-alternate-v1.0.0/burning_changer_alternate.lua) | 5 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=burning-changer-alternate&expanded=true)
 <!-- releases:end -->

@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`terrorblade-sunder-dagon-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/terrorblade-sunder-dagon-v1.0.0) | 2026-10-18 | [terrorblade_sunder_dagon.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/terrorblade-sunder-dagon-v1.0.0/terrorblade_sunder_dagon.lua) | 12 |
+| [`terrorblade-sunder-dagon-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/terrorblade-sunder-dagon-v1.0.0) | 2026-10-18 | [terrorblade_sunder_dagon.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/terrorblade-sunder-dagon-v1.0.0/terrorblade_sunder_dagon.lua) | 14 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=terrorblade-sunder-dagon&expanded=true)
 <!-- releases:end -->

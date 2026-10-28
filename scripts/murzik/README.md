@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`murzik-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/murzik-v1.0.0) | 2026-10-19 | [murzik.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/murzik-v1.0.0/murzik.lua) | 16 |
+| [`murzik-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/murzik-v1.0.0) | 2026-10-19 | [murzik.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/murzik-v1.0.0/murzik.lua) | 17 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=murzik&expanded=true)
 <!-- releases:end -->

@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`invoker-tornado-guard-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/invoker-tornado-guard-v1.0.0) | 2026-10-24 | [_invoker_tornado_ally_cc_guard.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-tornado-guard-v1.0.0/_invoker_tornado_ally_cc_guard.lua) | 13 |
+| [`invoker-tornado-guard-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/invoker-tornado-guard-v1.0.0) | 2026-10-24 | [_invoker_tornado_ally_cc_guard.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/invoker-tornado-guard-v1.0.0/_invoker_tornado_ally_cc_guard.lua) | 15 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=invoker-tornado-guard&expanded=true)
 <!-- releases:end -->
