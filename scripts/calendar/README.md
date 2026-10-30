@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`calendar-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/calendar-v1.0.0) | 2026-10-19 | [calendar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/calendar-v1.0.0/calendar.lua) | 6 |
+| [`calendar-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/calendar-v1.0.0) | 2026-10-19 | [calendar.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/calendar-v1.0.0/calendar.lua) | 7 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=calendar&expanded=true)
 <!-- releases:end -->

@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`dodger-utilities-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dodger-utilities-v1.0.0) | 2026-10-22 | [dodger_utilities.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dodger-utilities-v1.0.0/dodger_utilities.lua) | 33 |
+| [`dodger-utilities-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/dodger-utilities-v1.0.0) | 2026-10-22 | [dodger_utilities.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/dodger-utilities-v1.0.0/dodger_utilities.lua) | 35 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=dodger-utilities&expanded=true)
 <!-- releases:end -->

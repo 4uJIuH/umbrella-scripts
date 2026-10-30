@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`chronosphere-helper-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/chronosphere-helper-v1.0.0) | 2026-10-24 | [ChronosphereHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/chronosphere-helper-v1.0.0/ChronosphereHelper.lua) | 30 |
+| [`chronosphere-helper-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/chronosphere-helper-v1.0.0) | 2026-10-24 | [ChronosphereHelper.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/chronosphere-helper-v1.0.0/ChronosphereHelper.lua) | 33 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=chronosphere-helper&expanded=true)
 <!-- releases:end -->
