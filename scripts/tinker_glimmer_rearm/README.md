@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`tinker-glimmer-rearm-v1.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/tinker-glimmer-rearm-v1.3) | 2026-10-13 | [tinker_glimmer_rearm.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-glimmer-rearm-v1.3/tinker_glimmer_rearm.lua) | 0 |
+| [`tinker-glimmer-rearm-v1.3`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/tinker-glimmer-rearm-v1.3) | 2026-10-13 | [tinker_glimmer_rearm.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/tinker-glimmer-rearm-v1.3/tinker_glimmer_rearm.lua) | 1 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=tinker-glimmer-rearm&expanded=true)
 <!-- releases:end -->

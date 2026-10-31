@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`techies-auto-miner-v1.5`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/techies-auto-miner-v1.5) | 2026-10-24 | [techies_auto_miner.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-auto-miner-v1.5/techies_auto_miner.lua) | 12 |
+| [`techies-auto-miner-v1.5`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/techies-auto-miner-v1.5) | 2026-10-24 | [techies_auto_miner.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/techies-auto-miner-v1.5/techies_auto_miner.lua) | 13 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=techies-auto-miner&expanded=true)
 <!-- releases:end -->

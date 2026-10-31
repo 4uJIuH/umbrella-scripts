@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`self-play-v1.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/self-play-v1.0.1) | 2026-10-15 | [Self-Play.zip](https://github.com/4uJIuH/umbrella-scripts/releases/download/self-play-v1.0.1/Self-Play.zip) | 8 |
+| [`self-play-v1.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/self-play-v1.0.1) | 2026-10-15 | [Self-Play.zip](https://github.com/4uJIuH/umbrella-scripts/releases/download/self-play-v1.0.1/Self-Play.zip) | 9 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=self-play&expanded=true)
 <!-- releases:end -->

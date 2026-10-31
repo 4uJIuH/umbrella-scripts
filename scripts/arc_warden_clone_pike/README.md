@@ -7,7 +7,7 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`arc-warden-clone-pike-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/arc-warden-clone-pike-v1.0.0) | 2026-10-19 | [pika_arc_clone_pike.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-clone-pike-v1.0.0/pika_arc_clone_pike.lua) | 26 |
+| [`arc-warden-clone-pike-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/arc-warden-clone-pike-v1.0.0) | 2026-10-19 | [pika_arc_clone_pike.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-clone-pike-v1.0.0/pika_arc_clone_pike.lua) | 27 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=arc-warden-clone-pike&expanded=true)
 <!-- releases:end -->
