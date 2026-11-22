@@ -1,3 +1,15 @@
+# Обновление v3.0.0
+
+- real iphone proportions and motion: sizes and springs measured from slow motion of a real iphone, every animation redone frame by frame
+- the island squeezes into an empty pill before switching activities, content grows from the top edge with a blur like on ios, covers no longer jump mid animation
+- empty pill by default like on iphone, the old clock and stats look is back with "widgets on the empty island"
+- gestures: tap to open, click anywhere else to close, the island springs under the press, swipe an activity to swap it with the side bubble, ctrl + drag moves it only up and down
+- new player, notification banners, fight radar and courier on the map, match found rings like an incoming call, what's new pages right in the island
+- illusions and meepo clones no longer count in the fight radar
+- up to 300 of your own reminders with repeats
+- zero lag: the bridge talks to the island through files instead of umbrella's slow http queue (needs the new bridge, the old one still works over http)
+- a module that keeps failing pauses for 30 seconds and comes back by itself, config saves atomically
+
 # Обновление v2.5.3
 
 - yandex music: playlists. a plus button in the expanded player adds or removes the current track from your playlists (off by default, music > playlists)
