@@ -1,3 +1,8 @@
+# Update v3.0.1
+
+- notification center is now a stack like smart stack on iphone: wheel flips cards, same notifications are grouped and flip inside, swipe left removes a card, clear all at the end, match time on every card
+- script notifications with text and buttons open on tap again in tap mode
+
 # Update v3.0.0
 
 - real iphone proportions and motion: sizes and springs measured from slow motion of a real iphone, every animation redone frame by frame

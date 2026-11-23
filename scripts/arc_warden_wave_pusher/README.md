@@ -7,10 +7,10 @@
 
 | версия | дата | файл | загрузок |
 | --- | --- | --- | --- |
-| [`arc-warden-wave-pusher-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/arc-warden-wave-pusher-v1.2.0) | 2026-10-22 | [ArcWardenWavePusher.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-wave-pusher-v1.2.0/ArcWardenWavePusher.lua) | 178 |
+| [`arc-warden-wave-pusher-v1.2.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/arc-warden-wave-pusher-v1.2.0) | 2026-10-22 | [ArcWardenWavePusher.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-wave-pusher-v1.2.0/ArcWardenWavePusher.lua) | 182 |
 | [`arc-warden-wave-pusher-v1.1.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/arc-warden-wave-pusher-v1.1.0) | 2026-10-15 | [ArcWardenWavePusher.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-wave-pusher-v1.1.0/ArcWardenWavePusher.lua) | 54 |
 | [`arc-warden-wave-pusher-v1.0.1`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/arc-warden-wave-pusher-v1.0.1) | 2026-10-15 | [ArcWardenWavePusher.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-wave-pusher-v1.0.1/ArcWardenWavePusher.lua) | 3 |
-| [`arc-warden-wave-pusher-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/arc-warden-wave-pusher-v1.0.0) | 2026-10-15 | [ArcWardenWavePusher.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-wave-pusher-v1.0.0/ArcWardenWavePusher.lua) | 2 |
+| [`arc-warden-wave-pusher-v1.0.0`](https://github.com/4uJIuH/umbrella-scripts/releases/tag/arc-warden-wave-pusher-v1.0.0) | 2026-10-15 | [ArcWardenWavePusher.lua](https://github.com/4uJIuH/umbrella-scripts/releases/download/arc-warden-wave-pusher-v1.0.0/ArcWardenWavePusher.lua) | 3 |
 
 [Все релизы](https://github.com/4uJIuH/umbrella-scripts/releases?q=arc-warden-wave-pusher&expanded=true)
 <!-- releases:end -->
